@@ -1,0 +1,44 @@
+{
+  "name": "d3reacts",
+  "version": "1.0.0",
+  "description": "placeholder",
+  "main": "index.ts",
+  "scripts": {
+    "test": "test",
+    "build": "webpack --node-env=production --config ./webpack.config.js",
+    "dev": "webpack-dev-server --open"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/oslabs-beta/d3reacts.git"
+  },
+  "author": "Robert Crocker robert@vizsimply.com, Dmytro Iershov idmytro@yahoo.com, Ece Ozalp eceiozalp@gmail.com, Travis Lockett TravisLockett1@gmail.com, Eric Mulhern eric.mulhern@gmail.com",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/oslabs-beta/d3reacts/issues"
+  },
+  "homepage": "https://github.com/oslabs-beta/d3reacts#readme",
+  "dependencies": {
+    "@types/d3": "^7.1.0",
+    "@types/d3-selection": "^3.0.1",
+    "@types/react": "^17.0.34",
+    "@types/react-dom": "^17.0.11",
+    "css-loader": "^6.5.1",
+    "d3": "^7.1.1",
+    "dotenv": "^10.0.0",
+    "html-webpack-plugin": "^5.5.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "sass-loader": "^12.3.0",
+    "style-loader": "^3.3.1",
+    "ts-loader": "^9.2.6",
+    "typescript": "^4.4.4",
+    "webpack": "^5.64.0",
+    "webpack-dev-server": "^4.5.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.2.0",
+    "nodemon": "^2.0.15",
+    "webpack-cli": "^4.9.1"
+  }
+}
