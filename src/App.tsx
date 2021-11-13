@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import './App.css';
-import ScatterChart from './charts/ScatterChart';
+import ScatterChart from './charts/ScatterPlot/ScatterPlot';
 import penguins from './data/penguins.json'
 
 

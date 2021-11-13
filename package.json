@@ -5,8 +5,9 @@
   "main": "index.tsx",
   "scripts": {
     "test": "test",
+    "dev": "webpack-dev-server --open",
     "build": "webpack --node-env=production --config ./webpack.config.js",
-    "dev": "webpack-dev-server --open"
+    "start": ""
   },
   "repository": {
     "type": "git",

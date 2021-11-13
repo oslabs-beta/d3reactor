@@ -1,9 +1,9 @@
 /** App.js */
 import React, { useState, useEffect, useRef, useLayoutEffect } from "react";
-import ScatterChartBody from "../components/ScatterChartBody";
-import {Props} from '../../types'
+import ScatterPlotBody from "./ScatterPlotBody";
+import {Props} from '../../../types'
 
-export default function ScatterChart({
+export default function ScatterPlot({
   data,
   height = "100%",
   width = "100%",
@@ -39,7 +39,7 @@ export default function ScatterChart({
 
   return (
       <svg ref={anchor} width={width} height={height}>
-        <ScatterChartBody
+        <ScatterPlotBody
           height={cHeight}
           width={cWidth}
           data={data}

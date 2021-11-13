@@ -1,9 +1,9 @@
 /** LineChart.js */
 import React, {useMemo} from 'react';
 import * as d3 from "d3";
-import Axis from "./Axis";
-import {Props} from '../../types'
-import {getXAxisCoordinates, getYAxisCoordinates, getMargins} from '../utils'
+import Axis from "../../components/Axis";
+import {Props} from '../../../types'
+import {getXAxisCoordinates, getYAxisCoordinates, getMargins} from '../../utils'
 
 const ScatterChartBody = ({
   data,
