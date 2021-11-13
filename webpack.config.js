@@ -3,7 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 require('dotenv').config();
 
 module.exports = {
-  entry: './src/index.ts',
+  entry: './src/index.tsx',
   output: {
     path: path.resolve(__dirname, 'dist'),
     publicPath: '/',
@@ -22,9 +22,9 @@ module.exports = {
         exclude: /node_modules/,
       },
       {
-        test: /.(css|scss)$/,
+        test: /.(css)$/,
         exclude: /node_modules/,
-        use: ['style-loader', 'css-loader', 'sass-loader'],
+        use: ['style-loader', 'css-loader'],
       },
     ],
   },
