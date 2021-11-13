@@ -2,7 +2,7 @@
   "name": "d3reacts",
   "version": "1.0.0",
   "description": "placeholder",
-  "main": "index.ts",
+  "main": "index.tsx",
   "scripts": {
     "test": "test",
     "build": "webpack --node-env=production --config ./webpack.config.js",
