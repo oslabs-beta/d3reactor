@@ -1,6 +1,0 @@
-
-
-
-console.log('butts');
-
-export {}
