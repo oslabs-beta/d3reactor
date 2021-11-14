@@ -21,7 +21,7 @@ export interface Margin {
 export interface AxisProps {
     x:number;
     y:number;
-    scale:d3.ScaleLinear<number, number, never>;
+    scale:d3.ScaleLinear<number, number, never> | d3.ScaleTime<number, number, never>;
     type: string;
     label: string | undefined;
     height: number;
