@@ -13,6 +13,8 @@ const ScatterChartBody = ({
   yDataProp,
   xAxis,
   yAxis,
+  xGrid,
+  yGrid,
   xAxisLabel,
   yAxisLabel
 }: Props<number>): JSX.Element => {
@@ -48,8 +50,8 @@ const ScatterChartBody = ({
 
   return (
     <g transform={translate}>
-      {yAxis && <Axis x={yAxisX} y={yAxisY} height={height} width={width} margin={margin} scale={yScale} type={yAxis} label={yAxisLabel}/>}
-      {xAxis && <Axis x={xAxisX} y={xAxisY} height={height} width={width} margin={margin} scale={xScale} type={xAxis} label={xAxisLabel}/>}
+      {yAxis && <Axis x={yAxisX} y={yAxisY} yGrid={yGrid} height={height} width={width} margin={margin} scale={yScale} type={yAxis} label={yAxisLabel}/>}
+      {xAxis && <Axis x={xAxisX} y={xAxisY} xGrid={xGrid} height={height} width={width} margin={margin} scale={xScale} type={xAxis} label={xAxisLabel}/>}
     </g>
   );
 };

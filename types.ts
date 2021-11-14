@@ -7,8 +7,11 @@ export interface Props<T> {
   yDataProp: string;
   xAxis?: 'top' | 'bottom' | false;
   yAxis?: 'left' | 'right' | false;
+  xGrid?: boolean;
+  yGrid?: boolean;
   xAxisLabel?: string;
   yAxisLabel?: string;
+  
 }
 
 export interface Margin {
@@ -21,6 +24,8 @@ export interface Margin {
 export interface AxisProps {
     x:number;
     y:number;
+    xGrid?: boolean;
+    yGrid?: boolean;
     scale:d3.ScaleLinear<number, number, never>;
     type: string;
     label: string | undefined;

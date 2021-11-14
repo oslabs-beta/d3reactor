@@ -16,8 +16,11 @@ function App() {
                 yDataProp = 'body_mass_g'
                 xAxis='bottom'
                 yAxis='left'
+                xGrid = {true}
+                yGrid = {true}
                 xAxisLabel = 'Flipper, mm'
                 yAxisLabel = 'Body Mass, g'
+                
             />
      </div>
   );

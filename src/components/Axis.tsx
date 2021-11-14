@@ -4,11 +4,12 @@ import { useD3 } from "../hooks/useD3";
 import {AxisProps} from "../../types";
 import {getAxisLabelCoordinates} from '../utils';
 
-const Axis = ({ x, y, scale, type, label, width, height, margin }: AxisProps):JSX.Element => {
+const Axis = ({ x, y, scale, type, label, width, height, margin, xGrid, yGrid }: AxisProps):JSX.Element => {
   const gRef = useD3(
     (anchor) => {
 
       let axis:d3.Axis<d3.NumberValue>
+    
       switch(type){
         case 'bottom' :
           axis = d3.axisBottom(scale);
@@ -38,9 +39,33 @@ const Axis = ({ x, y, scale, type, label, width, height, margin }: AxisProps):JS
     rotate
   } = useMemo(() => getAxisLabelCoordinates(x, y, height, width, margin, type), [x, y, width, height, margin, type])
 
+  let grid: JSX.Element[] = [];
+  switch(true) {
+    case (type ==='bottom' && (xGrid || yGrid)):
+      grid = scale.ticks().map((tick, i) => 
+      <line key={tick} x1={scale(tick)} x2={scale(tick)} y1={margin.top} y2={(- height + margin.bottom + margin.top)} strokeDasharray={5} strokeOpacity='0.3' strokeWidth='0,3' stroke='currentColor'></line>);
+      break;
+    case (type ==='top' && (xGrid || yGrid)):
+      grid = scale.ticks().map((tick, i) => 
+      <line key={tick} x1={scale(tick)} x2={scale(tick)} y1={margin.bottom} y2={( height - margin.bottom - margin.top)} strokeDasharray={5} strokeOpacity='0.3' strokeWidth='0,3' stroke='currentColor'></line>);
+      break;
+    case (type ==='left' && (xGrid || yGrid)):
+      grid = scale.ticks().map((tick, i) => 
+      <line key={tick} x1={0} x2={(width - margin.right - margin.left)} y1={scale(tick)} y2={scale(tick)} strokeDasharray={5} strokeOpacity='0.3' strokeWidth='0,3' stroke='currentColor'></line>);
+      break;
+    case (type ==='right' && (xGrid || yGrid)):
+      grid = scale.ticks().map((tick, i) => 
+      <line key={tick} x1={0} x2={-(width - margin.right - margin.left)} y1={scale(tick)} y2={scale(tick)} strokeDasharray={5} strokeOpacity='0.3' strokeWidth='0,3' stroke='currentColor'></line>);
+      break;
+  }
+
+  console.log('axisLabelX, ', axisLabelX, 'axisLabelY', axisLabelY)
+
   return (
     <g className='hello'>
-      <g ref={gRef} transform={`translate(${x}, ${y})`}></g>
+      <g ref={gRef} transform={`translate(${x}, ${y})`}> 
+      {grid}
+      </g>
       <text
         transform={`translate(${axisLabelX}, ${axisLabelY}) rotate(${rotate})`}
         textAnchor="middle"

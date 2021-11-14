@@ -1,4 +1,6 @@
 import {Margin} from '../types'
+import React from 'react';
+import * as d3 from 'd3'
 
 export function getXAxisCoordinates(xAxis: 'top' | 'bottom' | false = 'bottom', height: number, margin: Margin) {
   let xAxisX: number = 0;

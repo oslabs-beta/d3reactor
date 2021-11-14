@@ -11,6 +11,8 @@ export default function ScatterPlot({
   yDataProp,
   xAxis = 'bottom',
   yAxis = 'left',
+  xGrid = false,
+  yGrid = false,
   xAxisLabel,
   yAxisLabel,
 }:Props<string | number>):JSX.Element {
@@ -47,6 +49,8 @@ export default function ScatterPlot({
           yDataProp={yDataProp}
           xAxis={xAxis}
           yAxis={yAxis}
+          xGrid={xGrid}
+          yGrid={yGrid}
           xAxisLabel={xAxisLabel}
           yAxisLabel={yAxisLabel}
         />
