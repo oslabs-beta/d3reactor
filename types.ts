@@ -3,8 +3,8 @@ export interface Props<T> {
   data: any;
   height: T;
   width: T;
-  xDataProp: string;
-  yDataProp: string;
+  xDataProp: { key: string, type: string };
+  yDataProp: { key: string, type: string };
   xAxis?: 'top' | 'bottom' | false;
   yAxis?: 'left' | 'right' | false;
   xAxisLabel?: string;

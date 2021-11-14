@@ -12,6 +12,9 @@ const Path = styled.path`
   stroke-width: 2px;
 `;
 
+type AccessorFunc = (d: any) => number | Date;
+type ScaleFunc = d3.ScaleLinear<number, number, never> | d3.ScaleTime<number, number, never>;
+
 const LineChartBody = ({
                          data,
                          height,
@@ -37,35 +40,59 @@ const LineChartBody = ({
 
   const translate = `translate(${margin.left}, ${margin.top})`;
 
-  const xAccessor = (d: any) => new Date(d[xDataProp]);
-  const yAccessor = (d: any) => d[yDataProp];
-
-  // const [xMin, xMax]: [any, any] = d3.extent(data, xAccessor);
-  const [yMin, yMax]: [any, any] = d3.extent(data, yAccessor);
-
-  const xScale = d3
-    .scaleTime()
+  let xAccessor:AccessorFunc = (d) => d[xDataProp.key];
+  let xScale:ScaleFunc = d3
+    .scaleLinear()
     // @ts-ignore
     .domain(d3.extent(data, xAccessor))
     .range([0, width - margin.right - margin.left]);
 
-  // @ts-ignore
-  console.log('xScale ', xScale(xAccessor({date: "2019-07-15"})))
+  switch (xDataProp.type) {
+    case ('date'):
+      xAccessor = (d) => new Date(d[xDataProp.key]);
+      xScale = d3
+        .scaleTime()
+        // @ts-ignore
+        .domain(d3.extent(data, xAccessor))
+        .range([0, width - margin.right - margin.left]);
+      break;
+    case ('string'): // TODO Example of how we could add other types
+      //
+      //
+      break;
+  }
 
-  const yScale = d3
+  let yAccessor:AccessorFunc = (d) => d[yDataProp.key];
+  let yScale:ScaleFunc = d3
     .scaleLinear()
-    .domain([yMin, yMax])
+    // @ts-ignore
+    .domain(d3.extent(data, yAccessor))
     .rangeRound([height - margin.bottom - margin.top, 0]);
 
+  switch (yDataProp.type) {
+    case ('date'):
+      yAccessor = (d) => new Date(d[yDataProp.key]);
+      yScale = d3
+        .scaleTime()
+        // @ts-ignore
+        .domain(d3.extent(data, yAccessor))
+        .range([height - margin.bottom - margin.top, 0]);
+      break;
+    case ('string'): // TODO Example of how we could add other types
+      //
+      //
+      break;
+  }
 
+
+  // @ts-ignore
   const line:any = d3
+  // @ts-ignore
     .line()
-    // @ts-ignore
-    .x((d) => xScale(new Date(d[xDataProp])))
-    // @ts-ignore
-    .y((d) => yScale(d[yDataProp]));
+  // @ts-ignore
+    .x((d) => xScale(xAccessor(d)))
+    .y((d) => yScale(yAccessor(d)));
 
-  console.log(line(data))
   return (
     <g transform={translate}>
       <Path className="line" d={line(data)} />
