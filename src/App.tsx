@@ -24,13 +24,13 @@ function App() {
       />
       <ScatterPlot
         data={portfolio}
-        // data={penguins}
+        //data={penguins}
         height="100%"
         width="100%"
         xDataProp={{ key: "date", dataType: "date" }}
-        // xDataProp={{ key: "flipper_length_mm", dataType: "number" }}
+        //xDataProp={{ key: "flipper_length_mm", dataType: "number" }}
         yDataProp={{ key: "value", dataType: "number" }}
-        // yDataProp={{ key: "body_mass_g", dataType: "number" }}
+        //yDataProp={{ key: "body_mass_g", dataType: "number" }}
         xAxis="bottom"
         yAxis="left"
         xGrid={true}
