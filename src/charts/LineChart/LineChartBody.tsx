@@ -1,8 +1,8 @@
 /** LineChart.js */
 import React, { useMemo } from "react"
 import * as d3 from "d3"
+import styled from "styled-components"
 import Axis from "../../components/Axis"
-import Circle from "./Circle"
 import { Props } from "../../../types"
 import {
   getXAxisCoordinates,
@@ -10,13 +10,19 @@ import {
   getMargins,
 } from "../../utils"
 
+const Path = styled.path`
+  fill: none;
+  stroke: black;
+  stroke-width: 2px;
+`
+
 type AccessorFunc = (d: any) => number | Date
 type Domain = number | Date | undefined
 type ScaleFunc =
   | d3.ScaleLinear<number, number, never>
   | d3.ScaleTime<number, number, never>
 
-const ScatterPlotBody = ({
+const LineChartBody = ({
   data,
   height,
   width,
@@ -24,8 +30,6 @@ const ScatterPlotBody = ({
   yDataProp,
   xAxis,
   yAxis,
-  xGrid,
-  yGrid,
   xAxisLabel,
   yAxisLabel,
 }: Props<number>): JSX.Element => {
@@ -95,13 +99,18 @@ const ScatterPlotBody = ({
       break
   }
 
+  const line: any = d3
+    .line()
+    .x((d) => xScale(xAccessor(d)))
+    .y((d) => yScale(yAccessor(d)))
+
   return (
-    <g className="spbody" transform={translate}>
+    <g transform={translate}>
+      <Path className="line" d={line(data)} />
       {yAxis && (
         <Axis
           x={yAxisX}
           y={yAxisY}
-          yGrid={yGrid}
           height={height}
           width={width}
           margin={margin}
@@ -114,7 +123,6 @@ const ScatterPlotBody = ({
         <Axis
           x={xAxisX}
           y={xAxisY}
-          xGrid={xGrid}
           height={height}
           width={width}
           margin={margin}
@@ -123,17 +131,8 @@ const ScatterPlotBody = ({
           label={xAxisLabel}
         />
       )}
-      {data.map((element: { [key: string]: number }, i: number) => (
-        <Circle
-          key={i}
-          cx={xScale(xAccessor(element))}
-          cy={yScale(yAccessor(element))}
-          r={5}
-          color="steelblue"
-        />
-      ))}
     </g>
   )
 }
 
-export default ScatterPlotBody
+export default LineChartBody
