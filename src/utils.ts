@@ -90,3 +90,25 @@ export function getAxisLabelCoordinates (x: number, y:number, height: number,  w
     rotate
   }
 }
+
+interface transformCountryDataProps {
+  key: string,
+  values: Array<Array<number>>
+}
+
+export function transformCountryData(arr: transformCountryDataProps[]) {
+  interface Entry {
+    [key: string]: string | number
+  }
+  const transformed = [];
+  for (let i = 0; i < arr[0].values.length; i++) {
+    const entry: Entry = {
+      date: arr[0].values[i][0]
+    };
+    for (let j = 0; j < arr.length; j++) {
+      entry[arr[j].key] = arr[j].values[i][1];
+    }
+    transformed.push(entry);
+  }
+  return transformed;
+}
