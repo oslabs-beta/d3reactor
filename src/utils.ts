@@ -111,3 +111,21 @@ export function getAxisLabelCoordinates(
     rotate,
   }
 }
+
+
+
+//############Area Chart Utils###############\\
+
+
+
+export function findYDomainMax(data: Array<Object>, keyArr: string[]) {
+  let yDomainMax = 0;
+  data.forEach(obj => {
+    let stackedHeight = 0;
+    for (const key of keyArr) {
+      stackedHeight += obj[key];
+      if (stackedHeight > yDomainMax) yDomainMax = stackedHeight;
+    }
+  });
+  return yDomainMax;
+}

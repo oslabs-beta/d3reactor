@@ -1,20 +1,21 @@
-/** LineChart.js */
+/** AreaChart.js */
 import React, { useMemo } from "react"
 import * as d3 from "d3"
 import styled from "styled-components"
 import Axis from "../../components/Axis"
-import { Props } from "../../../types"
+import { AreaProps } from "../../../types"
+import findYDomainMax from '../../utils.js'
 import {
   getXAxisCoordinates,
   getYAxisCoordinates,
   getMargins,
 } from "../../utils"
 
-const Path = styled.path`
-  fill: none;
-  stroke: black;
-  stroke-width: 2px;
-`
+// const Path = styled.path`
+//   fill: none;
+//   stroke: black;
+//   stroke-width: 2px;
+// `
 
 type AccessorFunc = (d: any) => number | Date
 type Domain = number | Date | undefined
@@ -22,7 +23,7 @@ type ScaleFunc =
   | d3.ScaleLinear<number, number, never>
   | d3.ScaleTime<number, number, never>
 
-const LineChartBody = ({
+const AreaChartBody = ({
   data,
   height,
   width,
@@ -32,7 +33,8 @@ const LineChartBody = ({
   yAxis,
   xAxisLabel,
   yAxisLabel,
-}: Props<number>): JSX.Element => {
+  colorScheme = d3.schemeCategory10 // TODO: replace with custom default color scheme?
+}: AreaProps<number>): JSX.Element => {
   const margin = useMemo(
     () => getMargins(xAxis, yAxis, xAxisLabel, yAxisLabel),
     [xAxis, yAxis, xAxisLabel, yAxisLabel]
@@ -47,11 +49,31 @@ const LineChartBody = ({
     () => getYAxisCoordinates(yAxis, width, margin),
     [width, yAxis, margin]
   )
-
+  // offset group to match position of axes
   const translate = `translate(${margin.left}, ${margin.top})`
 
-  let xScale: ScaleFunc, xAccessor: AccessorFunc, xMin: Domain, xMax: Domain
-  switch (xDataProp.dataType) {
+  const keys = []; // find the fields
+  for (let key in data[0]) { // make more abstractable (what if data points are missing for some fields?)
+    if (key !== 'date') keys.push(key);
+  }
+
+  // make sure to sort values #######
+  let x = d3.scaleTime().domain([data[0].date, data[data.length-1].date]).range([0, width]), 
+  // if not valid date, use scaleLinear & set domain to range of date arr
+  
+  y = d3.scaleLinear().domain([0, findYDomainMax(data, keys)]).range([height, 0]),
+  z = d3.scaleOrdinal(colorScheme || defaultOptions.colorScheme); // COLORS. HOW TO CUSTOMIZE?
+
+
+
+  let xScale: ScaleFunc, 
+      xAccessor: AccessorFunc, 
+      xMin: Domain, 
+      xMax: Domain;
+
+
+      
+  switch (xDataProp.dataType) { // TODO: refactor to implicitly derive data type
     case "number":
       xAccessor = (d) => d[xDataProp.key]
       xMin = d3.extent(data, xAccessor)[0] 
@@ -99,14 +121,12 @@ const LineChartBody = ({
       break
   }
 
-  const line: any = d3
-    .line()
-    .x((d) => xScale(xAccessor(d)))
-    .y((d) => yScale(yAccessor(d)))
+  // DECLARE AREA HERE
+
 
   return (
     <g transform={translate}>
-      <Path className="line" d={line(data)} />
+      <Path className="area" d={line(data)} /> {/**MAKE INTO ITERABLE OF AREAS. DON'T USE STYLED PATH? */}
       {yAxis && (
         <Axis
           x={yAxisX}
@@ -135,4 +155,4 @@ const LineChartBody = ({
   )
 }
 
-export default LineChartBody
+export default AreaChartBody
