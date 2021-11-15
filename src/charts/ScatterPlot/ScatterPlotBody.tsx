@@ -56,6 +56,7 @@ const ScatterChartBody = ({
         .scaleLinear()
         .domain([xMin ?? 0, xMax ?? 0])
         .range([0, width - margin.right - margin.left])
+        .nice()
       break
     case "date":
       xAccessor = (d) => new Date(d[xDataProp.key])
@@ -65,6 +66,7 @@ const ScatterChartBody = ({
         .scaleTime()
         .domain([xMin ?? 0, xMax ?? 0])
         .range([0, width - margin.right - margin.left])
+        .nice()
       break
   }
 
@@ -79,6 +81,7 @@ const ScatterChartBody = ({
         .scaleLinear()
         .domain([yMin ?? 0, yMax ?? 0])
         .range([height - margin.top - margin.bottom, 0])
+        .nice()
       break
     case "date":
       yAccessor = (d) => new Date(d[yDataProp.key])
@@ -88,6 +91,7 @@ const ScatterChartBody = ({
         .scaleTime()
         .domain([yMin ?? 0, yMax ?? 0])
         .range([height - margin.top - margin.bottom, 0])
+        .nice()
       break
   }
 
