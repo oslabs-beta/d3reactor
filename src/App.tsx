@@ -1,26 +1,28 @@
 /* eslint-disable no-unused-vars */
-import './App.css';
-import ScatterChart from './charts/ScatterPlot/ScatterPlot';
-import penguins from './data/penguins.json'
-
+import "./App.css"
+import LineChart from "./charts/LineChart/LineChart"
+import penguins from "./data/penguins.json"
+import portfolio from "./data/portfolio.json"
 
 function App() {
-
   return (
     <div className="App">
-            <ScatterChart 
-                data={penguins} 
-                height="100%" 
-                width="100%" 
-                xDataProp = 'flipper_length_mm'
-                yDataProp = 'body_mass_g'
-                xAxis='bottom'
-                yAxis='left'
-                xAxisLabel = 'Flipper, mm'
-                yAxisLabel = 'Body Mass, g'
-            />
-     </div>
-  );
+      <LineChart
+        // data={penguins}
+        data={portfolio}
+        height="100%"
+        width="100%"
+        // xDataProp={{ key: "body_mass_g", dataType: "number" }}
+        xDataProp={{ key: "date", dataType: "date" }}
+        // yDataProp={{ key: "flipper_length_mm", dataType: "number" }}
+        yDataProp={{ key: "value", dataType: "number" }}
+        xAxis="bottom"
+        yAxis="left"
+        xAxisLabel="Date"
+        yAxisLabel="Value"
+      />
+    </div>
+  )
 }
 
-export default App;
+export default App

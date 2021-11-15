@@ -1,13 +1,13 @@
 /** App.js */
 import React, { useState, useEffect, useRef, useLayoutEffect } from "react";
-import ScatterPlotBody from "./ScatterPlotBody";
+import LineChartBody from "./LineChartBody";
 import {Props} from '../../../types'
 
-export default function ScatterPlot({
+export default function LineChart({
   data,
   height = "100%",
   width = "100%",
-  xDataProp, 
+  xDataProp,
   yDataProp,
   xAxis = 'bottom',
   yAxis = 'left',
@@ -39,7 +39,7 @@ export default function ScatterPlot({
 
   return (
       <svg ref={anchor} width={width} height={height}>
-        <ScatterPlotBody
+        <LineChartBody
           height={cHeight}
           width={cWidth}
           data={data}
