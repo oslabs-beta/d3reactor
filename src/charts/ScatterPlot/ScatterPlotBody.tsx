@@ -1,6 +1,7 @@
 /** LineChart.js */
-import React, { useMemo } from "react"
+import React, { useMemo, useEffect } from "react"
 import * as d3 from "d3"
+import styled from 'styled-components'
 import Axis from "../../components/Axis"
 import Circle from "./Circle"
 import { Props } from "../../../types"
@@ -15,6 +16,15 @@ type Domain = number | Date | undefined
 type ScaleFunc =
   | d3.ScaleLinear<number, number, never>
   | d3.ScaleTime<number, number, never>
+interface DataArg {
+  [key: string]: number | string;
+}
+
+const Path = styled.path`
+  fill: none;
+  stroke: #ff1493;
+  opacity: 0.5;
+  `
 
 const ScatterPlotBody = ({
   data,
@@ -95,6 +105,14 @@ const ScatterPlotBody = ({
       break
   }
 
+  const delaunay = d3.Delaunay
+    .from(data, d => xScale(xAccessor(d)), d => yScale(yAccessor(d)))
+  let voronoi: d3.Voronoi<string> = null as unknown as d3.Voronoi<string> ;
+  if (height && width) {
+    voronoi = delaunay
+      .voronoi([0, 0, width - margin.right - margin.left, height - margin.bottom - margin.top]); 
+  }   
+
   return (
     <g className="spbody" transform={translate}>
       {yAxis && (
@@ -123,7 +141,7 @@ const ScatterPlotBody = ({
           label={xAxisLabel}
         />
       )}
-      {data.map((element: { [key: string]: number }, i: number) => (
+      {data.map((element: DataArg, i: number) => (
         <Circle
           key={i}
           cx={xScale(xAccessor(element))}
@@ -132,6 +150,11 @@ const ScatterPlotBody = ({
           color="steelblue"
         />
       ))}
+      {voronoi && 
+        <g className = 'voronoi-wrapper' >
+          {data.map((elem:DataArg, i:number) => <Path d={voronoi.renderCell(i)}></Path>)}
+        </g>
+      }
     </g>
   )
 }
