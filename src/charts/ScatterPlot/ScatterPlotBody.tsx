@@ -2,6 +2,7 @@
 import React, {useMemo} from 'react';
 import * as d3 from "d3";
 import Axis from "../../components/Axis";
+import Circle from './Circle';
 import {Props} from '../../../types'
 import {getXAxisCoordinates, getYAxisCoordinates, getMargins} from '../../utils'
 
@@ -49,9 +50,10 @@ const ScatterChartBody = ({
     .rangeRound([height - margin.bottom - margin.top, 0]);
 
   return (
-    <g transform={translate}>
+    <g className='spbody' transform={translate}>
       {yAxis && <Axis x={yAxisX} y={yAxisY} yGrid={yGrid} height={height} width={width} margin={margin} scale={yScale} type={yAxis} label={yAxisLabel}/>}
       {xAxis && <Axis x={xAxisX} y={xAxisY} xGrid={xGrid} height={height} width={width} margin={margin} scale={xScale} type={xAxis} label={xAxisLabel}/>}
+      {data.map((element: {[key: string]: number}, i:number) => <Circle key={i} cx={xScale(xAccessor(element))} cy={yScale(yAccessor(element))} r={5} color='steelblue'/>)}
     </g>
   );
 };

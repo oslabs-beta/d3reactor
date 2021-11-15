@@ -12,7 +12,7 @@ const Axis = ({ x, y, scale, type, label, width, height, margin, xGrid, yGrid }:
     
       switch(type){
         case 'bottom' :
-          axis = d3.axisBottom(scale);
+          axis = d3.axisBottom(scale).tickPadding(10);
           break;
         case 'top' :
           axis = d3.axisTop(scale);
@@ -43,7 +43,7 @@ const Axis = ({ x, y, scale, type, label, width, height, margin, xGrid, yGrid }:
   switch(true) {
     case (type ==='bottom' && (xGrid || yGrid)):
       grid = scale.ticks().map((tick, i) => 
-      <line key={tick} x1={scale(tick)} x2={scale(tick)} y1={margin.top} y2={(- height + margin.bottom + margin.top)} strokeDasharray={5} strokeOpacity='0.3' strokeWidth='0,3' stroke='currentColor'></line>);
+      <line key={tick} x1={scale(tick)} x2={scale(tick)} y1={0} y2={(- height + margin.bottom + margin.top)} strokeDasharray={5} strokeOpacity='0.3' strokeWidth='0,3' stroke='currentColor'></line>);
       break;
     case (type ==='top' && (xGrid || yGrid)):
       grid = scale.ticks().map((tick, i) => 
@@ -59,10 +59,9 @@ const Axis = ({ x, y, scale, type, label, width, height, margin, xGrid, yGrid }:
       break;
   }
 
-  console.log('axisLabelX, ', axisLabelX, 'axisLabelY', axisLabelY)
 
   return (
-    <g className='hello'>
+    <g>
       <g ref={gRef} transform={`translate(${x}, ${y})`}> 
       {grid}
       </g>

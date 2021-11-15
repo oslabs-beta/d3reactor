@@ -33,3 +33,10 @@ export interface AxisProps {
     width: number;
     margin: Margin;
 }
+
+export interface CircleProps {
+  cx: number;
+  cy: number;
+  r?: number;
+  color: string;
+}
