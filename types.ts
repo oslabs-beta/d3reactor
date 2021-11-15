@@ -6,6 +6,8 @@ export interface Props<T> {
   yDataProp: { key: string; dataType: "date" | "number" }
   xAxis?: "top" | "bottom" | false
   yAxis?: "left" | "right" | false
+  xGrid?: boolean
+  yGrid?: boolean
   xAxisLabel?: string
   yAxisLabel?: string
 }
@@ -20,6 +22,8 @@ export interface Margin {
 export interface AxisProps {
   x: number
   y: number
+  xGrid?: boolean
+  yGrid?: boolean
   scale:
     | d3.ScaleLinear<number, number, never>
     | d3.ScaleTime<number, number, never>
@@ -28,4 +32,11 @@ export interface AxisProps {
   height: number
   width: number
   margin: Margin
+}
+
+export interface CircleProps {
+  cx: number
+  cy: number
+  r?: number
+  color: string
 }

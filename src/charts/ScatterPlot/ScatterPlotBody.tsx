@@ -1,58 +1,135 @@
-// /** LineChart.js */
-// import React, {useMemo} from 'react';
-// import * as d3 from "d3";
-// import Axis from "../../components/Axis";
-// import {Props} from '../../../types'
-// import {getXAxisCoordinates, getYAxisCoordinates, getMargins} from '../../utils'
-//
-// const ScatterChartBody = ({
-//   data,
-//   height,
-//   width,
-//   xDataProp,
-//   yDataProp,
-//   xAxis,
-//   yAxis,
-//   xAxisLabel,
-//   yAxisLabel
-// }: Props<number>): JSX.Element => {
-//   const margin = useMemo(() =>  getMargins(xAxis, yAxis, xAxisLabel, yAxisLabel), [xAxis, yAxis, xAxisLabel, yAxisLabel])
-//
-//    const {
-//     xAxisX,
-//     xAxisY
-//   } = useMemo(() => getXAxisCoordinates(xAxis, height, margin), [height, xAxis, margin])
-//
-//   const {
-//     yAxisX,
-//     yAxisY
-//   } = useMemo(() => getYAxisCoordinates(yAxis, width, margin), [width, yAxis, margin])
-//
-//   const translate = `translate(${margin.left}, ${margin.top})`;
-//
-//   const xAccessor = (d: {[key: string]: number}) => d[xDataProp];
-//   const yAccessor = (d:{[key: string]: number}) => d[yDataProp];
-//
-//   const [xMin, xMax] = d3.extent(data, xAccessor);
-//   const [yMin, yMax] = d3.extent(data, yAccessor);
-//
-//   const xScale = d3
-//     .scaleLinear()
-//     .domain([xMin ?? 0, xMax ?? 0]).nice()
-//     .range([0, width - margin.right - margin.left]);
-//
-//   const yScale = d3
-//     .scaleLinear()
-//     .domain([yMin ?? 0, yMax ?? 0]).nice()
-//     .rangeRound([height - margin.bottom - margin.top, 0]);
-//
-//   return (
-//     <g transform={translate}>
-//       {yAxis && <Axis x={yAxisX} y={yAxisY} height={height} width={width} margin={margin} scale={yScale} type={yAxis} label={yAxisLabel}/>}
-//       {xAxis && <Axis x={xAxisX} y={xAxisY} height={height} width={width} margin={margin} scale={xScale} type={xAxis} label={xAxisLabel}/>}
-//     </g>
-//   );
-// };
-//
-// export default ScatterChartBody;
-export {}
+/** LineChart.js */
+import React, { useMemo } from "react"
+import * as d3 from "d3"
+import Axis from "../../components/Axis"
+import Circle from "./Circle"
+import { Props } from "../../../types"
+import {
+  getXAxisCoordinates,
+  getYAxisCoordinates,
+  getMargins,
+} from "../../utils"
+
+type AccessorFunc = (d: any) => number | Date
+type Domain = number | Date | undefined
+type ScaleFunc =
+  | d3.ScaleLinear<number, number, never>
+  | d3.ScaleTime<number, number, never>
+
+const ScatterChartBody = ({
+  data,
+  height,
+  width,
+  xDataProp,
+  yDataProp,
+  xAxis,
+  yAxis,
+  xGrid,
+  yGrid,
+  xAxisLabel,
+  yAxisLabel,
+}: Props<number>): JSX.Element => {
+  const margin = useMemo(
+    () => getMargins(xAxis, yAxis, xAxisLabel, yAxisLabel),
+    [xAxis, yAxis, xAxisLabel, yAxisLabel]
+  )
+
+  const { xAxisX, xAxisY } = useMemo(
+    () => getXAxisCoordinates(xAxis, height, margin),
+    [height, xAxis, margin]
+  )
+
+  const { yAxisX, yAxisY } = useMemo(
+    () => getYAxisCoordinates(yAxis, width, margin),
+    [width, yAxis, margin]
+  )
+
+  const translate = `translate(${margin.left}, ${margin.top})`
+
+  let xScale: ScaleFunc, xAccessor: AccessorFunc, xMin: Domain, xMax: Domain
+  switch (xDataProp.dataType) {
+    case "number":
+      xAccessor = (d) => d[xDataProp.key]
+      xMin = d3.extent(data, xAccessor)[0]
+      xMax = d3.extent(data, xAccessor)[1]
+      xScale = d3
+        .scaleLinear()
+        .domain([xMin ?? 0, xMax ?? 0])
+        .range([0, width - margin.right - margin.left])
+      break
+    case "date":
+      xAccessor = (d) => new Date(d[xDataProp.key])
+      xMin = d3.extent(data, xAccessor)[0]
+      xMax = d3.extent(data, xAccessor)[1]
+      xScale = d3
+        .scaleTime()
+        .domain([xMin ?? 0, xMax ?? 0])
+        .range([0, width - margin.right - margin.left])
+      break
+  }
+
+  let yScale: ScaleFunc, yAccessor: AccessorFunc, yMin: Domain, yMax: Domain
+  switch (yDataProp.dataType) {
+    case "number":
+      yAccessor = (d) => d[yDataProp.key]
+      yMin = d3.extent(data, yAccessor)[0]
+      yMax = d3.extent(data, yAccessor)[1]
+      console.log("Min and max ", yMin, yMax)
+      yScale = d3
+        .scaleLinear()
+        .domain([yMin ?? 0, yMax ?? 0])
+        .range([height - margin.top - margin.bottom, 0])
+      break
+    case "date":
+      yAccessor = (d) => new Date(d[yDataProp.key])
+      yMin = d3.extent(data, yAccessor)[0]
+      yMax = d3.extent(data, yAccessor)[1]
+      yScale = d3
+        .scaleTime()
+        .domain([yMin ?? 0, yMax ?? 0])
+        .range([height - margin.top - margin.bottom, 0])
+      break
+  }
+
+  return (
+    <g className="spbody" transform={translate}>
+      {yAxis && (
+        <Axis
+          x={yAxisX}
+          y={yAxisY}
+          yGrid={yGrid}
+          height={height}
+          width={width}
+          margin={margin}
+          scale={yScale}
+          type={yAxis}
+          label={yAxisLabel}
+        />
+      )}
+      {xAxis && (
+        <Axis
+          x={xAxisX}
+          y={xAxisY}
+          xGrid={xGrid}
+          height={height}
+          width={width}
+          margin={margin}
+          scale={xScale}
+          type={xAxis}
+          label={xAxisLabel}
+        />
+      )}
+      {data.map((element: { [key: string]: number }, i: number) => (
+        <Circle
+          key={i}
+          cx={xScale(xAccessor(element))}
+          cy={yScale(yAccessor(element))}
+          r={5}
+          color="steelblue"
+        />
+      ))}
+    </g>
+  )
+}
+
+export default ScatterChartBody

@@ -60,6 +60,7 @@ const LineChartBody = ({
         .scaleLinear()
         .domain([xMin ?? 0, xMax ?? 0])
         .range([0, width - margin.right - margin.left])
+        .nice()
       break
     case "date":
       xAccessor = (d) => new Date(d[xDataProp.key])
@@ -69,6 +70,7 @@ const LineChartBody = ({
         .scaleTime()
         .domain([xMin ?? 0, xMax ?? 0])
         .range([0, width - margin.right - margin.left])
+        .nice()
       break
   }
 
@@ -83,6 +85,7 @@ const LineChartBody = ({
         .scaleLinear()
         .domain([yMin ?? 0, yMax ?? 0])
         .range([height - margin.top - margin.bottom, 0])
+        .nice()
       break
     case "date":
       yAccessor = (d) => new Date(d[yDataProp.key])
@@ -92,6 +95,7 @@ const LineChartBody = ({
         .scaleTime()
         .domain([yMin ?? 0, yMax ?? 0])
         .range([height - margin.top - margin.bottom, 0])
+        .nice()
       break
   }
 
