@@ -24,6 +24,7 @@ const Path = styled.path`
   fill: none;
   stroke: #ff1493;
   opacity: 0.5;
+  pointer-events: all
   `
 
 const ScatterPlotBody = ({
@@ -43,6 +44,10 @@ const ScatterPlotBody = ({
     () => getMargins(xAxis, yAxis, xAxisLabel, yAxisLabel),
     [xAxis, yAxis, xAxisLabel, yAxisLabel]
   )
+
+const handleClick = (e:React.MouseEvent<SVGPathElement>, i:number) => {
+  console.log('e', e, 'element', data[i])
+}
 
   const { xAxisX, xAxisY } = useMemo(
     () => getXAxisCoordinates(xAxis, height, margin),
@@ -152,7 +157,7 @@ const ScatterPlotBody = ({
       ))}
       {voronoi && 
         <g className = 'voronoi-wrapper' >
-          {data.map((elem:DataArg, i:number) => <Path d={voronoi.renderCell(i)}></Path>)}
+          {data.map((elem:DataArg, i:number) => <Path  key={i} onMouseOver={(event: React.MouseEvent<SVGPathElement>) => handleClick(event, i)}  d={voronoi.renderCell(i)}></Path>)}
         </g>
       }
     </g>
