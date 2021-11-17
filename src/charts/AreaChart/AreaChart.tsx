@@ -1,9 +1,11 @@
 /** App.js */
 import React, { useState, useEffect, useRef, useLayoutEffect } from "react";
 import AreaChartBody from "./AreaChartBody";
-import {AreaProps} from '../../../types'
+import { AreaProps } from '../../../types'
+import { transformCountryData } from '../../utils'
 
-export default function LineChart({
+
+export default function AreaChart({
   data,
   height = "100%",
   width = "100%",
@@ -40,12 +42,16 @@ export default function LineChart({
     setCWidth(container.width);
   }, [windowSize]);
 
+  // IF data is structured the wrong way, convert:
+  let dataTransformed;
+  // dataTransformed = transformCountryData(data); //TODO: add conditional (requires typing input data)
+
   return (
       <svg ref={anchor} width={width} height={height}>
         <AreaChartBody
           height={cHeight}
           width={cWidth}
-          data={data}
+          data={dataTransformed || data}
           xDataProp={xDataProp}
           yDataProp={yDataProp}
           xAxis={xAxis}

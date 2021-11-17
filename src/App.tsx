@@ -1,14 +1,28 @@
 /* eslint-disable no-unused-vars */
 import "./App.css"
 import LineChart from "./charts/LineChart/LineChart"
+import AreaChart from "./charts/AreaChart/AreaChart"
 import ScatterPlot from "./charts/ScatterPlot/ScatterPlot"
 import penguins from "./data/penguins.json"
 import portfolio from "./data/portfolio.json"
+import countries from "./data/countries.json"
+import fruit from "./data/fruit.json"
 
 function App() {
   return (
     <div className="App">
-      <LineChart
+      <AreaChart
+        data={fruit}
+        height="100%"
+        width="100%"
+        xDataProp={{ key: "date", dataType: "date" }}
+        yDataProp={{ key: "value", dataType: "number" }}
+        xAxis="bottom"
+        yAxis="left"
+        xAxisLabel="Date"
+        yAxisLabel="Value"
+      />
+      {/* <LineChart
         // data={penguins}
         data={portfolio}
         height="100%"
@@ -37,7 +51,7 @@ function App() {
         yGrid={true}
         xAxisLabel="Flipper, mm"
         yAxisLabel="Body Mass, g"
-      />
+      /> */}
     </div>
   )
 }

@@ -4,7 +4,7 @@ import * as d3 from "d3"
 import styled from "styled-components"
 import Axis from "../../components/Axis"
 import { AreaProps } from "../../../types"
-import findYDomainMax from '../../utils.js'
+import { findYDomainMax } from '../../utils'
 import {
   getXAxisCoordinates,
   getYAxisCoordinates,
@@ -22,6 +22,24 @@ type Domain = number | Date | undefined
 type ScaleFunc =
   | d3.ScaleLinear<number, number, never>
   | d3.ScaleTime<number, number, never>
+type Series = d3.Series<{
+  [key: string]: number;
+}, string>[]
+type Stack = d3.Stack<any, {
+  [key: string]: number;
+}, string>
+type Area = d3.Area<any>
+// interface Series {
+//   key: string,
+//   index: number,
+
+// }
+
+const Path = styled.path`
+  fill: none;
+  stroke: black;
+  stroke-width: 2px;
+`
 
 const AreaChartBody = ({
   data,
@@ -35,6 +53,9 @@ const AreaChartBody = ({
   yAxisLabel,
   colorScheme = d3.schemeCategory10 // TODO: replace with custom default color scheme?
 }: AreaProps<number>): JSX.Element => {
+  console.log('@@@@@@@data@@@@@@@@ ', data)
+
+
   const margin = useMemo(
     () => getMargins(xAxis, yAxis, xAxisLabel, yAxisLabel),
     [xAxis, yAxis, xAxisLabel, yAxisLabel]
@@ -52,32 +73,27 @@ const AreaChartBody = ({
   // offset group to match position of axes
   const translate = `translate(${margin.left}, ${margin.top})`
 
-  const keys = []; // find the fields
-  for (let key in data[0]) { // make more abstractable (what if data points are missing for some fields?)
-    if (key !== 'date') keys.push(key);
+  const keys = []; // find the fields 
+  for (let key in data[0]) { 
+    if (key !== xDataProp.key) keys.push(key);
   }
 
   // make sure to sort values #######
   let x = d3.scaleTime().domain([data[0].date, data[data.length-1].date]).range([0, width]), 
   // if not valid date, use scaleLinear & set domain to range of date arr
-  
-  y = d3.scaleLinear().domain([0, findYDomainMax(data, keys)]).range([height, 0]),
-  z = d3.scaleOrdinal(colorScheme || defaultOptions.colorScheme); // COLORS. HOW TO CUSTOMIZE?
-
-
+  colorScale = d3.scaleOrdinal(colorScheme); // COLORS. CUSTOMIZE BY PASSING IN ARR OF STRINGS
 
   let xScale: ScaleFunc, 
       xAccessor: AccessorFunc, 
       xMin: Domain, 
-      xMax: Domain;
-
-
-      
+      xMax: Domain,
+      xExtent: Domain[];
   switch (xDataProp.dataType) { // TODO: refactor to implicitly derive data type
     case "number":
       xAccessor = (d) => d[xDataProp.key]
-      xMin = d3.extent(data, xAccessor)[0] 
-      xMax = d3.extent(data, xAccessor)[1]// no need to repeat calc
+      xExtent = d3.extent(data, xAccessor)
+      xMin = xExtent[0] 
+      xMax = xExtent[1]
       xScale = d3
         .scaleLinear()
         .domain([xMin ?? 0, xMax ?? 0])
@@ -86,23 +102,31 @@ const AreaChartBody = ({
       break
     case "date":
       xAccessor = (d) => new Date(d[xDataProp.key])
-      xMin = d3.extent(data, xAccessor)[0]
-      xMax = d3.extent(data, xAccessor)[1]
+      xExtent = d3.extent(data, xAccessor)
+      xMin = xExtent[0] 
+      xMax = xExtent[1]
       xScale = d3
         .scaleTime()
         .domain([xMin ?? 0, xMax ?? 0])
+        // .domain(d3.extent(data, (d: any) => {  // interpret date from string, Date, num. IS THIS NECESSARY OR DOES D3 DO THIS AUTOMATICALLY?
+        //   if (typeof d.date === 'string') d.date = Date.parse(d.date);
+        //   return +d.date; 
+        // }));
         .range([0, width - margin.right - margin.left])
         .nice()
       break
   }
 
-  let yScale: ScaleFunc, yAccessor: AccessorFunc, yMin: Domain, yMax: Domain
+  let yScale: ScaleFunc, 
+      yAccessor: AccessorFunc, 
+      yMin: Domain, 
+      yMax: Domain;
+
   switch (yDataProp.dataType) {
     case "number":
       yAccessor = (d) => d[yDataProp.key]
       yMin = d3.extent(data, yAccessor)[0]
-      yMax = d3.extent(data, yAccessor)[1]
-      console.log("Min and max ", yMin, yMax)
+      yMax = findYDomainMax(data, keys)
       yScale = d3
         .scaleLinear()
         .domain([yMin ?? 0, yMax ?? 0])
@@ -112,7 +136,7 @@ const AreaChartBody = ({
     case "date":
       yAccessor = (d) => new Date(d[yDataProp.key])
       yMin = d3.extent(data, yAccessor)[0]
-      yMax = d3.extent(data, yAccessor)[1]
+      yMax = findYDomainMax(data, keys) // is there a d3 function that does this?
       yScale = d3
         .scaleTime()
         .domain([yMin ?? 0, yMax ?? 0])
@@ -121,12 +145,57 @@ const AreaChartBody = ({
       break
   }
 
-  // DECLARE AREA HERE
+  let stack = d3.stack();
+  stack.keys(keys);
+  console.log('stack(data) is!! ', stack(data))
 
+
+  // <g> 
+  //   stack(data).map(el => {
+  //     <path d={area(el)}/>
+  //   })
+  // </g> 
+
+  colorScale.domain(keys);
+  
+  // xAccessor = (d) => d[xDataProp.key]
+  // const areaXAccessor = (d: any, i: number) => d.data[xDataProp.key]
+  const areaXAccessor = (d: any) => d.data[xDataProp.key]
+
+  let area: any = d3.area()
+    .x((d: any, i: number) => {
+      // console.log('d!!, ', d)
+      // console.log('areaxAccessor(d)!! ', areaXAccessor(d)); 
+      return xScale(areaXAccessor(d))})
+      // return xScale((d: any) => d[i].data.date)})
+    .y0((d) => {
+      // console.log('yScale(d[0])!! ', yScale(d[0])) // ###### TODO: FIX undefined
+      return yScale(d[0])}) // set to 0 for overlay?
+    .y1((d) => yScale(d[1]));
+
+  // console.log('area(data) is!! ', area(data))
+
+  const data = [
+    [0, 10, {"date": "Thu Feb 01 2018 00:00:00 GMT-0500 (Eastern Standard Time)", "apples": 10, "bananas": 20, "oranges": 15}],
+    [11, 20, {"date": "Thu Mar 01 2018 00:00:00 GMT-0500 (Eastern Standard Time)", "apples": 15, "bananas": 15, "oranges": 15}],
+    [21, 30 {"date": "Sun Apr 01 2018 00:00:00 GMT-0400 (Eastern Daylight Time)", "apples": 20, "bananas": 25, "oranges": 15}]
+  ]
+
+  stack(data).map((el: any) => {
+    console.log('area(el)^^^^^^^^^^^^^', area(el))
+    // console.log('el^^^^^^^^^^^^^', el)
+    return <path d={area(el)} />
+  })
 
   return (
     <g transform={translate}>
-      <Path className="area" d={line(data)} /> {/**MAKE INTO ITERABLE OF AREAS. DON'T USE STYLED PATH? */}
+      {/* <path className="area" d={area(data)}/> *MAKE INTO ITERABLE OF AREAS. DON'T USE STYLED PATH? */}
+      {/* <Path className="area" d={area(stack(data))} /> */}
+      {/* {stack(data).map((el: any) => {
+        // console.log('area(el)^^^^^^^^^^^^^', area(el))
+        // console.log('el^^^^^^^^^^^^^', el)
+        return <path d={area(el)} />
+      })} */}
       {yAxis && (
         <Axis
           x={yAxisX}
