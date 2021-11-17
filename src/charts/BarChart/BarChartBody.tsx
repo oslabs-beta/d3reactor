@@ -1,8 +1,8 @@
 /** LineChart.js */
 import React, { useMemo } from "react"
 import * as d3 from "d3"
-import styled from "styled-components"
-import Axis from "../../components/Axis"
+import ContinuousAxis from "../../components/ContinuousAxis"
+import DiscreteAxis from "../../components/DiscreteAxis"
 import { Props } from "../../../types"
 import {
   getXAxisCoordinates,
@@ -12,10 +12,10 @@ import {
 
 type AccessorFunc = (d: any) => any // number | Date | string
 type Domain = any //number | Date | undefined
-type ScaleFunc =
+type ContinuousScaleFunc =
   | d3.ScaleLinear<number, number, never>
   | d3.ScaleTime<number, number, never>
-  | d3.ScaleBand<string>
+type DiscreteScaleFunc = d3.ScaleBand<string>
 
 const BarChartBody = ({
   data,
@@ -46,46 +46,33 @@ const BarChartBody = ({
   const translate = `translate(${margin.left}, ${margin.top})`
 
   const xAccessor: AccessorFunc = (d) => d[xDataProp.key]
-  // const xMin: Domain = d3.extent(data, xAccessor)[0]
-  // const xMax: Domain = d3.extent(data, xAccessor)[1]
-  const xScale: ScaleFunc = d3
+  const xScale: DiscreteScaleFunc = d3
     .scaleBand()
     .paddingInner(0.1)
     .domain(data.map(xAccessor))
     .range([0, width - margin.right - margin.left])
 
   const yAccessor: AccessorFunc = (d) => d[yDataProp.key]
-  // const yMin: Domain = d3.extent(data, yAccessor)[0]
   const yMax: Domain = d3.max(data, yAccessor)
-  const yScale: ScaleFunc = d3
+  const yScale: ContinuousScaleFunc = d3
     .scaleLinear()
     .domain([0, yMax ?? 0])
-    .range([height - margin.top - margin.bottom, 0])
+    .range([height - margin.top - margin.bottom, margin.top])
     .nice()
-
-  // {
-  //   data.map((d: any) => {
-  //     ;<rect
-  //       x={xScale(xAccessor(d))}
-  //       y={height - margin.top - margin.bottom}
-  //       height={yScale(yAccessor(d))}
-  //       width={xScale.bandwidth()}
-  //     />
-  //   })
-  // }
 
   return (
     <g transform={translate}>
-      {data.map((d: any) => (
+      {data.map((d: any, i: number) => (
         <rect
+          key={i}
           x={xScale(xAccessor(d))}
-          y={height - margin.top - margin.bottom - yScale(yAccessor(d))}
+          y={yScale(yAccessor(d))}
           width={xScale.bandwidth()}
-          height={yScale(yAccessor(d))}
+          height={xAxisY - yScale(yAccessor(d))}
         />
       ))}
       {yAxis && (
-        <Axis
+        <ContinuousAxis
           x={yAxisX}
           y={yAxisY}
           height={height}
@@ -96,8 +83,8 @@ const BarChartBody = ({
           label={yAxisLabel}
         />
       )}
-      {/* {xAxis && (
-        <Axis
+      {xAxis && (
+        <DiscreteAxis
           x={xAxisX}
           y={xAxisY}
           height={height}
@@ -107,7 +94,7 @@ const BarChartBody = ({
           type={xAxis}
           label={xAxisLabel}
         />
-      )} */}
+      )}
     </g>
   )
 }
