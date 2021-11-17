@@ -19,7 +19,7 @@ export interface Margin {
   left: number
 }
 
-export interface AxisProps {
+export interface ContinuousAxisProps {
   x: number
   y: number
   xGrid?: boolean
@@ -27,6 +27,19 @@ export interface AxisProps {
   scale:
     | d3.ScaleLinear<number, number, never>
     | d3.ScaleTime<number, number, never>
+  type: string
+  label: string | undefined
+  height: number
+  width: number
+  margin: Margin
+}
+
+export interface DiscreteAxisProps {
+  x: number
+  y: number
+  xGrid?: boolean
+  yGrid?: boolean
+  scale: d3.ScaleBand<string>
   type: string
   label: string | undefined
   height: number

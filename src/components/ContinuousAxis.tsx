@@ -1,10 +1,10 @@
 import React, { useMemo } from "react"
 import * as d3 from "d3"
 import { useD3 } from "../hooks/useD3"
-import { AxisProps } from "../../types"
+import { ContinuousAxisProps } from "../../types"
 import { getAxisLabelCoordinates } from "../utils"
 
-const Axis = ({
+const ContinuousAxis = ({
   x,
   y,
   scale,
@@ -15,7 +15,7 @@ const Axis = ({
   margin,
   xGrid,
   yGrid,
-}: AxisProps): JSX.Element => {
+}: ContinuousAxisProps): JSX.Element => {
   const gRef = useD3(
     (anchor) => {
       let axis: d3.Axis<d3.NumberValue>
@@ -136,4 +136,4 @@ const Axis = ({
   )
 }
 
-export default Axis
+export default ContinuousAxis
