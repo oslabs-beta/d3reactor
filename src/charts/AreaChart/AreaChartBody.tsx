@@ -101,7 +101,6 @@ const AreaChartBody = ({
         .scaleLinear()
         .domain([xMin ?? 0, xMax ?? 0])
         .range([0, width - margin.right - margin.left])
-        .nice()
       break
     case "date":
       xAccessor = (d) => new Date(d[xDataProp.key])
@@ -111,7 +110,6 @@ const AreaChartBody = ({
         .scaleTime()
         .domain([xMin ?? 0, xMax ?? 0])
         .range([0, width - margin.right - margin.left])
-        .nice()
       break
   }
 
