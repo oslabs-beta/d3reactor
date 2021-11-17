@@ -77,18 +77,13 @@ const AreaChartBody = ({
   // offset group to match position of axes
   const translate = `translate(${margin.left}, ${margin.top})`
 
-  const keys = [] // find the fields
-  for (let key in data[0]) {
-    if (key !== xDataProp.key) keys.push(key)
-  }
-
-  // make sure to sort values #######
-  let x = d3
-      .scaleTime()
-      .domain([data[0].date, data[data.length - 1].date])
-      .range([0, width]),
-    // if not valid date, use scaleLinear & set domain to range of date arr
-    colorScale = d3.scaleOrdinal(colorScheme) // COLORS. CUSTOMIZE BY PASSING IN ARR OF STRINGS
+  const keys = ["apples", "bananas", "oranges"]
+  const stack = d3.stack().keys(keys)
+  const layers = stack(data)
+  const yExtent = [
+    0,
+    d3.max(layers, (layer) => d3.max(layer, (sequence: any) => sequence[1])),
+  ]
 
   let xScale: ScaleFunc,
     xAccessor: AccessorFunc,
@@ -100,8 +95,8 @@ const AreaChartBody = ({
   ) {
     case "number":
       xAccessor = (d) => d[xDataProp.key]
-      xMin = d3.extent(data, xAccessor)[0]
-      xMax = d3.extent(data, xAccessor)[1]
+      xMin = d3.min(data, xAccessor)
+      xMax = d3.max(data, xAccessor)
       xScale = d3
         .scaleLinear()
         .domain([xMin ?? 0, xMax ?? 0])
@@ -110,8 +105,8 @@ const AreaChartBody = ({
       break
     case "date":
       xAccessor = (d) => new Date(d[xDataProp.key])
-      xMin = d3.extent(data, xAccessor)[0]
-      xMax = d3.extent(data, xAccessor)[1]
+      xMin = d3.min(data, xAccessor)
+      xMax = d3.max(data, xAccessor)
       xScale = d3
         .scaleTime()
         .domain([xMin ?? 0, xMax ?? 0])
@@ -120,30 +115,12 @@ const AreaChartBody = ({
       break
   }
 
-  // console.log("x Range ", xMin, xMax)
-
-  // console.log(
-  //   "xAccessor ",
-  //   xAccessor({
-  //     date: "Thu Feb 01 2018 00:00:00 GMT-0500 (Eastern Standard Time)",
-  //     apples: 10,
-  //     bananas: 20,
-  //     oranges: 15,
-  //   })
-  // )
-
-  // console.log(
-  //   "Date ",
-  //   new Date("Thu Feb 01 2018 00:00:00 GMT-0500 (Eastern Standard Time)")
-  // )
-
   let yScale: ScaleFunc, yAccessor: AccessorFunc, yMin: Domain, yMax: Domain
-
   switch (yDataProp.dataType) {
     case "number":
-      yAccessor = (d) => d[yDataProp.key]
-      yMin = d3.extent(data, yAccessor)[0]
-      yMax = findYDomainMax(data, keys)
+      yAccessor = (d) => d
+      yMin = 0
+      yMax = yExtent[1]
       yScale = d3
         .scaleLinear()
         .domain([yMin ?? 0, yMax ?? 0])
@@ -151,9 +128,9 @@ const AreaChartBody = ({
         .nice()
       break
     case "date":
-      yAccessor = (d) => new Date(d[yDataProp.key])
-      yMin = d3.extent(data, yAccessor)[0]
-      yMax = findYDomainMax(data, keys) // is there a d3 function that does this?
+      yAccessor = (d) => new Date(d)
+      yMin = 0
+      yMax = yExtent[1]
       yScale = d3
         .scaleTime()
         .domain([yMin ?? 0, yMax ?? 0])
@@ -162,101 +139,41 @@ const AreaChartBody = ({
       break
   }
 
-  // console.log("Original domain ", [yMin ?? 0, yMax ?? 0])
-
-  const newData: any = [
-    {
-      month: new Date(2015, 0, 1),
-      apples: 3840,
-      bananas: 1920,
-      cherries: 960,
-      dates: 400,
-    },
-    {
-      month: new Date(2015, 1, 1),
-      apples: 1600,
-      bananas: 1440,
-      cherries: 960,
-      dates: 400,
-    },
-    {
-      month: new Date(2015, 2, 1),
-      apples: 640,
-      bananas: 960,
-      cherries: 640,
-      dates: 400,
-    },
-    {
-      month: new Date(2015, 3, 1),
-      apples: 320,
-      bananas: 480,
-      cherries: 640,
-      dates: 400,
-    },
-  ]
-
-  const newKeys = ["apples", "bananas", "cherries", "dates"]
-  const stack = d3
-    .stack()
-    .keys(newKeys)
-    .order(d3.stackOrderNone)
-    .offset(d3.stackOffsetNone)
-
-  const series = stack(newData)
-
-  xAccessor = (d) => d.month
-  xMin = d3.min(newData, xAccessor)
-  xMax = d3.max(newData, xAccessor)
-  xScale = d3
-    .scaleTime()
-    .domain([xMin ?? 0, xMax ?? 0])
-    .range([xAxisX, width - margin.right - margin.left])
-    .nice()
-
-  const yDomain: any = d3.extent(series.flat(2))
-
-  const newYScale = d3
-    .scaleLinear()
-    .domain(yDomain)
-    .range([height - margin.top - margin.bottom, 0])
-    .nice()
-
-  // console.log("Series  ", series)
-
-  let area: any = d3
+  const areaGenerator: any = d3
     .area()
-    .x((d: any) => xScale(d.month))
-    .y0((d) => d[0])
-    .y1((d) => d[1])
-
-  // series.forEach((layer, i) => console.log("Area ", area(layer)))
-
-  // debugger
-
-  // let area: any = d3.area()
-  //   .x((d: any, i: number) => {
-  //     // console.log('d!!, ', d)
-  //     // console.log('areaxAccessor(d)!! ', areaXAccessor(d));
-  //     return xScale(areaXAccessor(d))})
-  //     // return xScale((d: any) => d[i].data.date)})
-  //   .y0((d) => {
-  //     // console.log('yScale(d[0])!! ', yScale(d[0])) // ###### TODO: FIX undefined
-  //     return yScale(d[0])}) // set to 0 for overlay?
-  //   .y1((d) => yScale(d[1]));
-
-  // console.log("area(data) ", area(data))
-
-  // stack(data).map((el: any) => {
-  //   console.log('area(el)^^^^^^^^^^^^^', area(el))
-  //   // console.log('el^^^^^^^^^^^^^', el)
-  //   return <path d={area(el)} />
-  // })
+    .x((sequence: any) => xScale(xAccessor(sequence.data)))
+    .y0((sequence) => yScale(sequence[0]))
+    .y1((sequence) => yScale(sequence[1]))
 
   return (
     <g transform={translate}>
-      {/* {stack(data).map((el: any) => (
-        <path d={area(el)} />
-      ))} */}
+      {layers.map((layer) => (
+        <path d={areaGenerator(layer)} />
+      ))}
+      {yAxis && (
+        <Axis
+          x={yAxisX}
+          y={yAxisY}
+          height={height}
+          width={width}
+          margin={margin}
+          scale={yScale}
+          type={yAxis}
+          label={yAxisLabel}
+        />
+      )}
+      {xAxis && (
+        <Axis
+          x={xAxisX}
+          y={xAxisY}
+          height={height}
+          width={width}
+          margin={margin}
+          scale={xScale}
+          type={xAxis}
+          label={xAxisLabel}
+        />
+      )}
     </g>
   )
 }
