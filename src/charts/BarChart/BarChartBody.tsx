@@ -25,6 +25,7 @@ const BarChartBody = ({
   yDataProp,
   xAxis,
   yAxis,
+  yGrid,
   xAxisLabel,
   yAxisLabel,
 }: Props<number>): JSX.Element => {
@@ -80,6 +81,7 @@ const BarChartBody = ({
           margin={margin}
           scale={yScale}
           type={yAxis}
+          yGrid={yGrid}
           label={yAxisLabel}
         />
       )}

@@ -13,8 +13,6 @@ const Axis = ({
   width,
   height,
   margin,
-  xGrid,
-  yGrid,
 }: DiscreteAxisProps): JSX.Element => {
   const gRef = useD3(
     (anchor) => {
@@ -48,83 +46,9 @@ const Axis = ({
     [x, y, width, height, margin, type]
   )
 
-  // let grid: JSX.Element[] = []
-  // switch (true) {
-  //   case type === "bottom" && (xGrid || yGrid):
-  //     grid = scale
-  //       .ticks()
-  //       .map((tick, i: number) => (
-  //         <line
-  //           key={i}
-  //           x1={scale(tick)}
-  //           x2={scale(tick)}
-  //           y1={0}
-  //           y2={-height + margin.bottom + margin.top}
-  //           strokeDasharray={5}
-  //           strokeOpacity="0.3"
-  //           strokeWidth="0,3"
-  //           stroke="currentColor"
-  //         ></line>
-  //       ))
-  //     break
-  //   case type === "top" && (xGrid || yGrid):
-  //     grid = scale
-  //       .ticks()
-  //       .map((tick, i) => (
-  //         <line
-  //           key={i}
-  //           x1={scale(tick)}
-  //           x2={scale(tick)}
-  //           y1={margin.bottom}
-  //           y2={height - margin.bottom - margin.top}
-  //           strokeDasharray={5}
-  //           strokeOpacity="0.3"
-  //           strokeWidth="0,3"
-  //           stroke="currentColor"
-  //         ></line>
-  //       ))
-  //     break
-  //   case type === "left" && (xGrid || yGrid):
-  //     grid = scale
-  //       .ticks()
-  //       .map((tick, i) => (
-  //         <line
-  //           key={i}
-  //           x1={0}
-  //           x2={width - margin.right - margin.left}
-  //           y1={scale(tick)}
-  //           y2={scale(tick)}
-  //           strokeDasharray={5}
-  //           strokeOpacity="0.3"
-  //           strokeWidth="0,3"
-  //           stroke="currentColor"
-  //         ></line>
-  //       ))
-  //     break
-  //   case type === "right" && (xGrid || yGrid):
-  //     grid = scale
-  //       .ticks()
-  //       .map((tick, i) => (
-  //         <line
-  //           key={i}
-  //           x1={0}
-  //           x2={-(width - margin.right - margin.left)}
-  //           y1={scale(tick)}
-  //           y2={scale(tick)}
-  //           strokeDasharray={5}
-  //           strokeOpacity="0.3"
-  //           strokeWidth="0,3"
-  //           stroke="currentColor"
-  //         ></line>
-  //       ))
-  //     break
-  // }
-
   return (
     <g>
-      <g ref={gRef} transform={`translate(${x}, ${y})`}>
-        {/* {grid} */}
-      </g>
+      <g ref={gRef} transform={`translate(${x}, ${y})`}></g>
       <text
         transform={`translate(${axisLabelX}, ${axisLabelY}) rotate(${rotate})`}
         textAnchor="middle"

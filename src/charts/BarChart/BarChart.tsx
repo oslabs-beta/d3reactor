@@ -11,7 +11,6 @@ export default function LineChart({
   yDataProp,
   xAxis = "bottom",
   yAxis = "left",
-  xGrid = false,
   yGrid = false,
   xAxisLabel,
   yAxisLabel,
@@ -48,7 +47,6 @@ export default function LineChart({
         yDataProp={yDataProp}
         xAxis={xAxis}
         yAxis={yAxis}
-        xGrid={xGrid}
         yGrid={yGrid}
         xAxisLabel={xAxisLabel}
         yAxisLabel={yAxisLabel}

@@ -18,6 +18,7 @@ function App() {
         yDataProp={{ key: "sales", dataType: "number" }}
         xAxis="bottom"
         yAxis="left"
+        yGrid={true}
         xAxisLabel="Date"
         yAxisLabel="Value"
       />
