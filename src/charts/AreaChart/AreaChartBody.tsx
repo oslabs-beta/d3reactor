@@ -120,22 +120,22 @@ const AreaChartBody = ({
       break
   }
 
-  console.log("x Range ", xMin, xMax)
+  // console.log("x Range ", xMin, xMax)
 
-  console.log(
-    "xAccessor ",
-    xAccessor({
-      date: "Thu Feb 01 2018 00:00:00 GMT-0500 (Eastern Standard Time)",
-      apples: 10,
-      bananas: 20,
-      oranges: 15,
-    })
-  )
+  // console.log(
+  //   "xAccessor ",
+  //   xAccessor({
+  //     date: "Thu Feb 01 2018 00:00:00 GMT-0500 (Eastern Standard Time)",
+  //     apples: 10,
+  //     bananas: 20,
+  //     oranges: 15,
+  //   })
+  // )
 
-  console.log(
-    "Date ",
-    new Date("Thu Feb 01 2018 00:00:00 GMT-0500 (Eastern Standard Time)")
-  )
+  // console.log(
+  //   "Date ",
+  //   new Date("Thu Feb 01 2018 00:00:00 GMT-0500 (Eastern Standard Time)")
+  // )
 
   let yScale: ScaleFunc, yAccessor: AccessorFunc, yMin: Domain, yMax: Domain
 
@@ -162,7 +162,7 @@ const AreaChartBody = ({
       break
   }
 
-  console.log("Original domain ", [yMin ?? 0, yMax ?? 0])
+  // console.log("Original domain ", [yMin ?? 0, yMax ?? 0])
 
   const newData: any = [
     {
@@ -221,7 +221,7 @@ const AreaChartBody = ({
     .range([height - margin.top - margin.bottom, 0])
     .nice()
 
-  console.log("Series  ", series)
+  // console.log("Series  ", series)
 
   let area: any = d3
     .area()
@@ -229,9 +229,9 @@ const AreaChartBody = ({
     .y0((d) => d[0])
     .y1((d) => d[1])
 
-  series.forEach((layer, i) => console.log("Area ", area(layer)))
+  // series.forEach((layer, i) => console.log("Area ", area(layer)))
 
-  debugger
+  // debugger
 
   // let area: any = d3.area()
   //   .x((d: any, i: number) => {
