@@ -161,31 +161,32 @@ const AreaChartBody = ({
   // xAccessor = (d) => d[xDataProp.key]
   // const areaXAccessor = (d: any, i: number) => d.data[xDataProp.key]
   const areaXAccessor = (d: any) => d.data[xDataProp.key]
-
+  // const areaXAccessor = (d: any) => d.data["date"]
   let area: any = d3.area()
-    .x((d: any, i: number) => {
-      // console.log('d!!, ', d)
-      // console.log('areaxAccessor(d)!! ', areaXAccessor(d)); 
-      return xScale(areaXAccessor(d))})
-      // return xScale((d: any) => d[i].data.date)})
-    .y0((d) => {
-      // console.log('yScale(d[0])!! ', yScale(d[0])) // ###### TODO: FIX undefined
-      return yScale(d[0])}) // set to 0 for overlay?
-    .y1((d) => yScale(d[1]));
+    .x((d: any) => xScale(areaXAccessor(d)))
+    .y0((d) => yScale(d[0]))
+    .y1((d) => yScale(d[1]))
+
+  // let area: any = d3.area()
+  //   .x((d: any, i: number) => {
+  //     // console.log('d!!, ', d)
+  //     // console.log('areaxAccessor(d)!! ', areaXAccessor(d)); 
+  //     return xScale(areaXAccessor(d))})
+  //     // return xScale((d: any) => d[i].data.date)})
+  //   .y0((d) => {
+  //     // console.log('yScale(d[0])!! ', yScale(d[0])) // ###### TODO: FIX undefined
+  //     return yScale(d[0])}) // set to 0 for overlay?
+  //   .y1((d) => yScale(d[1]));
 
   // console.log('area(data) is!! ', area(data))
 
-  const data = [
-    [0, 10, {"date": "Thu Feb 01 2018 00:00:00 GMT-0500 (Eastern Standard Time)", "apples": 10, "bananas": 20, "oranges": 15}],
-    [11, 20, {"date": "Thu Mar 01 2018 00:00:00 GMT-0500 (Eastern Standard Time)", "apples": 15, "bananas": 15, "oranges": 15}],
-    [21, 30 {"date": "Sun Apr 01 2018 00:00:00 GMT-0400 (Eastern Daylight Time)", "apples": 20, "bananas": 25, "oranges": 15}]
-  ]
+  console.log('area(data) ', area(data))
 
-  stack(data).map((el: any) => {
-    console.log('area(el)^^^^^^^^^^^^^', area(el))
-    // console.log('el^^^^^^^^^^^^^', el)
-    return <path d={area(el)} />
-  })
+  // stack(data).map((el: any) => {
+  //   console.log('area(el)^^^^^^^^^^^^^', area(el))
+  //   // console.log('el^^^^^^^^^^^^^', el)
+  //   return <path d={area(el)} />
+  // })
 
   return (
     <g transform={translate}>
