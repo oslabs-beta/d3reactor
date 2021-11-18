@@ -2,8 +2,8 @@
   "name": "d3reacts",
   "version": "1.0.0",
   "description": "placeholder",
-  "main": "dist/d3reacts.js",
-  "types":"dist/types/d3reacts.d.ts",
+  "main": "./dist/d3reacts.js",
+  "types":"./dist/types/d3reacts.d.ts",
   "scripts": {
     "test": "test",
     "dev": "webpack-dev-server --node-env=development --open",
