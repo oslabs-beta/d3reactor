@@ -1,13 +1,17 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-require('dotenv').config();
 
 module.exports = {
-  entry: './src/index.tsx',
+  entry: './src/d3reacts.tsx',
   output: {
     path: path.resolve(__dirname, 'dist'),
     publicPath: '/',
-    filename: 'bundle.js',
+    filename: 'd3reacts.js',
+    library: {
+      name: 'd3reacts',
+      type: 'umd',
+      umdNamedDefine: true 
+    },
   },
   mode: process.env.NODE_ENV === "production" ? "production" : "development",
   devServer: {
@@ -18,7 +22,7 @@ module.exports = {
     rules: [
       {
         test: /\.tsx?$/,
-        use: 'ts-loader',
+        loader: 'ts-loader',
         exclude: /node_modules/,
       },
       {

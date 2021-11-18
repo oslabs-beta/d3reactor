@@ -2,11 +2,13 @@
   "name": "d3reacts",
   "version": "1.0.0",
   "description": "placeholder",
-  "main": "index.tsx",
+  "main": "dist/d3reacts.js",
+  "types":"dist/types/d3reacts.d.ts",
   "scripts": {
     "test": "test",
     "dev": "webpack-dev-server --node-env=development --open",
-    "build": "webpack --node-env=production --config ./webpack.config.js"
+    "build": "webpack --node-env=production --config ./webpack.config.js",
+    "build-try": "tsc"
   },
   "repository": {
     "type": "git",
@@ -26,6 +28,7 @@
     "@types/styled-components": "^5.1.15",
     "css-loader": "^6.5.1",
     "d3": "^7.1.1",
+    "declaration-bundler-webpack-plugin": "^1.0.3",
     "dotenv": "^10.0.0",
     "html-webpack-plugin": "^5.5.0",
     "react": "^17.0.2",
