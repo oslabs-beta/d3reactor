@@ -22,12 +22,14 @@ type Domain = number | Date | undefined
 type ScaleFunc =
   | d3.ScaleLinear<number, number, never>
   | d3.ScaleTime<number, number, never>
+
 type Series = d3.Series<
   {
     [key: string]: number
   },
   string
 >[]
+
 type Stack = d3.Stack<
   any,
   {
@@ -35,12 +37,10 @@ type Stack = d3.Stack<
   },
   string
 >
-type Area = d3.Area<any>
-// interface Series {
-//   key: string,
-//   index: number,
 
-// }
+type Area = d3.Area<any>
+
+type ColorScale = d3.ScaleOrdinal<string, string, never>;
 
 const Path = styled.path`
   fill: none;
@@ -59,7 +59,7 @@ const AreaChartBody = ({
   xAxisLabel,
   yAxisLabel,
   colorScheme = d3.schemeCategory10, // TODO: replace with custom default color scheme?
-}: AreaProps<number>): JSX.Element => {
+}: AreaProps<number> ): JSX.Element => {
   const margin = useMemo(
     () => getMargins(xAxis, yAxis, xAxisLabel, yAxisLabel),
     [xAxis, yAxis, xAxisLabel, yAxisLabel]
@@ -77,42 +77,49 @@ const AreaChartBody = ({
   // offset group to match position of axes
   const translate = `translate(${margin.left}, ${margin.top})`
 
-  const keys = ["apples", "bananas", "oranges"]
+  // const keys: string[] = []; // find the fields // TODO: make correspond to passed in keys
+  // for (let key in data[0]) { 
+  //   if (key !== xDataProp.key) keys.push(key);
+  // } 
+
+
+  // const keys = yDataProp.key ? [yDataProp.key]: yDataProp.keys;
+  const keys = yDataProp.keys
+
   const stack = d3.stack().keys(keys)
   const layers = stack(data)
+  
+  let xScale: ScaleFunc,
+  xAccessor: AccessorFunc,
+  xMin: Domain,
+  xMax: Domain;
+  switch (
+    xDataProp.dataType // TODO: refactor to implicitly derive data type
+    ) {
+      case "number":
+        xAccessor = (d) => d[xDataProp.key]
+        xMin = d3.min(data, xAccessor)
+        xMax = d3.max(data, xAccessor)
+        xScale = d3
+        .scaleLinear()
+        .domain([xMin ?? 0, xMax ?? 0])
+        .range([0, width - margin.right - margin.left])
+        break
+      case "date":
+        xAccessor = (d) => new Date(d[xDataProp.key])
+        xMin = d3.min(data, xAccessor)
+        xMax = d3.max(data, xAccessor)
+        xScale = d3
+        .scaleTime()
+        .domain([xMin ?? 0, xMax ?? 0])
+        .range([0, width - margin.right - margin.left])
+        break
+      }
+        
   const yExtent = [
     0,
     d3.max(layers, (layer) => d3.max(layer, (sequence: any) => sequence[1])),
   ]
-
-  let xScale: ScaleFunc,
-    xAccessor: AccessorFunc,
-    xMin: Domain,
-    xMax: Domain,
-    xExtent: Domain[]
-  switch (
-    xDataProp.dataType // TODO: refactor to implicitly derive data type
-  ) {
-    case "number":
-      xAccessor = (d) => d[xDataProp.key]
-      xMin = d3.min(data, xAccessor)
-      xMax = d3.max(data, xAccessor)
-      xScale = d3
-        .scaleLinear()
-        .domain([xMin ?? 0, xMax ?? 0])
-        .range([0, width - margin.right - margin.left])
-      break
-    case "date":
-      xAccessor = (d) => new Date(d[xDataProp.key])
-      xMin = d3.min(data, xAccessor)
-      xMax = d3.max(data, xAccessor)
-      xScale = d3
-        .scaleTime()
-        .domain([xMin ?? 0, xMax ?? 0])
-        .range([0, width - margin.right - margin.left])
-      break
-  }
-
   let yScale: ScaleFunc, yAccessor: AccessorFunc, yMin: Domain, yMax: Domain
   switch (yDataProp.dataType) {
     case "number":
@@ -137,16 +144,25 @@ const AreaChartBody = ({
       break
   }
 
+  const colorScale: ColorScale = d3.scaleOrdinal(colorScheme); // COLORS. CUSTOMIZE BY PASSING IN ARR OF STRINGS
+  colorScale.domain(keys);
+  console.log('colorScale("apples")', colorScale("apples"))
+
   const areaGenerator: any = d3
     .area()
-    .x((sequence: any) => xScale(xAccessor(sequence.data)))
-    .y0((sequence) => yScale(sequence[0]))
-    .y1((sequence) => yScale(sequence[1]))
+    .x((layer: any) => xScale(xAccessor(layer.data)))
+    .y0((layer) => yScale(layer[0]))
+    .y1((layer) => yScale(layer[1]))
+    console.log('layer ', layers[0])
 
   return (
     <g transform={translate}>
-      {layers.map((layer) => (
-        <path d={areaGenerator(layer)} />
+      {layers.map((layer, i) => (
+        <path 
+          key={i} 
+          d={areaGenerator(layer)} 
+          style={{'fill': colorScale(layer.key)}} 
+        />
       ))}
       {yAxis && (
         <Axis

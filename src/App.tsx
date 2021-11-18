@@ -18,7 +18,8 @@ function App() {
         height="100%"
         width="100%"
         xDataProp={{ key: "date", dataType: "date" }}
-        yDataProp={{ key: "INVALID", dataType: "number" }}
+        // yDataProp={{ keys: ['apples', 'bananas', 'oranges'], dataType: "number" }}
+        yDataProp={{ keys: ['apples', 'bananas'], dataType: "number" }}
         xAxis="bottom"
         yAxis="left"
         xAxisLabel="Date"

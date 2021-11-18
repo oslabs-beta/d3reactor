@@ -17,7 +17,9 @@ export interface AreaProps<T> {
   height: T
   width: T
   xDataProp: { key: string; dataType: "date" | "number" }
-  yDataProp: { key: string; dataType: "date" | "number" }
+  yDataProp: { 
+    keys: string[] 
+    dataType: "date" | "number" }
   xAxis?: "top" | "bottom" | false
   yAxis?: "left" | "right" | false
   xGrid?: boolean
@@ -26,6 +28,11 @@ export interface AreaProps<T> {
   yAxisLabel?: string
   colorScheme?: string[] | readonly string[] | undefined
 }
+
+
+
+
+
 
 export interface Margin {
   top: number
