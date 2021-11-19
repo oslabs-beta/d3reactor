@@ -112,47 +112,54 @@ export function getAxisLabelCoordinates(
   }
 }
 
-
-
 //############Area Chart Utils###############\\
 
 interface CountryDataProps {
-  key: string,
+  key: string
   values: Array<Array<number>>
 }
 
 interface CorrectedCountryDataProps {
-  key: string,
+  key: string
   values: Array<Array<number>>
 }
 
 export function findYDomainMax(data: any, keyArr: string[]) {
-  let yDomainMax = 0;
+  let yDomainMax = 0
   data.forEach((obj: any) => {
-    let stackedHeight = 0;
+    let stackedHeight = 0
     for (const key of keyArr) {
-      stackedHeight += obj[key];
-      if (stackedHeight > yDomainMax) yDomainMax = stackedHeight;
+      stackedHeight += obj[key]
+      if (stackedHeight > yDomainMax) yDomainMax = stackedHeight
     }
-  });
-  return yDomainMax;
+  })
+  return yDomainMax
 }
 
 interface CountryDataProps {
-  key: string,
+  key: string
   values: Array<Array<number>>
 }
 
 export function transformCountryData(arr: CountryDataProps[]) {
-  const transformed = [];
+  const transformed = []
   for (let i = 0; i < arr[0].values.length; i++) {
-    const entry: any = { // TODO: get rid of any?
-      date: arr[0].values[i][0] 
-    };
-    for (let j = 0; j < arr.length; j++) {
-      entry[arr[j].key] = arr[j].values[i][1];
+    const entry: any = {
+      // TODO: get rid of any?
+      date: arr[0].values[i][0],
     }
-    transformed.push(entry);
+    for (let j = 0; j < arr.length; j++) {
+      entry[arr[j].key] = arr[j].values[i][1]
+    }
+    transformed.push(entry)
   }
-  return transformed;
+  return transformed
+}
+
+export function findKeys(data: any) {
+  const keys: string[] = [] // find the fields
+  for (let key in data[0]) {
+    if (key !== "date") keys.push(key)
+  }
+  return keys
 }

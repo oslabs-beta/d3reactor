@@ -23,16 +23,16 @@ const Axis = ({
           axis = d3.axisBottom(scale).tickPadding(10)
           break
         case "top":
-          axis = d3.axisTop(scale)
+          axis = d3.axisTop(scale).tickPadding(10)
           break
         case "left":
-          axis = d3.axisLeft(scale)
+          axis = d3.axisLeft(scale).tickPadding(10)
           break
         case "right":
-          axis = d3.axisRight(scale)
+          axis = d3.axisRight(scale).tickPadding(10)
           break
         default:
-          axis = d3.axisRight(scale)
+          axis = d3.axisRight(scale).tickPadding(10)
           break
       }
 

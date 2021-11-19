@@ -11,15 +11,29 @@ export interface Props<T> {
   xAxisLabel?: string
   yAxisLabel?: string
 }
+export interface LineProps<T> {
+  data: any
+  height: T
+  width: T
+  xDataProp: { key: string; dataType: "date" | "number" }
+  yDataProp: { keys: string[]; dataType: "date" | "number" }
+  xAxis?: "top" | "bottom" | false
+  yAxis?: "left" | "right" | false
+  xGrid?: boolean
+  yGrid?: boolean
+  xAxisLabel?: string
+  yAxisLabel?: string
+}
 
 export interface AreaProps<T> {
   data: any
   height: T
   width: T
   xDataProp: { key: string; dataType: "date" | "number" }
-  yDataProp: { 
-    keys: string[] 
-    dataType: "date" | "number" }
+  yDataProp: {
+    keys: string[]
+    dataType: "date" | "number"
+  }
   xAxis?: "top" | "bottom" | false
   yAxis?: "left" | "right" | false
   xGrid?: boolean
@@ -28,11 +42,6 @@ export interface AreaProps<T> {
   yAxisLabel?: string
   colorScheme?: string[] | readonly string[] | undefined
 }
-
-
-
-
-
 
 export interface Margin {
   top: number

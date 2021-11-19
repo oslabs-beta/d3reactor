@@ -10,22 +10,20 @@ import penguins from "./data/penguins.json"
 import portfolio from "./data/portfolio.json"
 import countries from "./data/countries.json"
 import fruit from "./data/fruit.json"
+import { transformCountryData, findKeys } from "./utils"
 
 function App() {
   return (
     <div className="App">
-      <AreaChart
-        data={fruit}
+      <LineChart
+        data={aapl}
         height="100%"
         width="100%"
         xDataProp={{ key: "date", dataType: "date" }}
-        // yDataProp={{ keys: ['apples', 'bananas', 'oranges'], dataType: "number" }}
-        yDataProp={{
-          keys: ["apples", "bananas", "oranges"],
-          dataType: "number",
-        }}
+        yDataProp={{ keys: ["close"], dataType: "number" }}
         xAxis="bottom"
         yAxis="left"
+        xGrid={true}
         yGrid={true}
         xAxisLabel="Date"
         yAxisLabel="Value"
