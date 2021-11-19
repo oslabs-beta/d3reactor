@@ -1,9 +1,11 @@
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const TerserPlugin = require("terser-webpack-plugin");
+import path from 'path';
+import webpack from 'webpack';
+import HtmlWebpackPlugin from'html-webpack-plugin';
+import 'webpack-dev-server';
 
 
-module.exports = {
+
+const webpackconfiguration: webpack.Configuration =  {
   entry: './src/index.tsx',
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -15,7 +17,6 @@ module.exports = {
     },
   },
   externals: [
-    // nodeExternals(),
     {
       react: {
         root: 'React',
@@ -36,9 +37,6 @@ module.exports = {
     port: 8080,
     open: false
   },
-  // optimization: {
-  //   minimize: false,
-  //   minimizer: [new TerserPlugin()]},
   module: {
     rules: [
       {
@@ -63,3 +61,5 @@ module.exports = {
     extensions: ['.tsx', '.ts', '.js'],
   },
 }
+
+export default webpackconfiguration;
