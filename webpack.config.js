@@ -1,23 +1,44 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const TerserPlugin = require("terser-webpack-plugin");
+
 
 module.exports = {
-  entry: './src/d3reacts.tsx',
+  entry: './src/index.tsx',
   output: {
     path: path.resolve(__dirname, 'dist'),
     publicPath: '/',
-    filename: 'd3reacts.js',
+    filename: 'index.js',
     library: {
       name: 'd3reacts',
       type: 'umd',
-      umdNamedDefine: true 
     },
   },
+  externals: [
+    // nodeExternals(),
+    {
+      react: {
+        root: 'React',
+        commonjs2: 'react',
+        commonjs: 'react',
+        amd: 'react'
+      },
+      'react-dom': {
+        root: 'ReactDOM',
+        commonjs2: 'react-dom',
+        commonjs: 'react-dom',
+        amd: 'react-dom'
+      }
+    }
+  ],
   mode: process.env.NODE_ENV === "production" ? "production" : "development",
   devServer: {
     port: 8080,
     open: false
   },
+  // optimization: {
+  //   minimize: false,
+  //   minimizer: [new TerserPlugin()]},
   module: {
     rules: [
       {
@@ -32,6 +53,7 @@ module.exports = {
       },
     ],
   },
+  
   plugins: [
     new HtmlWebpackPlugin({
       template: './public/index.html',

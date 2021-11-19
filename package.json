@@ -2,8 +2,10 @@
   "name": "d3reacts",
   "version": "1.0.0",
   "description": "placeholder",
-  "main": "./dist/d3reacts.js",
-  "types":"./dist/types/d3reacts.d.ts",
+  "main": "./dist/index.js",
+  "files": [
+    "dist/**/*"
+  ],
   "scripts": {
     "test": "test",
     "dev": "webpack-dev-server --node-env=development --open",
@@ -31,8 +33,6 @@
     "declaration-bundler-webpack-plugin": "^1.0.3",
     "dotenv": "^10.0.0",
     "html-webpack-plugin": "^5.5.0",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
     "sass-loader": "^12.3.0",
     "style-loader": "^3.3.1",
     "styled-components": "5.3.3",
@@ -44,6 +44,11 @@
   "devDependencies": {
     "eslint": "^8.2.0",
     "nodemon": "^2.0.15",
+    "terser-webpack-plugin": "^5.2.5",
     "webpack-cli": "^4.9.1"
+  },
+  "peerDependencies": {
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
   }
 }
