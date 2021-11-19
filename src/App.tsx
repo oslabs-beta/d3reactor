@@ -6,6 +6,7 @@ import AreaChartTest from "./charts/AreaChart/AreaChartTest"
 import AreaChart from "./charts/AreaChart/AreaChart"
 import ScatterPlot from "./charts/ScatterPlot/ScatterPlot"
 import aapl from "./data/aapl.json"
+import unemployment from "./data/unemployment.json"
 import penguins from "./data/penguins.json"
 import portfolio from "./data/portfolio.json"
 import countries from "./data/countries.json"
@@ -16,11 +17,11 @@ function App() {
   return (
     <div className="App">
       <LineChart
-        data={aapl}
+        data={unemployment}
         height="100%"
         width="100%"
         xDataProp={{ key: "date", dataType: "date" }}
-        yDataProp={{ keys: ["close"], dataType: "number" }}
+        yDataProp={{ key: "unemployment", dataType: "number" }}
         xAxis="bottom"
         yAxis="left"
         xGrid={true}

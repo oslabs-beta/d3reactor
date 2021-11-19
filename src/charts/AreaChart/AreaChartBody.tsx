@@ -142,14 +142,12 @@ const AreaChartBody = ({
 
   const colorScale: ColorScale = d3.scaleOrdinal(colorScheme) // COLORS. CUSTOMIZE BY PASSING IN ARR OF STRINGS
   colorScale.domain(keys)
-  console.log('colorScale("apples")', colorScale("apples"))
 
   const areaGenerator: any = d3
     .area()
     .x((layer: any) => xScale(xAccessor(layer.data)))
     .y0((layer) => yScale(layer[0]))
     .y1((layer) => yScale(layer[1]))
-  console.log("layer ", layers[0])
 
   return (
     <g transform={translate}>

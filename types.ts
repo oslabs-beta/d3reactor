@@ -16,7 +16,7 @@ export interface LineProps<T> {
   height: T
   width: T
   xDataProp: { key: string; dataType: "date" | "number" }
-  yDataProp: { keys: string[]; dataType: "date" | "number" }
+  yDataProp: { key: string; dataType: "date" | "number" }
   xAxis?: "top" | "bottom" | false
   yAxis?: "left" | "right" | false
   xGrid?: boolean
