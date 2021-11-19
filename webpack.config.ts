@@ -1,7 +1,5 @@
 import path from 'path';
 import webpack from 'webpack';
-import HtmlWebpackPlugin from'html-webpack-plugin';
-import 'webpack-dev-server';
 
 
 
@@ -33,10 +31,6 @@ const webpackconfiguration: webpack.Configuration =  {
     }
   ],
   mode: process.env.NODE_ENV === "production" ? "production" : "development",
-  devServer: {
-    port: 8080,
-    open: false
-  },
   module: {
     rules: [
       {
@@ -51,12 +45,6 @@ const webpackconfiguration: webpack.Configuration =  {
       },
     ],
   },
-  
-  plugins: [
-    new HtmlWebpackPlugin({
-      template: './public/index.html',
-    })
-  ],
   resolve: {
     extensions: ['.tsx', '.ts', '.js'],
   },
