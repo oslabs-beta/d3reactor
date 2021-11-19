@@ -111,3 +111,48 @@ export function getAxisLabelCoordinates(
     rotate,
   }
 }
+
+
+
+//############Area Chart Utils###############\\
+
+interface CountryDataProps {
+  key: string,
+  values: Array<Array<number>>
+}
+
+interface CorrectedCountryDataProps {
+  key: string,
+  values: Array<Array<number>>
+}
+
+export function findYDomainMax(data: any, keyArr: string[]) {
+  let yDomainMax = 0;
+  data.forEach((obj: any) => {
+    let stackedHeight = 0;
+    for (const key of keyArr) {
+      stackedHeight += obj[key];
+      if (stackedHeight > yDomainMax) yDomainMax = stackedHeight;
+    }
+  });
+  return yDomainMax;
+}
+
+interface CountryDataProps {
+  key: string,
+  values: Array<Array<number>>
+}
+
+export function transformCountryData(arr: CountryDataProps[]) {
+  const transformed = [];
+  for (let i = 0; i < arr[0].values.length; i++) {
+    const entry: any = { // TODO: get rid of any?
+      date: arr[0].values[i][0] 
+    };
+    for (let j = 0; j < arr.length; j++) {
+      entry[arr[j].key] = arr[j].values[i][1];
+    }
+    transformed.push(entry);
+  }
+  return transformed;
+}
