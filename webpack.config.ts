@@ -14,6 +14,9 @@ const webpackconfiguration: webpack.Configuration =  {
       name: 'd3reacts',
       type: 'umd',
     },
+  }, 
+  optimization: {
+    minimize: true
   },
   externals: [
     {
