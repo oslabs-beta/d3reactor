@@ -2,7 +2,7 @@
 import React, { useMemo } from "react"
 import * as d3 from "d3"
 import styled from "styled-components"
-import Axis from "../../components/Axis"
+import Axis from "../../components/ContinuousAxis"
 import { Props } from "../../../types"
 import {
   getXAxisCoordinates,

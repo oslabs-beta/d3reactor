@@ -2,7 +2,7 @@
 import React, { useMemo } from "react"
 import * as d3 from "d3"
 import styled from "styled-components"
-import Axis from "../../components/Axis"
+import ContinuousAxis from "../../components/ContinuousAxis"
 import { AreaProps } from "../../../types"
 import { findYDomainMax, transformSkinnyToWide } from "../../utils"
 import {
@@ -163,7 +163,7 @@ const AreaChartBody = ({
         />
       ))}
       {yAxis && (
-        <Axis
+        <ContinuousAxis
           x={yAxisX}
           y={yAxisY}
           height={height}
@@ -175,7 +175,7 @@ const AreaChartBody = ({
         />
       )}
       {xAxis && (
-        <Axis
+        <ContinuousAxis
           x={xAxisX}
           y={xAxisY}
           height={height}

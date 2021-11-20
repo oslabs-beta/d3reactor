@@ -1,10 +1,11 @@
 /* eslint-disable no-unused-vars */
 import "./App.css"
+import BarChart from "./charts/BarChart/BarChart"
 import LineChart from "./charts/LineChart/LineChart"
-import AreaChartTest from "./charts/AreaChart/AreaChartTest"
 import AreaChart from "./charts/AreaChart/AreaChart"
 import ScatterPlot from "./charts/ScatterPlot/ScatterPlot"
 import aapl from "./data/aapl.json"
+import sales from "./data/sales.json"
 import penguins from "./data/penguins.json"
 import portfolio from "./data/portfolio.json"
 import countries from "./data/countries.json"
@@ -22,6 +23,7 @@ function App() {
         yData={{ key: 'marketvalue', dataType: "number" }}
         xAxis="bottom"
         yAxis="left"
+        yGrid={true}
         xAxisLabel="Date"
         yAxisLabel="Value"
       />
