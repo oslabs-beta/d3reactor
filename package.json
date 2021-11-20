@@ -3,14 +3,12 @@
   "version": "1.0.0",
   "description": "placeholder",
   "main": "./dist/index.js",
+  "types": "./dist/types/src/index.d.ts",
   "files": [
     "dist/**/*"
   ],
   "scripts": {
-    "test": "test",
-    "dev": "webpack-dev-server --node-env=development --open",
-    "build": "TS_NODE_PROJECT=\"tsconfig.webpack.json\" webpack --node-env=production",
-    "build-try": "tsc"
+    "build": "TS_NODE_PROJECT=\"tsconfig.webpack.json\" webpack --node-env=production"
   },
   "repository": {
     "type": "git",
@@ -24,7 +22,8 @@
   "homepage": "https://github.com/oslabs-beta/d3reacts#readme",
   "dependencies": {
     "d3": "^7.1.1",
-    "styled-components": "5.3.3"
+    "styled-components": "5.3.3",
+    "typescript": "^4.4.4"
   },
   "devDependencies": {
     "@types/d3": "^7.1.0",
@@ -43,7 +42,6 @@
     "ts-loader": "^9.2.6",
     "ts-node": "^10.4.0",
     "tsconfig-paths": "^3.11.0",
-    "typescript": "^4.4.4",
     "webpack": "^5.64.0",
     "webpack-cli": "^4.9.1",
     "webpack-dev-server": "^4.5.0"

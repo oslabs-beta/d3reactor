@@ -9,6 +9,7 @@ const webpackconfiguration: webpack.Configuration =  {
     path: path.resolve(__dirname, 'dist'),
     publicPath: '/',
     filename: 'index.js',
+    clean: true,
     library: {
       name: 'd3reacts',
       type: 'umd',
