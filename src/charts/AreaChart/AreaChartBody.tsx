@@ -4,7 +4,7 @@ import * as d3 from "d3"
 import styled from "styled-components"
 import Axis from "../../components/Axis"
 import { AreaProps } from "../../../types"
-import { findYDomainMax } from "../../utils"
+import { findYDomainMax, transformSkinnyToWide } from "../../utils"
 import {
   getXAxisCoordinates,
   getYAxisCoordinates,
@@ -54,6 +54,7 @@ const AreaChartBody = ({
   width,
   xDataProp,
   yDataProp,
+  groupBy,
   xAxis,
   yAxis,
   xAxisLabel,
@@ -77,29 +78,42 @@ const AreaChartBody = ({
   // offset group to match position of axes
   const translate = `translate(${margin.left}, ${margin.top})`
 
+  // ### TODO if no yDataProp, try to generate keys (error if not compatible)
   // const keys: string[] = []; // find the fields // TODO: make correspond to passed in keys
   // for (let key in data[0]) { 
   //   if (key !== xDataProp.key) keys.push(key);
   // } 
 
-
+  
   // const keys = yDataProp.key ? [yDataProp.key]: yDataProp.keys;
-  const keys = yDataProp.keys
+  
+  const keys: string[] = [];
+  for (let entry of data) {
+    if (!keys.includes(entry[groupBy ?? ''])) {
+      keys.push(entry[groupBy ?? '']);
+    }
+  }
+  
+  // console.log('transformSkinnyToWide', transformSkinnyToWide(data, keys, groupBy, xDataProp.key, yDataProp.key))
+  // const groupVals = d3.group(data, (group: any) => group[groupBy ?? ''])
+  const transformedData = transformSkinnyToWide(data, keys, groupBy, xDataProp.key, yDataProp.key);
 
   const stack = d3.stack().keys(keys)
-  const layers = stack(data)
+  const layers = stack(transformedData)
+  // console.log('layers', layers)
   
   let xScale: ScaleFunc,
   xAccessor: AccessorFunc,
   xMin: Domain,
   xMax: Domain;
+
   switch (
     xDataProp.dataType // TODO: refactor to implicitly derive data type
     ) {
       case "number":
         xAccessor = (d) => d[xDataProp.key]
-        xMin = d3.min(data, xAccessor)
-        xMax = d3.max(data, xAccessor)
+        xMin = d3.min(transformedData, xAccessor)
+        xMax = d3.max(transformedData, xAccessor)
         xScale = d3
         .scaleLinear()
         .domain([xMin ?? 0, xMax ?? 0])
@@ -107,8 +121,8 @@ const AreaChartBody = ({
         break
       case "date":
         xAccessor = (d) => new Date(d[xDataProp.key])
-        xMin = d3.min(data, xAccessor)
-        xMax = d3.max(data, xAccessor)
+        xMin = d3.min(transformedData, xAccessor)
+        xMax = d3.max(transformedData, xAccessor)
         xScale = d3
         .scaleTime()
         .domain([xMin ?? 0, xMax ?? 0])
@@ -153,7 +167,6 @@ const AreaChartBody = ({
     .x((layer: any) => xScale(xAccessor(layer.data)))
     .y0((layer) => yScale(layer[0]))
     .y1((layer) => yScale(layer[1]))
-    console.log('layer ', layers[0])
 
   return (
     <g transform={translate}>

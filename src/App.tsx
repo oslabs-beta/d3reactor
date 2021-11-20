@@ -9,17 +9,19 @@ import penguins from "./data/penguins.json"
 import portfolio from "./data/portfolio.json"
 import countries from "./data/countries.json"
 import fruit from "./data/fruit.json"
+import skinny_fruit from "./data/skinny_fruit.json"
 
 function App() {
   return (
     <div className="App">
       <AreaChart
-        data={fruit}
+        data={skinny_fruit}
         height="100%"
         width="100%"
         xDataProp={{ key: "date", dataType: "date" }}
         // yDataProp={{ keys: ['apples', 'bananas', 'oranges'], dataType: "number" }}
-        yDataProp={{ keys: ['apples', 'bananas'], dataType: "number" }}
+        yDataProp={{ key: 'value', dataType: "number" }}
+        groupBy="fruit"
         xAxis="bottom"
         yAxis="left"
         xAxisLabel="Date"
