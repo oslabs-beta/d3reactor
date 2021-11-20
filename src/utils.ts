@@ -174,7 +174,7 @@ export function transformSkinnyToWide(arr: any, keys: any, groupBy: string | und
   for (const rowValue of rowsArr) {
     const rowObj: any = {}
     rowObj[xDataPropKey ?? ''] = rowValue
-    
+
     for (const key of keys) {
       rowObj[key] = arr.reduce((val: number | undefined, currentRow: any) => {
         if (currentRow[xDataPropKey ?? ''] === rowValue && currentRow[groupBy ?? ''] === key) {

@@ -16,8 +16,8 @@ export interface AreaProps<T> {
   data: any
   height: T
   width: T
-  xDataProp: { key: string; dataType: "date" | "number" } // TODO: make dataType optional
-  yDataProp: { key: string; dataType: "date" | "number" } // TODO: make dataType optional
+  xData: { key: string; dataType: "date" | "number" } // TODO: make dataType optional
+  yData: { key: string; dataType: "date" | "number" } // TODO: make dataType optional
   groupBy?: string
   xAxis?: "top" | "bottom" | false
   yAxis?: "left" | "right" | false

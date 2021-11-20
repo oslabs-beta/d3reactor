@@ -15,13 +15,11 @@ function App() {
   return (
     <div className="App">
       <AreaChart
-        data={skinny_fruit}
+        data={portfolio}
         height="100%"
         width="100%"
-        xDataProp={{ key: "date", dataType: "date" }}
-        // yDataProp={{ keys: ['apples', 'bananas', 'oranges'], dataType: "number" }}
-        yDataProp={{ key: 'value', dataType: "number" }}
-        groupBy="fruit"
+        xData={{ key: "date", dataType: "date" }}
+        yData={{ key: 'marketvalue', dataType: "number" }}
         xAxis="bottom"
         yAxis="left"
         xAxisLabel="Date"
