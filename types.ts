@@ -12,6 +12,14 @@ export interface Props<T> {
   yAxisLabel?: string
 }
 
+export interface PieChartProps<T> {
+  data: any
+  innerRadius: T
+  outerRadius: T
+  pieValueProp: {key: string; dataType: "number"}
+  pieLabelProp: {key: string; dataType: "string"}
+}
+
 export interface Margin {
   top: number
   right: number
