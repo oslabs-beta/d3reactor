@@ -1,3 +1,4 @@
+import * as d3 from "d3"
 import { Margin } from "../types"
 
 export function getXAxisCoordinates(
@@ -110,4 +111,80 @@ export function getAxisLabelCoordinates(
     axisLabelY,
     rotate,
   }
+}
+
+
+
+//############Area Chart Utils###############\\
+
+interface CountryDataProps {
+  key: string,
+  values: Array<Array<number>>
+}
+
+interface CorrectedCountryDataProps {
+  key: string,
+  values: Array<Array<number>>
+}
+
+export function findYDomainMax(data: any, keyArr: string[]) {
+  let yDomainMax = 0;
+  data.forEach((obj: any) => {
+    let stackedHeight = 0;
+    for (const key of keyArr) {
+      stackedHeight += obj[key];
+      if (stackedHeight > yDomainMax) yDomainMax = stackedHeight;
+    }
+  });
+  return yDomainMax;
+}
+
+interface CountryDataProps {
+  key: string,
+  values: Array<Array<number>>
+}
+
+export function transformCountryData(arr: CountryDataProps[]) {
+  const transformed = [];
+  for (let i = 0; i < arr[0].values.length; i++) {
+    const entry: any = { // TODO: get rid of any?
+      date: arr[0].values[i][0] 
+    };
+    for (let j = 0; j < arr.length; j++) {
+      entry[arr[j].key] = arr[j].values[i][1];
+    }
+    transformed.push(entry);
+  }
+  return transformed;
+}
+
+// interface Skinny {
+//   key: string,
+//   value: number,
+
+// }
+export function transformSkinnyToWide(arr: any, keys: any, groupBy: string | undefined, xDataPropKey: string | undefined, yDataPropKey: string | undefined) {
+  const outputArr = [];
+  // Find unique dates. create 1 object with date prop for each date
+  const rowsArr: any = [];
+  for (const entry of arr) {
+    if (!rowsArr.includes(entry[xDataPropKey ?? ''])) rowsArr.push(entry[xDataPropKey ?? ''])
+  }
+  // create 1 prop with key for each val in keys, and associated val of 'value' from input arr at the object with current date & key name
+  for (const rowValue of rowsArr) {
+    const rowObj: any = {}
+    rowObj[xDataPropKey ?? ''] = rowValue
+
+    for (const key of keys) {
+      rowObj[key] = arr.reduce((val: number | undefined, currentRow: any) => {
+        if (currentRow[xDataPropKey ?? ''] === rowValue && currentRow[groupBy ?? ''] === key) {
+          return currentRow[yDataPropKey ?? ''];
+        } else {
+          return val
+        };
+      }, undefined)
+    }
+    outputArr.push(rowObj);
+  }
+  return outputArr;
 }

@@ -12,6 +12,27 @@ export interface Props<T> {
   yAxisLabel?: string
 }
 
+export interface AreaProps<T> {
+  data: any
+  height: T
+  width: T
+  xData: { key: string; dataType: "date" | "number" } // TODO: make dataType optional
+  yData: { key: string; dataType: "date" | "number" } // TODO: make dataType optional
+  groupBy?: string
+  xAxis?: "top" | "bottom" | false
+  yAxis?: "left" | "right" | false
+  xGrid?: boolean
+  yGrid?: boolean
+  xAxisLabel?: string
+  yAxisLabel?: string
+  colorScheme?: string[] | readonly string[] | undefined
+}
+
+
+
+
+
+
 export interface Margin {
   top: number
   right: number

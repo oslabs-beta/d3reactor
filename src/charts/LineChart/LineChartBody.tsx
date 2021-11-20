@@ -54,8 +54,8 @@ const LineChartBody = ({
   switch (xDataProp.dataType) {
     case "number":
       xAccessor = (d) => d[xDataProp.key]
-      xMin = d3.extent(data, xAccessor)[0]
-      xMax = d3.extent(data, xAccessor)[1]
+      xMin = d3.extent(data, xAccessor)[0] 
+      xMax = d3.extent(data, xAccessor)[1]// no need to repeat calc
       xScale = d3
         .scaleLinear()
         .domain([xMin ?? 0, xMax ?? 0])
@@ -80,7 +80,6 @@ const LineChartBody = ({
       yAccessor = (d) => d[yDataProp.key]
       yMin = d3.extent(data, yAccessor)[0]
       yMax = d3.extent(data, yAccessor)[1]
-      console.log("Min and max ", yMin, yMax)
       yScale = d3
         .scaleLinear()
         .domain([yMin ?? 0, yMax ?? 0])

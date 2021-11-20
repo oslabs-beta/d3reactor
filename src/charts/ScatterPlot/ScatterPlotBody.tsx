@@ -86,7 +86,6 @@ const ScatterPlotBody = ({
       yAccessor = (d) => d[yDataProp.key]
       yMin = d3.extent(data, yAccessor)[0]
       yMax = d3.extent(data, yAccessor)[1]
-      console.log("Min and max ", yMin, yMax)
       yScale = d3
         .scaleLinear()
         .domain([yMin ?? 0, yMax ?? 0])
