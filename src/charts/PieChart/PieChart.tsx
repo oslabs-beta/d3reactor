@@ -2,14 +2,13 @@
 import React, { useState, useEffect, useRef, useLayoutEffect } from "react"
 import PieChartBody from "./PieChartBody"
 import { PieChartProps } from "../../../types"
+import { checkRadiusDimension, calculateOuterRadius } from "../../utils"
 
-export default function LineChart({
+export default function PieChart({
   data,
   outerRadius,
   innerRadius,
-  pieValueProp,
-  pieLabelProp
-}: Props<string | number>): JSX.Element {
+}: PieChartProps<number>): JSX.Element {
   const anchor = useRef(null as unknown as SVGSVGElement)
   const [windowSize, setWindowSize] = useState<[number, number]>([0, 0])
   const [cHeight, setCHeight] = useState<number>(0)
@@ -40,21 +39,16 @@ export default function LineChart({
     left: 50,
   };
 
-  const width = 4 * outerRadius + margin.left + margin.right;
-  const height = 4 * outerRadius + margin.top + margin.bottom;
-
-    <svg ref={anchor} width={width} height={height}>
+  // outerRadius = outerRadius ? checkRadiusDimension(cHeight,cWidth,margin, outerRadius): calculateOuterRadius(cHeight,cWidth,margin)
+  // innerRadius = innerRadius? checkRadiusDimension(outerRadius, 0, margin,innerRadius) : 0
+  return(
+    <svg ref={anchor} width={"100%"} height={"100%"}>
       <PieChartBody
+        data={data}
         outerRadius={outerRadius}
         innerRadius={innerRadius}
-        data={data}
-        xDataProp={xDataProp}
-        yDataProp={yDataProp}
-        xAxis={xAxis}
-        yAxis={yAxis}
-        yGrid={yGrid}
-        xAxisLabel={xAxisLabel}
-        yAxisLabel={yAxisLabel}
+        height = {cHeight}
+        width = {cWidth}
       />
     </svg>
   )

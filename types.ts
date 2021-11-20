@@ -16,8 +16,14 @@ export interface PieChartProps<T> {
   data: any
   innerRadius: T
   outerRadius: T
-  pieValueProp: {key: string; dataType: "number"}
-  pieLabelProp: {key: string; dataType: "string"}
+}
+
+export interface PieChartBodyProps<T> {
+  data: any
+  height: number
+  width: number
+  innerRadius: number
+  outerRadius: number
 }
 
 export interface Margin {

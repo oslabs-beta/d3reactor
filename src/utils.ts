@@ -112,4 +112,30 @@ export function getAxisLabelCoordinates(
   }
 }
 
-export function checkInne
+export function checkRadiusDimension(
+  height: number,
+  width: number,
+  margin: Margin,
+  radius: number | string , 
+) {
+  if(typeof radius === "string") {
+    console.log(radius)
+  }
+  else {
+    if(radius > Math.max(height, width)) {
+      return Math.min(height,width)
+    }
+    else {
+      return radius
+    }
+  }
+}
+
+export function calculateOuterRadius(
+  height: number,
+  width: number,
+  margin: Margin,
+) {
+  return Math.min((height - margin.top - margin.bottom)/4, (width - margin.left - margin.right)/4)
+}
+
