@@ -5,6 +5,7 @@ import LineChart from "./charts/LineChart/LineChart"
 import AreaChart from "./charts/AreaChart/AreaChart"
 import ScatterPlot from "./charts/ScatterPlot/ScatterPlot"
 import aapl from "./data/aapl.json"
+import unemployment from "./data/unemployment.json"
 import sales from "./data/sales.json"
 import penguins from "./data/penguins.json"
 import portfolio from "./data/portfolio.json"
@@ -15,14 +16,15 @@ import skinny_fruit from "./data/skinny_fruit.json"
 function App() {
   return (
     <div className="App">
-      <AreaChart
-        data={portfolio}
+      <LineChart
+        data={aapl}
         height="100%"
         width="100%"
         xData={{ key: "date", dataType: "date" }}
-        yData={{ key: 'marketvalue', dataType: "number" }}
+        yData={{ key: "close", dataType: "number" }}
         xAxis="bottom"
         yAxis="left"
+        xGrid={true}
         yGrid={true}
         xAxisLabel="Date"
         yAxisLabel="Value"

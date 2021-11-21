@@ -40,9 +40,9 @@ export default function LineChart({
   return (
     <svg ref={anchor} width={width} height={height}>
       <BarChartBody
+        data={data}
         height={cHeight}
         width={cWidth}
-        data={data}
         xDataProp={xDataProp}
         yDataProp={yDataProp}
         xAxis={xAxis}

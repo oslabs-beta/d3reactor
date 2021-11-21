@@ -3,7 +3,7 @@ import React, { useMemo } from "react"
 import * as d3 from "d3"
 import styled from "styled-components"
 import Axis from "../../components/ContinuousAxis"
-import { Props } from "../../../types"
+import { LineProps } from "../../../types"
 import {
   getXAxisCoordinates,
   getYAxisCoordinates,
@@ -13,10 +13,11 @@ import {
 const Path = styled.path`
   fill: none;
   stroke: black;
-  stroke-width: 2px;
+  stroke-width: 1px;
 `
 
 type AccessorFunc = (d: any) => number | Date
+type GroupAccessorFunc = (d: any) => number | Date
 type Domain = number | Date | undefined
 type ScaleFunc =
   | d3.ScaleLinear<number, number, never>
@@ -26,13 +27,14 @@ const LineChartBody = ({
   data,
   height,
   width,
-  xDataProp,
-  yDataProp,
+  xData,
+  yData,
+  groupBy,
   xAxis,
   yAxis,
   xAxisLabel,
   yAxisLabel,
-}: Props<number>): JSX.Element => {
+}: LineProps<number>): JSX.Element => {
   const margin = useMemo(
     () => getMargins(xAxis, yAxis, xAxisLabel, yAxisLabel),
     [xAxis, yAxis, xAxisLabel, yAxisLabel]
@@ -51,35 +53,33 @@ const LineChartBody = ({
   const translate = `translate(${margin.left}, ${margin.top})`
 
   let xScale: ScaleFunc, xAccessor: AccessorFunc, xMin: Domain, xMax: Domain
-  switch (xDataProp.dataType) {
+  switch (xData.dataType) {
     case "number":
-      xAccessor = (d) => d[xDataProp.key]
-      xMin = d3.extent(data, xAccessor)[0] 
-      xMax = d3.extent(data, xAccessor)[1]// no need to repeat calc
+      xAccessor = (d) => d[xData.key]
+      xMin = d3.min(data, xAccessor)
+      xMax = d3.max(data, xAccessor)
       xScale = d3
         .scaleLinear()
         .domain([xMin ?? 0, xMax ?? 0])
         .range([0, width - margin.right - margin.left])
-        .nice()
       break
     case "date":
-      xAccessor = (d) => new Date(d[xDataProp.key])
-      xMin = d3.extent(data, xAccessor)[0]
-      xMax = d3.extent(data, xAccessor)[1]
+      xAccessor = (d) => new Date(d[xData.key])
+      xMin = d3.min(data, xAccessor)
+      xMax = d3.max(data, xAccessor)
       xScale = d3
         .scaleTime()
         .domain([xMin ?? 0, xMax ?? 0])
         .range([0, width - margin.right - margin.left])
-        .nice()
       break
   }
 
   let yScale: ScaleFunc, yAccessor: AccessorFunc, yMin: Domain, yMax: Domain
-  switch (yDataProp.dataType) {
+  switch (yData.dataType) {
     case "number":
-      yAccessor = (d) => d[yDataProp.key]
-      yMin = d3.extent(data, yAccessor)[0]
-      yMax = d3.extent(data, yAccessor)[1]
+      yAccessor = (d: any) => d[yData.key]
+      yMin = d3.min(data, yAccessor)
+      yMax = d3.max(data, yAccessor)
       yScale = d3
         .scaleLinear()
         .domain([yMin ?? 0, yMax ?? 0])
@@ -87,9 +87,9 @@ const LineChartBody = ({
         .nice()
       break
     case "date":
-      yAccessor = (d) => new Date(d[yDataProp.key])
-      yMin = d3.extent(data, yAccessor)[0]
-      yMax = d3.extent(data, yAccessor)[1]
+      yAccessor = (d: any) => new Date(d[yData.key])
+      yMin = d3.min(data, yAccessor)
+      yMax = d3.max(data, yAccessor)
       yScale = d3
         .scaleTime()
         .domain([yMin ?? 0, yMax ?? 0])
@@ -98,14 +98,26 @@ const LineChartBody = ({
       break
   }
 
+  const groupAccessor: GroupAccessorFunc = (d) => {
+    return d[xData.key]
+  }
+  const lineGroups = d3.group(data, (d) => groupAccessor(d))
+
   const line: any = d3
     .line()
+    .curve(d3.curveLinear)
     .x((d) => xScale(xAccessor(d)))
     .y((d) => yScale(yAccessor(d)))
 
   return (
     <g transform={translate}>
-      <Path className="line" d={line(data)} />
+      {groupBy ? (
+        d3.map(lineGroups, (lineArr, i) => (
+          <Path key={i} className="line" d={line(lineArr[1])} />
+        ))
+      ) : (
+        <Path className="line" d={line(data)} />
+      )}
       {yAxis && (
         <Axis
           x={yAxisX}

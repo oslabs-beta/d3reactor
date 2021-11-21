@@ -34,7 +34,7 @@ type Stack = d3.Stack<
 
 type Area = d3.Area<any>
 
-type ColorScale = d3.ScaleOrdinal<string, string, never>;
+type ColorScale = d3.ScaleOrdinal<string, string, never>
 
 const Path = styled.path`
   fill: none;
@@ -54,7 +54,7 @@ const AreaChartBody = ({
   xAxisLabel,
   yAxisLabel,
   colorScheme = d3.schemeCategory10, // TODO: replace with custom default color scheme?
-}: AreaProps<number> ): JSX.Element => {
+}: AreaProps<number>): JSX.Element => {
   const margin = useMemo(
     () => getMargins(xAxis, yAxis, xAxisLabel, yAxisLabel),
     [xAxis, yAxis, xAxisLabel, yAxisLabel]
@@ -71,51 +71,45 @@ const AreaChartBody = ({
   )
   // offset group to match position of axes
   const translate = `translate(${margin.left}, ${margin.top})`
-  
-  const keys: string[] = [];
+
+  const keys: string[] = []
   if (groupBy) {
     for (let entry of data) {
-      if (!keys.includes(entry[groupBy ?? ''])) {
-        keys.push(entry[groupBy ?? '']);
+      if (!keys.includes(entry[groupBy ?? ""])) {
+        keys.push(entry[groupBy ?? ""])
       }
     }
-    data = transformSkinnyToWide(data, keys, groupBy, xData.key, yData.key);
+    data = transformSkinnyToWide(data, keys, groupBy, xData.key, yData.key)
   } else {
     keys.push(yData.key)
   }
 
-
   const stack = d3.stack().keys(keys)
   const layers = stack(data)
-  
-  let xScale: ScaleFunc,
-  xAccessor: AccessorFunc,
-  xMin: Domain,
-  xMax: Domain;
 
-  switch (
-    xData.dataType
-    ) {
-      case "number":
-        xAccessor = (d) => d[xData.key]
-        xMin = d3.min(data, xAccessor)
-        xMax = d3.max(data, xAccessor)
-        xScale = d3
+  let xScale: ScaleFunc, xAccessor: AccessorFunc, xMin: Domain, xMax: Domain
+
+  switch (xData.dataType) {
+    case "number":
+      xAccessor = (d) => d[xData.key]
+      xMin = d3.min(data, xAccessor)
+      xMax = d3.max(data, xAccessor)
+      xScale = d3
         .scaleLinear()
         .domain([xMin ?? 0, xMax ?? 0])
         .range([0, width - margin.right - margin.left])
-        break
-      case "date":
-        xAccessor = (d) => new Date(d[xData.key])
-        xMin = d3.min(data, xAccessor)
-        xMax = d3.max(data, xAccessor)
-        xScale = d3
+      break
+    case "date":
+      xAccessor = (d) => new Date(d[xData.key])
+      xMin = d3.min(data, xAccessor)
+      xMax = d3.max(data, xAccessor)
+      xScale = d3
         .scaleTime()
         .domain([xMin ?? 0, xMax ?? 0])
         .range([0, width - margin.right - margin.left])
-        break
-      }
-        
+      break
+  }
+
   const yExtent = [
     0,
     d3.max(layers, (layer) => d3.max(layer, (sequence: any) => sequence[1])),
@@ -144,8 +138,8 @@ const AreaChartBody = ({
       break
   }
 
-  const colorScale: ColorScale = d3.scaleOrdinal(colorScheme);
-  colorScale.domain(keys);
+  const colorScale: ColorScale = d3.scaleOrdinal(colorScheme)
+  colorScale.domain(keys)
 
   const areaGenerator: any = d3
     .area()
@@ -156,10 +150,10 @@ const AreaChartBody = ({
   return (
     <g transform={translate}>
       {layers.map((layer, i) => (
-        <path 
-          key={i} 
-          d={areaGenerator(layer)} 
-          style={{'fill': colorScale(layer.key)}} 
+        <path
+          key={i}
+          d={areaGenerator(layer)}
+          style={{ fill: colorScale(layer.key) }}
         />
       ))}
       {yAxis && (
