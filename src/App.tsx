@@ -18,8 +18,6 @@ function App() {
     <div className="App">
       <ScatterPlot
         data={penguins}
-        height="500"
-        width="500"
         xData={{ key: "flipper_length_mm", dataType: "number" }}
         yData={{ key: "body_mass_g", dataType: "number" }}
         groupBy="species"
@@ -30,6 +28,31 @@ function App() {
         xAxisLabel="Date"
         yAxisLabel="Value"
       />
+
+      <BarChart
+        data={skinny_fruit}
+        xData={{ key: "date", dataType: "date" }}
+        yData={{ key: "value", dataType: "number" }}
+        groupBy='fruit'
+        xAxis="bottom"
+        yAxis="left"
+        yGrid={true}
+        xAxisLabel="Date"
+        yAxisLabel="Value"
+      />
+
+      <LineChart
+        data={portfolio}
+        xData={{ key: "date", dataType: "date" }}
+        yData={{ key: "value", dataType: "number" }}
+        xAxis="bottom"
+        yAxis="left"
+        xGrid={true}
+        yGrid={true}
+        xAxisLabel="Date"
+        yAxisLabel="Value"
+      />
+
     </div>
   )
 }

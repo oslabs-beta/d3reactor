@@ -1,7 +1,6 @@
 /** LineChart.js */
-import React, { useMemo, useEffect } from "react"
+import { useMemo } from "react"
 import * as d3 from "d3"
-import styled from "styled-components"
 import Axis from "../../components/ContinuousAxis"
 import Circle from "./Circle"
 import { ScatterProps } from "../../../types"
@@ -21,15 +20,10 @@ interface DataArg {
 }
 type ColorScale = d3.ScaleOrdinal<string, string, never>
 
-const Path = styled.path`
-  fill: none;
-  opacity: 0.5;
-`
-
 const ScatterPlotBody = ({
   data,
-  height,
-  width,
+  height = 0,
+  width = 0,
   xData,
   yData,
   groupBy,
@@ -180,7 +174,7 @@ const ScatterPlotBody = ({
       {voronoi && (
         <g className="voronoi-wrapper">
           {data.map((elem: DataArg, i: number) => (
-            <Path d={voronoi.renderCell(i)}></Path>
+            <path fill='none' opacity={0.5} d={voronoi.renderCell(i)}></path>
           ))}
         </g>
       )}

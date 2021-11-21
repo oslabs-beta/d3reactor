@@ -18,7 +18,6 @@ export default function ScatterPlot({
   xAxisLabel,
   yAxisLabel,
 }: ScatterProps<string | number>): JSX.Element {
-  console.log("rendered chart")
   const anchor = useRef(null as unknown as SVGSVGElement)
   const [windowSize, setWindowSize] = useState<[number, number]>([0, 0])
   const [cHeight, setCHeight] = useState<number>(0)

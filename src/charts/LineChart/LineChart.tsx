@@ -1,5 +1,5 @@
 /** App.js */
-import React, { useState, useEffect, useRef, useLayoutEffect } from "react"
+import { useState, useEffect, useRef, useLayoutEffect } from "react"
 import LineChartBody from "./LineChartBody"
 import { LineProps } from "../../../types"
 

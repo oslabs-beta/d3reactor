@@ -25,12 +25,14 @@ type ScaleFunc =
 
 const LineChartBody = ({
   data,
-  height,
-  width,
+  height = 0,
+  width = 0,
   xData,
   yData,
   groupBy,
   xAxis,
+  xGrid,
+  yGrid,
   yAxis,
   xAxisLabel,
   yAxisLabel,
@@ -127,6 +129,7 @@ const LineChartBody = ({
           margin={margin}
           scale={yScale}
           type={yAxis}
+          yGrid={yGrid}
           label={yAxisLabel}
         />
       )}
@@ -139,6 +142,7 @@ const LineChartBody = ({
           margin={margin}
           scale={xScale}
           type={xAxis}
+          xGrid={xGrid}
           label={xAxisLabel}
         />
       )}

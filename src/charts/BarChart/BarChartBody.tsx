@@ -21,8 +21,8 @@ type ColorScale = d3.ScaleOrdinal<string, string, never>
 
 const BarChartBody = ({
   data,
-  height,
-  width,
+  height=0,
+  width=0,
   xData,
   yData,
   groupBy,
@@ -87,7 +87,6 @@ const BarChartBody = ({
   const colorScale: ColorScale = d3.scaleOrdinal(colorScheme)
   colorScale.domain(keys)
 
-  console.log("groupBy ", groupBy === yData.key)
   return (
     <g transform={translate}>
       {!isNotGrouped

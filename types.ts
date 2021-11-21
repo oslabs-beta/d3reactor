@@ -1,7 +1,7 @@
 export interface ScatterProps<T> {
   data: any
-  height: T
-  width: T
+  height?: T
+  width?: T
   xData: { key: string; dataType: "date" | "number" }
   yData: { key: string; dataType: "date" | "number" }
   groupBy?: string
@@ -16,14 +16,13 @@ export interface ScatterProps<T> {
 
 export interface BarProps<T> {
   data: any
-  height: T
-  width: T
+  height?: T
+  width?: T
   xData: { key: string; dataType: "date" | "number" }
   yData: { key: string; dataType: "date" | "number" }
   groupBy?: string
   xAxis?: "top" | "bottom" | false
   yAxis?: "left" | "right" | false
-  xGrid?: boolean
   yGrid?: boolean
   xAxisLabel?: string
   yAxisLabel?: string
@@ -32,8 +31,8 @@ export interface BarProps<T> {
 
 export interface LineProps<T> {
   data: any
-  height: T
-  width: T
+  height?: T
+  width?: T
   xData: { key: string; dataType: "date" | "number" }
   yData: { key: string; dataType: "date" | "number" }
   groupBy?: string
