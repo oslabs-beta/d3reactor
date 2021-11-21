@@ -1,5 +1,6 @@
 /** App.js */
 import React, { useState, useEffect, useRef, useLayoutEffect } from "react"
+import * as d3 from "d3"
 import ScatterPlotBody from "./ScatterPlotBody"
 import { Props } from "../../../types"
 
@@ -9,6 +10,7 @@ export default function ScatterPlot({
   width = "100%",
   xData,
   yData,
+  groupBy,
   xAxis = "bottom",
   yAxis = "left",
   xGrid = false,
@@ -47,6 +49,7 @@ export default function ScatterPlot({
         data={data}
         xData={xData}
         yData={yData}
+        groupBy={groupBy}
         xAxis={xAxis}
         yAxis={yAxis}
         xGrid={xGrid}
