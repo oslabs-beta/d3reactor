@@ -13,8 +13,8 @@ export interface Props<T> {
 }
 export interface LineProps<T> {
   data: any
-  height: T
-  width: T
+  height: T // TODO: make optional, default to 100%
+  width: T  // TODO: make optional, default to 100%
   xData: { key: string; dataType: "date" | "number" }
   yData: { key: string; dataType: "date" | "number" }
   groupBy?: string

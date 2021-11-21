@@ -75,17 +75,26 @@ const AreaChartBody = ({
   const keys: string[] = []
   if (groupBy) {
     for (let entry of data) {
-      if (!keys.includes(entry[groupBy ?? ""])) {
-        keys.push(entry[groupBy ?? ""])
+      const property = entry[groupBy ?? ""];
+      if (property && !keys.includes(property)) {
+        keys.push(property)
       }
     }
-    data = transformSkinnyToWide(data, keys, groupBy, xData.key, yData.key)
+    data = transformSkinnyToWide(data, keys, groupBy, xData.key, yData.key);
   } else {
     keys.push(yData.key)
   }
 
   const stack = d3.stack().keys(keys)
-  const layers = stack(data)
+  const layers = useMemo(() => {
+    const layersTemp = stack(data);
+    for (const series of layersTemp) {
+      series.sort((a, b) => b.data[xData.key] - a.data[xData.key]);
+    }
+    return layersTemp;
+  }, [data, keys])
+  
+  console.log('layers ' , layers)
 
   let xScale: ScaleFunc, xAccessor: AccessorFunc, xMin: Domain, xMax: Domain
 

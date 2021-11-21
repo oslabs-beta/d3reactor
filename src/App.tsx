@@ -15,13 +15,14 @@ import skinny_fruit from "./data/skinny_fruit.json"
 
 function App() {
   return (
-    <div className="App">
-      <LineChart
-        data={aapl}
+    <div className="App" style={{backgroundColor: 'rgb(64,64,64)'}}>
+      <AreaChart
+        data={penguins}
         height="100%"
         width="100%"
-        xData={{ key: "date", dataType: "date" }}
-        yData={{ key: "close", dataType: "number" }}
+        xData={{ key: "body_mass_g", dataType: "number" }}
+        yData={{ key: "culmen_length_mm", dataType: "number" }}
+        groupBy='species'
         xAxis="bottom"
         yAxis="left"
         xGrid={true}
@@ -29,6 +30,17 @@ function App() {
         xAxisLabel="Date"
         yAxisLabel="Value"
       />
+      {/* <AreaChart
+        data={skinny_fruit}
+        xData={{ key: "date", dataType: "date" }}
+        yData={{ key: "value", dataType: "number" }}
+        groupBy='fruit'
+        xGrid={true}
+        yGrid={true}
+        xAxisLabel="Date"
+        yAxisLabel="Value" 
+        height='100%' width='100%' // WHY are these mandatory?
+      /> */}
     </div>
   )
 }
