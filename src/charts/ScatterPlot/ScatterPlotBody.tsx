@@ -19,6 +19,7 @@ type ScaleFunc =
 interface DataArg {
   [key: string]: number | string
 }
+type ColorScale = d3.ScaleOrdinal<string, string, never>
 
 const Path = styled.path`
   fill: none;
@@ -32,12 +33,14 @@ const ScatterPlotBody = ({
   width,
   xData,
   yData,
+  groupBy,
   xAxis,
   yAxis,
   xGrid,
   yGrid,
   xAxisLabel,
   yAxisLabel,
+  colorScheme = d3.schemeCategory10,
 }: Props<number>): JSX.Element => {
   const margin = useMemo(
     () => getMargins(xAxis, yAxis, xAxisLabel, yAxisLabel),
@@ -55,6 +58,12 @@ const ScatterPlotBody = ({
   )
 
   const translate = `translate(${margin.left}, ${margin.top})`
+
+  let keys: string[] = [],
+    groups: d3.InternMap<any, any[]>
+  const groupAccessor = (d: any) => d[groupBy ?? ""]
+  groups = d3.group(data, groupAccessor)
+  keys = Array.from(groups).map((group) => group[0])
 
   let xScale: ScaleFunc, xAccessor: AccessorFunc, xMin: Domain, xMax: Domain
   switch (xData.dataType) {
@@ -119,6 +128,9 @@ const ScatterPlotBody = ({
     ])
   }
 
+  const colorScale: ColorScale = d3.scaleOrdinal(colorScheme)
+  colorScale.domain(keys)
+
   return (
     <g className="spbody" transform={translate}>
       {yAxis && (
@@ -147,15 +159,25 @@ const ScatterPlotBody = ({
           label={xAxisLabel}
         />
       )}
-      {data.map((element: DataArg, i: number) => (
-        <Circle
-          key={i}
-          cx={xScale(xAccessor(element))}
-          cy={yScale(yAccessor(element))}
-          r={5}
-          color="steelblue"
-        />
-      ))}
+      {data.map((element: any, i: number) =>
+        !groupBy ? (
+          <Circle
+            key={i}
+            cx={xScale(xAccessor(element))}
+            cy={yScale(yAccessor(element))}
+            r={5}
+            color="steelblue"
+          />
+        ) : (
+          <Circle
+            key={i}
+            cx={xScale(xAccessor(element))}
+            cy={yScale(yAccessor(element))}
+            r={5}
+            color={colorScale(element[groupBy])}
+          />
+        )
+      )}
       {voronoi && (
         <g className="voronoi-wrapper">
           {data.map((elem: DataArg, i: number) => (

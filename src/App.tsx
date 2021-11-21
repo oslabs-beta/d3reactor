@@ -16,13 +16,13 @@ import skinny_fruit from "./data/skinny_fruit.json"
 function App() {
   return (
     <div className="App">
-      <BarChart
-        data={skinny_fruit}
+      <ScatterPlot
+        data={penguins}
         height="100%"
         width="100%"
-        xData={{ key: "date", dataType: "number" }}
-        yData={{ key: "value", dataType: "number" }}
-        groupBy="fruit"
+        xData={{ key: "flipper_length_mm", dataType: "number" }}
+        yData={{ key: "body_mass_g", dataType: "number" }}
+        groupBy="species"
         xAxis="bottom"
         yAxis="left"
         xGrid={true}
