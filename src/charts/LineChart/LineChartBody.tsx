@@ -27,8 +27,9 @@ const LineChartBody = ({
   data,
   height,
   width,
-  xDataProp,
-  yDataProp,
+  xData,
+  yData,
+  groupBy,
   xAxis,
   yAxis,
   xAxisLabel,
@@ -52,18 +53,18 @@ const LineChartBody = ({
   const translate = `translate(${margin.left}, ${margin.top})`
 
   let xScale: ScaleFunc, xAccessor: AccessorFunc, xMin: Domain, xMax: Domain
-  switch (xDataProp.dataType) {
+  switch (xData.dataType) {
     case "number":
-      xAccessor = (d) => d[xDataProp.key]
+      xAccessor = (d) => d[xData.key]
       xMin = d3.min(data, xAccessor)
-      xMax = d3.max(data, xAccessor) // no need to repeat calc
+      xMax = d3.max(data, xAccessor)
       xScale = d3
         .scaleLinear()
         .domain([xMin ?? 0, xMax ?? 0])
         .range([0, width - margin.right - margin.left])
       break
     case "date":
-      xAccessor = (d) => new Date(d[xDataProp.key])
+      xAccessor = (d) => new Date(d[xData.key])
       xMin = d3.min(data, xAccessor)
       xMax = d3.max(data, xAccessor)
       xScale = d3
@@ -74,9 +75,9 @@ const LineChartBody = ({
   }
 
   let yScale: ScaleFunc, yAccessor: AccessorFunc, yMin: Domain, yMax: Domain
-  switch (yDataProp.dataType) {
+  switch (yData.dataType) {
     case "number":
-      yAccessor = (d: any) => d[yDataProp.key]
+      yAccessor = (d: any) => d[yData.key]
       yMin = d3.min(data, yAccessor)
       yMax = d3.max(data, yAccessor)
       yScale = d3
@@ -86,7 +87,7 @@ const LineChartBody = ({
         .nice()
       break
     case "date":
-      yAccessor = (d: any) => new Date(d[yDataProp.key])
+      yAccessor = (d: any) => new Date(d[yData.key])
       yMin = d3.min(data, yAccessor)
       yMax = d3.max(data, yAccessor)
       yScale = d3
@@ -97,8 +98,10 @@ const LineChartBody = ({
       break
   }
 
-  const groupAccessor: GroupAccessorFunc = (d) => d.division
-  const lines = d3.group(data, groupAccessor)
+  const groupAccessor: GroupAccessorFunc = (d) => {
+    return d[xData.key]
+  }
+  const lineGroups = d3.group(data, (d) => groupAccessor(d))
 
   const line: any = d3
     .line()
@@ -108,9 +111,13 @@ const LineChartBody = ({
 
   return (
     <g transform={translate}>
-      {d3.map(lines, (lineArr, i) => (
-        <Path key={i} className="line" d={line(lineArr[1])} />
-      ))}
+      {groupBy ? (
+        d3.map(lineGroups, (lineArr, i) => (
+          <Path key={i} className="line" d={line(lineArr[1])} />
+        ))
+      ) : (
+        <Path className="line" d={line(data)} />
+      )}
       {yAxis && (
         <Axis
           x={yAxisX}

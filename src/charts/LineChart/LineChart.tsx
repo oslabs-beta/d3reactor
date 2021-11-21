@@ -7,8 +7,9 @@ export default function LineChart({
   data,
   height = "100%",
   width = "100%",
-  xDataProp,
-  yDataProp,
+  xData,
+  yData,
+  groupBy,
   xAxis = "bottom",
   yAxis = "left",
   xGrid = false,
@@ -44,8 +45,9 @@ export default function LineChart({
         height={cHeight}
         width={cWidth}
         data={data}
-        xDataProp={xDataProp}
-        yDataProp={yDataProp}
+        xData={xData}
+        yData={yData}
+        groupBy={groupBy}
         xAxis={xAxis}
         yAxis={yAxis}
         xGrid={xGrid}

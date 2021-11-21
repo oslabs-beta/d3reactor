@@ -9,8 +9,9 @@ export default function AreaChart({
   data,
   height = "100%",
   width = "100%",
-  xDataProp,
-  yDataProp,
+  xData,
+  yData,
+  groupBy,
   xAxis = 'bottom',
   yAxis = 'left',
   xGrid = false,
@@ -46,14 +47,17 @@ export default function AreaChart({
   let dataTransformed;
   // dataTransformed = transformCountryData(data); //TODO: add conditional (requires typing input data)
 
+
+
   return (
       <svg ref={anchor} width={width} height={height}>
         <AreaChartBody
           height={cHeight}
           width={cWidth}
           data={dataTransformed || data}
-          xDataProp={xDataProp}
-          yDataProp={yDataProp}
+          xData={xData}
+          yData={yData}
+          groupBy={groupBy}
           xAxis={xAxis}
           yAxis={yAxis}
           xGrid={xGrid}

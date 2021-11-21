@@ -4,18 +4,12 @@ import * as d3 from "d3"
 import styled from "styled-components"
 import ContinuousAxis from "../../components/ContinuousAxis"
 import { AreaProps } from "../../../types"
-import { findYDomainMax } from "../../utils"
+import { findYDomainMax, transformSkinnyToWide } from "../../utils"
 import {
   getXAxisCoordinates,
   getYAxisCoordinates,
   getMargins,
 } from "../../utils"
-
-// const Path = styled.path`
-//   fill: none;
-//   stroke: black;
-//   stroke-width: 2px;
-// `
 
 type AccessorFunc = (d: any) => number | Date
 type Domain = number | Date | undefined
@@ -52,8 +46,9 @@ const AreaChartBody = ({
   data,
   height,
   width,
-  xDataProp,
-  yDataProp,
+  xData,
+  yData,
+  groupBy,
   xAxis,
   yAxis,
   xAxisLabel,
@@ -77,23 +72,26 @@ const AreaChartBody = ({
   // offset group to match position of axes
   const translate = `translate(${margin.left}, ${margin.top})`
 
-  // const keys: string[] = []; // find the fields // TODO: make correspond to passed in keys
-  // for (let key in data[0]) {
-  //   if (key !== xDataProp.key) keys.push(key);
-  // }
-
-  // const keys = yDataProp.key ? [yDataProp.key]: yDataProp.keys;
-  const keys = yDataProp.keys
+  const keys: string[] = []
+  if (groupBy) {
+    for (let entry of data) {
+      if (!keys.includes(entry[groupBy ?? ""])) {
+        keys.push(entry[groupBy ?? ""])
+      }
+    }
+    data = transformSkinnyToWide(data, keys, groupBy, xData.key, yData.key)
+  } else {
+    keys.push(yData.key)
+  }
 
   const stack = d3.stack().keys(keys)
   const layers = stack(data)
 
   let xScale: ScaleFunc, xAccessor: AccessorFunc, xMin: Domain, xMax: Domain
-  switch (
-    xDataProp.dataType // TODO: refactor to implicitly derive data type
-  ) {
+
+  switch (xData.dataType) {
     case "number":
-      xAccessor = (d) => d[xDataProp.key]
+      xAccessor = (d) => d[xData.key]
       xMin = d3.min(data, xAccessor)
       xMax = d3.max(data, xAccessor)
       xScale = d3
@@ -102,7 +100,7 @@ const AreaChartBody = ({
         .range([0, width - margin.right - margin.left])
       break
     case "date":
-      xAccessor = (d) => new Date(d[xDataProp.key])
+      xAccessor = (d) => new Date(d[xData.key])
       xMin = d3.min(data, xAccessor)
       xMax = d3.max(data, xAccessor)
       xScale = d3
@@ -117,7 +115,7 @@ const AreaChartBody = ({
     d3.max(layers, (layer) => d3.max(layer, (sequence: any) => sequence[1])),
   ]
   let yScale: ScaleFunc, yAccessor: AccessorFunc, yMin: Domain, yMax: Domain
-  switch (yDataProp.dataType) {
+  switch (yData.dataType) {
     case "number":
       yAccessor = (d) => d
       yMin = 0
@@ -140,7 +138,7 @@ const AreaChartBody = ({
       break
   }
 
-  const colorScale: ColorScale = d3.scaleOrdinal(colorScheme) // COLORS. CUSTOMIZE BY PASSING IN ARR OF STRINGS
+  const colorScale: ColorScale = d3.scaleOrdinal(colorScheme)
   colorScale.domain(keys)
 
   const areaGenerator: any = d3

@@ -1,3 +1,4 @@
+import * as d3 from "d3"
 import { Margin } from "../types"
 
 export function getXAxisCoordinates(
@@ -156,10 +157,43 @@ export function transformCountryData(arr: CountryDataProps[]) {
   return transformed
 }
 
-export function findKeys(data: any) {
-  const keys: string[] = [] // find the fields
-  for (let key in data[0]) {
-    if (key !== "date") keys.push(key)
+// interface Skinny {
+//   key: string,
+//   value: number,
+
+// }
+export function transformSkinnyToWide(
+  arr: any,
+  keys: any,
+  groupBy: string | undefined,
+  xDataPropKey: string | undefined,
+  yDataPropKey: string | undefined
+) {
+  const outputArr = []
+  // Find unique dates. create 1 object with date prop for each date
+  const rowsArr: any = []
+  for (const entry of arr) {
+    if (!rowsArr.includes(entry[xDataPropKey ?? ""]))
+      rowsArr.push(entry[xDataPropKey ?? ""])
   }
-  return keys
+  // create 1 prop with key for each val in keys, and associated val of 'value' from input arr at the object with current date & key name
+  for (const rowValue of rowsArr) {
+    const rowObj: any = {}
+    rowObj[xDataPropKey ?? ""] = rowValue
+
+    for (const key of keys) {
+      rowObj[key] = arr.reduce((val: number | undefined, currentRow: any) => {
+        if (
+          currentRow[xDataPropKey ?? ""] === rowValue &&
+          currentRow[groupBy ?? ""] === key
+        ) {
+          return currentRow[yDataPropKey ?? ""]
+        } else {
+          return val
+        }
+      }, undefined)
+    }
+    outputArr.push(rowObj)
+  }
+  return outputArr
 }

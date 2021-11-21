@@ -2,26 +2,26 @@
 import "./App.css"
 import BarChart from "./charts/BarChart/BarChart"
 import LineChart from "./charts/LineChart/LineChart"
-import AreaChartTest from "./charts/AreaChart/AreaChartTest"
 import AreaChart from "./charts/AreaChart/AreaChart"
 import ScatterPlot from "./charts/ScatterPlot/ScatterPlot"
 import aapl from "./data/aapl.json"
 import unemployment from "./data/unemployment.json"
+import sales from "./data/sales.json"
 import penguins from "./data/penguins.json"
 import portfolio from "./data/portfolio.json"
 import countries from "./data/countries.json"
 import fruit from "./data/fruit.json"
-import { transformCountryData, findKeys } from "./utils"
+import skinny_fruit from "./data/skinny_fruit.json"
 
 function App() {
   return (
     <div className="App">
       <LineChart
-        data={unemployment}
+        data={aapl}
         height="100%"
         width="100%"
-        xDataProp={{ key: "date", dataType: "date" }}
-        yDataProp={{ key: "unemployment", dataType: "number" }}
+        xData={{ key: "date", dataType: "date" }}
+        yData={{ key: "close", dataType: "number" }}
         xAxis="bottom"
         yAxis="left"
         xGrid={true}
