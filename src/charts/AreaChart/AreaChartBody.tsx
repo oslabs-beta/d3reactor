@@ -4,7 +4,7 @@ import * as d3 from "d3"
 import styled from "styled-components"
 import ContinuousAxis from "../../components/ContinuousAxis"
 import { AreaProps } from "../../../types"
-import { findYDomainMax, transformSkinnyToWide } from "../../utils"
+import { transformSkinnyToWide } from "../../utils"
 import {
   getXAxisCoordinates,
   getYAxisCoordinates,
@@ -53,7 +53,7 @@ const AreaChartBody = ({
   yAxis,
   xAxisLabel,
   yAxisLabel,
-  colorScheme = d3.schemeCategory10, // TODO: replace with custom default color scheme?
+  colorScheme = d3.schemeCategory10,
 }: AreaProps<number>): JSX.Element => {
   const margin = useMemo(
     () => getMargins(xAxis, yAxis, xAxisLabel, yAxisLabel),
@@ -88,7 +88,6 @@ const AreaChartBody = ({
   const layers = stack(data)
 
   let xScale: ScaleFunc, xAccessor: AccessorFunc, xMin: Domain, xMax: Domain
-
   switch (xData.dataType) {
     case "number":
       xAccessor = (d) => d[xData.key]
@@ -138,14 +137,14 @@ const AreaChartBody = ({
       break
   }
 
-  const colorScale: ColorScale = d3.scaleOrdinal(colorScheme)
-  colorScale.domain(keys)
-
   const areaGenerator: any = d3
     .area()
     .x((layer: any) => xScale(xAccessor(layer.data)))
     .y0((layer) => yScale(layer[0]))
     .y1((layer) => yScale(layer[1]))
+
+  const colorScale: ColorScale = d3.scaleOrdinal(colorScheme)
+  colorScale.domain(keys)
 
   return (
     <g transform={translate}>

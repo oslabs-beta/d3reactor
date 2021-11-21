@@ -2,14 +2,16 @@ export interface Props<T> {
   data: any
   height: T
   width: T
-  xDataProp: { key: string; dataType: "date" | "number" }
-  yDataProp: { key: string; dataType: "date" | "number" }
+  xData: { key: string; dataType: "date" | "number" }
+  yData: { key: string; dataType: "date" | "number" }
+  groupBy?: string
   xAxis?: "top" | "bottom" | false
   yAxis?: "left" | "right" | false
   xGrid?: boolean
   yGrid?: boolean
   xAxisLabel?: string
   yAxisLabel?: string
+  colorScheme?: string[] | readonly string[] | undefined
 }
 export interface LineProps<T> {
   data: any

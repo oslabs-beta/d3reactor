@@ -30,8 +30,8 @@ const ScatterPlotBody = ({
   data,
   height,
   width,
-  xDataProp,
-  yDataProp,
+  xData,
+  yData,
   xAxis,
   yAxis,
   xGrid,
@@ -57,9 +57,9 @@ const ScatterPlotBody = ({
   const translate = `translate(${margin.left}, ${margin.top})`
 
   let xScale: ScaleFunc, xAccessor: AccessorFunc, xMin: Domain, xMax: Domain
-  switch (xDataProp.dataType) {
+  switch (xData.dataType) {
     case "number":
-      xAccessor = (d) => d[xDataProp.key]
+      xAccessor = (d) => d[xData.key]
       xMin = d3.extent(data, xAccessor)[0]
       xMax = d3.extent(data, xAccessor)[1]
       xScale = d3
@@ -69,7 +69,7 @@ const ScatterPlotBody = ({
         .nice()
       break
     case "date":
-      xAccessor = (d) => new Date(d[xDataProp.key])
+      xAccessor = (d) => new Date(d[xData.key])
       xMin = d3.extent(data, xAccessor)[0]
       xMax = d3.extent(data, xAccessor)[1]
       xScale = d3
@@ -81,9 +81,9 @@ const ScatterPlotBody = ({
   }
 
   let yScale: ScaleFunc, yAccessor: AccessorFunc, yMin: Domain, yMax: Domain
-  switch (yDataProp.dataType) {
+  switch (yData.dataType) {
     case "number":
-      yAccessor = (d) => d[yDataProp.key]
+      yAccessor = (d) => d[yData.key]
       yMin = d3.extent(data, yAccessor)[0]
       yMax = d3.extent(data, yAccessor)[1]
       yScale = d3
@@ -93,7 +93,7 @@ const ScatterPlotBody = ({
         .nice()
       break
     case "date":
-      yAccessor = (d) => new Date(d[yDataProp.key])
+      yAccessor = (d) => new Date(d[yData.key])
       yMin = d3.extent(data, yAccessor)[0]
       yMax = d3.extent(data, yAccessor)[1]
       yScale = d3
