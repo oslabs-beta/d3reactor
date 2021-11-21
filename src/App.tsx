@@ -16,12 +16,13 @@ import skinny_fruit from "./data/skinny_fruit.json"
 function App() {
   return (
     <div className="App">
-      <LineChart
-        data={aapl}
+      <BarChart
+        data={skinny_fruit}
         height="100%"
         width="100%"
         xData={{ key: "date", dataType: "date" }}
-        yData={{ key: "close", dataType: "number" }}
+        yData={{ key: "value", dataType: "number" }}
+        groupBy="fruit"
         xAxis="bottom"
         yAxis="left"
         xGrid={true}

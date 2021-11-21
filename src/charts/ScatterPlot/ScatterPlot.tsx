@@ -7,8 +7,8 @@ export default function ScatterPlot({
   data,
   height = "100%",
   width = "100%",
-  xDataProp,
-  yDataProp,
+  xData,
+  yData,
   xAxis = "bottom",
   yAxis = "left",
   xGrid = false,
@@ -45,8 +45,8 @@ export default function ScatterPlot({
         height={cHeight}
         width={cWidth}
         data={data}
-        xDataProp={xDataProp}
-        yDataProp={yDataProp}
+        xData={xData}
+        yData={yData}
         xAxis={xAxis}
         yAxis={yAxis}
         xGrid={xGrid}
