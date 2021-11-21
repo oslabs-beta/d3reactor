@@ -4,7 +4,7 @@ import * as d3 from "d3"
 import ContinuousAxis from "../../components/ContinuousAxis"
 import DiscreteAxis from "../../components/DiscreteAxis"
 import { transformSkinnyToWide } from "../../utils"
-import { Props } from "../../../types"
+import { BarProps } from "../../../types"
 import {
   getXAxisCoordinates,
   getYAxisCoordinates,
@@ -32,7 +32,7 @@ const BarChartBody = ({
   xAxisLabel,
   yAxisLabel,
   colorScheme = d3.schemeCategory10,
-}: Props<number>): JSX.Element => {
+}: BarProps<number>): JSX.Element => {
   const margin = useMemo(
     () => getMargins(xAxis, yAxis, xAxisLabel, yAxisLabel),
     [xAxis, yAxis, xAxisLabel, yAxisLabel]

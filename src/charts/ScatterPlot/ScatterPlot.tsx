@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef, useLayoutEffect } from "react"
 import * as d3 from "d3"
 import ScatterPlotBody from "./ScatterPlotBody"
-import { Props } from "../../../types"
+import { ScatterProps } from "../../../types"
 
 export default function ScatterPlot({
   data,
@@ -17,7 +17,7 @@ export default function ScatterPlot({
   yGrid = false,
   xAxisLabel,
   yAxisLabel,
-}: Props<string | number>): JSX.Element {
+}: ScatterProps<string | number>): JSX.Element {
   console.log("rendered chart")
   const anchor = useRef(null as unknown as SVGSVGElement)
   const [windowSize, setWindowSize] = useState<[number, number]>([0, 0])

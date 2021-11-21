@@ -18,8 +18,8 @@ function App() {
     <div className="App">
       <ScatterPlot
         data={penguins}
-        height="100%"
-        width="100%"
+        height="500"
+        width="500"
         xData={{ key: "flipper_length_mm", dataType: "number" }}
         yData={{ key: "body_mass_g", dataType: "number" }}
         groupBy="species"

@@ -1,4 +1,4 @@
-export interface Props<T> {
+export interface ScatterProps<T> {
   data: any
   height: T
   width: T
@@ -11,8 +11,25 @@ export interface Props<T> {
   yGrid?: boolean
   xAxisLabel?: string
   yAxisLabel?: string
-  colorScheme?: string[] | readonly string[] | undefined
+  colorScheme?: string[] | readonly string[]
 }
+
+export interface BarProps<T> {
+  data: any
+  height: T
+  width: T
+  xData: { key: string; dataType: "date" | "number" }
+  yData: { key: string; dataType: "date" | "number" }
+  groupBy?: string
+  xAxis?: "top" | "bottom" | false
+  yAxis?: "left" | "right" | false
+  xGrid?: boolean
+  yGrid?: boolean
+  xAxisLabel?: string
+  yAxisLabel?: string
+  colorScheme?: string[] | readonly string[]
+}
+
 export interface LineProps<T> {
   data: any
   height: T
@@ -41,7 +58,7 @@ export interface AreaProps<T> {
   yGrid?: boolean
   xAxisLabel?: string
   yAxisLabel?: string
-  colorScheme?: string[] | readonly string[] | undefined
+  colorScheme?: string[] | readonly string[]
 }
 
 export interface Margin {

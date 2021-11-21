@@ -1,7 +1,7 @@
 /** App.js */
 import React, { useState, useEffect, useRef, useLayoutEffect } from "react"
 import BarChartBody from "./BarChartBody"
-import { Props } from "../../../types"
+import { BarProps } from "../../../types"
 
 export default function LineChart({
   data,
@@ -15,7 +15,7 @@ export default function LineChart({
   yGrid = false,
   xAxisLabel,
   yAxisLabel,
-}: Props<string | number>): JSX.Element {
+}: BarProps<string | number>): JSX.Element {
   const anchor = useRef(null as unknown as SVGSVGElement)
   const [windowSize, setWindowSize] = useState<[number, number]>([0, 0])
   const [cHeight, setCHeight] = useState<number>(0)

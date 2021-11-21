@@ -4,7 +4,7 @@ import * as d3 from "d3"
 import styled from "styled-components"
 import Axis from "../../components/ContinuousAxis"
 import Circle from "./Circle"
-import { Props } from "../../../types"
+import { ScatterProps } from "../../../types"
 import {
   getXAxisCoordinates,
   getYAxisCoordinates,
@@ -23,7 +23,6 @@ type ColorScale = d3.ScaleOrdinal<string, string, never>
 
 const Path = styled.path`
   fill: none;
-  stroke: #ff1493;
   opacity: 0.5;
 `
 
@@ -41,7 +40,7 @@ const ScatterPlotBody = ({
   xAxisLabel,
   yAxisLabel,
   colorScheme = d3.schemeCategory10,
-}: Props<number>): JSX.Element => {
+}: ScatterProps<number>): JSX.Element => {
   const margin = useMemo(
     () => getMargins(xAxis, yAxis, xAxisLabel, yAxisLabel),
     [xAxis, yAxis, xAxisLabel, yAxisLabel]
