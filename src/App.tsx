@@ -20,7 +20,7 @@ function App() {
         data={skinny_fruit}
         height="100%"
         width="100%"
-        xData={{ key: "date", dataType: "date" }}
+        xData={{ key: "date", dataType: "number" }}
         yData={{ key: "value", dataType: "number" }}
         groupBy="fruit"
         xAxis="bottom"

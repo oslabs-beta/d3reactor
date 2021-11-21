@@ -50,18 +50,17 @@ const BarChartBody = ({
 
   const translate = `translate(${margin.left}, ${margin.top})`
 
-  const keys: string[] = []
-  if (groupBy) {
-    for (let entry of data) {
-      if (!keys.includes(entry[groupBy ?? ""])) {
-        keys.push(entry[groupBy ?? ""])
-      }
-    }
+  if (!groupBy) groupBy = yData.key
+  // When the yData key has been assigned to the groupBy variable we know the user didn't specify grouping
+  const isNotGrouped: boolean = groupBy === yData.key
+  let keys: string[] = [],
+    groups: d3.InternMap<any, any[]>
+  const groupAccessor = (d: any) => d[groupBy ?? ""]
+  groups = d3.group(data, groupAccessor)
+  keys = Array.from(groups).map((group) => group[0])
+  if (groupBy !== yData.key) {
     data = transformSkinnyToWide(data, keys, groupBy, xData.key, yData.key)
-  } else {
-    keys.push(yData.key)
   }
-
   const stack = d3.stack().keys(keys).order(d3.stackOrderAscending)
   const layers = stack(data)
 
@@ -73,42 +72,48 @@ const BarChartBody = ({
     .domain(data.map(xAccessor))
     .range([0, width - margin.right - margin.left])
 
-  const yExtent = [
+  let yExtent = [
     0,
     d3.max(layers, (layer) => d3.max(layer, (sequence: any) => sequence[1])),
   ]
   const yAccessor: AccessorFunc = (d) => d[yData.key]
+  if (isNotGrouped) yExtent = [0, d3.max(data, yAccessor)]
+
   const yScale: ContinuousScaleFunc = d3
     .scaleLinear()
     .domain(yExtent)
     .range([height - margin.top - margin.bottom, margin.top])
 
-  layers.forEach((l) => {
-    console.log("l ", l)
-    l.forEach((sequence) => {
-      console.log("yScale sequence at index 1 ", yScale(sequence[1]))
-    })
-  })
-
   const colorScale: ColorScale = d3.scaleOrdinal(colorScheme)
   colorScale.domain(keys)
 
+  console.log("groupBy ", groupBy === yData.key)
   return (
     <g transform={translate}>
-      {layers.map((layer: any, i: number) => (
-        <g key={i}>
-          {layer.map((sequence: any, i: number) => (
+      {!isNotGrouped
+        ? layers.map((layer: any, i: number) => (
+            <g key={i}>
+              {layer.map((sequence: any, i: number) => (
+                <rect
+                  key={i}
+                  x={xScale(xAccessor(sequence.data))}
+                  y={yScale(sequence[1])}
+                  width={xScale.bandwidth()}
+                  height={yScale(sequence[0]) - yScale(sequence[1])}
+                  style={{ fill: colorScale(layer.key) }}
+                />
+              ))}
+            </g>
+          ))
+        : data.map((d: any, i: number) => (
             <rect
               key={i}
-              x={xScale(xAccessor(sequence.data))}
-              y={yScale(sequence[1])}
+              x={xScale(xAccessor(d))}
+              y={yScale(yAccessor(d))}
               width={xScale.bandwidth()}
-              height={yScale(sequence[0]) - yScale(sequence[1])}
-              style={{ fill: colorScale(layer.key) }}
+              height={xAxisY - yScale(yAccessor(d))}
             />
           ))}
-        </g>
-      ))}
       {yAxis && (
         <ContinuousAxis
           x={yAxisX}
