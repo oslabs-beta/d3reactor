@@ -288,18 +288,19 @@ const PieChartBody = ({
     .domain([0, data.length]);
 
 
-  const arcGenerator = d3
+  const arcGenerator : any = d3
     .arc()
     .innerRadius(innerRadius)
     .outerRadius(outerRadius);
 
 
-  const pieGenerator = d3
+  const pieGenerator : any = d3
     .pie()
     .padAngle(0)
-    .value((d) => d.value);
+    .value((d : any) => d.value);
 
   const pie : any = pieGenerator(data)
+
   // let count = 0;
   // Append arcs
   // const path = arc
@@ -329,15 +330,17 @@ const PieChartBody = ({
 
     return (
       <g transform = {translate}  >
-        {data.map((d: any, i:number) => 
+        {pie.map((d: any, i:number) => 
+        <g key = {"g" + i} >
         <path 
-          key = {d.pieLabelProp}
-          data = {pieGenerator(data)}
+          key = {d.label}
+          d = {arcGenerator(d)}
           id = {"arc-" + i}
           stroke = {"#ffffff"}
           strokeWidth = {0}
-          fill = {colorScale(d.length-i)}
-        />)}
+          fill = {colorScale(i)}
+        />
+        </g>)}
       </g>
     )
 

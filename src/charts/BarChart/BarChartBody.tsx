@@ -62,7 +62,7 @@ const BarChartBody = ({
     .nice()
 
   return (
-    <g transform={translate}>
+    <g transform={translate} >
       {data.map((d: any, i: number) => (
         <rect
           key={i}
