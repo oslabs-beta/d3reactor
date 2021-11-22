@@ -19,7 +19,7 @@ export interface BarProps<T> {
   height?: T
   width?: T
   xData: { key: string; dataType: "date" | "number" }
-  yData: { key: string; dataType: "date" | "number" }
+  yData: { key: string; dataType: "number" }
   groupBy?: string
   xAxis?: "top" | "bottom" | false
   yAxis?: "left" | "right" | false
