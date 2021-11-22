@@ -1,10 +1,9 @@
 /** AreaChart.js */
-import React, { useMemo } from "react"
+import { useMemo } from "react"
 import * as d3 from "d3"
-import styled from "styled-components"
 import ContinuousAxis from "../../components/ContinuousAxis"
 import { AreaProps } from "../../../types"
-import { findYDomainMax, transformSkinnyToWide } from "../../utils"
+import { transformSkinnyToWide } from "../../utils"
 import {
   getXAxisCoordinates,
   getYAxisCoordinates,
@@ -36,11 +35,8 @@ type Area = d3.Area<any>
 
 type ColorScale = d3.ScaleOrdinal<string, string, never>
 
-const Path = styled.path`
-  fill: none;
-  stroke: black;
-  stroke-width: 2px;
-`
+
+
 
 const AreaChartBody = ({
   data,
@@ -146,14 +142,14 @@ const AreaChartBody = ({
       break
   }
 
-  const colorScale: ColorScale = d3.scaleOrdinal(colorScheme)
-  colorScale.domain(keys)
-
   const areaGenerator: any = d3
     .area()
     .x((layer: any) => xScale(xAccessor(layer.data)))
     .y0((layer) => yScale(layer[0]))
     .y1((layer) => yScale(layer[1]))
+
+  const colorScale: ColorScale = d3.scaleOrdinal(colorScheme)
+  colorScale.domain(keys)
 
   return (
     <g transform={translate}>

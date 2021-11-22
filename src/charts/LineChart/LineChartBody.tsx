@@ -1,7 +1,6 @@
 /** LineChart.js */
-import React, { useMemo } from "react"
+import { useMemo } from "react"
 import * as d3 from "d3"
-import styled from "styled-components"
 import Axis from "../../components/ContinuousAxis"
 import { LineProps } from "../../../types"
 import {
@@ -10,11 +9,6 @@ import {
   getMargins,
 } from "../../utils"
 
-const Path = styled.path`
-  fill: none;
-  stroke: black;
-  stroke-width: 1px;
-`
 
 type AccessorFunc = (d: any) => number | Date
 type GroupAccessorFunc = (d: any) => number | Date
@@ -25,12 +19,14 @@ type ScaleFunc =
 
 const LineChartBody = ({
   data,
-  height,
-  width,
+  height = 0,
+  width = 0,
   xData,
   yData,
   groupBy,
   xAxis,
+  xGrid,
+  yGrid,
   yAxis,
   xAxisLabel,
   yAxisLabel,
@@ -113,10 +109,10 @@ const LineChartBody = ({
     <g transform={translate}>
       {groupBy ? (
         d3.map(lineGroups, (lineArr, i) => (
-          <Path key={i} className="line" d={line(lineArr[1])} />
+          <path key={i} className="line" fill='none' stroke='black' strokeWidth='1px' d={line(lineArr[1])} />
         ))
       ) : (
-        <Path className="line" d={line(data)} />
+        <path className="line" fill='none' stroke='black' strokeWidth='1px' d={line(data)} />
       )}
       {yAxis && (
         <Axis
@@ -127,6 +123,7 @@ const LineChartBody = ({
           margin={margin}
           scale={yScale}
           type={yAxis}
+          yGrid={yGrid}
           label={yAxisLabel}
         />
       )}
@@ -139,6 +136,7 @@ const LineChartBody = ({
           margin={margin}
           scale={xScale}
           type={xAxis}
+          xGrid={xGrid}
           label={xAxisLabel}
         />
       )}

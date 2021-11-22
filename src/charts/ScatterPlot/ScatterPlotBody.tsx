@@ -1,10 +1,9 @@
 /** LineChart.js */
-import React, { useMemo, useEffect } from "react"
+import { useMemo } from "react"
 import * as d3 from "d3"
-import styled from "styled-components"
 import Axis from "../../components/ContinuousAxis"
 import Circle from "./Circle"
-import { Props } from "../../../types"
+import { ScatterProps } from "../../../types"
 import {
   getXAxisCoordinates,
   getYAxisCoordinates,
@@ -19,26 +18,23 @@ type ScaleFunc =
 interface DataArg {
   [key: string]: number | string
 }
-
-const Path = styled.path`
-  fill: none;
-  stroke: #ff1493;
-  opacity: 0.5;
-`
+type ColorScale = d3.ScaleOrdinal<string, string, never>
 
 const ScatterPlotBody = ({
   data,
-  height,
-  width,
-  xDataProp,
-  yDataProp,
+  height = 0,
+  width = 0,
+  xData,
+  yData,
+  groupBy,
   xAxis,
   yAxis,
   xGrid,
   yGrid,
   xAxisLabel,
   yAxisLabel,
-}: Props<number>): JSX.Element => {
+  colorScheme = d3.schemeCategory10,
+}: ScatterProps<number>): JSX.Element => {
   const margin = useMemo(
     () => getMargins(xAxis, yAxis, xAxisLabel, yAxisLabel),
     [xAxis, yAxis, xAxisLabel, yAxisLabel]
@@ -56,10 +52,16 @@ const ScatterPlotBody = ({
 
   const translate = `translate(${margin.left}, ${margin.top})`
 
+  let keys: string[] = [],
+    groups: d3.InternMap<any, any[]>
+  const groupAccessor = (d: any) => d[groupBy ?? ""]
+  groups = d3.group(data, groupAccessor)
+  keys = Array.from(groups).map((group) => group[0])
+
   let xScale: ScaleFunc, xAccessor: AccessorFunc, xMin: Domain, xMax: Domain
-  switch (xDataProp.dataType) {
+  switch (xData.dataType) {
     case "number":
-      xAccessor = (d) => d[xDataProp.key]
+      xAccessor = (d) => d[xData.key]
       xMin = d3.extent(data, xAccessor)[0]
       xMax = d3.extent(data, xAccessor)[1]
       xScale = d3
@@ -69,7 +71,7 @@ const ScatterPlotBody = ({
         .nice()
       break
     case "date":
-      xAccessor = (d) => new Date(d[xDataProp.key])
+      xAccessor = (d) => new Date(d[xData.key])
       xMin = d3.extent(data, xAccessor)[0]
       xMax = d3.extent(data, xAccessor)[1]
       xScale = d3
@@ -81,9 +83,9 @@ const ScatterPlotBody = ({
   }
 
   let yScale: ScaleFunc, yAccessor: AccessorFunc, yMin: Domain, yMax: Domain
-  switch (yDataProp.dataType) {
+  switch (yData.dataType) {
     case "number":
-      yAccessor = (d) => d[yDataProp.key]
+      yAccessor = (d) => d[yData.key]
       yMin = d3.extent(data, yAccessor)[0]
       yMax = d3.extent(data, yAccessor)[1]
       yScale = d3
@@ -93,7 +95,7 @@ const ScatterPlotBody = ({
         .nice()
       break
     case "date":
-      yAccessor = (d) => new Date(d[yDataProp.key])
+      yAccessor = (d) => new Date(d[yData.key])
       yMin = d3.extent(data, yAccessor)[0]
       yMax = d3.extent(data, yAccessor)[1]
       yScale = d3
@@ -118,6 +120,9 @@ const ScatterPlotBody = ({
       height - margin.bottom - margin.top,
     ])
   }
+
+  const colorScale: ColorScale = d3.scaleOrdinal(colorScheme)
+  colorScale.domain(keys)
 
   return (
     <g className="spbody" transform={translate}>
@@ -147,19 +152,29 @@ const ScatterPlotBody = ({
           label={xAxisLabel}
         />
       )}
-      {data.map((element: DataArg, i: number) => (
-        <Circle
-          key={i}
-          cx={xScale(xAccessor(element))}
-          cy={yScale(yAccessor(element))}
-          r={5}
-          color="steelblue"
-        />
-      ))}
+      {data.map((element: any, i: number) =>
+        !groupBy ? (
+          <Circle
+            key={i}
+            cx={xScale(xAccessor(element))}
+            cy={yScale(yAccessor(element))}
+            r={5}
+            color="steelblue"
+          />
+        ) : (
+          <Circle
+            key={i}
+            cx={xScale(xAccessor(element))}
+            cy={yScale(yAccessor(element))}
+            r={5}
+            color={colorScale(element[groupBy])}
+          />
+        )
+      )}
       {voronoi && (
         <g className="voronoi-wrapper">
           {data.map((elem: DataArg, i: number) => (
-            <Path d={voronoi.renderCell(i)}></Path>
+            <path fill='none' opacity={0.5} d={voronoi.renderCell(i)}></path>
           ))}
         </g>
       )}

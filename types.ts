@@ -1,20 +1,38 @@
-export interface Props<T> {
+export interface ScatterProps<T> {
   data: any
-  height: T
-  width: T
-  xDataProp: { key: string; dataType: "date" | "number" }
-  yDataProp: { key: string; dataType: "date" | "number" }
+  height?: T
+  width?: T
+  xData: { key: string; dataType: "date" | "number" }
+  yData: { key: string; dataType: "date" | "number" }
+  groupBy?: string
   xAxis?: "top" | "bottom" | false
   yAxis?: "left" | "right" | false
   xGrid?: boolean
   yGrid?: boolean
   xAxisLabel?: string
   yAxisLabel?: string
+  colorScheme?: string[] | readonly string[]
 }
+
+export interface BarProps<T> {
+  data: any
+  height?: T
+  width?: T
+  xData: { key: string; dataType: "date" | "number" }
+  yData: { key: string; dataType: "date" | "number" }
+  groupBy?: string
+  xAxis?: "top" | "bottom" | false
+  yAxis?: "left" | "right" | false
+  yGrid?: boolean
+  xAxisLabel?: string
+  yAxisLabel?: string
+  colorScheme?: string[] | readonly string[]
+}
+
 export interface LineProps<T> {
   data: any
-  height: T // TODO: make optional, default to 100%
-  width: T  // TODO: make optional, default to 100%
+  height?: T
+  width?: T
   xData: { key: string; dataType: "date" | "number" }
   yData: { key: string; dataType: "date" | "number" }
   groupBy?: string
@@ -39,7 +57,7 @@ export interface AreaProps<T> {
   yGrid?: boolean
   xAxisLabel?: string
   yAxisLabel?: string
-  colorScheme?: string[] | readonly string[] | undefined
+  colorScheme?: string[] | readonly string[]
 }
 
 export interface Margin {

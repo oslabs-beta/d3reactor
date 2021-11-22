@@ -1,22 +1,22 @@
 /** App.js */
-import React, { useState, useEffect, useRef, useLayoutEffect } from "react"
+import { useState, useEffect, useRef, useLayoutEffect } from "react"
 import ScatterPlotBody from "./ScatterPlotBody"
-import { Props } from "../../../types"
+import { ScatterProps } from "../../../types"
 
 export default function ScatterPlot({
   data,
   height = "100%",
   width = "100%",
-  xDataProp,
-  yDataProp,
+  xData,
+  yData,
+  groupBy,
   xAxis = "bottom",
   yAxis = "left",
   xGrid = false,
   yGrid = false,
   xAxisLabel,
   yAxisLabel,
-}: Props<string | number>): JSX.Element {
-  console.log("rendered chart")
+}: ScatterProps<string | number>): JSX.Element {
   const anchor = useRef(null as unknown as SVGSVGElement)
   const [windowSize, setWindowSize] = useState<[number, number]>([0, 0])
   const [cHeight, setCHeight] = useState<number>(0)
@@ -45,8 +45,9 @@ export default function ScatterPlot({
         height={cHeight}
         width={cWidth}
         data={data}
-        xDataProp={xDataProp}
-        yDataProp={yDataProp}
+        xData={xData}
+        yData={yData}
+        groupBy={groupBy}
         xAxis={xAxis}
         yAxis={yAxis}
         xGrid={xGrid}

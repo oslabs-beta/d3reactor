@@ -23,12 +23,6 @@ function App() {
         xData={{ key: "body_mass_g", dataType: "number" }}
         yData={{ key: "culmen_length_mm", dataType: "number" }}
         // groupBy='species'
-        xAxis="bottom"
-        yAxis="left"
-        xGrid={true}
-        yGrid={true}
-        xAxisLabel="Date"
-        yAxisLabel="Value"
       />
       <AreaChart
         data={skinny_fruit}
@@ -39,8 +33,46 @@ function App() {
         yGrid={true}
         xAxisLabel="Date"
         yAxisLabel="Number of fruit" 
-        // height='100%' width='100%' 
       />
+      
+      <ScatterPlot
+        data={penguins}
+        xData={{ key: "flipper_length_mm", dataType: "number" }}
+        yData={{ key: "body_mass_g", dataType: "number" }}
+        groupBy="species"
+        xAxis="bottom"
+        yAxis="left"
+        xGrid={true}
+        yGrid={true}
+        xAxisLabel="Date"
+        yAxisLabel="Value"
+      />
+
+      <BarChart
+        data={skinny_fruit}
+        xData={{ key: "date", dataType: "date" }}
+        yData={{ key: "value", dataType: "number" }}
+        groupBy='fruit'
+        xAxis="bottom"
+        yAxis="left"
+        yGrid={true}
+        xAxisLabel="Date"
+        yAxisLabel="Value"
+      />
+
+      <LineChart
+        data={portfolio}
+        xData={{ key: "date", dataType: "date" }}
+        yData={{ key: "value", dataType: "number" }}
+        xAxis="bottom"
+        yAxis="left"
+        xGrid={true}
+        yGrid={true}
+        xAxisLabel="Date"
+        yAxisLabel="Value"
+      />
+      
+
     </div>
   )
 }
