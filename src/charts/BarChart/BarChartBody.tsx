@@ -4,7 +4,7 @@ import * as d3 from "d3"
 import ContinuousAxis from "../../components/ContinuousAxis"
 import DiscreteAxis from "../../components/DiscreteAxis"
 import { transformSkinnyToWide } from "../../utils"
-import { BarProps } from "../../../types"
+import { BarProps, ColorScale } from "../../../types"
 import {
   getXAxisCoordinates,
   getYAxisCoordinates,
@@ -17,12 +17,11 @@ type ContinuousScaleFunc =
   | d3.ScaleLinear<number, number, never>
   | d3.ScaleTime<number, number, never>
 type DiscreteScaleFunc = d3.ScaleBand<string>
-type ColorScale = d3.ScaleOrdinal<string, string, never>
 
 const BarChartBody = ({
   data,
-  height=0,
-  width=0,
+  height = 0,
+  width = 0,
   xData,
   yData,
   groupBy,

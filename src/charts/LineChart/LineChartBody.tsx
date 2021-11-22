@@ -2,7 +2,7 @@
 import { useMemo } from "react"
 import * as d3 from "d3"
 import Axis from "../../components/ContinuousAxis"
-import { LineProps } from "../../../types"
+import { LineProps, ColorScale } from "../../../types"
 import {
   getXAxisCoordinates,
   getYAxisCoordinates,
@@ -29,6 +29,7 @@ const LineChartBody = ({
   yAxis,
   xAxisLabel,
   yAxisLabel,
+  colorScheme = d3.schemeCategory10,
 }: LineProps<number>): JSX.Element => {
   const margin = useMemo(
     () => getMargins(xAxis, yAxis, xAxisLabel, yAxisLabel),
@@ -96,7 +97,7 @@ const LineChartBody = ({
   const groupAccessor: GroupAccessorFunc = (d) => {
     return d[groupBy ?? ""]
   }
-  const lineGroups = d3.group(data, (d) => groupAccessor(d))
+  const lineGroups: any = d3.group(data, (d) => groupAccessor(d))
 
   const line: any = d3
     .line()
@@ -104,19 +105,26 @@ const LineChartBody = ({
     .x((d) => xScale(xAccessor(d)))
     .y((d) => yScale(yAccessor(d)))
 
+  let keys: Iterable<string> = []
+  keys = Array.from(lineGroups).map((group: any) => group[0])
+  const colorScale: ColorScale = d3.scaleOrdinal(colorScheme)
+  colorScale.domain(keys)
+
   return (
     <g transform={translate}>
       {groupBy ? (
-        d3.map(lineGroups, (lineArr, i) => (
-          <path
-            key={i}
-            className="line"
-            fill="none"
-            stroke="black"
-            strokeWidth="1px"
-            d={line(lineArr[1])}
-          />
-        ))
+        d3.map(lineGroups, (lineGroup: [string, []], i) => {
+          return (
+            <path
+              key={i}
+              className="line"
+              fill="none"
+              stroke={colorScale(lineGroup[0])}
+              strokeWidth="1px"
+              d={line(lineGroup[1])}
+            />
+          )
+        })
       ) : (
         <path
           className="line"
