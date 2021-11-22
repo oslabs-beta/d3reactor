@@ -9,7 +9,6 @@ import {
   getMargins,
 } from "../../utils"
 
-
 type AccessorFunc = (d: any) => number | Date
 type GroupAccessorFunc = (d: any) => number | Date
 type Domain = number | Date | undefined
@@ -95,7 +94,7 @@ const LineChartBody = ({
   }
 
   const groupAccessor: GroupAccessorFunc = (d) => {
-    return d[xData.key]
+    return d[groupBy ?? ""]
   }
   const lineGroups = d3.group(data, (d) => groupAccessor(d))
 
@@ -109,10 +108,23 @@ const LineChartBody = ({
     <g transform={translate}>
       {groupBy ? (
         d3.map(lineGroups, (lineArr, i) => (
-          <path key={i} className="line" fill='none' stroke='black' strokeWidth='1px' d={line(lineArr[1])} />
+          <path
+            key={i}
+            className="line"
+            fill="none"
+            stroke="black"
+            strokeWidth="1px"
+            d={line(lineArr[1])}
+          />
         ))
       ) : (
-        <path className="line" fill='none' stroke='black' strokeWidth='1px' d={line(data)} />
+        <path
+          className="line"
+          fill="none"
+          stroke="black"
+          strokeWidth="1px"
+          d={line(data)}
+        />
       )}
       {yAxis && (
         <Axis

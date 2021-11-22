@@ -15,55 +15,12 @@ import skinny_fruit from "./data/skinny_fruit.json"
 
 function App() {
   return (
-    <div className="App" style={{backgroundColor: 'rgb(64,64,64)'}}>
-      <AreaChart
-        data={penguins}
-        height="100%"
-        width="100%"
-        xData={{ key: "body_mass_g", dataType: "number" }}
-        yData={{ key: "culmen_length_mm", dataType: "number" }}
-        // groupBy='species'
-      />
-      <AreaChart
-        data={skinny_fruit}
-        xData={{ key: "date", dataType: "date" }}
-        yData={{ key: "value", dataType: "number" }}
-        groupBy='fruit'
-        xGrid={true}
-        yGrid={true}
-        xAxisLabel="Date"
-        yAxisLabel="Number of fruit" 
-      />
-      
-      <ScatterPlot
-        data={penguins}
-        xData={{ key: "flipper_length_mm", dataType: "number" }}
-        yData={{ key: "body_mass_g", dataType: "number" }}
-        groupBy="species"
-        xAxis="bottom"
-        yAxis="left"
-        xGrid={true}
-        yGrid={true}
-        xAxisLabel="Date"
-        yAxisLabel="Value"
-      />
-
-      <BarChart
-        data={skinny_fruit}
-        xData={{ key: "date", dataType: "date" }}
-        yData={{ key: "value", dataType: "number" }}
-        groupBy='fruit'
-        xAxis="bottom"
-        yAxis="left"
-        yGrid={true}
-        xAxisLabel="Date"
-        yAxisLabel="Value"
-      />
-
+    <div className="App">
       <LineChart
-        data={portfolio}
+        data={unemployment}
         xData={{ key: "date", dataType: "date" }}
-        yData={{ key: "value", dataType: "number" }}
+        yData={{ key: "unemployment", dataType: "number" }}
+        groupBy="division"
         xAxis="bottom"
         yAxis="left"
         xGrid={true}
@@ -71,8 +28,6 @@ function App() {
         xAxisLabel="Date"
         yAxisLabel="Value"
       />
-      
-
     </div>
   )
 }
