@@ -42,6 +42,7 @@ export interface LineProps<T> {
   yGrid?: boolean
   xAxisLabel?: string
   yAxisLabel?: string
+  colorScheme?: string[] | readonly string[]
 }
 
 export interface AreaProps<T> {
@@ -101,3 +102,5 @@ export interface CircleProps {
   r?: number
   color: string
 }
+
+export type ColorScale = d3.ScaleOrdinal<string, string, never>
