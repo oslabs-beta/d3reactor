@@ -14,8 +14,8 @@ function App() {
     <div className="App">
       <PieChart
         data={fruit}
-        outerRadius = {200}
-        innerRadius = {0}
+        label= "label"
+        value = "value"
       />
     </div>
   )

@@ -115,19 +115,21 @@ export function getAxisLabelCoordinates(
 export function checkRadiusDimension(
   height: number,
   width: number,
-  margin: Margin,
-  radius: number | string , 
+  radius: number | string, 
+  margin: Margin
 ) {
-  if(typeof radius === "string") {
-    console.log(radius)
+  console.log("cheight", height);
+  console.log("cwidth", width);
+  console.log("radius", radius)
+  if(typeof radius === "string" && radius.endsWith("%")) {
+    radius = radius.slice(0,-1)   
+    return Number(radius)*Math.min((height-margin.top)/2, (width-margin.left)/2)*0.01
+  }
+  if(Number(radius) > Math.min(height/2, width/2)) {
+      return Math.min(height/2,width/2) - margin.top
   }
   else {
-    if(radius > Math.max(height, width)) {
-      return Math.min(height,width)
-    }
-    else {
-      return radius
-    }
+    return Number(radius)
   }
 }
 
@@ -136,6 +138,7 @@ export function calculateOuterRadius(
   width: number,
   margin: Margin,
 ) {
-  return Math.min((height - margin.top - margin.bottom)/4, (width - margin.left - margin.right)/4)
+  return Math.min((height - margin.top - margin.bottom)/2, (width - margin.left - margin.right)/2)
 }
+
 

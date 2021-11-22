@@ -18,8 +18,10 @@ const PieChartBody = ({
   outerRadius,
   innerRadius,
   height, 
-  width
-}: PieChartBodyProps<number>): JSX.Element => {
+  width,
+  value,
+  label
+}: PieChartBodyProps): JSX.Element => {
  
   const colors = [
     "#f7fcfd",
@@ -297,24 +299,14 @@ const PieChartBody = ({
   const pieGenerator : any = d3
     .pie()
     .padAngle(0)
-    .value((d : any) => d.value);
+    .value((d : any) => d[value]);
 
   const pie : any = pieGenerator(data)
 
-  // let count = 0;
-  // Append arcs
-  // const path = arc
-  //   .append("path")
-  //   .attr("d", arcGenerator)
-  //   .attr("id", function (d) {
-  //     return "arc-" + count++;
-  //   })
-  //   .style("fill", (_, i) => colorScale(i))
-  //   .style("stroke", "#ffffff")
-  //   .style("stroke-width", 0)
-  //   .each(function (d) {
-  //     this._current = d;
-  //   });
+  const textTranform = (d : any) => {
+    const [x , y] = arcGenerator.centroid(d);
+    return `translate(${x}, ${y})`
+  }
 
   // // Append text labels
   // arc
@@ -340,6 +332,14 @@ const PieChartBody = ({
           strokeWidth = {0}
           fill = {colorScale(i)}
         />
+        <text
+          transform = {textTranform(d)}
+          textAnchor = {"middle"}
+          alignmentBaseline = {"middle"}
+          fill = {"black"}
+        >
+          {d.data[value]}
+        </text>
         </g>)}
       </g>
     )

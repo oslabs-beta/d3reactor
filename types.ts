@@ -12,18 +12,22 @@ export interface Props<T> {
   yAxisLabel?: string
 }
 
-export interface PieChartProps<T> {
+export interface PieChartProps {
   data: any
-  innerRadius: T
-  outerRadius: T
+  value: string
+  label: string
+  innerRadius?: number | string | undefined
+  outerRadius?: number | string | undefined
 }
 
-export interface PieChartBodyProps<T> {
+export interface PieChartBodyProps {
   data: any
   height: number
   width: number
-  innerRadius: number
-  outerRadius: number
+  innerRadius: number 
+  outerRadius: number 
+  value: string
+  label: string
 }
 
 export interface Margin {

@@ -6,9 +6,11 @@ import { checkRadiusDimension, calculateOuterRadius } from "../../utils"
 
 export default function PieChart({
   data,
+  label,
+  value,
   outerRadius,
   innerRadius,
-}: PieChartProps<number>): JSX.Element {
+}: PieChartProps): JSX.Element {
   const anchor = useRef(null as unknown as SVGSVGElement)
   const [windowSize, setWindowSize] = useState<[number, number]>([0, 0])
   const [cHeight, setCHeight] = useState<number>(0)
@@ -38,9 +40,10 @@ export default function PieChart({
     bottom: 50,
     left: 50,
   };
-
-  // outerRadius = outerRadius ? checkRadiusDimension(cHeight,cWidth,margin, outerRadius): calculateOuterRadius(cHeight,cWidth,margin)
-  // innerRadius = innerRadius? checkRadiusDimension(outerRadius, 0, margin,innerRadius) : 0
+  console.log("before outer", outerRadius)
+  outerRadius = outerRadius ? checkRadiusDimension(cHeight,cWidth, outerRadius, margin): calculateOuterRadius(cHeight,cWidth,margin)
+  console.log("outer ", outerRadius)
+  innerRadius = innerRadius ? checkRadiusDimension(outerRadius, 0, innerRadius, margin) : 0
   return(
     <svg ref={anchor} width={"100%"} height={"100%"}>
       <PieChartBody
@@ -49,6 +52,8 @@ export default function PieChart({
         innerRadius={innerRadius}
         height = {cHeight}
         width = {cWidth}
+        value = {value}
+        label = {label}
       />
     </svg>
   )
