@@ -44,8 +44,8 @@ const Path = styled.path`
 
 const AreaChartBody = ({
   data,
-  height,
-  width,
+  height = 0,
+  width = 0,
   xData,
   yData,
   groupBy,
@@ -53,7 +53,7 @@ const AreaChartBody = ({
   yAxis,
   xAxisLabel,
   yAxisLabel,
-  colorScheme = d3.schemeCategory10, // TODO: replace with custom default color scheme?
+  colorScheme, // TODO: replace with custom default color scheme?
 }: AreaProps<number>): JSX.Element => {
   const margin = useMemo(
     () => getMargins(xAxis, yAxis, xAxisLabel, yAxisLabel),
@@ -72,6 +72,7 @@ const AreaChartBody = ({
   // offset group to match position of axes
   const translate = `translate(${margin.left}, ${margin.top})`
 
+  // generate arr of keys. these are used to render discrete areas to be displayed
   const keys: string[] = []
   if (groupBy) {
     for (let entry of data) {
@@ -85,6 +86,7 @@ const AreaChartBody = ({
     keys.push(yData.key)
   }
 
+  // generate stack: an array of Series representing the x and associated y0 & y1 values for each area
   const stack = d3.stack().keys(keys)
   const layers = useMemo(() => {
     const layersTemp = stack(data);
@@ -93,11 +95,8 @@ const AreaChartBody = ({
     }
     return layersTemp;
   }, [data, keys])
-  
-  console.log('layers ' , layers)
 
   let xScale: ScaleFunc, xAccessor: AccessorFunc, xMin: Domain, xMax: Domain
-
   switch (xData.dataType) {
     case "number":
       xAccessor = (d) => d[xData.key]

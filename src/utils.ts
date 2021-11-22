@@ -157,11 +157,6 @@ export function transformCountryData(arr: CountryDataProps[]) {
   return transformed
 }
 
-// interface Skinny {
-//   key: string,
-//   value: number,
-
-// }
 export function transformSkinnyToWide(
   arr: any,
   keys: any,

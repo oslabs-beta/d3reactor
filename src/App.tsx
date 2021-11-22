@@ -22,7 +22,7 @@ function App() {
         width="100%"
         xData={{ key: "body_mass_g", dataType: "number" }}
         yData={{ key: "culmen_length_mm", dataType: "number" }}
-        groupBy='species'
+        // groupBy='species'
         xAxis="bottom"
         yAxis="left"
         xGrid={true}
@@ -30,7 +30,7 @@ function App() {
         xAxisLabel="Date"
         yAxisLabel="Value"
       />
-      {/* <AreaChart
+      <AreaChart
         data={skinny_fruit}
         xData={{ key: "date", dataType: "date" }}
         yData={{ key: "value", dataType: "number" }}
@@ -38,9 +38,9 @@ function App() {
         xGrid={true}
         yGrid={true}
         xAxisLabel="Date"
-        yAxisLabel="Value" 
-        height='100%' width='100%' // WHY are these mandatory?
-      /> */}
+        yAxisLabel="Number of fruit" 
+        // height='100%' width='100%' 
+      />
     </div>
   )
 }

@@ -3,6 +3,7 @@ import React, { useState, useEffect, useRef, useLayoutEffect } from "react";
 import AreaChartBody from "./AreaChartBody";
 import { AreaProps } from '../../../types'
 import { transformCountryData } from '../../utils'
+import * as d3 from "d3";
 
 
 export default function AreaChart({
@@ -18,7 +19,7 @@ export default function AreaChart({
   yGrid = false,
   xAxisLabel,
   yAxisLabel,
-  colorScheme
+  colorScheme = d3.schemeCategory10
 }:AreaProps<string | number>):JSX.Element {
 
   const anchor = useRef(null as unknown as SVGSVGElement);
