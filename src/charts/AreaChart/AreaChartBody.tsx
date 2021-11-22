@@ -1,7 +1,6 @@
 /** AreaChart.js */
-import React, { useMemo } from "react"
+import { useMemo } from "react"
 import * as d3 from "d3"
-import styled from "styled-components"
 import ContinuousAxis from "../../components/ContinuousAxis"
 import { AreaProps } from "../../../types"
 import { transformSkinnyToWide } from "../../utils"
@@ -36,11 +35,8 @@ type Area = d3.Area<any>
 
 type ColorScale = d3.ScaleOrdinal<string, string, never>
 
-const Path = styled.path`
-  fill: none;
-  stroke: black;
-  stroke-width: 2px;
-`
+
+
 
 const AreaChartBody = ({
   data,

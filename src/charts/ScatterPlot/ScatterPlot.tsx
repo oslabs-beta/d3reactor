@@ -1,6 +1,5 @@
 /** App.js */
-import React, { useState, useEffect, useRef, useLayoutEffect } from "react"
-import * as d3 from "d3"
+import { useState, useEffect, useRef, useLayoutEffect } from "react"
 import ScatterPlotBody from "./ScatterPlotBody"
 import { ScatterProps } from "../../../types"
 

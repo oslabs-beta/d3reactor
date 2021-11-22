@@ -1,5 +1,5 @@
 /** App.js */
-import React, { useState, useEffect, useRef, useLayoutEffect } from "react"
+import { useState, useEffect, useRef, useLayoutEffect } from "react"
 import BarChartBody from "./BarChartBody"
 import { BarProps } from "../../../types"
 
