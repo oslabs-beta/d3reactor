@@ -35,9 +35,6 @@ type Area = d3.Area<any>
 
 type ColorScale = d3.ScaleOrdinal<string, string, never>
 
-
-
-
 const AreaChartBody = ({
   data,
   height = 0,
@@ -47,6 +44,8 @@ const AreaChartBody = ({
   groupBy,
   xAxis,
   yAxis,
+  xGrid,
+  yGrid,
   xAxisLabel,
   yAxisLabel,
   colorScheme, // TODO: replace with custom default color scheme?
@@ -169,6 +168,7 @@ const AreaChartBody = ({
           margin={margin}
           scale={yScale}
           type={yAxis}
+          yGrid={yGrid}
           label={yAxisLabel}
         />
       )}
@@ -180,6 +180,7 @@ const AreaChartBody = ({
           width={width}
           margin={margin}
           scale={xScale}
+          xGrid={xGrid}
           type={xAxis}
           label={xAxisLabel}
         />
