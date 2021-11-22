@@ -46,8 +46,8 @@ export interface LineProps<T> {
 
 export interface AreaProps<T> {
   data: any
-  height: T
-  width: T
+  height?: T
+  width?: T
   xData: { key: string; dataType: "date" | "number" } // TODO: make dataType optional
   yData: { key: string; dataType: "date" | "number" } // TODO: make dataType optional
   groupBy?: string

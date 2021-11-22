@@ -157,37 +157,32 @@ export function transformCountryData(arr: CountryDataProps[]) {
   return transformed
 }
 
-// interface Skinny {
-//   key: string,
-//   value: number,
-
-// }
 export function transformSkinnyToWide(
   arr: any,
   keys: any,
   groupBy: string | undefined,
-  xDataPropKey: string | undefined,
-  yDataPropKey: string | undefined
+  xDataKey: string | undefined,
+  yDataKey: string | undefined
 ) {
   const outputArr = []
-  // Find unique dates. create 1 object with date prop for each date
+  // Find unique x vals. create 1 object with date prop for each date
   const rowsArr: any = []
   for (const entry of arr) {
-    if (!rowsArr.includes(entry[xDataPropKey ?? ""]))
-      rowsArr.push(entry[xDataPropKey ?? ""])
+    if (!rowsArr.includes(entry[xDataKey ?? ""]))
+      rowsArr.push(entry[xDataKey ?? ""])
   }
   // create 1 prop with key for each val in keys, and associated val of 'value' from input arr at the object with current date & key name
   for (const rowValue of rowsArr) {
     const rowObj: any = {}
-    rowObj[xDataPropKey ?? ""] = rowValue
+    rowObj[xDataKey ?? ""] = rowValue
 
     for (const key of keys) {
       rowObj[key] = arr.reduce((val: number | undefined, currentRow: any) => {
         if (
-          currentRow[xDataPropKey ?? ""] === rowValue &&
+          currentRow[xDataKey ?? ""] === rowValue &&
           currentRow[groupBy ?? ""] === key
         ) {
-          return currentRow[yDataPropKey ?? ""]
+          return currentRow[yDataKey ?? ""]
         } else {
           return val
         }
