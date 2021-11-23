@@ -15,6 +15,7 @@ const ContinuousAxis = ({
   margin,
   xGrid,
   yGrid,
+  ticksValue
 }: ContinuousAxisProps): JSX.Element => {
   const gRef = useD3(
     (anchor) => {
@@ -22,19 +23,19 @@ const ContinuousAxis = ({
 
       switch (type) {
         case "bottom":
-          axis = d3.axisBottom(scale).tickPadding(10)
+          axis = d3.axisBottom(scale).tickPadding(10)?.tickValues(ticksValue)
           break
         case "top":
-          axis = d3.axisTop(scale)
+          axis = d3.axisTop(scale).tickPadding(10)?.tickValues(ticksValue)
           break
         case "left":
-          axis = d3.axisLeft(scale)
+          axis = d3.axisLeft(scale).tickPadding(10)?.tickValues(ticksValue)
           break
         case "right":
-          axis = d3.axisRight(scale)
+          axis = d3.axisRight(scale).tickPadding(10)?.tickValues(ticksValue)
           break
         default:
-          axis = d3.axisRight(scale)
+          axis = d3.axisRight(scale).tickPadding(10)?.tickValues(ticksValue)
           break
       }
 
@@ -51,9 +52,8 @@ const ContinuousAxis = ({
   let grid: JSX.Element[] = []
   switch (true) {
     case type === "bottom" && (xGrid || yGrid):
-      grid = scale
-        .ticks()
-        .map((tick, i) => (
+      grid = (ticksValue ? ticksValue : scale.ticks())
+              .map((tick:any, i:number) => (
           <line
             key={i}
             x1={scale(tick)}
@@ -68,9 +68,8 @@ const ContinuousAxis = ({
         ))
       break
     case type === "top" && (xGrid || yGrid):
-      grid = scale
-        .ticks()
-        .map((tick, i) => (
+      grid = (ticksValue ? ticksValue : scale.ticks())
+        .map((tick:any, i:number) => (
           <line
             key={i}
             x1={scale(tick)}
@@ -85,9 +84,8 @@ const ContinuousAxis = ({
         ))
       break
     case type === "left" && (xGrid || yGrid):
-      grid = scale
-        .ticks()
-        .map((tick, i) => (
+      grid = (ticksValue ? ticksValue : scale.ticks())
+              .map((tick:any, i:number) => (
           <line
             key={i}
             x1={0}
@@ -102,9 +100,8 @@ const ContinuousAxis = ({
         ))
       break
     case type === "right" && (xGrid || yGrid):
-      grid = scale
-        .ticks()
-        .map((tick, i) => (
+      grid = (ticksValue ? ticksValue : scale.ticks())
+            .map((tick:any, i:number) => (
           <line
             key={i}
             x1={0}
@@ -119,6 +116,8 @@ const ContinuousAxis = ({
         ))
       break
   }
+
+  console.log('grid,' , grid)
 
   return (
     <g>

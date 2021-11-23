@@ -70,6 +70,9 @@ const LineChartBody = ({
       break
   }
 
+  let xTicksValue = [xMin, ... xScale.ticks(), xMax]
+
+
   let yScale: ScaleFunc, yAccessor: AccessorFunc, yMin: Domain, yMax: Domain
   switch (yData.dataType) {
     case "number":
@@ -93,6 +96,9 @@ const LineChartBody = ({
         .nice()
       break
   }
+
+  let yTicksValue = [yMin, ... yScale.ticks(), yMax]
+
 
   const groupAccessor: GroupAccessorFunc = (d) => {
     return d[groupBy ?? ""]

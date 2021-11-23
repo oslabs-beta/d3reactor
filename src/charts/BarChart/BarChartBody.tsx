@@ -12,7 +12,6 @@ import {
 } from "../../utils"
 
 type AccessorFunc = (d: any) => any // number | Date | string
-type Domain = any //number | Date | undefined
 type ContinuousScaleFunc =
   | d3.ScaleLinear<number, number, never>
   | d3.ScaleTime<number, number, never>
@@ -82,6 +81,7 @@ const BarChartBody = ({
     .scaleLinear()
     .domain(yExtent)
     .range([height - margin.top - margin.bottom, margin.top])
+    .nice()
 
   const colorScale: ColorScale = d3.scaleOrdinal(colorScheme)
   colorScale.domain(keys)

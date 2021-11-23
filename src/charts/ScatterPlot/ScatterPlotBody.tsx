@@ -69,6 +69,8 @@ const ScatterPlotBody = ({
         .domain([xMin ?? 0, xMax ?? 0])
         .range([0, width - margin.right - margin.left])
         .nice()
+
+        
       break
     case "date":
       xAccessor = (d) => new Date(d[xData.key])
@@ -79,8 +81,13 @@ const ScatterPlotBody = ({
         .domain([xMin ?? 0, xMax ?? 0])
         .range([0, width - margin.right - margin.left])
         .nice()
+
+        
       break
   }
+
+  let xTicksValue = [xMin, ... xScale.ticks(), xMax]
+
 
   let yScale: ScaleFunc, yAccessor: AccessorFunc, yMin: Domain, yMax: Domain
   switch (yData.dataType) {
@@ -93,6 +100,8 @@ const ScatterPlotBody = ({
         .domain([yMin ?? 0, yMax ?? 0])
         .range([height - margin.top - margin.bottom, 0])
         .nice()
+
+        
       break
     case "date":
       yAccessor = (d) => new Date(d[yData.key])
@@ -103,8 +112,12 @@ const ScatterPlotBody = ({
         .domain([yMin ?? 0, yMax ?? 0])
         .range([height - margin.top - margin.bottom, 0])
         .nice()
+        
       break
   }
+
+  let yTicksValue = [yMin, ... yScale.ticks(), yMax]
+
 
   const delaunay = d3.Delaunay.from(
     data,
@@ -174,7 +187,7 @@ const ScatterPlotBody = ({
       {voronoi && (
         <g className="voronoi-wrapper">
           {data.map((elem: DataArg, i: number) => (
-            <path fill='none' opacity={0.5} d={voronoi.renderCell(i)}></path>
+            <path key={i} fill='none' opacity={0.5} d={voronoi.renderCell(i)}></path>
           ))}
         </g>
       )}

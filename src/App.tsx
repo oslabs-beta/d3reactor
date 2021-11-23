@@ -7,6 +7,7 @@ import ScatterPlot from "./charts/ScatterPlot/ScatterPlot"
 import unemployment from "./data/unemployment.json"
 import penguins from "./data/penguins.json"
 import portfolio from "./data/portfolio.json"
+import sales from "./data/sales.json"
 
 import skinny_fruit from "./data/skinny_fruit.json"
 
@@ -50,8 +51,8 @@ function App() {
 
       <BarChart
         data={skinny_fruit}
-        xData={{ key: "date", dataType: "date" }}
-        yData={{ key: "value", dataType: "number" }}
+        xData={{ key: "date"}}
+        yData={{ key: "value"}}
         groupBy='fruit'
         xAxis="bottom"
         yAxis="left"

@@ -113,6 +113,9 @@ const AreaChartBody = ({
       break
   }
 
+  let xTicksValue = [xMin, ... xScale.ticks(), xMax]
+
+
   const yExtent = [
     0,
     d3.max(layers, (layer) => d3.max(layer, (sequence: any) => sequence[1])),
@@ -127,7 +130,6 @@ const AreaChartBody = ({
         .scaleLinear()
         .domain([yMin ?? 0, yMax ?? 0])
         .range([height - margin.top - margin.bottom, 0])
-        .nice()
       break
     case "date":
       yAccessor = (d) => new Date(d)
@@ -137,9 +139,10 @@ const AreaChartBody = ({
         .scaleTime()
         .domain([yMin ?? 0, yMax ?? 0])
         .range([height - margin.top - margin.bottom, 0])
-        .nice()
       break
   }
+
+  let yTicksValue = [yMin, ... yScale.ticks(), yMax]
 
   const areaGenerator: any = d3
     .area()

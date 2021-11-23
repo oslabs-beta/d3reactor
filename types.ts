@@ -18,8 +18,8 @@ export interface BarProps<T> {
   data: any
   height?: T
   width?: T
-  xData: { key: string; dataType: "date" | "number" }
-  yData: { key: string; dataType: "number" }
+  xData: { key: string }
+  yData: { key: string }
   groupBy?: string
   xAxis?: "top" | "bottom" | false
   yAxis?: "left" | "right" | false
@@ -81,6 +81,7 @@ export interface ContinuousAxisProps {
   height: number
   width: number
   margin: Margin
+  ticksValue?: any;
 }
 
 export interface DiscreteAxisProps {
@@ -104,3 +105,4 @@ export interface CircleProps {
 }
 
 export type ColorScale = d3.ScaleOrdinal<string, string, never>
+
