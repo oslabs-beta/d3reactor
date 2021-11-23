@@ -1,9 +1,9 @@
-/** LineChart.js */
+/** AreaChart.js */
 import { useMemo } from "react"
 import * as d3 from "d3"
-import Axis from "../../components/ContinuousAxis"
-import Circle from "./Circle"
-import { ScatterProps } from "../../../types"
+import ContinuousAxis from "../../components/ContinuousAxis"
+import { AreaProps } from "../../../types"
+import { transformSkinnyToWide } from "../../utils"
 import {
   getXAxisCoordinates,
   getYAxisCoordinates,
@@ -15,12 +15,27 @@ type Domain = number | Date | undefined
 type ScaleFunc =
   | d3.ScaleLinear<number, number, never>
   | d3.ScaleTime<number, number, never>
-interface DataArg {
-  [key: string]: number | string
-}
+
+type Series = d3.Series<
+  {
+    [key: string]: number
+  },
+  string
+>[]
+
+type Stack = d3.Stack<
+  any,
+  {
+    [key: string]: number
+  },
+  string
+>
+
+type Area = d3.Area<any>
+
 type ColorScale = d3.ScaleOrdinal<string, string, never>
 
-const ScatterPlotBody = ({
+const AreaChartBody = ({
   data,
   height = 0,
   width = 0,
@@ -33,8 +48,8 @@ const ScatterPlotBody = ({
   yGrid,
   xAxisLabel,
   yAxisLabel,
-  colorScheme = d3.schemeCategory10,
-}: ScatterProps<number>): JSX.Element => {
+  colorScheme, // TODO: replace with custom default color scheme?
+}: AreaProps<number>): JSX.Element => {
   const margin = useMemo(
     () => getMargins(xAxis, yAxis, xAxisLabel, yAxisLabel),
     [xAxis, yAxis, xAxisLabel, yAxisLabel]
@@ -49,150 +64,132 @@ const ScatterPlotBody = ({
     () => getYAxisCoordinates(yAxis, width, margin),
     [width, yAxis, margin]
   )
-
+  // offset group to match position of axes
   const translate = `translate(${margin.left}, ${margin.top})`
 
-  let keys: string[] = [],
-    groups: d3.InternMap<any, any[]>
-  const groupAccessor = (d: any) => d[groupBy ?? ""]
-  groups = d3.group(data, groupAccessor)
-  keys = Array.from(groups).map((group) => group[0])
+  // generate arr of keys. these are used to render discrete areas to be displayed
+  const keys: string[] = []
+  if (groupBy) {
+    for (let entry of data) {
+      const property = entry[groupBy ?? ""];
+      if (property && !keys.includes(property)) {
+        keys.push(property)
+      }
+    }
+    data = transformSkinnyToWide(data, keys, groupBy, xData.key, yData.key);
+  } else {
+    keys.push(yData.key)
+  }
+
+  // generate stack: an array of Series representing the x and associated y0 & y1 values for each area
+  const stack = d3.stack().keys(keys)
+  const layers = useMemo(() => {
+    const layersTemp = stack(data);
+    for (const series of layersTemp) {
+      series.sort((a, b) => b.data[xData.key] - a.data[xData.key]);
+    }
+    return layersTemp;
+  }, [data, keys])
 
   let xScale: ScaleFunc, xAccessor: AccessorFunc, xMin: Domain, xMax: Domain
   switch (xData.dataType) {
     case "number":
       xAccessor = (d) => d[xData.key]
-      xMin = d3.extent(data, xAccessor)[0]
-      xMax = d3.extent(data, xAccessor)[1]
+      xMin = d3.min(data, xAccessor)
+      xMax = d3.max(data, xAccessor)
       xScale = d3
         .scaleLinear()
         .domain([xMin ?? 0, xMax ?? 0])
         .range([0, width - margin.right - margin.left])
-        .nice()
-
-        
       break
     case "date":
       xAccessor = (d) => new Date(d[xData.key])
-      xMin = d3.extent(data, xAccessor)[0]
-      xMax = d3.extent(data, xAccessor)[1]
+      xMin = d3.min(data, xAccessor)
+      xMax = d3.max(data, xAccessor)
       xScale = d3
         .scaleTime()
         .domain([xMin ?? 0, xMax ?? 0])
         .range([0, width - margin.right - margin.left])
-        .nice()
-
-        
       break
   }
 
   let xTicksValue = [xMin, ... xScale.ticks(), xMax]
 
 
+  const yExtent = [
+    0,
+    d3.max(layers, (layer) => d3.max(layer, (sequence: any) => sequence[1])),
+  ]
   let yScale: ScaleFunc, yAccessor: AccessorFunc, yMin: Domain, yMax: Domain
   switch (yData.dataType) {
     case "number":
-      yAccessor = (d) => d[yData.key]
-      yMin = d3.extent(data, yAccessor)[0]
-      yMax = d3.extent(data, yAccessor)[1]
+      yAccessor = (d) => d
+      yMin = 0
+      yMax = yExtent[1]
       yScale = d3
         .scaleLinear()
         .domain([yMin ?? 0, yMax ?? 0])
         .range([height - margin.top - margin.bottom, 0])
-        .nice()
-
-        
       break
     case "date":
-      yAccessor = (d) => new Date(d[yData.key])
-      yMin = d3.extent(data, yAccessor)[0]
-      yMax = d3.extent(data, yAccessor)[1]
+      yAccessor = (d) => new Date(d)
+      yMin = 0
+      yMax = yExtent[1]
       yScale = d3
         .scaleTime()
         .domain([yMin ?? 0, yMax ?? 0])
         .range([height - margin.top - margin.bottom, 0])
-        .nice()
-        
       break
   }
 
   let yTicksValue = [yMin, ... yScale.ticks(), yMax]
 
-
-  const delaunay = d3.Delaunay.from(
-    data,
-    (d) => xScale(xAccessor(d)),
-    (d) => yScale(yAccessor(d))
-  )
-  let voronoi: d3.Voronoi<string> = null as unknown as d3.Voronoi<string>
-  if (height && width) {
-    voronoi = delaunay.voronoi([
-      0,
-      0,
-      width - margin.right - margin.left,
-      height - margin.bottom - margin.top,
-    ])
-  }
+  const areaGenerator: any = d3
+    .area()
+    .x((layer: any) => xScale(xAccessor(layer.data)))
+    .y0((layer) => yScale(layer[0]))
+    .y1((layer) => yScale(layer[1]))
 
   const colorScale: ColorScale = d3.scaleOrdinal(colorScheme)
   colorScale.domain(keys)
 
   return (
-    <g className="spbody" transform={translate}>
+    <g transform={translate}>
+      {layers.map((layer, i) => (
+        <path
+          key={i}
+          d={areaGenerator(layer)}
+          style={{ fill: colorScale(layer.key) }}
+        />
+      ))}
       {yAxis && (
-        <Axis
+        <ContinuousAxis
           x={yAxisX}
           y={yAxisY}
-          yGrid={yGrid}
           height={height}
           width={width}
           margin={margin}
           scale={yScale}
           type={yAxis}
+          yGrid={yGrid}
           label={yAxisLabel}
         />
       )}
       {xAxis && (
-        <Axis
+        <ContinuousAxis
           x={xAxisX}
           y={xAxisY}
-          xGrid={xGrid}
           height={height}
           width={width}
           margin={margin}
           scale={xScale}
+          xGrid={xGrid}
           type={xAxis}
           label={xAxisLabel}
         />
-      )}
-      {data.map((element: any, i: number) =>
-        !groupBy ? (
-          <Circle
-            key={i}
-            cx={xScale(xAccessor(element))}
-            cy={yScale(yAccessor(element))}
-            r={5}
-            color="steelblue"
-          />
-        ) : (
-          <Circle
-            key={i}
-            cx={xScale(xAccessor(element))}
-            cy={yScale(yAccessor(element))}
-            r={5}
-            color={colorScale(element[groupBy])}
-          />
-        )
-      )}
-      {voronoi && (
-        <g className="voronoi-wrapper">
-          {data.map((elem: DataArg, i: number) => (
-            <path key={i} fill='none' opacity={0.5} d={voronoi.renderCell(i)}></path>
-          ))}
-        </g>
       )}
     </g>
   )
 }
 
-export default ScatterPlotBody
+export default AreaChartBody

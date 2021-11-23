@@ -1,15 +1,64 @@
-export interface Props<T> {
+export interface ScatterProps<T> {
   data: any
-  height: T
-  width: T
-  xDataProp: { key: string; dataType: "date" | "number" }
-  yDataProp: { key: string; dataType: "date" | "number" }
+  height?: T
+  width?: T
+  xData: { key: string; dataType: "date" | "number" }
+  yData: { key: string; dataType: "date" | "number" }
+  groupBy?: string
   xAxis?: "top" | "bottom" | false
   yAxis?: "left" | "right" | false
   xGrid?: boolean
   yGrid?: boolean
   xAxisLabel?: string
   yAxisLabel?: string
+  colorScheme?: string[] | readonly string[]
+}
+
+export interface BarProps<T> {
+  data: any
+  height?: T
+  width?: T
+  xData: { key: string }
+  yData: { key: string }
+  groupBy?: string
+  xAxis?: "top" | "bottom" | false
+  yAxis?: "left" | "right" | false
+  yGrid?: boolean
+  xAxisLabel?: string
+  yAxisLabel?: string
+  colorScheme?: string[] | readonly string[]
+}
+
+export interface LineProps<T> {
+  data: any
+  height?: T
+  width?: T
+  xData: { key: string; dataType: "date" | "number" }
+  yData: { key: string; dataType: "date" | "number" }
+  groupBy?: string
+  xAxis?: "top" | "bottom" | false
+  yAxis?: "left" | "right" | false
+  xGrid?: boolean
+  yGrid?: boolean
+  xAxisLabel?: string
+  yAxisLabel?: string
+  colorScheme?: string[] | readonly string[]
+}
+
+export interface AreaProps<T> {
+  data: any
+  height?: T
+  width?: T
+  xData: { key: string; dataType: "date" | "number" } // TODO: make dataType optional
+  yData: { key: string; dataType: "date" | "number" } // TODO: make dataType optional
+  groupBy?: string
+  xAxis?: "top" | "bottom" | false
+  yAxis?: "left" | "right" | false
+  xGrid?: boolean
+  yGrid?: boolean
+  xAxisLabel?: string
+  yAxisLabel?: string
+  colorScheme?: string[] | readonly string[]
 }
 
 export interface PieChartProps {
@@ -50,6 +99,7 @@ export interface ContinuousAxisProps {
   height: number
   width: number
   margin: Margin
+  ticksValue?: any;
 }
 
 export interface DiscreteAxisProps {
@@ -71,3 +121,6 @@ export interface CircleProps {
   r?: number
   color: string
 }
+
+export type ColorScale = d3.ScaleOrdinal<string, string, never>
+
