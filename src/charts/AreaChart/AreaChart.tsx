@@ -1,4 +1,3 @@
-/** App.js */
 import React, { useState, useEffect, useRef, useLayoutEffect } from "react";
 import AreaChartBody from "./AreaChartBody";
 import { AreaProps } from '../../../types'
