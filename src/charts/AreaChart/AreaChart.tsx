@@ -1,8 +1,6 @@
-/** App.js */
-import { useState, useEffect, useRef, useLayoutEffect } from "react";
+import React, { useState, useEffect, useRef, useLayoutEffect } from "react";
 import AreaChartBody from "./AreaChartBody";
 import { AreaProps } from '../../../types'
-import { transformCountryData } from '../../utils'
 import * as d3 from "d3";
 
 

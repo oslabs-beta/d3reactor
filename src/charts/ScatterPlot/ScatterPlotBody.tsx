@@ -1,5 +1,4 @@
-/** LineChart.js */
-import { useMemo } from "react"
+import React, { useMemo } from "react"
 import * as d3 from "d3"
 import Axis from "../../components/ContinuousAxis"
 import Circle from "./Circle"
@@ -39,6 +38,10 @@ const ScatterPlotBody = ({
     () => getMargins(xAxis, yAxis, xAxisLabel, yAxisLabel),
     [xAxis, yAxis, xAxisLabel, yAxisLabel]
   )
+
+const handleClick = (e:React.MouseEvent<SVGPathElement>, i:number) => {
+  console.log('e', e, 'element', data[i])
+}
 
   const { xAxisX, xAxisY } = useMemo(
     () => getXAxisCoordinates(xAxis, height, margin),

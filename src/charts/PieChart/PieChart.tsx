@@ -1,5 +1,4 @@
-/** App.js */
-import { useState, useEffect, useRef, useLayoutEffect } from "react"
+import React, { useState, useEffect, useRef, useLayoutEffect } from "react"
 import PieChartBody from "./PieChartBody"
 import { PieChartProps } from "../../../types"
 import { checkRadiusDimension, calculateOuterRadius } from "../../utils"

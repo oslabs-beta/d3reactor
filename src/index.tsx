@@ -1,12 +1,6 @@
-// import React from 'react';
-import ReactDOM from "react-dom"
-import "./index.css"
-import App from "./App"
-import * as React from "react"
-
-ReactDOM.render(
-  <>
-    <App />
-  </>,
-  document.getElementById("root")
-)
+import LineChart from "./charts/LineChart/LineChart";
+import ScatterPlot from "./charts/ScatterPlot/ScatterPlot";
+import BarChart from "./charts/BarChart/BarChart";
+import AreaChart from "./charts/AreaChart/AreaChart";
+import PieChart from "./charts/PieChart/PieChart";
+export {AreaChart, BarChart, PieChart, ScatterPlot, LineChart};
