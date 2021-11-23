@@ -67,6 +67,7 @@ export interface PieChartProps {
   label: string
   innerRadius?: number | string | undefined
   outerRadius?: number | string | undefined
+  colorScheme?: string[] | readonly string[]
 }
 
 export interface PieChartBodyProps {
@@ -77,6 +78,7 @@ export interface PieChartBodyProps {
   outerRadius: number 
   value: string
   label: string
+  colorScheme?: string[] | readonly string[]
 }
 
 export interface Margin {

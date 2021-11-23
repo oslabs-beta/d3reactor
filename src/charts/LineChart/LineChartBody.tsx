@@ -135,7 +135,7 @@ const LineChartBody = ({
         <path
           className="line"
           fill="none"
-          stroke="black"
+          stroke={colorScale(yData.key)}
           strokeWidth="1px"
           d={line(data)}
         />

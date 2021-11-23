@@ -3,7 +3,7 @@ import { useState, useEffect, useRef, useLayoutEffect } from "react"
 import PieChartBody from "./PieChartBody"
 import { PieChartProps } from "../../../types"
 import { checkRadiusDimension, calculateOuterRadius } from "../../utils"
-
+import * as d3 from "d3";
 
 export default function PieChart({
   data,
@@ -11,6 +11,7 @@ export default function PieChart({
   value,
   outerRadius,
   innerRadius,
+  colorScheme = d3.schemeCategory10
 }: PieChartProps): JSX.Element {
   const anchor = useRef(null as unknown as SVGSVGElement)
   const [windowSize, setWindowSize] = useState<[number, number]>([0, 0])
@@ -43,7 +44,7 @@ export default function PieChart({
     left: 20,
   };
   outerRadius = outerRadius ? checkRadiusDimension(cHeight,cWidth, outerRadius, margin): calculateOuterRadius(cHeight,cWidth,margin)
-  innerRadius = innerRadius ? checkRadiusDimension(outerRadius, 0, innerRadius, margin) : 0
+  innerRadius = innerRadius ? checkRadiusDimension(outerRadius, outerRadius, innerRadius, margin) : 0
   return(
     <svg ref={anchor} width={"100%"} height={"100%"}>
       <PieChartBody
@@ -54,6 +55,7 @@ export default function PieChart({
         width = {cWidth}
         value = {value}
         label = {label}
+        colorScheme={colorScheme}
       />
     </svg>
   )

@@ -117,7 +117,7 @@ const ContinuousAxis = ({
       break
   }
 
-  console.log('grid,' , grid)
+
 
   return (
     <g>

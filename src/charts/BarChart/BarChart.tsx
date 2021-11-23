@@ -3,7 +3,7 @@ import { useState, useEffect, useRef, useLayoutEffect } from "react"
 import BarChartBody from "./BarChartBody"
 import { BarProps } from "../../../types"
 
-export default function LineChart({
+export default function BarChart({
   data,
   height = "100%",
   width = "100%",
