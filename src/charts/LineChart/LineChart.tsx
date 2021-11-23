@@ -1,9 +1,9 @@
 /** App.js */
 import { useState, useEffect, useRef, useLayoutEffect } from "react"
-import ScatterPlotBody from "./ScatterPlotBody"
-import { ScatterProps } from "../../../types"
+import LineChartBody from "./LineChartBody"
+import { LineProps } from "../../../types"
 
-export default function ScatterPlot({
+export default function LineChart({
   data,
   height = "100%",
   width = "100%",
@@ -16,7 +16,7 @@ export default function ScatterPlot({
   yGrid = false,
   xAxisLabel,
   yAxisLabel,
-}: ScatterProps<string | number>): JSX.Element {
+}: LineProps<string | number>): JSX.Element {
   const anchor = useRef(null as unknown as SVGSVGElement)
   const [windowSize, setWindowSize] = useState<[number, number]>([0, 0])
   const [cHeight, setCHeight] = useState<number>(0)
@@ -41,7 +41,7 @@ export default function ScatterPlot({
 
   return (
     <svg ref={anchor} width={width} height={height}>
-      <ScatterPlotBody
+      <LineChartBody
         height={cHeight}
         width={cWidth}
         data={data}
