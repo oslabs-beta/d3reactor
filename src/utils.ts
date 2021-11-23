@@ -39,10 +39,10 @@ export function getMargins(
   xAxisLabel: string | undefined,
   yAxisLabel: string | undefined
 ) {
-  let left = 8,
-    right = 8,
-    top = 8,
-    bottom = 8
+  let left = 20,
+    right = 20,
+    top = 20,
+    bottom = 20
 
   function addVerticalMargin() {
     switch (xAxis) {
@@ -119,9 +119,6 @@ export function checkRadiusDimension(
   radius: number | string, 
   margin: Margin
 ) {
-  console.log("cheight", height);
-  console.log("cwidth", width);
-  console.log("radius", radius)
   if(typeof radius === "string" && radius.endsWith("%")) {
     radius = radius.slice(0,-1)   
     return Number(radius)*Math.min((height-margin.top)/2, (width-margin.left)/2)*0.01

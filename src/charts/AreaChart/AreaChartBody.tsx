@@ -113,7 +113,7 @@ const AreaChartBody = ({
       break
   }
 
-  let xTicksValue = [xMin, ... xScale.ticks(), xMax]
+  //let xTicksValue = [xMin, ... xScale.ticks(), xMax]
 
 
   const yExtent = [
@@ -130,6 +130,7 @@ const AreaChartBody = ({
         .scaleLinear()
         .domain([yMin ?? 0, yMax ?? 0])
         .range([height - margin.top - margin.bottom, 0])
+        .nice()
       break
     case "date":
       yAccessor = (d) => new Date(d)
@@ -139,6 +140,7 @@ const AreaChartBody = ({
         .scaleTime()
         .domain([yMin ?? 0, yMax ?? 0])
         .range([height - margin.top - margin.bottom, 0])
+        .nice()
       break
   }
 

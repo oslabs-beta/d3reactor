@@ -70,7 +70,7 @@ const LineChartBody = ({
       break
   }
 
-  let xTicksValue = [xMin, ... xScale.ticks(), xMax]
+  //let xTicksValue = [xMin, ... xScale.ticks(), xMax]
 
 
   let yScale: ScaleFunc, yAccessor: AccessorFunc, yMin: Domain, yMax: Domain
@@ -97,7 +97,7 @@ const LineChartBody = ({
       break
   }
 
-  let yTicksValue = [yMin, ... yScale.ticks(), yMax]
+  //let yTicksValue = [yMin, ... yScale.ticks(), yMax]
 
 
   const groupAccessor: GroupAccessorFunc = (d) => {

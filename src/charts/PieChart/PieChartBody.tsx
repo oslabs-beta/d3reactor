@@ -1,17 +1,7 @@
 /** LineChart.js */
-import React, { useMemo } from "react"
 import * as d3 from "d3"
 import { PieChartBodyProps } from "../../../types"
-import {
-  getMargins,
-} from "../../utils"
 
-type AccessorFunc = (d: any) => any // number | Date | string
-type Domain = any //number | Date | undefined
-type ContinuousScaleFunc =
-  | d3.ScaleLinear<number, number, never>
-  | d3.ScaleTime<number, number, never>
-type DiscreteScaleFunc = d3.ScaleBand<string>
 
 const PieChartBody = ({
   data,

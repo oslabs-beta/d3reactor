@@ -1,8 +1,9 @@
 /** App.js */
-import React, { useState, useEffect, useRef, useLayoutEffect } from "react"
+import { useState, useEffect, useRef, useLayoutEffect } from "react"
 import PieChartBody from "./PieChartBody"
 import { PieChartProps } from "../../../types"
 import { checkRadiusDimension, calculateOuterRadius } from "../../utils"
+
 
 export default function PieChart({
   data,
@@ -34,15 +35,14 @@ export default function PieChart({
   }, [windowSize])
 
   //ASK: how to handle margins for PieChart
+  
   const margin = {
-    top: 50,
-    right: 50,
-    bottom: 50,
-    left: 50,
+    top: 20,
+    right: 20,
+    bottom: 20,
+    left: 20,
   };
-  console.log("before outer", outerRadius)
   outerRadius = outerRadius ? checkRadiusDimension(cHeight,cWidth, outerRadius, margin): calculateOuterRadius(cHeight,cWidth,margin)
-  console.log("outer ", outerRadius)
   innerRadius = innerRadius ? checkRadiusDimension(outerRadius, 0, innerRadius, margin) : 0
   return(
     <svg ref={anchor} width={"100%"} height={"100%"}>

@@ -8,7 +8,6 @@ import PieChart from "./charts/PieChart/PieChart"
 import unemployment from "./data/unemployment.json"
 import penguins from "./data/penguins.json"
 import portfolio from "./data/portfolio.json"
-import sales from "./data/sales.json"
 import fruit from "./data/fruit.json"
 import skinny_fruit from "./data/skinny_fruit.json"
 
@@ -19,6 +18,8 @@ function App() {
         data={fruit}
         label= "label"
         value = "value"
+        />
+
       <AreaChart
         data={penguins}
         height="100%"
@@ -27,7 +28,6 @@ function App() {
         yData={{ key: "culmen_length_mm", dataType: "number" }}
         xGrid={true}
         yGrid={true}
-        // groupBy='species'
       />
 
       <AreaChart
