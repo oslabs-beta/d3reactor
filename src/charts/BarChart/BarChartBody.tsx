@@ -87,6 +87,7 @@ const BarChartBody = ({
   colorScale.domain(keys)
 
   return (
+
     <g transform={translate}>
       {!isNotGrouped
         ? layers.map((layer: any, i: number) => (

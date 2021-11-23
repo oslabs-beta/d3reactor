@@ -1,5 +1,15 @@
 [
-  {"date": "Thu Feb 01 2018 00:00:00 GMT-0500 (Eastern Standard Time)", "apples": 10, "bananas": 20, "oranges": 15},
-  {"date": "Thu Mar 01 2018 00:00:00 GMT-0500 (Eastern Standard Time)", "apples": 15, "bananas": 15, "oranges": 15},
-  {"date": "Sun Apr 01 2018 00:00:00 GMT-0400 (Eastern Daylight Time)", "apples": 20, "bananas": 25, "oranges": 15}
+  {
+    "label" : "apples",
+    "value" : 20
+  }, 
+  {
+    "label" : "bananas",
+    "value" : 40
+  },
+  {
+    "label" : "pears",
+    "value" : 30
+  }
+
 ]

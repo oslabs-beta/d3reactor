@@ -113,7 +113,35 @@ export function getAxisLabelCoordinates(
   }
 }
 
-//############Area Chart Utils###############\\
+export function checkRadiusDimension(
+  height: number,
+  width: number,
+  radius: number | string, 
+  margin: Margin
+) {
+  console.log("cheight", height);
+  console.log("cwidth", width);
+  console.log("radius", radius)
+  if(typeof radius === "string" && radius.endsWith("%")) {
+    radius = radius.slice(0,-1)   
+    return Number(radius)*Math.min((height-margin.top)/2, (width-margin.left)/2)*0.01
+  }
+  if(Number(radius) > Math.min(height/2, width/2)) {
+      return Math.min(height/2,width/2) - margin.top
+  }
+  else {
+    return Number(radius)
+  }
+}
+
+export function calculateOuterRadius(
+  height: number,
+  width: number,
+  margin: Margin,
+) {
+  return Math.min((height - margin.top - margin.bottom)/2, (width - margin.left - margin.right)/2)
+}
+
 
 interface CountryDataProps {
   key: string

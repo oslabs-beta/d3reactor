@@ -61,6 +61,24 @@ export interface AreaProps<T> {
   colorScheme?: string[] | readonly string[]
 }
 
+export interface PieChartProps {
+  data: any
+  value: string
+  label: string
+  innerRadius?: number | string | undefined
+  outerRadius?: number | string | undefined
+}
+
+export interface PieChartBodyProps {
+  data: any
+  height: number
+  width: number
+  innerRadius: number 
+  outerRadius: number 
+  value: string
+  label: string
+}
+
 export interface Margin {
   top: number
   right: number
