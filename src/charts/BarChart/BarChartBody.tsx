@@ -98,7 +98,7 @@ const BarChartBody = ({
                   x={xScale(xAccessor(sequence.data))}
                   y={yScale(sequence[1])}
                   width={xScale.bandwidth()}
-                  height={yScale(sequence[0]) - yScale(sequence[1])}
+                  height={yScale(sequence[0]) - yScale(sequence[1]) > 0 ? yScale(sequence[0]) - yScale(sequence[1]) : 0}
                   style={{ fill: colorScale(layer.key) }}
                 />
               ))}
@@ -110,7 +110,9 @@ const BarChartBody = ({
               x={xScale(xAccessor(d))}
               y={yScale(yAccessor(d))}
               width={xScale.bandwidth()}
-              height={xAxisY - yScale(yAccessor(d))}
+              height={xAxisY - yScale(yAccessor(d)) > 0 ? xAxisY - yScale(yAccessor(d)) : 0}
+              style={{ fill: colorScale(yData.key) }}
+
             />
           ))}
       {yAxis && (

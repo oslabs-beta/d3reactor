@@ -13,83 +13,113 @@ import skinny_fruit from "./data/skinny_fruit.json"
 
 function App() {
   return (
-    <div className="App">
-      <PieChart
-        data={fruit}
-        label= "label"
-        value = "value"
+    <div className="App" >
+      <div className="PieDemo" style={{display: 'inline-flex', flexDirection: 'column', alignContent: 'center', justifyContent: 'center'}}></div>
+        <div style={{width: '50%'}}>
+        <PieChart
+          data={fruit}
+          label= "label"
+          value = "value"
         />
+        </div>
+        <div style={{width: '50%'}}>
+        <PieChart
+          data={fruit}
+          label= "label"
+          value = "value"
+          innerRadius = "70%"
+          outerRadius = "80%"
+        />
+        </div>
+      <div/>
 
-      <AreaChart
-        data={penguins}
-        height="100%"
-        width="100%"
-        xData={{ key: "body_mass_g", dataType: "number" }}
-        yData={{ key: "culmen_length_mm", dataType: "number" }}
-        xGrid={true}
-        yGrid={true}
-      />
+      <div className="AreaDemo" style={{display: 'inline-flex', flexDirection: 'column', alignContent: 'center', justifyContent: 'center'}}>
+        <AreaChart
+          data={penguins}
+          height="100%"
+          width="100%"
+          xData={{ key: "body_mass_g", dataType: "number" }}
+          yData={{ key: "culmen_length_mm", dataType: "number" }}
+          xGrid={true}
+          yGrid={true}
+        />
+        <AreaChart
+          data={skinny_fruit}
+          xData={{ key: "date", dataType: "date" }}
+          yData={{ key: "value", dataType: "number" }}
+          groupBy='fruit'
+          xGrid={true}
+          yGrid={true}
+          xAxisLabel="Date"
+          yAxisLabel="Number of fruit" 
+        />
+      </div>
 
-      <AreaChart
-        data={skinny_fruit}
-        xData={{ key: "date", dataType: "date" }}
-        yData={{ key: "value", dataType: "number" }}
-        groupBy='fruit'
-        xGrid={true}
-        yGrid={true}
-        xAxisLabel="Date"
-        yAxisLabel="Number of fruit" 
-      />
-      
-      <ScatterPlot
-        data={penguins}
-        xData={{ key: "flipper_length_mm", dataType: "number" }}
-        yData={{ key: "body_mass_g", dataType: "number" }}
-        groupBy="species"
-        xAxis="bottom"
-        yAxis="left"
-        xGrid={true}
-        yGrid={true}
-        xAxisLabel="Date"
-        yAxisLabel="Value"
-      />
+      <div className="ScatterDemo" style={{display: 'inline-flex', flexDirection: 'column', alignContent: 'center', justifyContent: 'center'}}>
+        <ScatterPlot
+          data={penguins}
+          xData={{ key: "flipper_length_mm", dataType: "number" }}
+          yData={{ key: "body_mass_g", dataType: "number" }}
+          groupBy="species"
+          xAxis="bottom"
+          yAxis="left"
+          xGrid={true}
+          yGrid={true}
+          xAxisLabel="Date"
+          yAxisLabel="Value"
+        />
+      </div>
 
-      <BarChart
-        data={skinny_fruit}
-        xData={{ key: "date"}}
-        yData={{ key: "value"}}
-        groupBy='fruit'
-        xAxis="bottom"
-        yAxis="left"
-        yGrid={true}
-        xAxisLabel="Date"
-        yAxisLabel="Value"
-      />
+      <div className="BarDemo" style={{display: 'inline-flex', flexDirection: 'column', alignContent: 'center', justifyContent: 'center'}}>
+        <BarChart
+          data={skinny_fruit}
+          xData={{ key: "date"}}
+          yData={{ key: "value"}}
+          groupBy='fruit'
+          xAxis="bottom"
+          yAxis="left"
+          yGrid={true}
+          xAxisLabel="Date"
+          yAxisLabel="Value"
+        />
+        <BarChart
+          data={skinny_fruit}
+          xData={{ key: "date"}}
+          yData={{ key: "value"}}
+          // groupBy='fruit'
+          xAxis="bottom"
+          yAxis="left"
+          yGrid={true}
+          xAxisLabel="Date"
+          yAxisLabel="Value"
+        />
+      </div>
 
-      <LineChart
-        data={unemployment}
-        xData={{ key: "date", dataType: "date" }}
-        yData={{ key: "unemployment", dataType: "number" }}
-        groupBy="division"
-        xAxis="bottom"
-        yAxis="left"
-        xGrid={true}
-        yGrid={true}
-        xAxisLabel="Date"
-        yAxisLabel="Unemployment"
-      />
-
-      <LineChart
-        data={portfolio}
-        xData={{ key: "date", dataType: "date" }}
-        yData={{ key: "value", dataType: "number" }}
-        xAxis="bottom"
-        yAxis="left"
-        xGrid={true}
-        yGrid={true}
-        xAxisLabel="Date"
-        yAxisLabel="Value"
-      />
+      <div className="LineDemo" style={{display: 'inline-flex', flexDirection: 'column', alignContent: 'center', justifyContent: 'center'}}>
+        <LineChart
+          data={unemployment}
+          xData={{ key: "date", dataType: "date" }}
+          yData={{ key: "unemployment", dataType: "number" }}
+          groupBy="division"
+          xAxis="bottom"
+          yAxis="left"
+          xGrid={true}
+          yGrid={true}
+          xAxisLabel="Date"
+          yAxisLabel="Unemployment"
+        />
+        <LineChart
+          data={portfolio}
+          xData={{ key: "date", dataType: "date" }}
+          yData={{ key: "value", dataType: "number" }}
+          xAxis="bottom"
+          yAxis="left"
+          xGrid={true}
+          yGrid={true}
+          xAxisLabel="Date"
+          yAxisLabel="Value"
+        />
+      </div>
 
     
     </div>
