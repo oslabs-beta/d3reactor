@@ -1,10 +1,10 @@
 import React, { useMemo } from "react"
 import * as d3 from "d3"
 import { useD3 } from "../hooks/useD3"
-import { AxisProps } from "../../types"
+import { ContinuousAxisProps } from "../../types"
 import { getAxisLabelCoordinates } from "../utils"
 
-const Axis = ({
+const ContinuousAxis = ({
   x,
   y,
   scale,
@@ -15,26 +15,27 @@ const Axis = ({
   margin,
   xGrid,
   yGrid,
-}: AxisProps): JSX.Element => {
+  ticksValue
+}: ContinuousAxisProps): JSX.Element => {
   const gRef = useD3(
     (anchor) => {
       let axis: d3.Axis<d3.NumberValue>
 
       switch (type) {
         case "bottom":
-          axis = d3.axisBottom(scale).tickPadding(10)
+          axis = d3.axisBottom(scale).tickPadding(10)?.tickValues(ticksValue)
           break
         case "top":
-          axis = d3.axisTop(scale)
+          axis = d3.axisTop(scale).tickPadding(10)?.tickValues(ticksValue)
           break
         case "left":
-          axis = d3.axisLeft(scale)
+          axis = d3.axisLeft(scale).tickPadding(10)?.tickValues(ticksValue)
           break
         case "right":
-          axis = d3.axisRight(scale)
+          axis = d3.axisRight(scale).tickPadding(10)?.tickValues(ticksValue)
           break
         default:
-          axis = d3.axisRight(scale)
+          axis = d3.axisRight(scale).tickPadding(10)?.tickValues(ticksValue)
           break
       }
 
@@ -51,9 +52,8 @@ const Axis = ({
   let grid: JSX.Element[] = []
   switch (true) {
     case type === "bottom" && (xGrid || yGrid):
-      grid = scale
-        .ticks()
-        .map((tick, i) => (
+      grid = (ticksValue ? ticksValue : scale.ticks())
+              .map((tick:any, i:number) => (
           <line
             key={i}
             x1={scale(tick)}
@@ -68,9 +68,8 @@ const Axis = ({
         ))
       break
     case type === "top" && (xGrid || yGrid):
-      grid = scale
-        .ticks()
-        .map((tick, i) => (
+      grid = (ticksValue ? ticksValue : scale.ticks())
+        .map((tick:any, i:number) => (
           <line
             key={i}
             x1={scale(tick)}
@@ -85,9 +84,8 @@ const Axis = ({
         ))
       break
     case type === "left" && (xGrid || yGrid):
-      grid = scale
-        .ticks()
-        .map((tick, i) => (
+      grid = (ticksValue ? ticksValue : scale.ticks())
+              .map((tick:any, i:number) => (
           <line
             key={i}
             x1={0}
@@ -102,9 +100,8 @@ const Axis = ({
         ))
       break
     case type === "right" && (xGrid || yGrid):
-      grid = scale
-        .ticks()
-        .map((tick, i) => (
+      grid = (ticksValue ? ticksValue : scale.ticks())
+            .map((tick:any, i:number) => (
           <line
             key={i}
             x1={0}
@@ -119,6 +116,8 @@ const Axis = ({
         ))
       break
   }
+
+
 
   return (
     <g>
@@ -136,4 +135,4 @@ const Axis = ({
   )
 }
 
-export default Axis
+export default ContinuousAxis

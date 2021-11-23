@@ -1,22 +1,16 @@
 /** LineChart.js */
 import React, { useMemo } from "react"
 import * as d3 from "d3"
-import styled from "styled-components"
-import Axis from "../../components/Axis"
-import { Props } from "../../../types"
+import Axis from "../../components/ContinuousAxis"
+import { LineProps, ColorScale } from "../../../types"
 import {
   getXAxisCoordinates,
   getYAxisCoordinates,
   getMargins,
 } from "../../utils"
 
-const Path = styled.path`
-  fill: none;
-  stroke: black;
-  stroke-width: 2px;
-`
-
 type AccessorFunc = (d: any) => number | Date
+type GroupAccessorFunc = (d: any) => number | Date
 type Domain = number | Date | undefined
 type ScaleFunc =
   | d3.ScaleLinear<number, number, never>
@@ -24,15 +18,19 @@ type ScaleFunc =
 
 const LineChartBody = ({
   data,
-  height,
-  width,
-  xDataProp,
-  yDataProp,
+  height = 0,
+  width = 0,
+  xData,
+  yData,
+  groupBy,
   xAxis,
+  xGrid,
+  yGrid,
   yAxis,
   xAxisLabel,
   yAxisLabel,
-}: Props<number>): JSX.Element => {
+  colorScheme = d3.schemeCategory10,
+}: LineProps<number>): JSX.Element => {
   const margin = useMemo(
     () => getMargins(xAxis, yAxis, xAxisLabel, yAxisLabel),
     [xAxis, yAxis, xAxisLabel, yAxisLabel]
@@ -51,62 +49,97 @@ const LineChartBody = ({
   const translate = `translate(${margin.left}, ${margin.top})`
 
   let xScale: ScaleFunc, xAccessor: AccessorFunc, xMin: Domain, xMax: Domain
-  switch (xDataProp.dataType) {
+  switch (xData.dataType) {
     case "number":
-      xAccessor = (d) => d[xDataProp.key]
-      xMin = d3.extent(data, xAccessor)[0]
-      xMax = d3.extent(data, xAccessor)[1]
+      xAccessor = (d) => d[xData.key]
+      xMin = d3.min(data, xAccessor)
+      xMax = d3.max(data, xAccessor)
       xScale = d3
         .scaleLinear()
         .domain([xMin ?? 0, xMax ?? 0])
         .range([0, width - margin.right - margin.left])
-        .nice()
       break
     case "date":
-      xAccessor = (d) => new Date(d[xDataProp.key])
-      xMin = d3.extent(data, xAccessor)[0]
-      xMax = d3.extent(data, xAccessor)[1]
+      xAccessor = (d) => new Date(d[xData.key])
+      xMin = d3.min(data, xAccessor)
+      xMax = d3.max(data, xAccessor)
       xScale = d3
         .scaleTime()
         .domain([xMin ?? 0, xMax ?? 0])
         .range([0, width - margin.right - margin.left])
+      break
+  }
+
+  //let xTicksValue = [xMin, ... xScale.ticks(), xMax]
+
+
+  let yScale: ScaleFunc, yAccessor: AccessorFunc, yMin: Domain, yMax: Domain
+  switch (yData.dataType) {
+    case "number":
+      yAccessor = (d: any) => d[yData.key]
+      yMin = d3.min(data, yAccessor)
+      yMax = d3.max(data, yAccessor)
+      yScale = d3
+        .scaleLinear()
+        .domain([yMin ?? 0, yMax ?? 0])
+        .range([height - margin.top - margin.bottom, 0])
+        .nice()
+      break
+    case "date":
+      yAccessor = (d: any) => new Date(d[yData.key])
+      yMin = d3.min(data, yAccessor)
+      yMax = d3.max(data, yAccessor)
+      yScale = d3
+        .scaleTime()
+        .domain([yMin ?? 0, yMax ?? 0])
+        .range([height - margin.top - margin.bottom, 0])
         .nice()
       break
   }
 
-  let yScale: ScaleFunc, yAccessor: AccessorFunc, yMin: Domain, yMax: Domain
-  switch (yDataProp.dataType) {
-    case "number":
-      yAccessor = (d) => d[yDataProp.key]
-      yMin = d3.extent(data, yAccessor)[0]
-      yMax = d3.extent(data, yAccessor)[1]
-      console.log("Min and max ", yMin, yMax)
-      yScale = d3
-        .scaleLinear()
-        .domain([yMin ?? 0, yMax ?? 0])
-        .range([height - margin.top - margin.bottom, 0])
-        .nice()
-      break
-    case "date":
-      yAccessor = (d) => new Date(d[yDataProp.key])
-      yMin = d3.extent(data, yAccessor)[0]
-      yMax = d3.extent(data, yAccessor)[1]
-      yScale = d3
-        .scaleTime()
-        .domain([yMin ?? 0, yMax ?? 0])
-        .range([height - margin.top - margin.bottom, 0])
-        .nice()
-      break
+  //let yTicksValue = [yMin, ... yScale.ticks(), yMax]
+
+
+  const groupAccessor: GroupAccessorFunc = (d) => {
+    return d[groupBy ?? ""]
   }
+  const lineGroups: any = d3.group(data, (d) => groupAccessor(d))
 
   const line: any = d3
     .line()
+    .curve(d3.curveLinear)
     .x((d) => xScale(xAccessor(d)))
     .y((d) => yScale(yAccessor(d)))
 
+  let keys: Iterable<string> = []
+  keys = Array.from(lineGroups).map((group: any) => group[0])
+  const colorScale: ColorScale = d3.scaleOrdinal(colorScheme)
+  colorScale.domain(keys)
+
   return (
     <g transform={translate}>
-      <Path className="line" d={line(data)} />
+      {groupBy ? (
+        d3.map(lineGroups, (lineGroup: [string, []], i) => {
+          return (
+            <path
+              key={i}
+              className="line"
+              fill="none"
+              stroke={colorScale(lineGroup[0])}
+              strokeWidth="1px"
+              d={line(lineGroup[1])}
+            />
+          )
+        })
+      ) : (
+        <path
+          className="line"
+          fill="none"
+          stroke={colorScale(yData.key)}
+          strokeWidth="1px"
+          d={line(data)}
+        />
+      )}
       {yAxis && (
         <Axis
           x={yAxisX}
@@ -116,6 +149,7 @@ const LineChartBody = ({
           margin={margin}
           scale={yScale}
           type={yAxis}
+          yGrid={yGrid}
           label={yAxisLabel}
         />
       )}
@@ -128,6 +162,7 @@ const LineChartBody = ({
           margin={margin}
           scale={xScale}
           type={xAxis}
+          xGrid={xGrid}
           label={xAxisLabel}
         />
       )}
