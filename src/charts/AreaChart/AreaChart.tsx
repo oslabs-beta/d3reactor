@@ -10,8 +10,8 @@ export default function AreaChart({
   data,
   height = "100%",
   width = "100%",
-  xData,
-  yData,
+  xKey,
+  yKey,
   groupBy,
   xAxis = 'bottom',
   yAxis = 'left',
@@ -56,8 +56,8 @@ export default function AreaChart({
           height={cHeight}
           width={cWidth}
           data={dataTransformed || data}
-          xData={xData}
-          yData={yData}
+          xKey={xKey}
+          yKey={yKey}
           groupBy={groupBy}
           xAxis={xAxis}
           yAxis={yAxis}

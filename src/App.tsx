@@ -36,17 +36,18 @@ function App() {
       <div className="AreaDemo" style={{display: 'inline-flex', flexDirection: 'column', alignContent: 'center', justifyContent: 'center'}}>
         <AreaChart
           data={penguins}
-          height="100%"
+          height="300"
           width="100%"
-          xData={{ key: "body_mass_g", dataType: "number" }}
-          yData={{ key: "culmen_length_mm", dataType: "number" }}
+          xKey={{ key: "body_mass_gKeyType", dataType: "number" }}
+          yKey={{ key: "culmen_lenKeymm", dataType: "number" }}
           xGrid={true}
           yGrid={true}
         />
         <AreaChart
           data={skinny_fruit}
-          xData={{ key: "date", dataType: "date" }}
-          yData={{ key: "value", dataType: "number" }}
+          height="300"
+          xKey={{ key: "date", dataType: "date" }}
+          yKey={{ key: "value", dataType: "number" }}
           groupBy='fruit'
           xGrid={true}
           yGrid={true}
@@ -57,6 +58,7 @@ function App() {
 
       <div className="ScatterDemo" style={{display: 'inline-flex', flexDirection: 'column', alignContent: 'center', justifyContent: 'center'}}>
         <ScatterPlot
+          height="300"
           data={penguins}
           xData={{ key: "flipper_length_mm", dataType: "number" }}
           yData={{ key: "body_mass_g", dataType: "number" }}
@@ -72,6 +74,7 @@ function App() {
 
       <div className="BarDemo" style={{display: 'inline-flex', flexDirection: 'column', alignContent: 'center', justifyContent: 'center'}}>
         <BarChart
+          height="300"
           data={skinny_fruit}
           xData={{ key: "date"}}
           yData={{ key: "value"}}
@@ -83,6 +86,7 @@ function App() {
           yAxisLabel="Value"
         />
         <BarChart
+          height="300"
           data={skinny_fruit}
           xData={{ key: "date"}}
           yData={{ key: "value"}}
@@ -97,6 +101,7 @@ function App() {
 
       <div className="LineDemo" style={{display: 'inline-flex', flexDirection: 'column', alignContent: 'center', justifyContent: 'center'}}>
         <LineChart
+          height="300"
           data={unemployment}
           xData={{ key: "date", dataType: "date" }}
           yData={{ key: "unemployment", dataType: "number" }}
@@ -109,6 +114,7 @@ function App() {
           yAxisLabel="Unemployment"
         />
         <LineChart
+          height="300"
           data={portfolio}
           xData={{ key: "date", dataType: "date" }}
           yData={{ key: "value", dataType: "number" }}
