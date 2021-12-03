@@ -9,6 +9,7 @@ import {
   getYAxisCoordinates,
   getMargins,
 } from "../../utils"
+import { isAssertClause } from "typescript"
 
 type AccessorFunc = (d: any) => number | Date
 type Domain = number | Date | undefined
@@ -67,6 +68,21 @@ const AreaChartBody = ({
   // offset group to match position of axes
   const translate = `translate(${margin.left}, ${margin.top})`
 
+
+
+  // if no xKey datatype is passed in, determine if it's Date
+  if (!xKey.dataType) {
+    for (let i = 0; i < data.length; i++) {
+      const el = data[i];
+      if (typeof el[xKey.key] === 'string' && isNaN(Date.parse(el[xKey.key] as string))) {
+        xKey.dataType = 'number';
+        break;
+      } else {
+        xKey.dataType = 'date';
+      }
+    }
+  }
+
   // generate arr of keys. these are used to render discrete areas to be displayed
   const keys: string[] = []
   if (groupBy) {
@@ -121,28 +137,14 @@ const AreaChartBody = ({
     d3.max(layers, (layer) => d3.max(layer, (sequence: any) => sequence[1])),
   ]
   let yScale: ScaleFunc, yAccessor: AccessorFunc, yMin: Domain, yMax: Domain
-  switch (yKey.dataType) {
-    case "number":
-      yAccessor = (d) => d
-      yMin = 0
-      yMax = yExtent[1]
-      yScale = d3
-        .scaleLinear()
-        .domain([yMin ?? 0, yMax ?? 0])
-        .range([height - margin.top - margin.bottom, 0])
-        .nice()
-      break
-    case "date":
-      yAccessor = (d) => new Date(d)
-      yMin = 0
-      yMax = yExtent[1]
-      yScale = d3
-        .scaleTime()
-        .domain([yMin ?? 0, yMax ?? 0])
-        .range([height - margin.top - margin.bottom, 0])
-        .nice()
-      break
-  }
+  yAccessor = (d) => d
+  yMin = 0
+  yMax = yExtent[1]
+  yScale = d3
+    .scaleLinear()
+    .domain([yMin ?? 0, yMax ?? 0])
+    .range([height - margin.top - margin.bottom, 0])
+    .nice()
 
   let yTicksValue = [yMin, ... yScale.ticks(), yMax]
 

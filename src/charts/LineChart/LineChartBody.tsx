@@ -74,29 +74,15 @@ const LineChartBody = ({
 
 
   let yScale: ScaleFunc, yAccessor: AccessorFunc, yMin: Domain, yMax: Domain
-  switch (yKey.dataType) {
-    case "number":
-      yAccessor = (d: any) => d[yKey.key]
-      yMin = d3.min(data, yAccessor)
-      yMax = d3.max(data, yAccessor)
-      yScale = d3
-        .scaleLinear()
-        .domain([yMin ?? 0, yMax ?? 0])
-        .range([height - margin.top - margin.bottom, 0])
-        .nice()
-      break
-    case "date":
-      yAccessor = (d: any) => new Date(d[yKey.key])
-      yMin = d3.min(data, yAccessor)
-      yMax = d3.max(data, yAccessor)
-      yScale = d3
-        .scaleTime()
-        .domain([yMin ?? 0, yMax ?? 0])
-        .range([height - margin.top - margin.bottom, 0])
-        .nice()
-      break
-  }
-
+  yAccessor = (d: any) => d[yKey.key]
+  yMin = d3.min(data, yAccessor)
+  yMax = d3.max(data, yAccessor)
+  yScale = d3
+    .scaleLinear()
+    .domain([yMin ?? 0, yMax ?? 0])
+    .range([height - margin.top - margin.bottom, 0])
+    .nice()
+  
   //let yTicksValue = [yMin, ... yScale.ticks(), yMax]
 
 

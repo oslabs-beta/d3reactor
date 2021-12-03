@@ -4,7 +4,7 @@ import * as d3 from "d3"
 import ContinuousAxis from "../../components/ContinuousAxis"
 import DiscreteAxis from "../../components/DiscreteAxis"
 import { transformSkinnyToWide } from "../../utils"
-import { BarProps, ColorScale } from "../../../types"
+import { BarProps, ColorScale, Data } from "../../../types"
 import {
   getXAxisCoordinates,
   getYAxisCoordinates,
@@ -53,7 +53,7 @@ const BarChartBody = ({
   const isNotGrouped: boolean = groupBy === yKey.key
   let keys: string[] = [],
     groups: d3.InternMap<any, any[]>
-  const groupAccessor = (d: any) => d[groupBy ?? ""]
+  const groupAccessor = (d: Data) => d[groupBy ?? ""]
   groups = d3.group(data, groupAccessor)
   keys = Array.from(groups).map((group) => group[0])
   if (groupBy !== yKey.key) {
