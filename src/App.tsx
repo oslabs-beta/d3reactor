@@ -38,8 +38,8 @@ function App() {
           data={penguins}
           height="300"
           width="100%"
-          xKey={{ key: "body_mass_gKeyType", dataType: "number" }}
-          yKey={{ key: "culmen_lenKeymm", dataType: "number" }}
+          xKey={{ key: "body_mass_g", dataType: "number" }}
+          yKey={{ key: "culmen_length_mm", dataType: "number" }}
           xGrid={true}
           yGrid={true}
         />
@@ -60,8 +60,8 @@ function App() {
         <ScatterPlot
           height="300"
           data={penguins}
-          xData={{ key: "flipper_length_mm", dataType: "number" }}
-          yData={{ key: "body_mass_g", dataType: "number" }}
+          xKey={{ key: "flipper_length_mm", dataType: "number" }}
+          yKey={{ key: "body_mass_g", dataType: "number" }}
           groupBy="species"
           xAxis="bottom"
           yAxis="left"
@@ -76,8 +76,8 @@ function App() {
         <BarChart
           height="300"
           data={skinny_fruit}
-          xData={{ key: "date"}}
-          yData={{ key: "value"}}
+          xKey={{ key: "date"}}
+          yKey={{ key: "value"}}
           groupBy='fruit'
           xAxis="bottom"
           yAxis="left"
@@ -88,8 +88,8 @@ function App() {
         <BarChart
           height="300"
           data={skinny_fruit}
-          xData={{ key: "date"}}
-          yData={{ key: "value"}}
+          xKey={{ key: "date"}}
+          yKey={{ key: "value"}}
           // groupBy='fruit'
           xAxis="bottom"
           yAxis="left"
@@ -103,8 +103,8 @@ function App() {
         <LineChart
           height="300"
           data={unemployment}
-          xData={{ key: "date", dataType: "date" }}
-          yData={{ key: "unemployment", dataType: "number" }}
+          xKey={{ key: "date", dataType: "date" }}
+          yKey={{ key: "unemployment", dataType: "number" }}
           groupBy="division"
           xAxis="bottom"
           yAxis="left"
@@ -116,8 +116,8 @@ function App() {
         <LineChart
           height="300"
           data={portfolio}
-          xData={{ key: "date", dataType: "date" }}
-          yData={{ key: "value", dataType: "number" }}
+          xKey={{ key: "date", dataType: "date" }}
+          yKey={{ key: "value", dataType: "number" }}
           xAxis="bottom"
           yAxis="left"
           xGrid={true}

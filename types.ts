@@ -22,11 +22,11 @@ export interface Data {
 
 
 export interface ScatterProps<T> {
-  data: any
+  data: Data[]
   height?: T
   width?: T
-  xData: { key: string; dataType: "date" | "number" }
-  yData: { key: string; dataType: "date" | "number" }
+  xKey: { key: string; dataType: "date" | "number" }
+  yKey: { key: string; dataType: "date" | "number" }
   groupBy?: string
   xAxis?: "top" | "bottom" | false
   yAxis?: "left" | "right" | false
@@ -38,11 +38,11 @@ export interface ScatterProps<T> {
 }
 
 export interface BarProps<T> {
-  data: any
+  data: Data[]
   height?: T
   width?: T
-  xData: { key: string }
-  yData: { key: string }
+  xKey: { key: string }
+  yKey: { key: string }
   groupBy?: string
   xAxis?: "top" | "bottom" | false
   yAxis?: "left" | "right" | false
@@ -56,8 +56,8 @@ export interface LineProps<T> {
   data: Data[] 
   height?: T
   width?: T
-  xData: { key: string; dataType: "date" | "number" }
-  yData: { key: string; dataType: "date" | "number" }
+  xKey: { key: string; dataType: "date" | "number" }
+  yKey: { key: string; dataType: "date" | "number" }
   groupBy?: string
   xAxis?: "top" | "bottom" | false
   yAxis?: "left" | "right" | false
@@ -69,7 +69,7 @@ export interface LineProps<T> {
 }
 
 export interface AreaProps<T> {
-  data: any //Data[] 
+  data: Data[] 
   height?: T
   width?: T
   xKey: { key: string; dataType: "date" | "number" } // TODO: make dataType optional

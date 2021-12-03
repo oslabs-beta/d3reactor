@@ -7,8 +7,8 @@ export default function BarChart({
   data,
   height = "100%",
   width = "100%",
-  xData,
-  yData,
+  xKey,
+  yKey,
   groupBy,
   xAxis = "bottom",
   yAxis = "left",
@@ -44,8 +44,8 @@ export default function BarChart({
         data={data}
         height={cHeight}
         width={cWidth}
-        xData={xData}
-        yData={yData}
+        xKey={xKey}
+        yKey={yKey}
         groupBy={groupBy}
         xAxis={xAxis}
         yAxis={yAxis}
