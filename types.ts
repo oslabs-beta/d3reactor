@@ -17,7 +17,7 @@ import { resolveModuleName } from "typescript"
 
 
 export interface Data {
-  [key: string]: string | number | null | undefined
+  [key: string]: any
 }
 
 
@@ -25,8 +25,9 @@ export interface ScatterProps<T> {
   data: Data[]
   height?: T
   width?: T
-  xKey: { key: string; dataType: "date" | "number" }
-  yKey: { key: string; dataType: "date" | "number" }
+  xKey: string
+  xDataType?: "date" | "number"
+  yKey: string
   groupBy?: string
   xAxis?: "top" | "bottom" | false
   yAxis?: "left" | "right" | false
@@ -41,8 +42,8 @@ export interface BarProps<T> {
   data: Data[]
   height?: T
   width?: T
-  xKey: { key: string }
-  yKey: { key: string }
+  xKey: string
+  yKey: string
   groupBy?: string
   xAxis?: "top" | "bottom" | false
   yAxis?: "left" | "right" | false
@@ -56,8 +57,9 @@ export interface LineProps<T> {
   data: Data[] 
   height?: T
   width?: T
-  xKey: { key: string; dataType: "date" | "number" }
-  yKey: { key: string; dataType: "date" | "number" }
+  xKey: string
+  xDataType?: "date" | "number"
+  yKey: string
   groupBy?: string
   xAxis?: "top" | "bottom" | false
   yAxis?: "left" | "right" | false
@@ -72,8 +74,9 @@ export interface AreaProps<T> {
   data: Data[] 
   height?: T
   width?: T
-  xKey: { key: string; dataType: "date" | "number" } // TODO: make dataType optional
-  yKey: { key: string; dataType: "date" | "number" } // TODO: make dataType optional
+  xKey: string 
+  xDataType?: "date" | "number"
+  yKey: string 
   groupBy?: string
   xAxis?: "top" | "bottom" | false
   yAxis?: "left" | "right" | false

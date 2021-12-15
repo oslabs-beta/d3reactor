@@ -11,6 +11,7 @@ export default function AreaChart({
   width = "100%",
   xKey,
   yKey,
+  xDataType,
   groupBy,
   xAxis = 'bottom',
   yAxis = 'left',
@@ -47,13 +48,6 @@ export default function AreaChart({
   // let dataTransformed;
   // dataTransformed = transformCountryData(data); //TODO: add conditional (requires typing input data)
 
-  // if (typeof xKey === 'string') {
-  //   xKey = {key: xKey}
-  // }
-  // if (typeof yKey === 'string') {
-  //   yKey = {key: yKey}
-  // }
-
   return (
       <svg ref={anchor} width={width} height={height}>
         <AreaChartBody
@@ -61,6 +55,7 @@ export default function AreaChart({
           width={cWidth}
           data={data}
           xKey={xKey}
+          xDataType={xDataType}
           yKey={yKey}
           groupBy={groupBy}
           xAxis={xAxis}
