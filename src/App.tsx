@@ -20,6 +20,7 @@ function App() {
           data={fruit}
           label= "label"
           value = "value"
+          legend = {true}
         />
         </div>
         <div style={{width: '50%', backgroundColor: "rgb(64,64,64)"}}>

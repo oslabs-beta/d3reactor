@@ -2,7 +2,7 @@
 import { useMemo } from "react"
 import * as d3 from "d3"
 import ContinuousAxis from "../../components/ContinuousAxis"
-import { AreaProps } from "../../../types"
+import { AreaProps, ColorScale } from "../../../types"
 import { transformSkinnyToWide } from "../../utils"
 import {
   getXAxisCoordinates,
@@ -34,8 +34,6 @@ type Stack = d3.Stack<
 >
 
 type Area = d3.Area<any>
-
-type ColorScale = d3.ScaleOrdinal<string, string, never>
 
 const AreaChartBody = ({
   data,

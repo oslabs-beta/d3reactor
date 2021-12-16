@@ -94,6 +94,7 @@ export interface PieChartProps {
   innerRadius?: number | string | undefined
   outerRadius?: number | string | undefined
   colorScheme?: string[] | readonly string[]
+  legend?: boolean
 }
 
 export interface PieChartBodyProps {
@@ -105,6 +106,7 @@ export interface PieChartBodyProps {
   value: string
   label: string
   colorScheme?: string[] | readonly string[]
+  legend?: boolean
 }
 
 export interface Margin {
@@ -152,3 +154,12 @@ export interface CircleProps {
 
 export type ColorScale = d3.ScaleOrdinal<string, string, never>
 
+export interface ColorLegendProps {
+  colorScale: ColorScale,
+  tickSpacing: number
+  circleRadius: number
+  tickTextOffset: number
+  colorLegendLabel: string
+  xPosition: number,
+  yPosition: number
+}

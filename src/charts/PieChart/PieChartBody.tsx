@@ -1,6 +1,6 @@
 import * as d3 from "d3"
 import { PieChartBodyProps } from "../../../types"
-
+import { ColorLegend } from "../../components/ColorLegend"
 
 const PieChartBody = ({
   data,
@@ -10,7 +10,8 @@ const PieChartBody = ({
   width,
   value,
   label,
-  colorScheme
+  colorScheme,
+  legend
 }: PieChartBodyProps): JSX.Element => {
  
   const colors = colorScheme
@@ -28,18 +29,11 @@ const PieChartBody = ({
 
   const colorScale: ColorScale = d3.scaleOrdinal(colorScheme)
   colorScale.domain(keys)
-  
-
-  // const colorScale = d3
-  //   .scaleSequential()
-  //   .interpolator(colorScheme)
-  //   .domain([0, data.length]);
 
   const arcGenerator : any = d3
     .arc()
     .innerRadius(innerRadius)
     .outerRadius(outerRadius);
-
 
   const pieGenerator : any = d3
     .pie()
@@ -74,6 +68,16 @@ const PieChartBody = ({
           {d.data[value]}
         </text>
         </g>)}
+        { // If legend prop is true, render legend component:
+        legend && <ColorLegend 
+          colorLegendLabel={'Fruit' /**we need a way to derive this either from data or as an extra prop passed in */} 
+          xPosition={outerRadius+15 /* Where legend is placed on page */}
+          yPosition={outerRadius-60 /* Where legend is placed on page */}
+          tickSpacing={22 /* Vertical space between each line of legend */}
+          circleRadius={10 /* Radius of each color swab in legend */}
+          tickTextOffset={12 /* How much the text label is pushed to the right of the color swab */}
+          colorScale={colorScale}
+        />}
       </g>
     )
 
