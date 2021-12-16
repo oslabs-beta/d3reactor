@@ -23,19 +23,19 @@ const ContinuousAxis = ({
 
       switch (type) {
         case "bottom":
-          axis = d3.axisBottom(scale).tickPadding(10)?.tickValues(ticksValue)
+          axis = d3.axisBottom(scale)
           break
         case "top":
-          axis = d3.axisTop(scale).tickPadding(10)?.tickValues(ticksValue)
+          axis = d3.axisTop(scale)
           break
         case "left":
-          axis = d3.axisLeft(scale).tickPadding(10)?.tickValues(ticksValue)
+          axis = d3.axisLeft(scale)
           break
         case "right":
-          axis = d3.axisRight(scale).tickPadding(10)?.tickValues(ticksValue)
+          axis = d3.axisRight(scale)
           break
         default:
-          axis = d3.axisRight(scale).tickPadding(10)?.tickValues(ticksValue)
+          axis = d3.axisRight(scale)
           break
       }
 
@@ -48,7 +48,7 @@ const ContinuousAxis = ({
     () => getAxisLabelCoordinates(x, y, height, width, margin, type),
     [x, y, width, height, margin, type]
   )
-
+  console.log('scale ticks', scale.ticks())
   let grid: JSX.Element[] = []
   switch (true) {
     case type === "bottom" && (xGrid || yGrid):
@@ -60,9 +60,7 @@ const ContinuousAxis = ({
             x2={scale(tick)}
             y1={0}
             y2={-height + margin.bottom + margin.top}
-            strokeDasharray={5}
-            strokeOpacity="0.3"
-            strokeWidth="0,3"
+            strokeOpacity="0.2"
             stroke="currentColor"
           ></line>
         ))
@@ -74,11 +72,9 @@ const ContinuousAxis = ({
             key={i}
             x1={scale(tick)}
             x2={scale(tick)}
-            y1={margin.bottom}
+            y1={0}
             y2={height - margin.bottom - margin.top}
-            strokeDasharray={5}
-            strokeOpacity="0.3"
-            strokeWidth="0,3"
+            strokeOpacity="0.2"
             stroke="currentColor"
           ></line>
         ))
@@ -92,9 +88,7 @@ const ContinuousAxis = ({
             x2={width - margin.right - margin.left}
             y1={scale(tick)}
             y2={scale(tick)}
-            strokeDasharray={5}
-            strokeOpacity="0.3"
-            strokeWidth="0,3"
+            strokeOpacity="0.2"
             stroke="currentColor"
           ></line>
         ))
@@ -108,9 +102,7 @@ const ContinuousAxis = ({
             x2={-(width - margin.right - margin.left)}
             y1={scale(tick)}
             y2={scale(tick)}
-            strokeDasharray={5}
-            strokeOpacity="0.3"
-            strokeWidth="0,3"
+            strokeOpacity="0.2"
             stroke="currentColor"
           ></line>
         ))
