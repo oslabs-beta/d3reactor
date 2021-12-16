@@ -4,7 +4,7 @@ import * as d3 from "d3"
 import ContinuousAxis from "../../components/ContinuousAxis"
 import DiscreteAxis from "../../components/DiscreteAxis"
 import { transformSkinnyToWide } from "../../utils"
-import { BarProps, ColorScale } from "../../../types"
+import { BarProps, ColorScale, Data } from "../../../types"
 import {
   getXAxisCoordinates,
   getYAxisCoordinates,
@@ -21,8 +21,8 @@ const BarChartBody = ({
   data,
   height = 0,
   width = 0,
-  xData,
-  yData,
+  xKey,
+  yKey,
   groupBy,
   xAxis,
   yAxis,
@@ -48,21 +48,21 @@ const BarChartBody = ({
 
   const translate = `translate(${margin.left}, ${margin.top})`
 
-  if (!groupBy) groupBy = yData.key
-  // When the yData key has been assigned to the groupBy variable we know the user didn't specify grouping
-  const isNotGrouped: boolean = groupBy === yData.key
+  if (!groupBy) groupBy = yKey.key
+  // When the yKey key has been assigned to the groupBy variable we know the user didn't specify grouping
+  const isNotGrouped: boolean = groupBy === yKey.key
   let keys: string[] = [],
     groups: d3.InternMap<any, any[]>
-  const groupAccessor = (d: any) => d[groupBy ?? ""]
+  const groupAccessor = (d: Data) => d[groupBy ?? ""]
   groups = d3.group(data, groupAccessor)
   keys = Array.from(groups).map((group) => group[0])
-  if (groupBy !== yData.key) {
-    data = transformSkinnyToWide(data, keys, groupBy, xData.key, yData.key)
+  if (groupBy !== yKey.key) {
+    data = transformSkinnyToWide(data, keys, groupBy, xKey.key, yKey.key)
   }
   const stack = d3.stack().keys(keys).order(d3.stackOrderAscending)
-  const layers = stack(data)
+  const layers = stack(data as Iterable<{ [key: string]: number; }>)
 
-  const xAccessor: AccessorFunc = (d) => d[xData.key]
+  const xAccessor: AccessorFunc = (d) => d[xKey.key]
   const xScale: DiscreteScaleFunc = d3
     .scaleBand()
     .paddingInner(0.1)
@@ -74,7 +74,7 @@ const BarChartBody = ({
     0,
     d3.max(layers, (layer) => d3.max(layer, (sequence: any) => sequence[1])),
   ]
-  const yAccessor: AccessorFunc = (d) => d[yData.key]
+  const yAccessor: AccessorFunc = (d) => d[yKey.key]
   if (isNotGrouped) yExtent = [0, d3.max(data, yAccessor)]
 
   const yScale: ContinuousScaleFunc = d3
@@ -111,7 +111,7 @@ const BarChartBody = ({
               y={yScale(yAccessor(d))}
               width={xScale.bandwidth()}
               height={xAxisY - yScale(yAccessor(d)) > 0 ? xAxisY - yScale(yAccessor(d)) : 0}
-              style={{ fill: colorScale(yData.key) }}
+              style={{ fill: colorScale(yKey.key) }}
 
             />
           ))}

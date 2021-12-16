@@ -9,6 +9,7 @@ import {
   getYAxisCoordinates,
   getMargins,
 } from "../../utils"
+import { isAssertClause } from "typescript"
 
 type AccessorFunc = (d: any) => number | Date
 type Domain = number | Date | undefined
@@ -39,8 +40,8 @@ const AreaChartBody = ({
   data,
   height = 0,
   width = 0,
-  xData,
-  yData,
+  xKey,
+  yKey,
   groupBy,
   xAxis,
   yAxis,
@@ -67,34 +68,49 @@ const AreaChartBody = ({
   // offset group to match position of axes
   const translate = `translate(${margin.left}, ${margin.top})`
 
+
+
+  // if no xKey datatype is passed in, determine if it's Date
+  if (!xKey.dataType) {
+    for (let i = 0; i < data.length; i++) {
+      const el = data[i];
+      if (typeof el[xKey.key] === 'string' && isNaN(Date.parse(el[xKey.key] as string))) {
+        xKey.dataType = 'number';
+        break;
+      } else {
+        xKey.dataType = 'date';
+      }
+    }
+  }
+
   // generate arr of keys. these are used to render discrete areas to be displayed
   const keys: string[] = []
   if (groupBy) {
-    for (let entry of data) {
-      const property = entry[groupBy ?? ""];
+    for (const entry of data) {
+      const property = String(entry[groupBy ?? ""]);
       if (property && !keys.includes(property)) {
         keys.push(property)
       }
     }
-    data = transformSkinnyToWide(data, keys, groupBy, xData.key, yData.key);
+    data = transformSkinnyToWide(data, keys, groupBy, xKey.key, yKey.key);
   } else {
-    keys.push(yData.key)
+    keys.push(yKey.key)
   }
 
   // generate stack: an array of Series representing the x and associated y0 & y1 values for each area
   const stack = d3.stack().keys(keys)
   const layers = useMemo(() => {
-    const layersTemp = stack(data);
+    const layersTemp = stack(data as Iterable<{ [key: string]: number; }>);
     for (const series of layersTemp) {
-      series.sort((a, b) => b.data[xData.key] - a.data[xData.key]);
+      series.sort((a, b) => b.data[xKey.key] - a.data[xKey.key]);
     }
     return layersTemp;
   }, [data, keys])
 
   let xScale: ScaleFunc, xAccessor: AccessorFunc, xMin: Domain, xMax: Domain
-  switch (xData.dataType) {
+  switch (xKey.dataType) {
     case "number":
-      xAccessor = (d) => d[xData.key]
+      xAccessor = (d) => d[xKey.key]
       xMin = d3.min(data, xAccessor)
       xMax = d3.max(data, xAccessor)
       xScale = d3
@@ -103,7 +119,7 @@ const AreaChartBody = ({
         .range([0, width - margin.right - margin.left])
       break
     case "date":
-      xAccessor = (d) => new Date(d[xData.key])
+      xAccessor = (d) => new Date(d[xKey.key])
       xMin = d3.min(data, xAccessor)
       xMax = d3.max(data, xAccessor)
       xScale = d3
@@ -121,28 +137,14 @@ const AreaChartBody = ({
     d3.max(layers, (layer) => d3.max(layer, (sequence: any) => sequence[1])),
   ]
   let yScale: ScaleFunc, yAccessor: AccessorFunc, yMin: Domain, yMax: Domain
-  switch (yData.dataType) {
-    case "number":
-      yAccessor = (d) => d
-      yMin = 0
-      yMax = yExtent[1]
-      yScale = d3
-        .scaleLinear()
-        .domain([yMin ?? 0, yMax ?? 0])
-        .range([height - margin.top - margin.bottom, 0])
-        .nice()
-      break
-    case "date":
-      yAccessor = (d) => new Date(d)
-      yMin = 0
-      yMax = yExtent[1]
-      yScale = d3
-        .scaleTime()
-        .domain([yMin ?? 0, yMax ?? 0])
-        .range([height - margin.top - margin.bottom, 0])
-        .nice()
-      break
-  }
+  yAccessor = (d) => d
+  yMin = 0
+  yMax = yExtent[1]
+  yScale = d3
+    .scaleLinear()
+    .domain([yMin ?? 0, yMax ?? 0])
+    .range([height - margin.top - margin.bottom, 0])
+    .nice()
 
   let yTicksValue = [yMin, ... yScale.ticks(), yMax]
 

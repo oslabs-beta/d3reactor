@@ -20,8 +20,8 @@ const LineChartBody = ({
   data,
   height = 0,
   width = 0,
-  xData,
-  yData,
+  xKey,
+  yKey,
   groupBy,
   xAxis,
   xGrid,
@@ -49,9 +49,9 @@ const LineChartBody = ({
   const translate = `translate(${margin.left}, ${margin.top})`
 
   let xScale: ScaleFunc, xAccessor: AccessorFunc, xMin: Domain, xMax: Domain
-  switch (xData.dataType) {
+  switch (xKey.dataType) {
     case "number":
-      xAccessor = (d) => d[xData.key]
+      xAccessor = (d) => d[xKey.key]
       xMin = d3.min(data, xAccessor)
       xMax = d3.max(data, xAccessor)
       xScale = d3
@@ -60,7 +60,7 @@ const LineChartBody = ({
         .range([0, width - margin.right - margin.left])
       break
     case "date":
-      xAccessor = (d) => new Date(d[xData.key])
+      xAccessor = (d) => new Date(d[xKey.key])
       xMin = d3.min(data, xAccessor)
       xMax = d3.max(data, xAccessor)
       xScale = d3
@@ -74,29 +74,15 @@ const LineChartBody = ({
 
 
   let yScale: ScaleFunc, yAccessor: AccessorFunc, yMin: Domain, yMax: Domain
-  switch (yData.dataType) {
-    case "number":
-      yAccessor = (d: any) => d[yData.key]
-      yMin = d3.min(data, yAccessor)
-      yMax = d3.max(data, yAccessor)
-      yScale = d3
-        .scaleLinear()
-        .domain([yMin ?? 0, yMax ?? 0])
-        .range([height - margin.top - margin.bottom, 0])
-        .nice()
-      break
-    case "date":
-      yAccessor = (d: any) => new Date(d[yData.key])
-      yMin = d3.min(data, yAccessor)
-      yMax = d3.max(data, yAccessor)
-      yScale = d3
-        .scaleTime()
-        .domain([yMin ?? 0, yMax ?? 0])
-        .range([height - margin.top - margin.bottom, 0])
-        .nice()
-      break
-  }
-
+  yAccessor = (d: any) => d[yKey.key]
+  yMin = d3.min(data, yAccessor)
+  yMax = d3.max(data, yAccessor)
+  yScale = d3
+    .scaleLinear()
+    .domain([yMin ?? 0, yMax ?? 0])
+    .range([height - margin.top - margin.bottom, 0])
+    .nice()
+  
   //let yTicksValue = [yMin, ... yScale.ticks(), yMax]
 
 
@@ -135,7 +121,7 @@ const LineChartBody = ({
         <path
           className="line"
           fill="none"
-          stroke={colorScale(yData.key)}
+          stroke={colorScale(yKey.key)}
           strokeWidth="1px"
           d={line(data)}
         />

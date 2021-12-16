@@ -1,9 +1,32 @@
+import { resolveModuleName } from "typescript"
+
+// import in the propNames 
+// const userDefinedPropNames = { xVal: 'date', yVal: 'value', group: 'fruit' } as const
+
+// interface PreData {
+//   xVal: number,
+//   yVal: number,
+//   group: string
+// }
+
+// type RenameProps<KeyMap extends Record<keyof ValueMap, string>, ValueMap> = {
+//   [K in keyof ValueMap as `${KeyMap[K]}`]: ValueMap[K]
+// }
+
+// export type Data = RenameProps<typeof userDefinedPropNames, PreData>
+
+
+export interface Data {
+  [key: string]: string | number | null | undefined
+}
+
+
 export interface ScatterProps<T> {
-  data: any
+  data: Data[]
   height?: T
   width?: T
-  xData: { key: string; dataType: "date" | "number" }
-  yData: { key: string; dataType: "date" | "number" }
+  xKey: { key: string; dataType: "date" | "number" }
+  yKey: { key: string; dataType: "date" | "number" }
   groupBy?: string
   xAxis?: "top" | "bottom" | false
   yAxis?: "left" | "right" | false
@@ -15,11 +38,11 @@ export interface ScatterProps<T> {
 }
 
 export interface BarProps<T> {
-  data: any
+  data: Data[]
   height?: T
   width?: T
-  xData: { key: string }
-  yData: { key: string }
+  xKey: { key: string }
+  yKey: { key: string }
   groupBy?: string
   xAxis?: "top" | "bottom" | false
   yAxis?: "left" | "right" | false
@@ -30,11 +53,11 @@ export interface BarProps<T> {
 }
 
 export interface LineProps<T> {
-  data: any
+  data: Data[] 
   height?: T
   width?: T
-  xData: { key: string; dataType: "date" | "number" }
-  yData: { key: string; dataType: "date" | "number" }
+  xKey: { key: string; dataType: "date" | "number" }
+  yKey: { key: string; dataType: "date" | "number" }
   groupBy?: string
   xAxis?: "top" | "bottom" | false
   yAxis?: "left" | "right" | false
@@ -46,11 +69,11 @@ export interface LineProps<T> {
 }
 
 export interface AreaProps<T> {
-  data: any
+  data: Data[] 
   height?: T
   width?: T
-  xData: { key: string; dataType: "date" | "number" } // TODO: make dataType optional
-  yData: { key: string; dataType: "date" | "number" } // TODO: make dataType optional
+  xKey: { key: string; dataType: "date" | "number" } // TODO: make dataType optional
+  yKey: { key: string; dataType: "date" | "number" } // TODO: make dataType optional
   groupBy?: string
   xAxis?: "top" | "bottom" | false
   yAxis?: "left" | "right" | false

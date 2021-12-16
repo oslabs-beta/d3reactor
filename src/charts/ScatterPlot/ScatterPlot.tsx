@@ -7,8 +7,8 @@ export default function ScatterPlot({
   data,
   height = "100%",
   width = "100%",
-  xData,
-  yData,
+  xKey,
+  yKey,
   groupBy,
   xAxis = "bottom",
   yAxis = "left",
@@ -45,8 +45,8 @@ export default function ScatterPlot({
         height={cHeight}
         width={cWidth}
         data={data}
-        xData={xData}
-        yData={yData}
+        xKey={xKey}
+        yKey={yKey}
         groupBy={groupBy}
         xAxis={xAxis}
         yAxis={yAxis}

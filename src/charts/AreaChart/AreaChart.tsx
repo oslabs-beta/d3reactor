@@ -2,7 +2,6 @@
 import { useState, useEffect, useRef, useLayoutEffect } from "react";
 import AreaChartBody from "./AreaChartBody";
 import { AreaProps } from '../../../types'
-import { transformCountryData } from '../../utils'
 import * as d3 from "d3";
 
 
@@ -10,8 +9,8 @@ export default function AreaChart({
   data,
   height = "100%",
   width = "100%",
-  xData,
-  yData,
+  xKey,
+  yKey,
   groupBy,
   xAxis = 'bottom',
   yAxis = 'left',
@@ -45,19 +44,24 @@ export default function AreaChart({
   }, [windowSize]);
 
   // IF data is structured the wrong way, convert:
-  let dataTransformed;
+  // let dataTransformed;
   // dataTransformed = transformCountryData(data); //TODO: add conditional (requires typing input data)
 
-
+  // if (typeof xKey === 'string') {
+  //   xKey = {key: xKey}
+  // }
+  // if (typeof yKey === 'string') {
+  //   yKey = {key: yKey}
+  // }
 
   return (
       <svg ref={anchor} width={width} height={height}>
         <AreaChartBody
           height={cHeight}
           width={cWidth}
-          data={dataTransformed || data}
-          xData={xData}
-          yData={yData}
+          data={data}
+          xKey={xKey}
+          yKey={yKey}
           groupBy={groupBy}
           xAxis={xAxis}
           yAxis={yAxis}
