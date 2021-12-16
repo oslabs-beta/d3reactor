@@ -127,7 +127,7 @@ export interface ContinuousAxisProps {
   height: number
   width: number
   margin: Margin
-  ticksValue?: any;
+  xTicksValue?: any;
 }
 
 export interface DiscreteAxisProps {

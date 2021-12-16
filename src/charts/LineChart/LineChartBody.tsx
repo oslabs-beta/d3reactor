@@ -79,7 +79,8 @@ const LineChartBody = ({
       break
   }
 
-  //let xTicksValue = [xMin, ... xScale.ticks(), xMax]
+  let xTicksValue = [xMin, ... xScale.ticks(), xMax]
+  console.log("xcccticksvalue", xTicksValue)
 
 
   let yScale: ScaleFunc, yAccessor: AccessorFunc, yMin: Domain, yMax: Domain
@@ -91,9 +92,6 @@ const LineChartBody = ({
     .domain([yMin ?? 0, yMax ?? 0])
     .range([height - margin.top - margin.bottom, 0])
     .nice()
-  
-  //let yTicksValue = [yMin, ... yScale.ticks(), yMax]
-
 
   const groupAccessor: GroupAccessorFunc = (d) => {
     return d[groupBy ?? ""]
@@ -113,54 +111,55 @@ const LineChartBody = ({
 
   return (
     <g transform={translate}>
-      {groupBy ? (
-        d3.map(lineGroups, (lineGroup: [string, []], i) => {
-          return (
-            <path
-              key={i}
-              className="line"
-              fill="none"
-              stroke={colorScale(lineGroup[0])}
-              strokeWidth="1px"
-              d={line(lineGroup[1])}
-            />
-          )
-        })
-      ) : (
-        <path
-          className="line"
-          fill="none"
-          stroke={colorScale(yKey)}
-          strokeWidth="1px"
-          d={line(data)}
-        />
-      )}
       {yAxis && (
         <Axis
-          x={yAxisX}
-          y={yAxisY}
-          height={height}
-          width={width}
-          margin={margin}
-          scale={yScale}
-          type={yAxis}
-          yGrid={yGrid}
-          label={yAxisLabel}
+        x={yAxisX}
+        y={yAxisY}
+        height={height}
+        width={width}
+        margin={margin}
+        scale={yScale}
+        type={yAxis}
+        yGrid={yGrid}
+        label={yAxisLabel}
         />
-      )}
+        )}
       {xAxis && (
         <Axis
-          x={xAxisX}
-          y={xAxisY}
-          height={height}
-          width={width}
-          margin={margin}
-          scale={xScale}
-          type={xAxis}
-          xGrid={xGrid}
-          label={xAxisLabel}
+        x={xAxisX}
+        y={xAxisY}
+        height={height}
+        width={width}
+        margin={margin}
+        scale={xScale}
+        type={xAxis}
+        xGrid={xGrid}
+        label={xAxisLabel}
+        xTicksValue={xTicksValue}
         />
-      )}
+        )}
+        {groupBy ? (
+          d3.map(lineGroups, (lineGroup: [string, []], i) => {
+            return (
+              <path
+                key={i}
+                className="line"
+                fill="none"
+                stroke={colorScale(lineGroup[0])}
+                strokeWidth="1px"
+                d={line(lineGroup[1])}
+              />
+            )
+          })
+        ) : (
+          <path
+            className="line"
+            fill="none"
+            stroke={colorScale(yKey)}
+            strokeWidth="1px"
+            d={line(data)}
+          />
+        )}
     </g>
   )
 }
