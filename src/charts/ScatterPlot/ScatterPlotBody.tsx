@@ -8,6 +8,7 @@ import {
   getXAxisCoordinates,
   getYAxisCoordinates,
   getMargins,
+  inferXDataType,
 } from "../../utils"
 
 type AccessorFunc = (d: any) => number | Date
@@ -25,6 +26,7 @@ const ScatterPlotBody = ({
   height = 0,
   width = 0,
   xKey,
+  xDataType,
   yKey,
   groupBy,
   xAxis,
@@ -52,6 +54,12 @@ const ScatterPlotBody = ({
 
   const translate = `translate(${margin.left}, ${margin.top})`
 
+
+  // if no xKey datatype is passed in, determine if it's Date
+  if (!xDataType) {
+    xDataType = inferXDataType(data[0], xKey);
+  }
+
   let keys: string[] = [],
     groups: d3.InternMap<any, any[]>
   const groupAccessor = (d: any) => d[groupBy ?? ""]
@@ -59,9 +67,9 @@ const ScatterPlotBody = ({
   keys = Array.from(groups).map((group) => group[0])
 
   let xScale: ScaleFunc, xAccessor: AccessorFunc, xMin: Domain, xMax: Domain
-  switch (xKey.dataType) {
+  switch (xDataType) {
     case "number":
-      xAccessor = (d) => d[xKey.key]
+      xAccessor = (d) => d[xKey]
       xMin = d3.extent(data, xAccessor)[0]
       xMax = d3.extent(data, xAccessor)[1]
       xScale = d3
@@ -69,11 +77,9 @@ const ScatterPlotBody = ({
         .domain([xMin ?? 0, xMax ?? 0])
         .range([0, width - margin.right - margin.left])
         .nice()
-
-        
       break
     case "date":
-      xAccessor = (d) => new Date(d[xKey.key])
+      xAccessor = (d) => new Date(d[xKey])
       xMin = d3.extent(data, xAccessor)[0]
       xMax = d3.extent(data, xAccessor)[1]
       xScale = d3
@@ -81,8 +87,6 @@ const ScatterPlotBody = ({
         .domain([xMin ?? 0, xMax ?? 0])
         .range([0, width - margin.right - margin.left])
         .nice()
-
-        
       break
   }
 
@@ -90,7 +94,7 @@ const ScatterPlotBody = ({
 
 
   let yScale: ScaleFunc, yAccessor: AccessorFunc, yMin: Domain, yMax: Domain
-  yAccessor = (d) => d[yKey.key]
+  yAccessor = (d) => d[yKey]
   yMin = d3.extent(data, yAccessor)[0]
   yMax = d3.extent(data, yAccessor)[1]
   yScale = d3

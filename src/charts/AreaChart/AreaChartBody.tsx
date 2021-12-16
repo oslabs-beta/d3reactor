@@ -8,6 +8,7 @@ import {
   getXAxisCoordinates,
   getYAxisCoordinates,
   getMargins,
+  inferXDataType,
 } from "../../utils"
 import { isAssertClause } from "typescript"
 
@@ -41,6 +42,7 @@ const AreaChartBody = ({
   height = 0,
   width = 0,
   xKey,
+  xDataType,
   yKey,
   groupBy,
   xAxis,
@@ -55,36 +57,26 @@ const AreaChartBody = ({
     () => getMargins(xAxis, yAxis, xAxisLabel, yAxisLabel),
     [xAxis, yAxis, xAxisLabel, yAxisLabel]
   )
-
   const { xAxisX, xAxisY } = useMemo(
     () => getXAxisCoordinates(xAxis, height, margin),
     [height, xAxis, margin]
   )
-
   const { yAxisX, yAxisY } = useMemo(
     () => getYAxisCoordinates(yAxis, width, margin),
     [width, yAxis, margin]
   )
   // offset group to match position of axes
   const translate = `translate(${margin.left}, ${margin.top})`
-
-
-
+  
+  // type KeyType = { key: string; dataType?: "number" | "date" | undefined; }
+  
   // if no xKey datatype is passed in, determine if it's Date
-  if (!xKey.dataType) {
-    for (let i = 0; i < data.length; i++) {
-      const el = data[i];
-      if (typeof el[xKey.key] === 'string' && isNaN(Date.parse(el[xKey.key] as string))) {
-        xKey.dataType = 'number';
-        break;
-      } else {
-        xKey.dataType = 'date';
-      }
-    }
+  if (!xDataType) {
+    xDataType = inferXDataType(data[0], xKey);
   }
 
   // generate arr of keys. these are used to render discrete areas to be displayed
-  const keys: string[] = []
+  const keys: string[] = [];
   if (groupBy) {
     for (const entry of data) {
       const property = String(entry[groupBy ?? ""]);
@@ -92,9 +84,9 @@ const AreaChartBody = ({
         keys.push(property)
       }
     }
-    data = transformSkinnyToWide(data, keys, groupBy, xKey.key, yKey.key);
+    data = transformSkinnyToWide(data, keys, groupBy, xKey, yKey);
   } else {
-    keys.push(yKey.key)
+    keys.push(yKey)
   }
 
   // generate stack: an array of Series representing the x and associated y0 & y1 values for each area
@@ -102,15 +94,15 @@ const AreaChartBody = ({
   const layers = useMemo(() => {
     const layersTemp = stack(data as Iterable<{ [key: string]: number; }>);
     for (const series of layersTemp) {
-      series.sort((a, b) => b.data[xKey.key] - a.data[xKey.key]);
+      series.sort((a, b) => b.data[xKey] - a.data[xKey]);
     }
     return layersTemp;
   }, [data, keys])
 
   let xScale: ScaleFunc, xAccessor: AccessorFunc, xMin: Domain, xMax: Domain
-  switch (xKey.dataType) {
+  switch (xDataType as "date" | "number") { 
     case "number":
-      xAccessor = (d) => d[xKey.key]
+      xAccessor = (d) => d[xKey]
       xMin = d3.min(data, xAccessor)
       xMax = d3.max(data, xAccessor)
       xScale = d3
@@ -119,7 +111,7 @@ const AreaChartBody = ({
         .range([0, width - margin.right - margin.left])
       break
     case "date":
-      xAccessor = (d) => new Date(d[xKey.key])
+      xAccessor = (d) => new Date(d[xKey])
       xMin = d3.min(data, xAccessor)
       xMax = d3.max(data, xAccessor)
       xScale = d3

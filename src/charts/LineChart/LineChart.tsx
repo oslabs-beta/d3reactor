@@ -9,6 +9,7 @@ export default function LineChart({
   width = "100%",
   xKey,
   yKey,
+  xDataType,
   groupBy,
   xAxis = "bottom",
   yAxis = "left",
@@ -46,6 +47,7 @@ export default function LineChart({
         width={cWidth}
         data={data}
         xKey={xKey}
+        xDataType={xDataType}
         yKey={yKey}
         groupBy={groupBy}
         xAxis={xAxis}

@@ -48,21 +48,21 @@ const BarChartBody = ({
 
   const translate = `translate(${margin.left}, ${margin.top})`
 
-  if (!groupBy) groupBy = yKey.key
+  if (!groupBy) groupBy = yKey
   // When the yKey key has been assigned to the groupBy variable we know the user didn't specify grouping
-  const isNotGrouped: boolean = groupBy === yKey.key
+  const isNotGrouped: boolean = groupBy === yKey
   let keys: string[] = [],
     groups: d3.InternMap<any, any[]>
   const groupAccessor = (d: Data) => d[groupBy ?? ""]
   groups = d3.group(data, groupAccessor)
   keys = Array.from(groups).map((group) => group[0])
-  if (groupBy !== yKey.key) {
-    data = transformSkinnyToWide(data, keys, groupBy, xKey.key, yKey.key)
+  if (groupBy !== yKey) {
+    data = transformSkinnyToWide(data, keys, groupBy, xKey, yKey)
   }
   const stack = d3.stack().keys(keys).order(d3.stackOrderAscending)
   const layers = stack(data as Iterable<{ [key: string]: number; }>)
 
-  const xAccessor: AccessorFunc = (d) => d[xKey.key]
+  const xAccessor: AccessorFunc = (d) => d[xKey]
   const xScale: DiscreteScaleFunc = d3
     .scaleBand()
     .paddingInner(0.1)
@@ -74,7 +74,7 @@ const BarChartBody = ({
     0,
     d3.max(layers, (layer) => d3.max(layer, (sequence: any) => sequence[1])),
   ]
-  const yAccessor: AccessorFunc = (d) => d[yKey.key]
+  const yAccessor: AccessorFunc = (d) => d[yKey]
   if (isNotGrouped) yExtent = [0, d3.max(data, yAccessor)]
 
   const yScale: ContinuousScaleFunc = d3
@@ -111,7 +111,7 @@ const BarChartBody = ({
               y={yScale(yAccessor(d))}
               width={xScale.bandwidth()}
               height={xAxisY - yScale(yAccessor(d)) > 0 ? xAxisY - yScale(yAccessor(d)) : 0}
-              style={{ fill: colorScale(yKey.key) }}
+              style={{ fill: colorScale(yKey) }}
 
             />
           ))}
