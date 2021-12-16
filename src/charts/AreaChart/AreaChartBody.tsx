@@ -134,40 +134,40 @@ const AreaChartBody = ({
 
   return (
     <g transform={translate}>
-      {layers.map((layer, i) => (
-        <path
-          key={i}
-          d={areaGenerator(layer)}
-          style={{ fill: colorScale(layer.key) }}
-        />
-      ))}
       {yAxis && (
         <ContinuousAxis
-          x={yAxisX}
-          y={yAxisY}
-          height={height}
-          width={width}
-          margin={margin}
-          scale={yScale}
-          type={yAxis}
-          yGrid={yGrid}
-          label={yAxisLabel}
+        x={yAxisX}
+        y={yAxisY}
+        height={height}
+        width={width}
+        margin={margin}
+        scale={yScale}
+        type={yAxis}
+        yGrid={yGrid}
+        label={yAxisLabel}
         />
       )}
       {xAxis && (
         <ContinuousAxis
-          x={xAxisX}
-          y={xAxisY}
-          height={height}
-          width={width}
-          margin={margin}
-          scale={xScale}
-          xGrid={xGrid}
-          type={xAxis}
-          label={xAxisLabel}
-          xTicksValue={xTicksValue}
+        x={xAxisX}
+        y={xAxisY}
+        height={height}
+        width={width}
+        margin={margin}
+        scale={xScale}
+        xGrid={xGrid}
+        type={xAxis}
+        label={xAxisLabel}
+        xTicksValue={xTicksValue}
         />
       )}
+        {layers.map((layer, i) => (
+          <path
+            key={i}
+            d={areaGenerator(layer)}
+            style={{ fill: colorScale(layer.key) }}
+          />
+        ))}
     </g>
   )
 }

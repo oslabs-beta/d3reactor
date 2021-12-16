@@ -111,55 +111,55 @@ const LineChartBody = ({
 
   return (
     <g transform={translate}>
-      {groupBy ? (
-        d3.map(lineGroups, (lineGroup: [string, []], i) => {
-          return (
-            <path
-              key={i}
-              className="line"
-              fill="none"
-              stroke={colorScale(lineGroup[0])}
-              strokeWidth="1px"
-              d={line(lineGroup[1])}
-            />
-          )
-        })
-      ) : (
-        <path
-          className="line"
-          fill="none"
-          stroke={colorScale(yKey)}
-          strokeWidth="1px"
-          d={line(data)}
-        />
-      )}
       {yAxis && (
         <Axis
-          x={yAxisX}
-          y={yAxisY}
-          height={height}
-          width={width}
-          margin={margin}
-          scale={yScale}
-          type={yAxis}
-          yGrid={yGrid}
-          label={yAxisLabel}
+        x={yAxisX}
+        y={yAxisY}
+        height={height}
+        width={width}
+        margin={margin}
+        scale={yScale}
+        type={yAxis}
+        yGrid={yGrid}
+        label={yAxisLabel}
         />
-      )}
+        )}
       {xAxis && (
         <Axis
-          x={xAxisX}
-          y={xAxisY}
-          height={height}
-          width={width}
-          margin={margin}
-          scale={xScale}
-          type={xAxis}
-          xGrid={xGrid}
-          label={xAxisLabel}
-          xTicksValue={xTicksValue}
+        x={xAxisX}
+        y={xAxisY}
+        height={height}
+        width={width}
+        margin={margin}
+        scale={xScale}
+        type={xAxis}
+        xGrid={xGrid}
+        label={xAxisLabel}
+        xTicksValue={xTicksValue}
         />
-      )}
+        )}
+        {groupBy ? (
+          d3.map(lineGroups, (lineGroup: [string, []], i) => {
+            return (
+              <path
+                key={i}
+                className="line"
+                fill="none"
+                stroke={colorScale(lineGroup[0])}
+                strokeWidth="1px"
+                d={line(lineGroup[1])}
+              />
+            )
+          })
+        ) : (
+          <path
+            className="line"
+            fill="none"
+            stroke={colorScale(yKey)}
+            strokeWidth="1px"
+            d={line(data)}
+          />
+        )}
     </g>
   )
 }
