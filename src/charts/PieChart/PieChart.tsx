@@ -53,8 +53,8 @@ export default function PieChart({
         innerRadius={innerRadius}
         height = {cHeight}
         width = {cWidth}
-        value = {value}
-        label = {label}
+        value = {value} // value is the same as 'yKey' in other charts. Should we rename?
+        label = {label} // label is the same as 'group' in other charts. Should we rename?
         colorScheme={colorScheme}
       />
     </svg>

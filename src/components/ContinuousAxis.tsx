@@ -15,8 +15,11 @@ const ContinuousAxis = ({
   margin,
   xGrid,
   yGrid,
-  ticksValue
+  xTicksValue
 }: ContinuousAxisProps): JSX.Element => {
+  console.log(
+    "scaleleee", scale
+      )
   const gRef = useD3(
     (anchor) => {
       let axis: d3.Axis<d3.NumberValue>
@@ -48,11 +51,11 @@ const ContinuousAxis = ({
     () => getAxisLabelCoordinates(x, y, height, width, margin, type),
     [x, y, width, height, margin, type]
   )
-  console.log('scale ticks', scale.ticks())
+ 
   let grid: JSX.Element[] = []
   switch (true) {
-    case type === "bottom" && (xGrid || yGrid):
-      grid = (ticksValue ? ticksValue : scale.ticks())
+    case type === "bottom" && xGrid:
+      grid = (xTicksValue ? xTicksValue : scale.ticks())
               .map((tick:any, i:number) => (
           <line
             key={i}
@@ -65,8 +68,8 @@ const ContinuousAxis = ({
           ></line>
         ))
       break
-    case type === "top" && (xGrid || yGrid):
-      grid = (ticksValue ? ticksValue : scale.ticks())
+    case type === "top" && xGrid:
+      grid = (xTicksValue ? xTicksValue : scale.ticks())
         .map((tick:any, i:number) => (
           <line
             key={i}
@@ -79,8 +82,8 @@ const ContinuousAxis = ({
           ></line>
         ))
       break
-    case type === "left" && (xGrid || yGrid):
-      grid = (ticksValue ? ticksValue : scale.ticks())
+    case type === "left" && yGrid:
+      grid = scale.ticks()
               .map((tick:any, i:number) => (
           <line
             key={i}
@@ -93,8 +96,8 @@ const ContinuousAxis = ({
           ></line>
         ))
       break
-    case type === "right" && (xGrid || yGrid):
-      grid = (ticksValue ? ticksValue : scale.ticks())
+    case type === "right" && yGrid :
+      grid = scale.ticks()
             .map((tick:any, i:number) => (
           <line
             key={i}
@@ -106,10 +109,9 @@ const ContinuousAxis = ({
             stroke="currentColor"
           ></line>
         ))
+      
       break
   }
-
-
 
   return (
     <g>

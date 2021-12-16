@@ -13,13 +13,12 @@ import skinny_fruit from "./data/skinny_fruit.json"
 
 function App() {
   return (
-    <div className="App" >
+        <div>
         <PieChart
           data={fruit}
           label= "label"
           value = "value"
         />
-   
         <PieChart
           data={fruit}
           label= "label"
@@ -27,21 +26,26 @@ function App() {
           innerRadius = "70%"
           outerRadius = "80%"
         />
-      
 
         <AreaChart
           data={penguins}
-          height="100%"
+          height="300"
           width="100%"
-          xData={{ key: "body_mass_g", dataType: "number" }}
-          yData={{ key: "culmen_length_mm", dataType: "number" }}
+          xKey="body_mass_g"
+          xDataType="number"
+          yKey="culmen_length_mm"
           xGrid={true}
           yGrid={true}
+          xAxis="bottom"
+          yAxis="left"
+
         />
         <AreaChart
           data={skinny_fruit}
-          xData={{ key: "date", dataType: "date" }}
-          yData={{ key: "value", dataType: "number" }}
+          height="300"
+          xKey="date"
+          xDataType="date"
+          yKey="value"
           groupBy='fruit'
           xGrid={true}
           yGrid={true}
@@ -50,9 +54,11 @@ function App() {
         />
 
         <ScatterPlot
+          height="300"
           data={penguins}
-          xData={{ key: "flipper_length_mm", dataType: "number" }}
-          yData={{ key: "body_mass_g", dataType: "number" }}
+          xKey="flipper_length_mm"
+          xDataType="number"
+          yKey="body_mass_g"
           groupBy="species"
           xAxis="top"
           yAxis="right"
@@ -63,9 +69,10 @@ function App() {
         />
 
         <BarChart
+          height="300"
           data={skinny_fruit}
-          xData={{ key: "date"}}
-          yData={{ key: "value"}}
+          xKey="date"
+          yKey="value"
           groupBy='fruit'
           xAxis="bottom"
           yAxis="left"
@@ -74,9 +81,10 @@ function App() {
           yAxisLabel="Value"
         />
         <BarChart
+          height="300"
           data={skinny_fruit}
-          xData={{ key: "date"}}
-          yData={{ key: "value"}}
+          xKey="date"
+          yKey="value"
           // groupBy='fruit'
           xAxis="bottom"
           yAxis="left"
@@ -86,9 +94,11 @@ function App() {
         />
 
         <LineChart
+          height="300"
           data={unemployment}
-          xData={{ key: "date", dataType: "date" }}
-          yData={{ key: "unemployment", dataType: "number" }}
+          xKey="date"
+          xDataType="date"
+          yKey="unemployment"
           groupBy="division"
           xAxis="bottom"
           yAxis="left"
@@ -98,9 +108,11 @@ function App() {
           yAxisLabel="Unemployment"
         />
         <LineChart
+          height="300"
           data={portfolio}
-          xData={{ key: "date", dataType: "date" }}
-          yData={{ key: "value", dataType: "number" }}
+          xKey="date"
+          xDataType="date"
+          yKey="value"
           xAxis="bottom"
           yAxis="left"
           xGrid={true}
@@ -108,7 +120,6 @@ function App() {
           xAxisLabel="Date"
           yAxisLabel="Value"
         />
-
     
     </div>
   )

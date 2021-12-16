@@ -7,6 +7,7 @@ import {
   getXAxisCoordinates,
   getYAxisCoordinates,
   getMargins,
+  inferXDataType,
 } from "../../utils"
 
 type AccessorFunc = (d: any) => number | Date
@@ -20,8 +21,9 @@ const LineChartBody = ({
   data,
   height = 0,
   width = 0,
-  xData,
-  yData,
+  xKey,
+  xDataType,
+  yKey,
   groupBy,
   xAxis,
   xGrid,
@@ -48,10 +50,17 @@ const LineChartBody = ({
 
   const translate = `translate(${margin.left}, ${margin.top})`
 
+
+  // if no xKey datatype is passed in, determine if it's Date
+  if (!xDataType) {
+    xDataType = inferXDataType(data[0], xKey);
+  }
+
+
   let xScale: ScaleFunc, xAccessor: AccessorFunc, xMin: Domain, xMax: Domain
-  switch (xData.dataType) {
+  switch (xDataType) {
     case "number":
-      xAccessor = (d) => d[xData.key]
+      xAccessor = (d) => d[xKey]
       xMin = d3.min(data, xAccessor)
       xMax = d3.max(data, xAccessor)
       xScale = d3
@@ -60,7 +69,7 @@ const LineChartBody = ({
         .range([0, width - margin.right - margin.left])
       break
     case "date":
-      xAccessor = (d) => new Date(d[xData.key])
+      xAccessor = (d) => new Date(d[xKey])
       xMin = d3.min(data, xAccessor)
       xMax = d3.max(data, xAccessor)
       xScale = d3
@@ -70,35 +79,19 @@ const LineChartBody = ({
       break
   }
 
-  //let xTicksValue = [xMin, ... xScale.ticks(), xMax]
+  let xTicksValue = [xMin, ... xScale.ticks(), xMax]
+  console.log("xcccticksvalue", xTicksValue)
 
 
   let yScale: ScaleFunc, yAccessor: AccessorFunc, yMin: Domain, yMax: Domain
-  switch (yData.dataType) {
-    case "number":
-      yAccessor = (d: any) => d[yData.key]
-      yMin = d3.min(data, yAccessor)
-      yMax = d3.max(data, yAccessor)
-      yScale = d3
-        .scaleLinear()
-        .domain([yMin ?? 0, yMax ?? 0])
-        .range([height - margin.top - margin.bottom, 0])
-        .nice()
-      break
-    case "date":
-      yAccessor = (d: any) => new Date(d[yData.key])
-      yMin = d3.min(data, yAccessor)
-      yMax = d3.max(data, yAccessor)
-      yScale = d3
-        .scaleTime()
-        .domain([yMin ?? 0, yMax ?? 0])
-        .range([height - margin.top - margin.bottom, 0])
-        .nice()
-      break
-  }
-
-  //let yTicksValue = [yMin, ... yScale.ticks(), yMax]
-
+  yAccessor = (d: any) => d[yKey]
+  yMin = d3.min(data, yAccessor)
+  yMax = d3.max(data, yAccessor)
+  yScale = d3
+    .scaleLinear()
+    .domain([yMin ?? 0, yMax ?? 0])
+    .range([height - margin.top - margin.bottom, 0])
+    .nice()
 
   const groupAccessor: GroupAccessorFunc = (d) => {
     return d[groupBy ?? ""]
@@ -135,7 +128,7 @@ const LineChartBody = ({
         <path
           className="line"
           fill="none"
-          stroke={colorScale(yData.key)}
+          stroke={colorScale(yKey)}
           strokeWidth="1px"
           d={line(data)}
         />
@@ -164,6 +157,7 @@ const LineChartBody = ({
           type={xAxis}
           xGrid={xGrid}
           label={xAxisLabel}
+          xTicksValue={xTicksValue}
         />
       )}
     </g>

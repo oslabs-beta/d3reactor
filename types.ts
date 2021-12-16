@@ -1,9 +1,33 @@
+import { resolveModuleName } from "typescript"
+
+// import in the propNames 
+// const userDefinedPropNames = { xVal: 'date', yVal: 'value', group: 'fruit' } as const
+
+// interface PreData {
+//   xVal: number,
+//   yVal: number,
+//   group: string
+// }
+
+// type RenameProps<KeyMap extends Record<keyof ValueMap, string>, ValueMap> = {
+//   [K in keyof ValueMap as `${KeyMap[K]}`]: ValueMap[K]
+// }
+
+// export type Data = RenameProps<typeof userDefinedPropNames, PreData>
+
+
+export interface Data {
+  [key: string]: any
+}
+
+
 export interface ScatterProps<T> {
-  data: any
+  data: Data[]
   height?: T
   width?: T
-  xData: { key: string; dataType: "date" | "number" }
-  yData: { key: string; dataType: "date" | "number" }
+  xKey: string
+  xDataType?: "date" | "number"
+  yKey: string
   groupBy?: string
   xAxis?: "top" | "bottom" | false
   yAxis?: "left" | "right" | false
@@ -15,11 +39,11 @@ export interface ScatterProps<T> {
 }
 
 export interface BarProps<T> {
-  data: any
+  data: Data[]
   height?: T
   width?: T
-  xData: { key: string }
-  yData: { key: string }
+  xKey: string
+  yKey: string
   groupBy?: string
   xAxis?: "top" | "bottom" | false
   yAxis?: "left" | "right" | false
@@ -30,11 +54,12 @@ export interface BarProps<T> {
 }
 
 export interface LineProps<T> {
-  data: any
+  data: Data[] 
   height?: T
   width?: T
-  xData: { key: string; dataType: "date" | "number" }
-  yData: { key: string; dataType: "date" | "number" }
+  xKey: string
+  xDataType?: "date" | "number"
+  yKey: string
   groupBy?: string
   xAxis?: "top" | "bottom" | false
   yAxis?: "left" | "right" | false
@@ -46,11 +71,12 @@ export interface LineProps<T> {
 }
 
 export interface AreaProps<T> {
-  data: any
+  data: Data[] 
   height?: T
   width?: T
-  xData: { key: string; dataType: "date" | "number" } // TODO: make dataType optional
-  yData: { key: string; dataType: "date" | "number" } // TODO: make dataType optional
+  xKey: string 
+  xDataType?: "date" | "number"
+  yKey: string 
   groupBy?: string
   xAxis?: "top" | "bottom" | false
   yAxis?: "left" | "right" | false
@@ -101,7 +127,7 @@ export interface ContinuousAxisProps {
   height: number
   width: number
   margin: Margin
-  ticksValue?: any;
+  xTicksValue?: any;
 }
 
 export interface DiscreteAxisProps {
