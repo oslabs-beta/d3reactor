@@ -152,3 +152,20 @@ export interface CircleProps {
 
 export type ColorScale = d3.ScaleOrdinal<string, string, never>
 
+export type ScaleFunc =
+  | d3.ScaleLinear<number, number, never>
+  | d3.ScaleTime<number, number, never>
+
+export type AccessorFunc = (d: any) => number | Date;
+
+export type Domain = number | Date | undefined;
+
+export interface VoronoiProps {
+  fill: string
+  stroke: string
+  opacity: number
+  d: string | undefined
+}
+
+
+

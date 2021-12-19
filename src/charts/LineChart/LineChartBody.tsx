@@ -80,8 +80,6 @@ const LineChartBody = ({
   }
 
   let xTicksValue = [xMin, ... xScale.ticks(), xMax]
-  console.log("xcccticksvalue", xTicksValue)
-
 
   let yScale: ScaleFunc, yAccessor: AccessorFunc, yMin: Domain, yMax: Domain
   yAccessor = (d: any) => d[yKey]
