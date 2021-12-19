@@ -1,7 +1,8 @@
 /** App.js */
-import { useState, useEffect, useRef, useLayoutEffect } from "react"
-import ScatterPlotBody from "./ScatterPlotBody"
-import { ScatterProps } from "../../../types"
+import React, { useState, useEffect, useRef } from "react";
+import useEnvEffect from '../../hooks/useEnvEffect';
+import ScatterPlotBody from "./ScatterPlotBody";
+import { ScatterProps } from "../../../types";
 
 export default function ScatterPlot({
   data,
@@ -28,7 +29,7 @@ export default function ScatterPlot({
   }
 
   // Set up an event listener on mount
-  useLayoutEffect(() => {
+  useEnvEffect(() => {
     window.addEventListener("resize", updateSize)
     updateSize()
     return () => window.removeEventListener("resize", updateSize)

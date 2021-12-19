@@ -1,15 +1,15 @@
 /** LineChart.js */
-import { useMemo } from "react"
-import * as d3 from "d3"
-import ContinuousAxis from "../../components/ContinuousAxis"
-import DiscreteAxis from "../../components/DiscreteAxis"
-import { transformSkinnyToWide } from "../../utils"
-import { BarProps, ColorScale, Data } from "../../../types"
+import React, { useMemo } from "react";
+import * as d3 from "d3";
+import ContinuousAxis from "../../components/ContinuousAxis";
+import DiscreteAxis from "../../components/DiscreteAxis";
+import { transformSkinnyToWide } from "../../utils";
+import { BarProps, ColorScale, Data } from "../../../types";
 import {
   getXAxisCoordinates,
   getYAxisCoordinates,
   getMargins,
-} from "../../utils"
+} from "../../utils";
 
 type AccessorFunc = (d: any) => any // number | Date | string
 type ContinuousScaleFunc =

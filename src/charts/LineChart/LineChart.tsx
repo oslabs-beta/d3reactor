@@ -1,7 +1,8 @@
 /** App.js */
-import { useState, useEffect, useRef, useLayoutEffect } from "react"
-import LineChartBody from "./LineChartBody"
-import { LineProps } from "../../../types"
+import React, { useState, useEffect, useRef } from "react";
+import useEnvEffect from '../../hooks/useEnvEffect';
+import LineChartBody from "./LineChartBody";
+import { LineProps } from "../../../types";
 
 export default function LineChart({
   data,
@@ -28,7 +29,7 @@ export default function LineChart({
   }
 
   // Set up an event listener on mount
-  useLayoutEffect(() => {
+  useEnvEffect(() => {
     window.addEventListener("resize", updateSize)
     updateSize()
     return () => window.removeEventListener("resize", updateSize)

@@ -1,7 +1,8 @@
 /** App.js */
-import { useState, useEffect, useRef, useLayoutEffect } from "react"
-import BarChartBody from "./BarChartBody"
-import { BarProps } from "../../../types"
+import React, { useState, useEffect, useRef } from "react";
+import useEnvEffect from '../../hooks/useEnvEffect';
+import BarChartBody from "./BarChartBody";
+import { BarProps } from "../../../types";
 
 export default function BarChart({
   data,
@@ -26,7 +27,7 @@ export default function BarChart({
   }
 
   // Set up an event listener on mount
-  useLayoutEffect(() => {
+  useEnvEffect(() => {
     window.addEventListener("resize", updateSize)
     updateSize()
     return () => window.removeEventListener("resize", updateSize)

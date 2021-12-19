@@ -1,5 +1,5 @@
 /** LineChart.js */
-import { useMemo } from "react"
+import React, { useMemo } from "react"
 import * as d3 from "d3"
 import Axis from "../../components/ContinuousAxis"
 import Circle from "./Circle"
