@@ -1,6 +1,7 @@
 /** App.js */
-import { useState, useEffect, useRef, useLayoutEffect } from "react"
-import PieChartBody from "./PieChartBody"
+import React, { useState, useEffect, useRef } from "react";
+import useEnvEffect from '../../hooks/useEnvEffect';
+import PieChartBody from "./PieChartBody";
 import { PieChartProps } from "../../../types"
 import { checkRadiusDimension, calculateOuterRadius } from "../../utils"
 import * as d3 from "d3";
@@ -23,7 +24,7 @@ export default function PieChart({
   }
 
   // Set up an event listener on mount
-  useLayoutEffect(() => {
+  useEnvEffect(() => {
     window.addEventListener("resize", updateSize)
     updateSize()
     return () => window.removeEventListener("resize", updateSize)

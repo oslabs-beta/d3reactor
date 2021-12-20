@@ -1,8 +1,9 @@
 /** App.js */
-import { useState, useEffect, useRef, useLayoutEffect } from "react";
-import AreaChartBody from "./AreaChartBody";
-import { AreaProps } from '../../../types'
+import React, { useState, useEffect, useRef } from "react";
+import useEnvEffect from '../../hooks/useEnvEffect';
 import * as d3 from "d3";
+import AreaChartBody from "./AreaChartBody";
+import { AreaProps } from '../../../types';
 
 
 export default function AreaChart({
@@ -32,7 +33,7 @@ export default function AreaChart({
   }
 
   // Set up an event listener on mount
-  useLayoutEffect(() => {
+  useEnvEffect(() => {
     window.addEventListener("resize", updateSize);
     updateSize();
     return () => window.removeEventListener("resize", updateSize);

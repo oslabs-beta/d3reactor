@@ -1,4 +1,5 @@
 /* eslint-disable no-unused-vars */
+import React from "react"
 import "./App.css"
 import BarChart from "./charts/BarChart/BarChart"
 import LineChart from "./charts/LineChart/LineChart"

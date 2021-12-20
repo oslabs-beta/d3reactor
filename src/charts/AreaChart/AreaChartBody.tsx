@@ -1,16 +1,15 @@
 /** AreaChart.js */
-import { useMemo } from "react"
-import * as d3 from "d3"
-import ContinuousAxis from "../../components/ContinuousAxis"
-import { AreaProps } from "../../../types"
-import { transformSkinnyToWide } from "../../utils"
+import React, { useMemo } from "react";
+import * as d3 from "d3";
+import ContinuousAxis from "../../components/ContinuousAxis";
+import { AreaProps } from "../../../types";
+import { transformSkinnyToWide } from "../../utils";
 import {
   getXAxisCoordinates,
   getYAxisCoordinates,
   getMargins,
   inferXDataType,
-} from "../../utils"
-import { isAssertClause } from "typescript"
+} from "../../utils";
 
 type AccessorFunc = (d: any) => number | Date
 type Domain = number | Date | undefined

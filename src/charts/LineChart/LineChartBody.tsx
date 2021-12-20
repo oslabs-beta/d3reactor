@@ -1,14 +1,14 @@
 /** LineChart.js */
-import { useMemo } from "react"
-import * as d3 from "d3"
-import Axis from "../../components/ContinuousAxis"
-import { LineProps, ColorScale } from "../../../types"
+import React, { useMemo } from "react";
+import * as d3 from "d3";
+import Axis from "../../components/ContinuousAxis";
+import { LineProps, ColorScale } from "../../../types";
 import {
   getXAxisCoordinates,
   getYAxisCoordinates,
   getMargins,
   inferXDataType,
-} from "../../utils"
+} from "../../utils";
 
 type AccessorFunc = (d: any) => number | Date
 type GroupAccessorFunc = (d: any) => number | Date
