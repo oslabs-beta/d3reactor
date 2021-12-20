@@ -1,5 +1,4 @@
-import * as d3 from "d3"
-import { Margin } from "../types"
+import { Margin} from "../types"
 
 export function getXAxisCoordinates(
   xAxis: "top" | "bottom" | false = "bottom",
@@ -230,3 +229,4 @@ export function inferXDataType( el: any, xKey: string) {
   }
   return xDataType;
 }
+

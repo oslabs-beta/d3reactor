@@ -1,4 +1,4 @@
-import { useMemo } from "react"
+import React, { useMemo } from "react"
 import * as d3 from "d3"
 import { useD3 } from "../hooks/useD3"
 import { DiscreteAxisProps } from "../../types"
@@ -16,23 +16,22 @@ const Axis = ({
 }: DiscreteAxisProps): JSX.Element => {
   const gRef = useD3(
     (anchor) => {
-      let axis = d3.axisBottom(scale).tickPadding(10)
-
+      let axis = d3.axisBottom(scale)
       switch (type) {
         case "bottom":
-          axis = d3.axisBottom(scale).tickPadding(10)
+          axis = d3.axisBottom(scale)
           break
         case "top":
-          axis = d3.axisTop(scale).tickPadding(10)
+          axis = d3.axisTop(scale)
           break
         case "left":
-          axis = d3.axisLeft(scale).tickPadding(10)
+          axis = d3.axisLeft(scale)
           break
         case "right":
-          axis = d3.axisRight(scale).tickPadding(10)
+          axis = d3.axisRight(scale)
           break
         default:
-          axis = d3.axisRight(scale).tickPadding(10)
+          axis = d3.axisRight(scale)
           break
       }
 

@@ -1,16 +1,15 @@
 /** AreaChart.js */
-import { useMemo } from "react"
-import * as d3 from "d3"
-import ContinuousAxis from "../../components/ContinuousAxis"
-import { AreaProps, ColorScale } from "../../../types"
-import { transformSkinnyToWide } from "../../utils"
+import React, { useMemo } from "react";
+import * as d3 from "d3";
+import ContinuousAxis from "../../components/ContinuousAxis";
+import { AreaProps, ColorScale }  from "../../../types";
+import { transformSkinnyToWide } from "../../utils";
 import {
   getXAxisCoordinates,
   getYAxisCoordinates,
   getMargins,
   inferXDataType,
-} from "../../utils"
-import { isAssertClause } from "typescript"
+} from "../../utils";
 
 type AccessorFunc = (d: any) => number | Date
 type Domain = number | Date | undefined
@@ -18,22 +17,6 @@ type ScaleFunc =
   | d3.ScaleLinear<number, number, never>
   | d3.ScaleTime<number, number, never>
 
-type Series = d3.Series<
-  {
-    [key: string]: number
-  },
-  string
->[]
-
-type Stack = d3.Stack<
-  any,
-  {
-    [key: string]: number
-  },
-  string
->
-
-type Area = d3.Area<any>
 
 const AreaChartBody = ({
   data,
@@ -119,7 +102,7 @@ const AreaChartBody = ({
       break
   }
 
-  //let xTicksValue = [xMin, ... xScale.ticks(), xMax]
+  let xTicksValue = [xMin, ... xScale.ticks(), xMax]
 
 
   const yExtent = [
@@ -136,7 +119,6 @@ const AreaChartBody = ({
     .range([height - margin.top - margin.bottom, 0])
     .nice()
 
-  let yTicksValue = [yMin, ... yScale.ticks(), yMax]
 
   const areaGenerator: any = d3
     .area()
@@ -149,39 +131,40 @@ const AreaChartBody = ({
 
   return (
     <g transform={translate}>
-      {layers.map((layer, i) => (
-        <path
-          key={i}
-          d={areaGenerator(layer)}
-          style={{ fill: colorScale(layer.key) }}
-        />
-      ))}
       {yAxis && (
         <ContinuousAxis
-          x={yAxisX}
-          y={yAxisY}
-          height={height}
-          width={width}
-          margin={margin}
-          scale={yScale}
-          type={yAxis}
-          yGrid={yGrid}
-          label={yAxisLabel}
+        x={yAxisX}
+        y={yAxisY}
+        height={height}
+        width={width}
+        margin={margin}
+        scale={yScale}
+        type={yAxis}
+        yGrid={yGrid}
+        label={yAxisLabel}
         />
       )}
       {xAxis && (
         <ContinuousAxis
-          x={xAxisX}
-          y={xAxisY}
-          height={height}
-          width={width}
-          margin={margin}
-          scale={xScale}
-          xGrid={xGrid}
-          type={xAxis}
-          label={xAxisLabel}
+        x={xAxisX}
+        y={xAxisY}
+        height={height}
+        width={width}
+        margin={margin}
+        scale={xScale}
+        xGrid={xGrid}
+        type={xAxis}
+        label={xAxisLabel}
+        xTicksValue={xTicksValue}
         />
       )}
+        {layers.map((layer, i) => (
+          <path
+            key={i}
+            d={areaGenerator(layer)}
+            style={{ fill: colorScale(layer.key) }}
+          />
+        ))}
     </g>
   )
 }

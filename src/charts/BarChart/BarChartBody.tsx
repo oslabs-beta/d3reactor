@@ -1,15 +1,15 @@
 /** LineChart.js */
-import { useMemo } from "react"
-import * as d3 from "d3"
-import ContinuousAxis from "../../components/ContinuousAxis"
-import DiscreteAxis from "../../components/DiscreteAxis"
-import { transformSkinnyToWide } from "../../utils"
-import { BarProps, ColorScale, Data } from "../../../types"
+import React, { useMemo } from "react";
+import * as d3 from "d3";
+import ContinuousAxis from "../../components/ContinuousAxis";
+import DiscreteAxis from "../../components/DiscreteAxis";
+import { transformSkinnyToWide } from "../../utils";
+import { BarProps, ColorScale, Data } from "../../../types";
 import {
   getXAxisCoordinates,
   getYAxisCoordinates,
   getMargins,
-} from "../../utils"
+} from "../../utils";
 
 type AccessorFunc = (d: any) => any // number | Date | string
 type ContinuousScaleFunc =
@@ -89,57 +89,57 @@ const BarChartBody = ({
   return (
 
     <g transform={translate}>
-      {!isNotGrouped
-        ? layers.map((layer: any, i: number) => (
-            <g key={i}>
-              {layer.map((sequence: any, i: number) => (
-                <rect
-                  key={i}
-                  x={xScale(xAccessor(sequence.data))}
-                  y={yScale(sequence[1])}
-                  width={xScale.bandwidth()}
-                  height={yScale(sequence[0]) - yScale(sequence[1]) > 0 ? yScale(sequence[0]) - yScale(sequence[1]) : 0}
-                  style={{ fill: colorScale(layer.key) }}
-                />
-              ))}
-            </g>
-          ))
-        : data.map((d: any, i: number) => (
-            <rect
-              key={i}
-              x={xScale(xAccessor(d))}
-              y={yScale(yAccessor(d))}
-              width={xScale.bandwidth()}
-              height={xAxisY - yScale(yAccessor(d)) > 0 ? xAxisY - yScale(yAccessor(d)) : 0}
-              style={{ fill: colorScale(yKey) }}
-
-            />
-          ))}
       {yAxis && (
         <ContinuousAxis
-          x={yAxisX}
-          y={yAxisY}
-          height={height}
-          width={width}
-          margin={margin}
-          scale={yScale}
-          type={yAxis}
-          yGrid={yGrid}
-          label={yAxisLabel}
+        x={yAxisX}
+        y={yAxisY}
+        height={height}
+        width={width}
+        margin={margin}
+        scale={yScale}
+        type={yAxis}
+        yGrid={yGrid}
+        label={yAxisLabel}
         />
-      )}
+        )}
       {xAxis && (
         <DiscreteAxis
-          x={xAxisX}
-          y={xAxisY}
-          height={height}
-          width={width}
-          margin={margin}
-          scale={xScale}
-          type={xAxis}
-          label={xAxisLabel}
+        x={xAxisX}
+        y={xAxisY}
+        height={height}
+        width={width}
+        margin={margin}
+        scale={xScale}
+        type={xAxis}
+        label={xAxisLabel}
         />
-      )}
+        )}
+        {!isNotGrouped
+          ? layers.map((layer: any, i: number) => (
+              <g key={i}>
+                {layer.map((sequence: any, i: number) => (
+                  <rect
+                    key={i}
+                    x={xScale(xAccessor(sequence.data))}
+                    y={yScale(sequence[1])}
+                    width={xScale.bandwidth()}
+                    height={yScale(sequence[0]) - yScale(sequence[1]) > 0 ? yScale(sequence[0]) - yScale(sequence[1]) : 0}
+                    style={{ fill: colorScale(layer.key) }}
+                  />
+                ))}
+              </g>
+            ))
+          : data.map((d: any, i: number) => (
+              <rect
+                key={i}
+                x={xScale(xAccessor(d))}
+                y={yScale(yAccessor(d))}
+                width={xScale.bandwidth()}
+                height={xAxisY - yScale(yAccessor(d)) > 0 ? xAxisY - yScale(yAccessor(d)) : 0}
+                style={{ fill: colorScale(yKey) }}
+  
+              />
+            ))}
     </g>
   )
 }

@@ -1,6 +1,8 @@
 import * as d3 from "d3"
 import { PieChartBodyProps } from "../../../types"
 import { ColorLegend } from "../../components/ColorLegend"
+import React from "react";
+
 
 const PieChartBody = ({
   data,
