@@ -3,28 +3,28 @@ import { Margin, Data, ScaleFunc, AccessorFunc, Domain } from "../../types"
 
 
 
-export function xScaleDef (data: Data[], xDataType: 'date' | 'number', xAccessor: AccessorFunc, margin: Margin, width: number) {
-  let xScale: ScaleFunc, xMin: Domain, xMax: Domain
+export function xScaleDef (data: Data[], xDataType: 'date' | 'number', xAccessor: AccessorFunc, margin: Margin, width: number, chart: 'ScatterPlot' | 'LineChart') { 
+  let xScale: ScaleFunc;
+  const [xMin, xMax] = d3.extent(data, xAccessor)
   switch (xDataType) {
     case "number":
-      xMin = d3.extent(data, xAccessor)[0]
-      xMax = d3.extent(data, xAccessor)[1]
       xScale = d3
         .scaleLinear()
         .domain([xMin ?? 0, xMax ?? 0])
         .range([0, width - margin.right - margin.left])
-        .nice()
+        chart === 'ScatterPlot' ? 
+        xScale.nice() : null
       break
     case "date":
-      xMin = d3.extent(data, xAccessor)[0]
-      xMax = d3.extent(data, xAccessor)[1]
       xScale = d3
         .scaleTime()
         .domain([xMin ?? 0, xMax ?? 0])
         .range([0, width - margin.right - margin.left])
-        .nice()
+
+        chart === 'ScatterPlot' ? 
+        xScale.nice() : null
       break
   }
 
-    return xScale;
+    return {xScale, xMin, xMax};
   }

@@ -2,7 +2,7 @@
 import React, { useMemo } from "react";
 import * as d3 from "d3";
 import ContinuousAxis from "../../components/ContinuousAxis";
-import { AreaProps } from "../../../types";
+import { AreaChartProps } from "../../../types";
 import { transformSkinnyToWide } from "../../utils";
 import {
   getXAxisCoordinates,
@@ -35,7 +35,7 @@ const AreaChartBody = ({
   xAxisLabel,
   yAxisLabel,
   colorScheme, // TODO: replace with custom default color scheme?
-}: AreaProps<number>): JSX.Element => {
+}: AreaChartProps<number>): JSX.Element => {
   const margin = useMemo(
     () => getMargins(xAxis, yAxis, xAxisLabel, yAxisLabel),
     [xAxis, yAxis, xAxisLabel, yAxisLabel]

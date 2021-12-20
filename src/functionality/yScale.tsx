@@ -2,11 +2,10 @@ import * as d3 from 'd3';
 import { Margin, Data, Domain, AccessorFunc } from "../../types"
 
 
-export function yScaleDef (data: Data[], margin: Margin, height: number, yAccessor: AccessorFunc) {
+export function yScaleDef (data: Data[], yAccessor: AccessorFunc, margin: Margin, height: number) {
 
-  let yScale: d3.ScaleLinear<number, number, never>, yMin: Domain, yMax: Domain
-  yMin = d3.extent(data, yAccessor)[0]
-  yMax = d3.extent(data, yAccessor)[1]
+  let yScale: d3.ScaleLinear<number, number, never>
+  const [yMin, yMax] = d3.extent(data, yAccessor)
   yScale = d3
     .scaleLinear()
     .domain([yMin ?? 0, yMax ?? 0])

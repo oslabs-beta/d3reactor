@@ -1,8 +1,18 @@
 /** App.js */
-import React, { useState, useEffect, useRef } from "react";
-import useEnvEffect from '../../hooks/useEnvEffect';
-import LineChartBody from "./LineChartBody";
-import { LineProps } from "../../../types";
+import React, { useMemo } from "react";
+import { useResponsive } from '../../hooks/useResponsive';
+import * as d3 from "d3";
+import Axis from "../../components/ContinuousAxis";
+import Line from '../../components/Line';
+import { LineChartProps, ColorScale, AccessorFunc, GroupAccessorFunc } from "../../../types";
+import {
+  getXAxisCoordinates,
+  getYAxisCoordinates,
+  getMargins,
+  inferXDataType,
+} from "../../utils";
+import { yScaleDef } from '../../functionality/yScale';
+import { xScaleDef } from '../../functionality/xScale';
 
 export default function LineChart({
   data,
@@ -18,46 +28,110 @@ export default function LineChart({
   yGrid = false,
   xAxisLabel,
   yAxisLabel,
-}: LineProps<string | number>): JSX.Element {
-  const anchor = useRef(null as unknown as SVGSVGElement)
-  const [windowSize, setWindowSize] = useState<[number, number]>([0, 0])
-  const [cHeight, setCHeight] = useState<number>(0)
-  const [cWidth, setCWidth] = useState<number>(0)
+  colorScheme = d3.schemeCategory10,
+}: LineChartProps<string | number>): JSX.Element {
+  
+  const chart = 'LineChart';
 
-  function updateSize() {
-    setWindowSize([window.innerWidth, window.innerHeight])
+  const {anchor, cHeight, cWidth}  = useResponsive();
+
+  const margin = useMemo(
+    () => getMargins(xAxis, yAxis, xAxisLabel, yAxisLabel),
+    [xAxis, yAxis, xAxisLabel, yAxisLabel]
+  )
+
+  const { xAxisX, xAxisY } = useMemo(
+    () => getXAxisCoordinates(xAxis, cHeight, margin),
+    [cHeight, xAxis, margin]
+  )
+
+  const { yAxisX, yAxisY } = useMemo(
+    () => getYAxisCoordinates(yAxis, cWidth, margin),
+    [cWidth, yAxis, margin]
+  )
+
+  const translate = `translate(${margin.left}, ${margin.top})`
+
+  // if no xKey datatype is passed in, determine if it's Date
+  if (!xDataType) {
+    xDataType = inferXDataType(data[0], xKey);
   }
 
-  // Set up an event listener on mount
-  useEnvEffect(() => {
-    window.addEventListener("resize", updateSize)
-    updateSize()
-    return () => window.removeEventListener("resize", updateSize)
-  }, [])
+  const xAccessor: AccessorFunc = xDataType === 'number' ? (d) => d[xKey] : (d) => new Date(d[xKey]);
+  const yAccessor: AccessorFunc = (d) => d[yKey];
 
-  useEffect(() => {
-    const container = anchor.current.getBoundingClientRect()
-    setCHeight(container.height)
-    setCWidth(container.width)
-  }, [windowSize])
+  const yScale = yScaleDef(data, yAccessor, margin, cHeight);
+  const {xScale, xMin, xMax} = xScaleDef(data, xDataType, xAccessor, margin, cWidth, chart);
+  
+  let xTicksValue = [xMin, ... xScale.ticks(), xMax]
+
+  let keys: Iterable<string> = []
+  const groupAccessor: GroupAccessorFunc = (d) => {
+    return d[groupBy ?? ""]
+  }
+  const lineGroups: any = d3.group(data, (d) => groupAccessor(d))
+  keys = Array.from(lineGroups).map((group: any) => group[0])
+  const line: any = d3
+    .line()
+    .curve(d3.curveLinear)
+    .x((d) => xScale(xAccessor(d)))
+    .y((d) => yScale(yAccessor(d)))
+
+  const colorScale: ColorScale = d3.scaleOrdinal(colorScheme)
+  colorScale.domain(keys)
+
 
   return (
     <svg ref={anchor} width={width} height={height}>
-      <LineChartBody
+      <g transform={translate}>
+      {yAxis && (
+        <Axis
+        x={yAxisX}
+        y={yAxisY}
         height={cHeight}
         width={cWidth}
-        data={data}
-        xKey={xKey}
-        xDataType={xDataType}
-        yKey={yKey}
-        groupBy={groupBy}
-        xAxis={xAxis}
-        yAxis={yAxis}
-        xGrid={xGrid}
+        margin={margin}
+        scale={yScale}
+        type={yAxis}
         yGrid={yGrid}
-        xAxisLabel={xAxisLabel}
-        yAxisLabel={yAxisLabel}
-      />
+        label={yAxisLabel}
+        />
+        )}
+      {xAxis && (
+        <Axis
+        x={xAxisX}
+        y={xAxisY}
+        height={cHeight}
+        width={cWidth}
+        margin={margin}
+        scale={xScale}
+        type={xAxis}
+        xGrid={xGrid}
+        label={xAxisLabel}
+        xTicksValue={xTicksValue}
+        />
+        )}
+        {groupBy ? (
+          d3.map(lineGroups, (lineGroup: [string, []], i) => {
+            return (
+              <Line
+                key={i}
+                fill="none"
+                stroke={colorScale(lineGroup[0])}
+                strokeWidth="1px"
+                d={line(lineGroup[1])}
+              />
+            )
+          })
+        ) : (
+          <Line
+            fill="none"
+            stroke={colorScale(yKey)}
+            strokeWidth="1px"
+            d={line(data)}
+          />
+        )}
+    </g>
     </svg>
   )
 }
