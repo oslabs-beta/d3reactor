@@ -17,9 +17,6 @@ const ContinuousAxis = ({
   yGrid,
   xTicksValue
 }: ContinuousAxisProps): JSX.Element => {
-  console.log(
-    "scaleleee", scale
-      )
   const gRef = useD3(
     (anchor) => {
       let axis: d3.Axis<d3.NumberValue>
