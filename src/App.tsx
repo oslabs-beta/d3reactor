@@ -20,7 +20,7 @@ function App() {
               label= "label"
               value = "value"
               legend = {true}
-              outerRadius = {50}
+              outerRadius = {240}
             />
           <div id='pie-with-legend' style={{width:600, height:600}}>
             

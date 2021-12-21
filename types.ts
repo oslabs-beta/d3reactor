@@ -156,12 +156,14 @@ export type ColorScale = d3.ScaleOrdinal<string, string, never>
 
 export interface ColorLegendProps {
   colorScale: ColorScale,
-  tickSpacing: number
+  tickSpacing?: number
   circleRadius: number
-  tickTextOffset: number
-  colorLegendLabel: string
-  xPosition: number,
-  yPosition: number
+  tickTextOffset?: number
+  colorLegendLabel?: string
+  xPosition?: number
+  yPosition?: number
+  legendPosition?: 'right-center' |'right-top' |'right-bottom' 
+  fontSize?: number
 }
 export type ScaleFunc =
   | d3.ScaleLinear<number, number, never>
