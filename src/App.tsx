@@ -30,7 +30,7 @@ function App() {
 
         <AreaChart
           data={penguins}
-          height="300"
+          height="700"
           width="100%"
           xKey="body_mass_g"
           xDataType="number"
