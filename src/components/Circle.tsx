@@ -1,5 +1,5 @@
 import React from 'react';
-import {CircleProps} from '../../../types'
+import {CircleProps} from '../../types'
 
 const Circle = ({cx, cy, r=4, color}: CircleProps):JSX.Element => {
   return (

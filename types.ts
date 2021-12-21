@@ -21,7 +21,7 @@ export interface Data {
 }
 
 
-export interface ScatterProps<T> {
+export interface ScatterPlotProps<T> {
   data: Data[]
   height?: T
   width?: T
@@ -38,7 +38,7 @@ export interface ScatterProps<T> {
   colorScheme?: string[] | readonly string[]
 }
 
-export interface BarProps<T> {
+export interface BarChartProps<T> {
   data: Data[]
   height?: T
   width?: T
@@ -53,7 +53,7 @@ export interface BarProps<T> {
   colorScheme?: string[] | readonly string[]
 }
 
-export interface LineProps<T> {
+export interface LineChartProps<T> {
   data: Data[] 
   height?: T
   width?: T
@@ -70,7 +70,7 @@ export interface LineProps<T> {
   colorScheme?: string[] | readonly string[]
 }
 
-export interface AreaProps<T> {
+export interface AreaChartProps<T> {
   data: Data[] 
   height?: T
   width?: T
@@ -150,5 +150,39 @@ export interface CircleProps {
   color: string
 }
 
+export interface LineProps {
+  fill: string
+  stroke: string
+  strokeWidth: string
+  d: string | undefined
+}
+
+export interface VoronoiProps {
+  fill: string
+  stroke: string
+  opacity: number
+  d: string | undefined
+}
+
 export type ColorScale = d3.ScaleOrdinal<string, string, never>
+
+export type ScaleFunc =
+  | d3.ScaleLinear<number, number, never>
+  | d3.ScaleTime<number, number, never>
+
+export type AccessorFunc = (d: any) => number | Date;
+
+export type Domain = number | Date | undefined;
+
+export interface VoronoiProps {
+  fill: string
+  stroke: string
+  opacity: number
+  d: string | undefined
+}
+
+export type GroupAccessorFunc = (d: any) => number | Date
+
+
+
 
