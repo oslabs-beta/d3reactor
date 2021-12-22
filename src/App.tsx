@@ -14,120 +14,111 @@ import skinny_fruit from "./data/skinny_fruit.json"
 
 function App() {
   return (
-        <div className='app'>
-          <PieChart
-              data={fruit}
-              label= "label"
-              value = "value"
-              legend = {true}
-              outerRadius = {240}
-            />
-          <div id='pie-with-legend' style={{width:600, height:600}}>
-            
-          </div>
-        <PieChart
-          data={fruit}
-          label= "label"
-          value = "value"
-          innerRadius = "70%"
-          outerRadius = "80%"
-        />
-
-        <AreaChart
-          data={penguins}
-          height="700"
-          width="100%"
-          xKey="body_mass_g"
-          xDataType="number"
-          yKey="culmen_length_mm"
-          xGrid={true}
-          yGrid={true}
-          xAxis="bottom"
-          yAxis="left"
-
-        />
-        <AreaChart
-          data={skinny_fruit}
-          height="300"
-          xKey="date"
-          xDataType="date"
-          yKey="value"
-          groupBy='fruit'
-          xGrid={true}
-          yGrid={true}
-          xAxisLabel="Date"
-          yAxisLabel="Number of fruit" 
-        />
-
-        <ScatterPlot
-          height='100%'
-          width = '100%'
-          data={penguins.slice(150)}
-          xKey="flipper_length_mm"
-          xDataType="number"
-          yKey="body_mass_g"
-          groupBy="species"
-          xAxis="bottom"
-          yAxis="right"
-          xGrid={true}
-          yGrid={true}
-          xAxisLabel="Date"
-          yAxisLabel="Value"
-        />
-
-        <BarChart
-          height="300"
-          data={skinny_fruit}
-          xKey="date"
-          yKey="value"
-          groupBy='fruit'
-          xAxis="bottom"
-          yAxis="left"
-          yGrid={true}
-          xAxisLabel="Date"
-          yAxisLabel="Value"
-        />
-        <BarChart
-          height="300"
-          data={skinny_fruit}
-          xKey="date"
-          yKey="value"
-          // groupBy='fruit'
-          xAxis="bottom"
-          yAxis="left"
-          yGrid={true}
-          xAxisLabel="Date"
-          yAxisLabel="Value"
-        />
-
-        <LineChart
-          height="100%"
-          data={unemployment}
-          xKey="date"
-          xDataType="date"
-          yKey="unemployment"
-          groupBy="division"
-          xAxis="bottom"
-          yAxis="left"
-          xGrid={true}
-          yGrid={true}
-          xAxisLabel="Date"
-          yAxisLabel="Unemployment"
-        />
-        <LineChart
-          height="500"
-          data={portfolio}
-          xKey="date"
-          xDataType="date"
-          yKey="value"
-          xAxis="bottom"
-          yAxis="left"
-          xGrid={true}
-          yGrid={true}
-          xAxisLabel="Date"
-          yAxisLabel="Value"
-        />
-  
+    <div className="app">
+      {/* <PieChart
+        data={fruit}
+        label="label"
+        value="value"
+        legend={true}
+        outerRadius={240}
+      />
+      <PieChart
+        data={fruit}
+        label="label"
+        value="value"
+        innerRadius="70%"
+        outerRadius="80%"
+      />
+      <AreaChart
+        data={penguins}
+        height="700"
+        width="100%"
+        xKey="body_mass_g"
+        xDataType="number"
+        yKey="culmen_length_mm"
+        xGrid={true}
+        yGrid={true}
+        xAxis="bottom"
+        yAxis="left"
+      />
+      <AreaChart
+        data={skinny_fruit}
+        height="300"
+        xKey="date"
+        xDataType="date"
+        yKey="value"
+        groupBy="fruit"
+        xGrid={true}
+        yGrid={true}
+        xAxisLabel="Date"
+        yAxisLabel="Number of fruit"
+      /> */}
+      <ScatterPlot
+        height="100%"
+        width="100%"
+        data={penguins.slice(150)}
+        xKey="flipper_length_mm"
+        xDataType="number"
+        yKey="body_mass_g"
+        // groupBy="species"
+        xAxis="bottom"
+        yAxis="right"
+        // xGrid={true}
+        // yGrid={true}
+        xAxisLabel="Date"
+        yAxisLabel="Value"
+      />
+      {/* <BarChart
+        height="300"
+        data={skinny_fruit}
+        xKey="date"
+        yKey="value"
+        groupBy="fruit"
+        xAxis="bottom"
+        yAxis="left"
+        yGrid={true}
+        xAxisLabel="Date"
+        yAxisLabel="Value"
+      />
+      <BarChart
+        height="300"
+        data={skinny_fruit}
+        xKey="date"
+        yKey="value"
+        // groupBy='fruit'
+        xAxis="bottom"
+        yAxis="left"
+        yGrid={true}
+        xAxisLabel="Date"
+        yAxisLabel="Value"
+      />
+      <LineChart
+        height="100%"
+        data={unemployment}
+        xKey="date"
+        xDataType="date"
+        yKey="unemployment"
+        groupBy="division"
+        xAxis="bottom"
+        yAxis="left"
+        xGrid={true}
+        yGrid={true}
+        xAxisLabel="Date"
+        yAxisLabel="Unemployment"
+      />
+      <LineChart
+        height="500"
+        data={portfolio}
+        xKey="date"
+        xDataType="date"
+        yKey="value"
+        xAxis="bottom"
+        yAxis="left"
+        xGrid={true}
+        yGrid={true}
+        xAxisLabel="Date"
+        yAxisLabel="Value"
+      /> */}
     </div>
   )
 }
