@@ -157,6 +157,7 @@ export interface LineProps {
   stroke: string
   strokeWidth: string
   d: string | undefined
+  id?: string | number 
 }
 
 export interface VoronoiProps {

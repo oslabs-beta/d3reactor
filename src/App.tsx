@@ -25,7 +25,7 @@ function App() {
           <div id='pie-with-legend' style={{width:600, height:600}}>
             
           </div>
-        {/* <PieChart
+        <PieChart
           data={fruit}
           label= "label"
           value = "value"
@@ -126,7 +126,7 @@ function App() {
           yGrid={true}
           xAxisLabel="Date"
           yAxisLabel="Value"
-        /> */}
+        />
   
     </div>
   )
