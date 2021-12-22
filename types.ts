@@ -1,6 +1,6 @@
 import { resolveModuleName } from "typescript"
 
-// import in the propNames 
+// import in the propNames
 // const userDefinedPropNames = { xVal: 'date', yVal: 'value', group: 'fruit' } as const
 
 // interface PreData {
@@ -15,11 +15,9 @@ import { resolveModuleName } from "typescript"
 
 // export type Data = RenameProps<typeof userDefinedPropNames, PreData>
 
-
 export interface Data {
   [key: string]: any
 }
-
 
 export interface ScatterPlotProps<T> {
   data: Data[]
@@ -54,7 +52,7 @@ export interface BarChartProps<T> {
 }
 
 export interface LineChartProps<T> {
-  data: Data[] 
+  data: Data[]
   height?: T
   width?: T
   xKey: string
@@ -71,12 +69,12 @@ export interface LineChartProps<T> {
 }
 
 export interface AreaChartProps<T> {
-  data: Data[] 
+  data: Data[]
   height?: T
   width?: T
-  xKey: string 
+  xKey: string
   xDataType?: "date" | "number"
-  yKey: string 
+  yKey: string
   groupBy?: string
   xAxis?: "top" | "bottom" | false
   yAxis?: "left" | "right" | false
@@ -101,8 +99,8 @@ export interface PieChartBodyProps {
   data: any
   height: number
   width: number
-  innerRadius: number 
-  outerRadius: number 
+  innerRadius: number
+  outerRadius: number
   value: string
   label: string
   colorScheme?: string[] | readonly string[]
@@ -129,7 +127,7 @@ export interface ContinuousAxisProps {
   height: number
   width: number
   margin: Margin
-  xTicksValue?: any;
+  xTicksValue?: any
 }
 
 export interface DiscreteAxisProps {
@@ -157,7 +155,7 @@ export interface LineProps {
   stroke: string
   strokeWidth: string
   d: string | undefined
-  id?: string | number 
+  id?: string | number
 }
 
 export interface VoronoiProps {
@@ -165,28 +163,30 @@ export interface VoronoiProps {
   stroke: string
   opacity: number
   d: string | undefined
+  cellCenter?: { cx: number; cy: number }
+  setTooltip?: React.Dispatch<any>
 }
 
 export type ColorScale = d3.ScaleOrdinal<string, string, never>
 
 export interface ColorLegendProps {
-  colorScale: ColorScale,
+  colorScale: ColorScale
   tickSpacing?: number
   circleRadius: number
   tickTextOffset?: number
   colorLegendLabel?: string
   xPosition?: number
   yPosition?: number
-  legendPosition?: 'right-center' |'right-top' |'right-bottom' 
+  legendPosition?: "right-center" | "right-top" | "right-bottom"
   fontSize?: number
 }
 export type ScaleFunc =
   | d3.ScaleLinear<number, number, never>
   | d3.ScaleTime<number, number, never>
 
-export type AccessorFunc = (d: any) => number | Date;
+export type AccessorFunc = (d: any) => number | Date
 
-export type Domain = number | Date | undefined;
+export type Domain = number | Date | undefined
 
 export interface VoronoiProps {
   fill: string
@@ -196,7 +196,3 @@ export interface VoronoiProps {
 }
 
 export type GroupAccessorFunc = (d: any) => number | Date
-
-
-
-
