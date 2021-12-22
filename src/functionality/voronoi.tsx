@@ -8,6 +8,7 @@ export function d3Voronoi (data: Data[], xScale:ScaleFunc, yScale: d3.ScaleLinea
     (d) => xScale(xAccessor(d)),
     (d) => yScale(yAccessor(d))
   )
+
   let voronoi: d3.Voronoi<string> = null as unknown as d3.Voronoi<string>
   if (height && width) {
     voronoi = delaunay.voronoi([
