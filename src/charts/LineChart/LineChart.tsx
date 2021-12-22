@@ -4,7 +4,14 @@ import { useResponsive } from '../../hooks/useResponsive';
 import * as d3 from "d3";
 import Axis from "../../components/ContinuousAxis";
 import Line from '../../components/Line';
-import { LineChartProps, ColorScale, xAccessorFunc, yAccessorFunc, Data, GroupAccessorFunc } from "../../../types";
+import { 
+  LineChartProps, 
+  ColorScale, 
+  xAccessorFunc, 
+  yAccessorFunc, 
+  Data, 
+  GroupAccessorFunc 
+} from "../../../types";
 import {
   getXAxisCoordinates,
   getYAxisCoordinates,
