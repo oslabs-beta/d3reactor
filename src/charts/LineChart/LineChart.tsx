@@ -4,15 +4,18 @@ import { useResponsive } from '../../hooks/useResponsive';
 import * as d3 from "d3";
 import Axis from "../../components/ContinuousAxis";
 import Line from '../../components/Line';
-import { LineChartProps, ColorScale, AccessorFunc, GroupAccessorFunc } from "../../../types";
+import { LineChartProps, ColorScale, AccessorFunc, Data, GroupAccessorFunc } from "../../../types";
 import {
   getXAxisCoordinates,
   getYAxisCoordinates,
   getMargins,
   inferXDataType,
 } from "../../utils";
+import VoronoiCell from "../../components/VoronoiCell";
 import { yScaleDef } from '../../functionality/yScale';
 import { xScaleDef } from '../../functionality/xScale';
+import { d3Voronoi } from '../../functionality/voronoi';
+
 
 export default function LineChart({
   data,
@@ -77,6 +80,9 @@ export default function LineChart({
     .x((d) => xScale(xAccessor(d)))
     .y((d) => yScale(yAccessor(d)))
 
+  const voronoi = d3Voronoi(data, xScale, yScale, xAccessor, yAccessor, cHeight, cWidth, margin)
+
+
   const colorScale: ColorScale = d3.scaleOrdinal(colorScheme)
   colorScale.domain(keys)
 
@@ -131,6 +137,13 @@ export default function LineChart({
             d={line(data)}
           />
         )}
+        {voronoi && (
+        <g className="voronoi-wrapper">
+          {data.map((_elem: Data, i: number) => (
+            <VoronoiCell key={i} fill='none' stroke="#ff1493" opacity={0.5} d={voronoi.renderCell(i)}/>
+          ))}
+        </g>)
+}
     </g>
     </svg>
   )

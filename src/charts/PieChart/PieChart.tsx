@@ -1,10 +1,11 @@
 /** App.js */
-import React, { useState, useEffect, useRef } from "react";
-import useEnvEffect from '../../hooks/useEnvEffect';
-import PieChartBody from "./PieChartBody";
-import { PieChartProps } from "../../../types"
-import { checkRadiusDimension, calculateOuterRadius } from "../../utils"
+import React from "react";
 import * as d3 from "d3";
+import { useResponsive } from '../../hooks/useResponsive';
+import { PieChartProps } from "../../../types";
+import { ColorLegend } from "../../components/ColorLegend";
+import Line from '../../components/Line';
+import { checkRadiusDimension, calculateOuterRadius } from "../../utils";
 
 export default function PieChart({
   data,
@@ -15,29 +16,8 @@ export default function PieChart({
   colorScheme = d3.schemeCategory10,
   legend
 }: PieChartProps): JSX.Element {
-  const anchor = useRef(null as unknown as SVGSVGElement)
-  const [windowSize, setWindowSize] = useState<[number, number]>([0, 0])
-  const [cHeight, setCHeight] = useState<number>(0)
-  const [cWidth, setCWidth] = useState<number>(0)
 
-  function updateSize() {
-    setWindowSize([window.innerWidth, window.innerHeight])
-  }
-
-  // Set up an event listener on mount
-  useEnvEffect(() => {
-    window.addEventListener("resize", updateSize)
-    updateSize()
-    return () => window.removeEventListener("resize", updateSize)
-  }, [])
-
-  useEffect(() => {
-    const container = anchor.current.getBoundingClientRect()
-    setCHeight(container.height)
-    setCWidth(container.width)
-  }, [windowSize])
-
-  //ASK: how to handle margins for PieChart
+  const {anchor, cHeight, cWidth}  = useResponsive();
   
   const margin = {
     top: 20,
@@ -47,19 +27,73 @@ export default function PieChart({
   };
   outerRadius = outerRadius ? checkRadiusDimension(cHeight,cWidth, outerRadius, margin): calculateOuterRadius(cHeight,cWidth,margin)
   innerRadius = innerRadius ? checkRadiusDimension(outerRadius, outerRadius, innerRadius, margin) : 0
+
+  const colors = colorScheme
+  type ColorScale = d3.ScaleOrdinal<string, string, never>
+
+  const translate = `translate(${cWidth/2}, ${cHeight/2})`
+  
+  const keys: string[] = []
+  for (let entry of data) {
+    const property = entry[label];
+    if (property && !keys.includes(property)) {
+      keys.push(property)
+    }
+  }
+
+  const colorScale: ColorScale = d3.scaleOrdinal(colorScheme)
+  colorScale.domain(keys)
+
+  const arcGenerator : any = d3
+    .arc()
+    .innerRadius(innerRadius)
+    .outerRadius(outerRadius);
+
+  const pieGenerator : any = d3
+    .pie()
+    .padAngle(0)
+    .value((d : any) => d[value]);
+
+  const pie : any = pieGenerator(data)
+
+  const textTranform = (d : any) => {
+    const [x , y] = arcGenerator.centroid(d);
+    return `translate(${x}, ${y})`
+  }
+
   return(
     <svg ref={anchor} width={"100%"} height={"100%"}>
-      <PieChartBody
-        data={data}
-        outerRadius={outerRadius}
-        innerRadius={innerRadius}
-        height = {cHeight}
-        width = {cWidth}
-        value = {value} // value is the same as 'yKey' in other charts. Should we rename?
-        label = {label} // label is the same as 'group' in other charts. Should we rename?
-        colorScheme={colorScheme}
-        legend={legend}
-      />
+     <g transform = {translate}  >
+        {pie.map((d: any, i:number) => 
+        <g key = {"g" + i} >
+          <Line 
+            key={d.label}
+            fill={colorScale(keys[i])}
+            stroke = "#ffffff"
+            strokeWidth = "0px"
+            d = {arcGenerator(d)}
+            id = {"arc-" + i}
+          />
+        <text
+          transform = {textTranform(d)}
+          textAnchor = {"middle"}
+          alignmentBaseline = {"middle"}
+          fill = {"black"}
+        >
+          {d.data[value]}
+        </text>
+        </g>)}
+        { // If legend prop is true, render legend component:
+        legend && <ColorLegend 
+          colorLegendLabel={'Fruit' /**we need a way to derive this either from data or as an extra prop passed in */} 
+          xPosition={outerRadius+15 /* Where legend is placed on page */}
+          yPosition={0/* Where legend is placed on page */}
+          circleRadius={5 /* Radius of each color swab in legend */}
+          // tickSpacing={22 /* Vertical space between each line of legend */}
+          // tickTextOffset={12 /* How much the text label is pushed to the right of the color swab */}
+          colorScale={colorScale}
+        />}
+      </g>
     </svg>
   )
 }
