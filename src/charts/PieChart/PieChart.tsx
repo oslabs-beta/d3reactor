@@ -12,7 +12,8 @@ export default function PieChart({
   value,
   outerRadius,
   innerRadius,
-  colorScheme = d3.schemeCategory10
+  colorScheme = d3.schemeCategory10,
+  legend
 }: PieChartProps): JSX.Element {
   const anchor = useRef(null as unknown as SVGSVGElement)
   const [windowSize, setWindowSize] = useState<[number, number]>([0, 0])
@@ -57,6 +58,7 @@ export default function PieChart({
         value = {value} // value is the same as 'yKey' in other charts. Should we rename?
         label = {label} // label is the same as 'group' in other charts. Should we rename?
         colorScheme={colorScheme}
+        legend={legend}
       />
     </svg>
   )

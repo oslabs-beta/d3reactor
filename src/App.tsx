@@ -15,12 +15,17 @@ import skinny_fruit from "./data/skinny_fruit.json"
 function App() {
   return (
         <div className='app'>
-        <PieChart
-          data={fruit}
-          label= "label"
-          value = "value"
-        />
-        <PieChart
+          <PieChart
+              data={fruit}
+              label= "label"
+              value = "value"
+              legend = {true}
+              outerRadius = {240}
+            />
+          <div id='pie-with-legend' style={{width:600, height:600}}>
+            
+          </div>
+        {/* <PieChart
           data={fruit}
           label= "label"
           value = "value"
@@ -121,7 +126,7 @@ function App() {
           yGrid={true}
           xAxisLabel="Date"
           yAxisLabel="Value"
-        />
+        /> */}
   
     </div>
   )
