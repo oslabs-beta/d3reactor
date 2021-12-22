@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import useEnvEffect from '../../hooks/useEnvEffect';
 import BarChartBody from "./BarChartBody";
-import { BarProps } from "../../../types";
+import { BarChartProps } from "../../../types";
 
 export default function BarChart({
   data,
@@ -16,7 +16,7 @@ export default function BarChart({
   yGrid = false,
   xAxisLabel,
   yAxisLabel,
-}: BarProps<string | number>): JSX.Element {
+}: BarChartProps<string | number>): JSX.Element {
   const anchor = useRef(null as unknown as SVGSVGElement)
   const [windowSize, setWindowSize] = useState<[number, number]>([0, 0])
   const [cHeight, setCHeight] = useState<number>(0)

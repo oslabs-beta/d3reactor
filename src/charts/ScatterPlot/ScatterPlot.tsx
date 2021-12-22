@@ -8,7 +8,7 @@ import { d3Voronoi } from '../../functionality/voronoi';
 import { xScaleDef } from '../../functionality/xScale';
 import { yScaleDef } from '../../functionality/yScale';
 import VoronoiCell from "../../components/VoronoiCell";
-import { ScatterProps, Data, AccessorFunc, ColorScale } from "../../../types"
+import { ScatterPlotProps, Data, AccessorFunc, ColorScale } from "../../../types"
 import {
   getXAxisCoordinates,
   getYAxisCoordinates,
@@ -32,7 +32,9 @@ export default function ScatterPlot({
   xAxisLabel,
   yAxisLabel,
   colorScheme = d3.schemeCategory10,
-}: ScatterProps<string | number>): JSX.Element {
+}: ScatterPlotProps<string | number>): JSX.Element {
+
+const chart = 'ScatterPlot';
   
 const {anchor, cHeight, cWidth}  = useResponsive();
 
@@ -67,8 +69,8 @@ keys = Array.from(groups).map((group) => group[0])
 const xAccessor: AccessorFunc = xDataType === 'number' ? (d) => d[xKey] : (d) => new Date(d[xKey]);
 const yAccessor: AccessorFunc = (d) => d[yKey];
 
-const xScale = xScaleDef(data, xDataType, xAccessor, margin, cWidth);
-const yScale = yScaleDef(data, margin, cHeight, yAccessor);
+const {xScale} = xScaleDef(data, xDataType, xAccessor, margin, cWidth, chart);
+const yScale = yScaleDef(data, yAccessor, margin, cHeight);
 
 const voronoi = d3Voronoi(data, xScale, yScale, xAccessor, yAccessor, cHeight, cWidth, margin)
 

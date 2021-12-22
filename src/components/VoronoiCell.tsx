@@ -1,11 +1,6 @@
 import React from 'react';
+import {VoronoiProps} from '../../types'
 
-interface VoronoiProps {
-  fill: string
-  stroke: string
-  opacity: number
-  d: string | undefined
-}
 
 const VoronoiCell = ({fill, stroke, opacity, d} : VoronoiProps) : JSX.Element => {
   return(

@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef } from "react";
 import useEnvEffect from '../../hooks/useEnvEffect';
 import * as d3 from "d3";
 import AreaChartBody from "./AreaChartBody";
-import { AreaProps } from '../../../types';
+import { AreaChartProps } from '../../../types';
 
 
 export default function AreaChart({
@@ -21,7 +21,7 @@ export default function AreaChart({
   xAxisLabel,
   yAxisLabel,
   colorScheme = d3.schemeCategory10
-}:AreaProps<string | number>):JSX.Element {
+}:AreaChartProps<string | number>):JSX.Element {
 
   const anchor = useRef(null as unknown as SVGSVGElement);
   const [windowSize, setWindowSize] = useState<[number, number]>([0, 0]);

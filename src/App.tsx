@@ -35,7 +35,7 @@ function App() {
 
         <AreaChart
           data={penguins}
-          height="300"
+          height="700"
           width="100%"
           xKey="body_mass_g"
           xDataType="number"
@@ -101,7 +101,7 @@ function App() {
         />
 
         <LineChart
-          height="300"
+          height="100%"
           data={unemployment}
           xKey="date"
           xDataType="date"
@@ -115,7 +115,7 @@ function App() {
           yAxisLabel="Unemployment"
         />
         <LineChart
-          height="300"
+          height="500"
           data={portfolio}
           xKey="date"
           xDataType="date"
