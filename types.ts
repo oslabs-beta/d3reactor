@@ -1,21 +1,3 @@
-import { resolveModuleName } from "typescript"
-
-// import in the propNames 
-// const userDefinedPropNames = { xVal: 'date', yVal: 'value', group: 'fruit' } as const
-
-// interface PreData {
-//   xVal: number,
-//   yVal: number,
-//   group: string
-// }
-
-// type RenameProps<KeyMap extends Record<keyof ValueMap, string>, ValueMap> = {
-//   [K in keyof ValueMap as `${KeyMap[K]}`]: ValueMap[K]
-// }
-
-// export type Data = RenameProps<typeof userDefinedPropNames, PreData>
-
-
 export interface Data {
   [key: string]: any
 }
@@ -184,7 +166,9 @@ export type ScaleFunc =
   | d3.ScaleLinear<number, number, never>
   | d3.ScaleTime<number, number, never>
 
-export type AccessorFunc = (d: any) => number | Date;
+export type xAccessorFunc = (d: any) => number | Date;
+
+export type yAccessorFunc = (d: any) => number;
 
 export type Domain = number | Date | undefined;
 

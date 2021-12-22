@@ -8,7 +8,7 @@ import { d3Voronoi } from '../../functionality/voronoi';
 import { xScaleDef } from '../../functionality/xScale';
 import { yScaleDef } from '../../functionality/yScale';
 import VoronoiCell from "../../components/VoronoiCell";
-import { ScatterPlotProps, Data, AccessorFunc, ColorScale } from "../../../types"
+import { ScatterPlotProps, Data, ColorScale, xAccessorFunc, yAccessorFunc } from "../../../types"
 import {
   getXAxisCoordinates,
   getYAxisCoordinates,
@@ -66,8 +66,8 @@ groups = d3.group(data, groupAccessor)
 keys = Array.from(groups).map((group) => group[0])
 
 
-const xAccessor: AccessorFunc = xDataType === 'number' ? (d) => d[xKey] : (d) => new Date(d[xKey]);
-const yAccessor: AccessorFunc = (d) => d[yKey];
+const xAccessor: xAccessorFunc = xDataType === 'number' ? (d) => d[xKey] : (d) => new Date(d[xKey]);
+const yAccessor: yAccessorFunc = (d) => d[yKey];
 
 const {xScale} = xScaleDef(data, xDataType, xAccessor, margin, cWidth, chart);
 const yScale = yScaleDef(data, yAccessor, margin, cHeight);
