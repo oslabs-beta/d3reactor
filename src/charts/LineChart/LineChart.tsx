@@ -1,28 +1,28 @@
 /** App.js */
-import React, { useMemo } from "react";
-import { useResponsive } from '../../hooks/useResponsive';
-import * as d3 from "d3";
-import Axis from "../../components/ContinuousAxis";
-import Line from '../../components/Line';
-import { 
-  LineChartProps, 
-  ColorScale, 
-  xAccessorFunc, 
-  yAccessorFunc, 
-  Data, 
-  GroupAccessorFunc 
-} from "../../../types";
+import React, { useState, useMemo } from "react"
+import { useResponsive } from "../../hooks/useResponsive"
+import * as d3 from "d3"
+import Axis from "../../components/ContinuousAxis"
+import Line from "../../components/Line"
+import {
+  LineChartProps,
+  ColorScale,
+  xAccessorFunc,
+  yAccessorFunc,
+  Data,
+  GroupAccessorFunc,
+} from "../../../types"
 import {
   getXAxisCoordinates,
   getYAxisCoordinates,
   getMargins,
   inferXDataType,
-} from "../../utils";
-import VoronoiCell from "../../components/VoronoiCell";
-import { yScaleDef } from '../../functionality/yScale';
-import { xScaleDef } from '../../functionality/xScale';
-import { d3Voronoi } from '../../functionality/voronoi';
-
+} from "../../utils"
+import VoronoiCell from "../../components/VoronoiCell"
+import Tooltip from "../../components/Tooltip"
+import { yScaleDef } from "../../functionality/yScale"
+import { xScaleDef } from "../../functionality/xScale"
+import { d3Voronoi } from "../../functionality/voronoi"
 
 export default function LineChart({
   data,
@@ -40,10 +40,10 @@ export default function LineChart({
   yAxisLabel,
   colorScheme = d3.schemeCategory10,
 }: LineChartProps<string | number>): JSX.Element {
-  
-  const chart = 'LineChart';
+  const [tooltip, setTooltip] = useState<false | any>(false)
+  const chart = "LineChart"
 
-  const {anchor, cHeight, cWidth}  = useResponsive();
+  const { anchor, cHeight, cWidth } = useResponsive()
 
   const margin = useMemo(
     () => getMargins(xAxis, yAxis, xAxisLabel, yAxisLabel),
@@ -64,16 +64,24 @@ export default function LineChart({
 
   // if no xKey datatype is passed in, determine if it's Date
   if (!xDataType) {
-    xDataType = inferXDataType(data[0], xKey);
+    xDataType = inferXDataType(data[0], xKey)
   }
 
-  const xAccessor: xAccessorFunc = xDataType === 'number' ? (d) => d[xKey] : (d) => new Date(d[xKey]);
-  const yAccessor: yAccessorFunc = (d) => d[yKey];
+  const xAccessor: xAccessorFunc =
+    xDataType === "number" ? (d) => d[xKey] : (d) => new Date(d[xKey])
+  const yAccessor: yAccessorFunc = (d) => d[yKey]
 
-  const yScale = yScaleDef(data, yAccessor, margin, cHeight);
-  const {xScale, xMin, xMax} = xScaleDef(data, xDataType, xAccessor, margin, cWidth, chart);
-  
-  let xTicksValue = [xMin, ... xScale.ticks(), xMax]
+  const yScale = yScaleDef(data, yAccessor, margin, cHeight)
+  const { xScale, xMin, xMax } = xScaleDef(
+    data,
+    xDataType,
+    xAccessor,
+    margin,
+    cWidth,
+    chart
+  )
+
+  let xTicksValue = [xMin, ...xScale.ticks(), xMax]
 
   let keys: Iterable<string> = []
   const groupAccessor: GroupAccessorFunc = (d) => {
@@ -87,42 +95,49 @@ export default function LineChart({
     .x((d) => xScale(xAccessor(d)))
     .y((d) => yScale(yAccessor(d)))
 
-  const voronoi = d3Voronoi(data, xScale, yScale, xAccessor, yAccessor, cHeight, cWidth, margin)
-
+  const voronoi = d3Voronoi(
+    data,
+    xScale,
+    yScale,
+    xAccessor,
+    yAccessor,
+    cHeight,
+    cWidth,
+    margin
+  )
 
   const colorScale: ColorScale = d3.scaleOrdinal(colorScheme)
   colorScale.domain(keys)
 
-
   return (
     <svg ref={anchor} width={width} height={height}>
       <g transform={translate}>
-      {yAxis && (
-        <Axis
-        x={yAxisX}
-        y={yAxisY}
-        height={cHeight}
-        width={cWidth}
-        margin={margin}
-        scale={yScale}
-        type={yAxis}
-        yGrid={yGrid}
-        label={yAxisLabel}
-        />
+        {yAxis && (
+          <Axis
+            x={yAxisX}
+            y={yAxisY}
+            height={cHeight}
+            width={cWidth}
+            margin={margin}
+            scale={yScale}
+            type={yAxis}
+            yGrid={yGrid}
+            label={yAxisLabel}
+          />
         )}
-      {xAxis && (
-        <Axis
-        x={xAxisX}
-        y={xAxisY}
-        height={cHeight}
-        width={cWidth}
-        margin={margin}
-        scale={xScale}
-        type={xAxis}
-        xGrid={xGrid}
-        label={xAxisLabel}
-        xTicksValue={xTicksValue}
-        />
+        {xAxis && (
+          <Axis
+            x={xAxisX}
+            y={xAxisY}
+            height={cHeight}
+            width={cWidth}
+            margin={margin}
+            scale={xScale}
+            type={xAxis}
+            xGrid={xGrid}
+            label={xAxisLabel}
+            xTicksValue={xTicksValue}
+          />
         )}
         {groupBy ? (
           d3.map(lineGroups, (lineGroup: [string, []], i) => {
@@ -145,13 +160,26 @@ export default function LineChart({
           />
         )}
         {voronoi && (
-        <g className="voronoi-wrapper">
-          {data.map((_elem: Data, i: number) => (
-            <VoronoiCell key={i} fill='none' stroke="#ff1493" opacity={0.5} d={voronoi.renderCell(i)}/>
-          ))}
-        </g>)
-}
-    </g>
+          <g className="voronoi-wrapper">
+            {data.map((element: Data, i: number) => (
+              <VoronoiCell
+                key={i}
+                fill="none"
+                stroke="#ff1493"
+                opacity={0.5}
+                d={voronoi.renderCell(i)}
+                cellCenter={{
+                  cx: xScale(xAccessor(element)),
+                  cy: yScale(yAccessor(element)),
+                }}
+                setTooltip={setTooltip}
+              />
+            ))}
+          </g>
+        )}
+
+        {tooltip && <Tooltip x={tooltip.cx} y={tooltip.cy} />}
+      </g>
     </svg>
   )
 }
