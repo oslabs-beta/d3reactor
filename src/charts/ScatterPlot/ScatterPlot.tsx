@@ -41,7 +41,6 @@ export default function ScatterPlot({
   colorScheme = d3.schemeCategory10,
 }: ScatterPlotProps<string | number>): JSX.Element {
   const [tooltip, setTooltip] = useState<false | any>(false)
-  console.log("Tooltip in Scatter ", tooltip)
   const chart = "ScatterPlot"
 
   const { anchor, cHeight, cWidth } = useResponsive()
