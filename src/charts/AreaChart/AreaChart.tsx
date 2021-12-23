@@ -88,7 +88,7 @@ export default function AreaChart({
   const {xScale, xMin, xMax} = xScaleDef(data, xDataType, xAccessor, margin, cWidth, chart);
   const yScale = yScaleDef(layers, yAccessor, margin, cHeight, chart);   
   
-  let xTicksValue = [xMin, ... xScale.ticks(), xMax]
+  let xTicksValue = [xMin, ...xScale.ticks(), xMax]
 
   const areaGenerator: any = d3
     .area()
@@ -98,10 +98,6 @@ export default function AreaChart({
 
   const colorScale: ColorScale = d3.scaleOrdinal(colorScheme)
   colorScale.domain(keys)
-
-  // IF data is structured the wrong way, convert:
-  // let dataTransformed;
-  // dataTransformed = transformCountryData(data); //TODO: add conditional (requires typing input data)
 
   return (
       <svg ref={anchor} width={width} height={height}>
