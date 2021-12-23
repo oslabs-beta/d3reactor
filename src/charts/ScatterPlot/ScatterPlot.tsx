@@ -4,6 +4,7 @@ import * as d3 from "d3"
 import { useResponsive } from "../../hooks/useResponsive"
 import Axis from "../../components/ContinuousAxis"
 import Circle from "../../components/Circle"
+
 import { d3Voronoi } from "../../functionality/voronoi"
 import { xScaleDef } from "../../functionality/xScale"
 import { yScaleDef } from "../../functionality/yScale"
@@ -12,7 +13,8 @@ import Tooltip from "../../components/Tooltip"
 import {
   ScatterPlotProps,
   Data,
-  AccessorFunc,
+  xAccessorFunc, 
+  yAccessorFunc,
   ColorScale,
 } from "../../../types"
 import {
@@ -70,9 +72,8 @@ export default function ScatterPlot({
   groups = d3.group(data, groupAccessor)
   keys = Array.from(groups).map((group) => group[0])
 
-  const xAccessor: AccessorFunc =
-    xDataType === "number" ? (d) => d[xKey] : (d) => new Date(d[xKey])
-  const yAccessor: AccessorFunc = (d) => d[yKey]
+const xAccessor: xAccessorFunc = xDataType === 'number' ? (d) => d[xKey] : (d) => new Date(d[xKey]);
+const yAccessor: yAccessorFunc = (d) => d[yKey];
 
   const { xScale } = xScaleDef(
     data,

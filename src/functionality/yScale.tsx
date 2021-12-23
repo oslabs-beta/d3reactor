@@ -1,12 +1,13 @@
 import * as d3 from 'd3';
-import { Margin, Data, Domain, AccessorFunc } from "../../types"
+import { Margin, Data, Domain, yAccessorFunc } from "../../types"
 
 
-export function yScaleDef (data: Data[], yAccessor: AccessorFunc, margin: Margin, height: number) {
+export function yScaleDef (data: Data[], yAccessor: yAccessorFunc, margin: Margin, height: number, chart?: string) {
 
-  let yScale: d3.ScaleLinear<number, number, never>
-  const [yMin, yMax] = d3.extent(data, yAccessor)
-  yScale = d3
+  const [yMin, yMax] = chart === 'AreaChart' ? [0, d3.max(data, (layer: any) => d3.max(layer, (sequence:[number, number, any]) => sequence[1]))] 
+               : d3.extent(data, yAccessor) 
+
+  const yScale = d3
     .scaleLinear()
     .domain([yMin ?? 0, yMax ?? 0])
     .range([height - margin.top - margin.bottom, 0])
