@@ -52,7 +52,7 @@ function App() {
         yGrid={true}
         xAxisLabel="Date"
         yAxisLabel="Number of fruit"
-      /> */}
+      />
       <ScatterPlot
         height="100%"
         width="100%"
@@ -68,7 +68,7 @@ function App() {
         xAxisLabel="Date"
         yAxisLabel="Value"
       />
-      {/* <BarChart
+      <BarChart
         height="300"
         data={skinny_fruit}
         xKey="date"
@@ -91,7 +91,7 @@ function App() {
         yGrid={true}
         xAxisLabel="Date"
         yAxisLabel="Value"
-      />
+      /> */}
       <LineChart
         height="100%"
         data={unemployment}
@@ -118,7 +118,7 @@ function App() {
         yGrid={true}
         xAxisLabel="Date"
         yAxisLabel="Value"
-      /> */}
+      />
     </div>
   )
 }

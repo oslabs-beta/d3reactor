@@ -9,6 +9,7 @@ const VoronoiCell = ({
   cellCenter,
   setTooltip,
 }: VoronoiProps): JSX.Element => {
+  // console.log("Cell center ", cellCenter)
   return (
     <path
       fill={fill}
