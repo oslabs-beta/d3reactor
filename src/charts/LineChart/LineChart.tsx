@@ -7,7 +7,8 @@ import Line from "../../components/Line"
 import {
   LineChartProps,
   ColorScale,
-  AccessorFunc,
+  xAccessorFunc,
+  yAccessorFunc,
   Data,
   GroupAccessorFunc,
 } from "../../../types"
@@ -66,9 +67,9 @@ export default function LineChart({
     xDataType = inferXDataType(data[0], xKey)
   }
 
-  const xAccessor: AccessorFunc =
+  const xAccessor: xAccessorFunc =
     xDataType === "number" ? (d) => d[xKey] : (d) => new Date(d[xKey])
-  const yAccessor: AccessorFunc = (d) => d[yKey]
+  const yAccessor: yAccessorFunc = (d) => d[yKey]
 
   const yScale = yScaleDef(data, yAccessor, margin, cHeight)
   const { xScale, xMin, xMax } = xScaleDef(
