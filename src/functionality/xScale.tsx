@@ -1,9 +1,9 @@
 import * as d3 from 'd3';
-import { Margin, Data, ScaleFunc, AccessorFunc, Domain } from "../../types"
+import { Margin, Data, ScaleFunc, xAccessorFunc } from "../../types"
 
 
 
-export function xScaleDef (data: Data[], xDataType: 'date' | 'number', xAccessor: AccessorFunc, margin: Margin, width: number, chart: 'ScatterPlot' | 'LineChart') { 
+export function xScaleDef (data: Data[], xDataType: 'date' | 'number', xAccessor: xAccessorFunc, margin: Margin, width: number, chart: 'ScatterPlot' | 'LineChart' | 'AreaChart') { 
   let xScale: ScaleFunc;
   const [xMin, xMax] = d3.extent(data, xAccessor)
   switch (xDataType) {
@@ -20,7 +20,6 @@ export function xScaleDef (data: Data[], xDataType: 'date' | 'number', xAccessor
         .scaleTime()
         .domain([xMin ?? 0, xMax ?? 0])
         .range([0, width - margin.right - margin.left])
-
         chart === 'ScatterPlot' ? 
         xScale.nice() : null
       break

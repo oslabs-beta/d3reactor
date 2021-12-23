@@ -1,7 +1,7 @@
 import * as d3 from "d3"
-import { Margin, Data, ScaleFunc, AccessorFunc } from "../../types"
+import { Margin, Data, ScaleFunc, xAccessorFunc, yAccessorFunc } from "../../types"
 
-export function d3Voronoi (data: Data[], xScale:ScaleFunc, yScale: d3.ScaleLinear<number, number, never>, xAccessor: AccessorFunc, yAccessor: AccessorFunc, height: number, width: number, margin:Margin) {
+export function d3Voronoi (data: Data[], xScale:ScaleFunc, yScale: d3.ScaleLinear<number, number, never>, xAccessor: xAccessorFunc, yAccessor: yAccessorFunc, height: number, width: number, margin:Margin) {
 
   const delaunay = d3.Delaunay.from(
     data,
