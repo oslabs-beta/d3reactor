@@ -30,7 +30,7 @@ function App() {
         outerRadius="80%"
       />
       <AreaChart
-        data={penguins}
+        data={penguins.slice(0,7)}
         height="700"
         width="100%"
         xKey="body_mass_g"
@@ -42,7 +42,7 @@ function App() {
         yAxis="left"
       />
       <AreaChart
-        data={skinny_fruit}
+        data={skinny_fruit.slice(0,40)}
         height="300"
         xKey="date"
         xDataType="date"
@@ -94,7 +94,7 @@ function App() {
       />
       <LineChart
         height="100%"
-        data={unemployment}
+        data={unemployment.slice(0,300)}
         xKey="date"
         xDataType="date"
         yKey="unemployment"
@@ -108,7 +108,8 @@ function App() {
       />
       <LineChart
         height="500"
-        data={portfolio}
+        width='500'
+        data={portfolio.slice(0, 3)}
         xKey="date"
         xDataType="date"
         yKey="value"

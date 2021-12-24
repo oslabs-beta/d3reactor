@@ -148,6 +148,7 @@ export interface VoronoiProps {
   d: string | undefined
   cellCenter?: { cx: number; cy: number }
   setTooltip?: React.Dispatch<any>
+  data?: any
 }
 
 export type ColorScale = d3.ScaleOrdinal<string, string, never>

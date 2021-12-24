@@ -8,6 +8,7 @@ const VoronoiCell = ({
   d,
   cellCenter,
   setTooltip,
+  data
 }: VoronoiProps): JSX.Element => {
   // console.log("Cell center ", cellCenter)
   return (
@@ -17,7 +18,7 @@ const VoronoiCell = ({
       pointerEvents="all"
       opacity={opacity}
       d={d}
-      onMouseOver={(e) => (setTooltip ? setTooltip(cellCenter) : null)}
+      onMouseOver={(e) => {console.log(data);setTooltip ? setTooltip(cellCenter) : null}}
       onMouseOut={() => (setTooltip ? setTooltip(false) : null)}
     ></path>
   )

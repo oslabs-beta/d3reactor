@@ -173,6 +173,7 @@ export default function LineChart({
                   cy: yScale(yAccessor(element)),
                 }}
                 setTooltip={setTooltip}
+                data = {element}
               />
             ))}
           </g>

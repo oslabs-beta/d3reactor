@@ -15,7 +15,8 @@ export default function Tooltip({ x, y }: { x: number; y: number }) {
     boxShadow: "rgba(0, 0, 0, 0.3) 0 2px 10px",
   }
   return (
-    <foreignObject x={x + 10} y={y + 10} width={150} height={75}>
+    <foreignObject x={x} y={y} width={150} height={75} pointerEvents="none"
+>
       <div style={style}>
         <strong>X Position: {x}</strong>
         <br></br>

@@ -1,11 +1,14 @@
 /** App.js */
 import React, { useMemo} from "react";
 import * as d3 from "d3";
-import { AreaChartProps, ColorScale, xAccessorFunc, yAccessorFunc } from '../../../types';
+import { AreaChartProps, ColorScale, xAccessorFunc, Data, yAccessorFunc } from '../../../types';
 import ContinuousAxis from "../../components/ContinuousAxis";
+import VoronoiCell from "../../components/VoronoiCell"
 import { useResponsive } from '../../hooks/useResponsive';
 import { xScaleDef } from '../../functionality/xScale';
 import { yScaleDef } from '../../functionality/yScale';
+import { d3Voronoi } from "../../functionality/voronoi"
+
 import {
   getXAxisCoordinates,
   getYAxisCoordinates,
@@ -13,7 +16,6 @@ import {
   inferXDataType,
   transformSkinnyToWide
 } from "../../utils";
-
 
 
 export default function AreaChart({
@@ -96,6 +98,18 @@ export default function AreaChart({
     .y0((layer) => yScale(layer[0]))
     .y1((layer) => yScale(layer[1]))
 
+
+    const voronoi = d3Voronoi(
+      data,
+      xScale,
+      yScale,
+      xAccessor,
+      yAccessor,
+      cHeight,
+      cWidth,
+      margin
+    )
+
   const colorScale: ColorScale = d3.scaleOrdinal(colorScheme)
   colorScale.domain(keys)
 
@@ -136,6 +150,23 @@ export default function AreaChart({
             fill= {colorScale(layer.key)}
           />
         ))}
+        {voronoi && (
+          <g className="voronoi-wrapper">
+            {data.map((element: Data, i: number) => (
+              <VoronoiCell
+                key={i}
+                fill="none"
+                stroke="#ff1493"
+                opacity={0.5}
+                d={voronoi.renderCell(i)}
+                cellCenter={{
+                  cx: xScale(xAccessor(element)),
+                  cy: yScale(yAccessor(element)),
+                }}
+              />
+            ))}
+          </g>
+        )}
     </g>
       </svg>
   );
