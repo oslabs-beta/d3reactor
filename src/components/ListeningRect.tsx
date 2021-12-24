@@ -19,6 +19,7 @@ export default function ListeningRect({
   yScale,
   xAccessor,
   yAccessor,
+  setTooltip,
 }: {
   data: Data[]
   layers: d3.Series<
@@ -34,7 +35,10 @@ export default function ListeningRect({
   yScale: ScaleFunc
   xAccessor: xAccessorFunc
   yAccessor: yAccessorFunc
+  setTooltip?: React.Dispatch<any>
 }) {
+  const cellCenter = { cx: 0, cy: 0 }
+
   function onMouseMove(e: any) {
     const mousePosition = d3.pointer(e)
     const hoveredX = xScale.invert(mousePosition[0]) as Date
@@ -57,55 +61,37 @@ export default function ListeningRect({
     if (typeof closestXIndex === "number") {
       const closestDataPoint = data[closestXIndex]
       const closestXValue = xAccessor(closestDataPoint)
+      cellCenter.cx = xScale(closestXValue)
     }
 
     // ****************************************
     // Find y position
     // ****************************************
-
-    // closestYSequence returns the relevant sequence
     const closestYSequence = layers.map((layer) => {
       if (typeof closestXIndex === "number") {
         return layer[closestXIndex][1]
       }
     })
 
-    // if (typeof closestXIndex === "number") {
-    // Found the solution here: https://stackoverflow.com/questions/54736011/custom-typescript-type-guard-for-not-undefined-in-separate-function
-    // console.log("y Accessor test ", yScale(closestYSequence[0].max))
-    //     console.log("Closest sequence ", closestYSequence)
-    //     if (closestYSequence instanceof Array && typeof closestYSequence[0] === 'number')
-    //     console.log("y Accessor test ", d3.bisect(closestYSequence, yScale(hoveredY))
-    // }
-
     const getDistanceFromHoveredY = function (d: any) {
-      // console.log("DATA IN HOVERED Y ", d)
-      // This StackOverFlow Article helped me with this TS issue
-      // https://stackoverflow.com/questions/48274028/the-left-hand-and-right-hand-side-of-an-arithmetic-operation-must-be-of-type-a
-      // console.log("Y SCALE ", yScale(d))
-      // console.log("HOVERED Y ", hoveredY.valueOf())
-      // console.log("Returned value ", Math.abs(yScale(d) - hoveredY.valueOf()))
       return Math.abs(d - hoveredY.valueOf())
     }
 
     const closestYIndex = d3.leastIndex(closestYSequence, (a, b) => {
-      // This post help me with the below TS issue https://stackoverflow.com/questions/54884488/how-can-i-solve-the-error-ts2532-object-is-possibly-undefined
-      // console.log(`A ${a}, B ${b}`)
-      // console.log(
-      //   "Returned value ",
-      //   getDistanceFromHoveredY(a) - getDistanceFromHoveredY(b)
-      // )
-      console.log("Dist from A ", getDistanceFromHoveredY(a))
-      console.log("Dist from B ", getDistanceFromHoveredY(b))
       return getDistanceFromHoveredY(a) - getDistanceFromHoveredY(b)
     })
 
     if (typeof closestYIndex === "number") {
-      console.log("Closest Y index ", closestYIndex)
-      // const closestDataPoint = data[closestYIndex]
-      // console.log("Closest data ", closestDataPoint)
-      // const closestYValue = yAccessor(closestDataPoint)
-      // console.log(`Closest Y ${closestYValue}`)
+      const closestKey = layers[closestYIndex].key
+      if (typeof closestXIndex === "number") {
+        const closestValue = layers[closestYIndex][closestXIndex][1]
+        cellCenter.cy = yScale(closestValue)
+        // console.log(`The Closest Y is ${closestKey} ${closestValue}`)
+      }
+    }
+
+    if (setTooltip) {
+      setTooltip(cellCenter)
     }
   }
 
@@ -115,6 +101,7 @@ export default function ListeningRect({
       height={height - margin.bottom - margin.top}
       fill="transparent"
       onMouseMove={onMouseMove}
+      onMouseLeave={() => (setTooltip ? setTooltip(false) : null)}
     />
   )
 }

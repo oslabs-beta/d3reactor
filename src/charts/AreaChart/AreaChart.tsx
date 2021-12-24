@@ -1,5 +1,5 @@
 /** App.js */
-import React, { useMemo } from "react"
+import React, { useState, useMemo } from "react"
 import * as d3 from "d3"
 import {
   AreaChartProps,
@@ -9,6 +9,7 @@ import {
 } from "../../../types"
 import ContinuousAxis from "../../components/ContinuousAxis"
 import ListeningRect from "../../components/ListeningRect"
+import Tooltip from "../../components/Tooltip"
 import { useResponsive } from "../../hooks/useResponsive"
 import { xScaleDef } from "../../functionality/xScale"
 import { yScaleDef } from "../../functionality/yScale"
@@ -36,6 +37,7 @@ export default function AreaChart({
   yAxisLabel,
   colorScheme = d3.schemeCategory10,
 }: AreaChartProps<string | number>): JSX.Element {
+  const [tooltip, setTooltip] = useState<false | any>(false)
   const chart = "AreaChart"
 
   const { anchor, cHeight, cWidth } = useResponsive()
@@ -143,6 +145,7 @@ export default function AreaChart({
         {layers.map((layer, i) => (
           <path key={i} d={areaGenerator(layer)} fill={colorScale(layer.key)} />
         ))}
+        {tooltip && <Tooltip x={tooltip.cx} y={tooltip.cy} />}
         <ListeningRect
           data={data}
           layers={layers}
@@ -153,6 +156,7 @@ export default function AreaChart({
           yScale={yScale}
           xAccessor={xAccessor}
           yAccessor={yAccessor}
+          setTooltip={setTooltip}
         />
       </g>
     </svg>
