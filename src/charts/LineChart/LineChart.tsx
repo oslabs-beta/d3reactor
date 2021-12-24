@@ -10,7 +10,6 @@ import {
   ColorScale,
   xAccessorFunc,
   yAccessorFunc,
-  Data,
   GroupAccessorFunc,
 } from "../../../types"
 import {
@@ -19,7 +18,6 @@ import {
   getMargins,
   inferXDataType,
 } from "../../utils"
-import { VoronoiCell } from "../../components/VoronoiCell"
 import { Tooltip } from "../../components/Tooltip"
 import { yScaleDef } from "../../functionality/yScale"
 import { xScaleDef } from "../../functionality/xScale"
@@ -73,7 +71,7 @@ export default function LineChart({
   const yAccessor: yAccessorFunc = (d) => d[yKey]
 
   const yScale = yScaleDef(data, yAccessor, margin, cHeight)
-  
+
   const { xScale, xMin, xMax } = xScaleDef(
     data,
     xType,

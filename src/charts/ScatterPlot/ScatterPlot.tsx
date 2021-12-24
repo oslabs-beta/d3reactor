@@ -3,16 +3,15 @@ import React, { useState, useMemo } from "react"
 import * as d3 from "d3"
 import { useResponsive } from "../../hooks/useResponsive"
 import { Axis } from "../../components/ContinuousAxis"
-import Circle from "../../components/Circle"
+import { Circle } from "../../components/Circle"
 
 import { d3Voronoi } from "../../functionality/voronoi"
 import { xScaleDef } from "../../functionality/xScale"
 import { yScaleDef } from "../../functionality/yScale"
-import { VoronoiCell } from "../../components/VoronoiCell"
+import { VoronoiWrapper } from "../../components/VoronoiWrapper"
 import { Tooltip } from "../../components/Tooltip"
 import {
   ScatterPlotProps,
-  Data,
   xAccessorFunc, 
   yAccessorFunc,
   ColorScale,
@@ -85,7 +84,7 @@ const yAccessor: yAccessorFunc = (d) => d[yKey];
   )
   const yScale = yScaleDef(data, yAccessor, margin, cHeight)
 
-  const voronoi = d3Voronoi(
+  const voronoi = useMemo (() => {return d3Voronoi(
     data,
     xScale,
     yScale,
@@ -94,6 +93,8 @@ const yAccessor: yAccessorFunc = (d) => d[yKey];
     cHeight,
     cWidth,
     margin
+  )}, 
+  [data, cHeight, cWidth]
   )
 
   const colorScale: ColorScale = d3.scaleOrdinal(colorScheme)
@@ -147,23 +148,16 @@ const yAccessor: yAccessorFunc = (d) => d[yKey];
             />
           )
         )}
-        {voronoi && (
-          <g className="voronoi-wrapper">
-            {data.map((element: Data, i: number) => (
-              <VoronoiCell
-                key={i}
-                fill="none"
-                stroke="#ff1493"
-                opacity={0.5}
-                d={voronoi.renderCell(i)}
-                cellCenter={{
-                  cx: xScale(xAccessor(element)),
-                  cy: yScale(yAccessor(element)),
-                }}
-                setTooltip={setTooltip}
-              />
-            ))}
-          </g>
+       {voronoi && (
+         <VoronoiWrapper
+           data={data}
+           voronoi={voronoi}
+           xScale={xScale}
+           yScale={yScale}
+           xAccessor={xAccessor}
+           yAccessor={yAccessor}
+           setTooltip={setTooltip}
+         />
         )}
         {tooltip && <Tooltip x={tooltip.cx} y={tooltip.cy} />}
       </g>
