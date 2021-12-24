@@ -143,7 +143,17 @@ export default function AreaChart({
         {layers.map((layer, i) => (
           <path key={i} d={areaGenerator(layer)} fill={colorScale(layer.key)} />
         ))}
-        <ListeningRect width={cWidth} height={cHeight} margin={margin} />
+        <ListeningRect
+          data={data}
+          layers={layers}
+          width={cWidth}
+          height={cHeight}
+          margin={margin}
+          xScale={xScale}
+          yScale={yScale}
+          xAccessor={xAccessor}
+          yAccessor={yAccessor}
+        />
       </g>
     </svg>
   )
