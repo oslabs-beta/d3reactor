@@ -17,6 +17,7 @@ import React from "react"
   return (
     <foreignObject x={x} y={y} width={150} height={75} pointerEvents="none"
 >
+
       <div style={style}>
         <strong>X Position: {x}</strong>
         <br></br>
