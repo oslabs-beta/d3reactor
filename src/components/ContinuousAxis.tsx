@@ -4,7 +4,7 @@ import { useD3 } from "../hooks/useD3"
 import { ContinuousAxisProps } from "../../types"
 import { getAxisLabelCoordinates } from "../utils"
 
-const ContinuousAxis = ({
+export function Axis ({
   x,
   y,
   scale,
@@ -16,7 +16,7 @@ const ContinuousAxis = ({
   xGrid,
   yGrid,
   xTicksValue
-}: ContinuousAxisProps): JSX.Element => {
+}: ContinuousAxisProps): JSX.Element {
   const gRef = useD3(
     (anchor) => {
       let axis: d3.Axis<d3.NumberValue>
@@ -125,5 +125,3 @@ const ContinuousAxis = ({
     </g>
   )
 }
-
-export default ContinuousAxis

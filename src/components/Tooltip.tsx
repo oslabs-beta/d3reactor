@@ -1,6 +1,6 @@
 import React from "react"
 
-export default function Tooltip({ x, y }: { x: number; y: number }) {
+ function Toolti({ x, y }: { x: number; y: number }) {
   const style: React.CSSProperties | undefined = {
     margin: "4px 4px",
     padding: "3px 5px",
@@ -25,3 +25,5 @@ export default function Tooltip({ x, y }: { x: number; y: number }) {
     </foreignObject>
   )
 }
+
+export const Tooltip = React.memo(Toolti)

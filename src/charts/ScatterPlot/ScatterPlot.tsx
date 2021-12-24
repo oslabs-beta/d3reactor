@@ -2,14 +2,14 @@
 import React, { useState, useMemo } from "react"
 import * as d3 from "d3"
 import { useResponsive } from "../../hooks/useResponsive"
-import Axis from "../../components/ContinuousAxis"
+import { Axis } from "../../components/ContinuousAxis"
 import Circle from "../../components/Circle"
 
 import { d3Voronoi } from "../../functionality/voronoi"
 import { xScaleDef } from "../../functionality/xScale"
 import { yScaleDef } from "../../functionality/yScale"
-import VoronoiCell from "../../components/VoronoiCell"
-import Tooltip from "../../components/Tooltip"
+import { VoronoiCell } from "../../components/VoronoiCell"
+import { Tooltip } from "../../components/Tooltip"
 import {
   ScatterPlotProps,
   Data,

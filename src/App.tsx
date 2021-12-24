@@ -94,7 +94,7 @@ function App() {
       />
       <LineChart
         height="100%"
-        data={unemployment.slice(0,300)}
+        data={unemployment.slice(0,5000)}
         xKey="date"
         xDataType="date"
         yKey="unemployment"

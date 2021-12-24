@@ -1,7 +1,7 @@
 /** LineChart.js */
 import React, { useMemo } from "react";
 import * as d3 from "d3";
-import ContinuousAxis from "../../components/ContinuousAxis";
+import {Axis} from "../../components/ContinuousAxis";
 import DiscreteAxis from "../../components/DiscreteAxis";
 import { transformSkinnyToWide } from "../../utils";
 import { BarChartProps, ColorScale, Data } from "../../../types";
@@ -90,7 +90,7 @@ const BarChartBody = ({
 
     <g transform={translate}>
       {yAxis && (
-        <ContinuousAxis
+        <Axis
         x={yAxisX}
         y={yAxisY}
         height={height}

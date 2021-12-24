@@ -2,8 +2,8 @@
 import React, { useMemo} from "react";
 import * as d3 from "d3";
 import { AreaChartProps, ColorScale, xAccessorFunc, Data, yAccessorFunc } from '../../../types';
-import ContinuousAxis from "../../components/ContinuousAxis";
-import VoronoiCell from "../../components/VoronoiCell"
+import {Axis} from "../../components/ContinuousAxis";
+import { VoronoiCell } from "../../components/VoronoiCell"
 import { useResponsive } from '../../hooks/useResponsive';
 import { xScaleDef } from '../../functionality/xScale';
 import { yScaleDef } from '../../functionality/yScale';
@@ -98,8 +98,8 @@ export default function AreaChart({
     .y0((layer) => yScale(layer[0]))
     .y1((layer) => yScale(layer[1]))
 
-
-    const voronoi = d3Voronoi(
+    
+    const voronoi = layers.length < 2 ? d3Voronoi(
       data,
       xScale,
       yScale,
@@ -108,7 +108,7 @@ export default function AreaChart({
       cHeight,
       cWidth,
       margin
-    )
+    ) : null
 
   const colorScale: ColorScale = d3.scaleOrdinal(colorScheme)
   colorScale.domain(keys)
@@ -117,7 +117,7 @@ export default function AreaChart({
       <svg ref={anchor} width={width} height={height}>
          <g transform={translate}>
       {yAxis && (
-        <ContinuousAxis
+        <Axis
         x={yAxisX}
         y={yAxisY}
         height={cHeight}
@@ -130,7 +130,7 @@ export default function AreaChart({
         />
       )}
       {xAxis && (
-        <ContinuousAxis
+        <Axis
         x={xAxisX}
         y={xAxisY}
         height={cHeight}

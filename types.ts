@@ -1,3 +1,5 @@
+import * as d3 from 'd3';
+import React from 'react';
 export interface Data {
   [key: string]: any
 }
@@ -180,5 +182,13 @@ export interface VoronoiProps {
   opacity: number
   d: string | undefined
 }
-
+export interface VoronoiBody {
+  data: Data
+  voronoi: d3.Voronoi<string>
+  xScale:ScaleFunc
+  yScale: ScaleFunc
+  xAccessor: xAccessorFunc
+  yAccessor: yAccessorFunc
+  setTooltip: React.Dispatch<any> | undefined
+}
 export type GroupAccessorFunc = (d: any) => number | Date
