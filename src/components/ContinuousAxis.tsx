@@ -17,7 +17,6 @@ function Axi ({
   yGrid,
   xTicksValue
 }: ContinuousAxisProps): JSX.Element {
-  console.log('axis rerendered')
   const gRef = useD3(
     (anchor) => {
       let axis: d3.Axis<d3.NumberValue>

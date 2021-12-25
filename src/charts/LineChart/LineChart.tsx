@@ -110,7 +110,6 @@ export default function LineChart({
 
   const colorScale: ColorScale = d3.scaleOrdinal(colorScheme)
   colorScale.domain(keys)
-
   return (
     <svg ref={anchor} width={width} height={height}>
       <g transform={translate}>
