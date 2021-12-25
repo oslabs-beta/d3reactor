@@ -126,7 +126,7 @@ function Axi ({
   )
 }
 
-function AxisPropsAreEqual (prevAxis:any, newAxis:any) {
+function AxisPropsAreEqual (prevAxis:ContinuousAxisProps, newAxis:ContinuousAxisProps) {
   return prevAxis.scale === newAxis.scale && prevAxis.height === newAxis.height && 
   prevAxis.width === newAxis.width
 }

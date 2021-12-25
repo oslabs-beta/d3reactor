@@ -25,7 +25,7 @@ const VoronoiBody = ({data, voronoi, xScale, yScale, xAccessor, yAccessor, setTo
 
 }
 
-function voronoiPropsAreEqual (prevVoronoi:any, newVoronoi:any) {
+function voronoiPropsAreEqual (prevVoronoi:VoronoiBody, newVoronoi:VoronoiBody) {
   return prevVoronoi.data === newVoronoi.data && prevVoronoi.voronoi === newVoronoi.voronoi
 }
 
