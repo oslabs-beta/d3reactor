@@ -1,5 +1,5 @@
 /** App.js */
-import React, { useState, useMemo } from "react"
+import React, { useState, useMemo, useCallback } from "react"
 import { useResponsive } from "../../hooks/useResponsive"
 import * as d3 from "d3"
 import { Axis } from "../../components/ContinuousAxis"
@@ -66,20 +66,20 @@ export default function LineChart({
   // if no xKey datatype is passed in, determine if it's Date
 
 
-  const xAccessor: xAccessorFunc =
-    xType === "number" ? (d) => d[xKey] : (d) => new Date(d[xKey])
-  const yAccessor: yAccessorFunc = (d) => d[yKey]
+  const xAccessor: xAccessorFunc = useMemo(() => {return  xType === "number" ? (d) => d[xKey] : (d) => new Date(d[xKey])}, [])
 
-  const yScale = yScaleDef(data, yAccessor, margin, cHeight)
+  const yAccessor:yAccessorFunc = useMemo(() => { return (d) => d[yKey] }, [])
 
-  const { xScale, xMin, xMax } = xScaleDef(
+  const yScale = useMemo(() => {return yScaleDef(data, yAccessor, margin, cHeight)}, [data, margin, cHeight])
+
+  const { xScale, xMin, xMax } = useMemo(() => {return xScaleDef(
     data,
     xType,
     xAccessor,
     margin,
     cWidth,
     chart
-  )
+  )}, [data, cWidth, margin])
 
   let xTicksValue = [xMin, ...xScale.ticks(), xMax]
 
