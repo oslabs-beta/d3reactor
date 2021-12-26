@@ -1,3 +1,5 @@
+import * as d3 from 'd3';
+import React from 'react';
 export interface Data {
   [key: string]: any
 }
@@ -133,6 +135,14 @@ export interface CircleProps {
   color: string
 }
 
+export interface RectangleProps {
+  x: number | undefined
+  y:number
+  width: number
+  height: number
+  fill: string 
+}
+
 export interface LineProps {
   fill: string
   stroke: string
@@ -148,6 +158,7 @@ export interface VoronoiProps {
   d: string | undefined
   cellCenter?: { cx: number; cy: number }
   setTooltip?: React.Dispatch<any>
+  data?: any
 }
 
 export type ColorScale = d3.ScaleOrdinal<string, string, never>
@@ -179,5 +190,13 @@ export interface VoronoiProps {
   opacity: number
   d: string | undefined
 }
-
+export interface VoronoiBody {
+  data: Data
+  voronoi: d3.Voronoi<string>
+  xScale:ScaleFunc
+  yScale: ScaleFunc
+  xAccessor: xAccessorFunc
+  yAccessor: yAccessorFunc
+  setTooltip: React.Dispatch<any> | undefined
+}
 export type GroupAccessorFunc = (d: any) => number | Date

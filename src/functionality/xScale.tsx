@@ -3,7 +3,7 @@ import { Margin, Data, ScaleFunc, xAccessorFunc } from "../../types"
 
 
 
-export function xScaleDef (data: Data[], xDataType: 'date' | 'number', xAccessor: xAccessorFunc, margin: Margin, width: number, chart: 'ScatterPlot' | 'LineChart' | 'AreaChart') { 
+export function xScaleDef (data: Data[], xDataType: 'date' | 'number', xAccessor: xAccessorFunc, margin: Margin, width: number, chart: 'ScatterPlot' | 'LineChart' | 'AreaChart' | 'BarChart') { 
   let xScale: ScaleFunc;
   const [xMin, xMax] = d3.extent(data, xAccessor)
   switch (xDataType) {

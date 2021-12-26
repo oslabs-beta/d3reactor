@@ -4,7 +4,7 @@ import { useD3 } from "../hooks/useD3"
 import { DiscreteAxisProps } from "../../types"
 import { getAxisLabelCoordinates } from "../utils"
 
-const Axis = ({
+export const DiscreteAxis = React.memo(({
   x,
   y,
   scale,
@@ -57,6 +57,4 @@ const Axis = ({
       ;
     </g>
   )
-}
-
-export default Axis
+})

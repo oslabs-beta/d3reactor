@@ -28,7 +28,7 @@ function App() {
         value="value"
         innerRadius="70%"
         outerRadius="80%"
-      />
+      /> 
       <AreaChart
         data={penguins}
         height="700"
@@ -56,11 +56,11 @@ function App() {
       <ScatterPlot
         height="100%"
         width="100%"
-        data={penguins.slice(150)}
+        data={penguins}
         xKey="flipper_length_mm"
         xDataType="number"
         yKey="body_mass_g"
-        // groupBy="species"
+        groupBy="species"
         xAxis="bottom"
         yAxis="right"
         // xGrid={true}
@@ -108,6 +108,7 @@ function App() {
       />
       <LineChart
         height="500"
+        width='500'
         data={portfolio}
         xKey="date"
         xDataType="date"

@@ -1,8 +1,19 @@
 /** App.js */
-import React, { useState, useEffect, useRef } from "react";
-import useEnvEffect from '../../hooks/useEnvEffect';
-import BarChartBody from "./BarChartBody";
-import { BarChartProps } from "../../../types";
+import React, { useMemo } from "react";
+import * as d3 from "d3";
+import { useResponsive } from "../../hooks/useResponsive"
+import { Axis } from "../../components/ContinuousAxis";
+import { DiscreteAxis } from "../../components/DiscreteAxis";
+import { Rectangle } from "../../components/Rectangle";
+import { transformSkinnyToWide } from "../../utils";
+import { BarChartProps, Data, ColorScale, yAccessorFunc } from "../../../types";
+import {
+  getXAxisCoordinates,
+  getYAxisCoordinates,
+  getMargins,
+} from "../../utils"
+import { yScaleDef } from "../../functionality/yScale"
+
 
 export default function BarChart({
   data,
@@ -16,44 +27,112 @@ export default function BarChart({
   yGrid = false,
   xAxisLabel,
   yAxisLabel,
+  colorScheme = d3.schemeCategory10,
 }: BarChartProps<string | number>): JSX.Element {
-  const anchor = useRef(null as unknown as SVGSVGElement)
-  const [windowSize, setWindowSize] = useState<[number, number]>([0, 0])
-  const [cHeight, setCHeight] = useState<number>(0)
-  const [cWidth, setCWidth] = useState<number>(0)
+  const chart = 'BarChart';
+  
+  const { anchor, cHeight, cWidth } = useResponsive();
 
-  function updateSize() {
-    setWindowSize([window.innerWidth, window.innerHeight])
+  const margin = useMemo(
+    () => getMargins(xAxis, yAxis, xAxisLabel, yAxisLabel),
+    [xAxis, yAxis, xAxisLabel, yAxisLabel]
+  )
+
+  const { xAxisX, xAxisY } = useMemo(
+    () => getXAxisCoordinates(xAxis, cHeight, margin),
+    [cHeight, xAxis, margin]
+  )
+
+  const { yAxisX, yAxisY } = useMemo(
+    () => getYAxisCoordinates(yAxis, cWidth, margin),
+    [cWidth, yAxis, margin]
+  )
+
+  const translate = `translate(${margin.left}, ${margin.top})`
+
+  // When the yKey key has been assigned to the groupBy variable we know the user didn't specify grouping
+  let keys: string[] = [],
+    groups: d3.InternMap<any, any[]>
+  const groupAccessor = (d: Data) => d[groupBy ?? ""]
+  groups = d3.group(data, groupAccessor)
+  keys = Array.from(groups).map((group) => group[0])
+  if (groupBy) {
+    data = transformSkinnyToWide(data, keys, groupBy, xKey, yKey)
   }
+  const stack = d3.stack().keys(keys).order(d3.stackOrderAscending)
+  const layers = stack(data as Iterable<{ [key: string]: number; }>)
 
-  // Set up an event listener on mount
-  useEnvEffect(() => {
-    window.addEventListener("resize", updateSize)
-    updateSize()
-    return () => window.removeEventListener("resize", updateSize)
-  }, [])
+  const xAccessor: (d: Data) => string = useMemo(() => {return (d) => d[xKey]}, [])
+  
+  const yAccessor:yAccessorFunc = useMemo(() => { return (d) => d[yKey] }, [])
 
-  useEffect(() => {
-    const container = anchor.current.getBoundingClientRect()
-    setCHeight(container.height)
-    setCWidth(container.width)
-  }, [windowSize])
+  const xScale= useMemo(() => { return d3
+    .scaleBand()
+    .paddingInner(0.1)
+    .paddingOuter(0.1)
+    .domain(data.map(xAccessor))
+    .range([0, cWidth - margin.right - margin.left]) }, [data, xAccessor, cWidth, margin])
+
+  const yScale = useMemo(() => { return yScaleDef(groupBy? layers : data, yAccessor, margin, cHeight, chart, groupBy)}, [data, yAccessor, margin, cHeight, chart, groupBy])
+
+  const colorScale: ColorScale = d3.scaleOrdinal(colorScheme)
+  colorScale.domain(keys)
 
   return (
     <svg ref={anchor} width={width} height={height}>
-      <BarChartBody
-        data={data}
+    <g transform={translate}>
+      {yAxis && (
+        <Axis
+        x={yAxisX}
+        y={yAxisY}
         height={cHeight}
         width={cWidth}
-        xKey={xKey}
-        yKey={yKey}
-        groupBy={groupBy}
-        xAxis={xAxis}
-        yAxis={yAxis}
+        margin={margin}
+        scale={yScale}
+        type={yAxis}
         yGrid={yGrid}
-        xAxisLabel={xAxisLabel}
-        yAxisLabel={yAxisLabel}
-      />
+        label={yAxisLabel}
+        />
+        )}
+      {xAxis && (
+        <DiscreteAxis
+        x={xAxisX}
+        y={xAxisY}
+        height={cHeight}
+        width={cWidth}
+        margin={margin}
+        scale={xScale}
+        type={xAxis}
+        label={xAxisLabel}
+        />
+        )}
+        {groupBy
+          ? layers.map((layer: any, i: number) => (
+              <g key={i}>
+                {layer.map((sequence: any, i: number) => (
+                  <Rectangle
+                    key={i}
+                    x={xScale(xAccessor(sequence.data))}
+                    y={yScale(sequence[1])}
+                    width={xScale.bandwidth()}
+                    height={yScale(sequence[0]) - yScale(sequence[1]) > 0 ? yScale(sequence[0]) - yScale(sequence[1]) : 0}
+                    fill={colorScale(layer.key)}
+                  />
+                ))}
+              </g>
+            ))
+          : data.map((d: any, i: number) => (
+              <Rectangle
+                key={i}
+                x={xScale(xAccessor(d))}
+                y={yScale(yAccessor(d))}
+                width={xScale.bandwidth()}
+                height={xAxisY - yScale(yAccessor(d)) > 0 ? xAxisY - yScale(yAccessor(d)) : 0}
+                fill={colorScale(yKey)}
+  
+              />
+            ))}
+    </g>
     </svg>
   )
 }

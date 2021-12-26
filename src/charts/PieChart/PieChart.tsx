@@ -4,7 +4,7 @@ import * as d3 from "d3";
 import { useResponsive } from '../../hooks/useResponsive';
 import { PieChartProps } from "../../../types";
 import { ColorLegend } from "../../components/ColorLegend";
-import Line from '../../components/Line';
+import { Line } from '../../components/Line';
 import { checkRadiusDimension, calculateOuterRadius } from "../../utils";
 
 export default function PieChart({
@@ -28,7 +28,6 @@ export default function PieChart({
   outerRadius = outerRadius ? checkRadiusDimension(cHeight,cWidth, outerRadius, margin): calculateOuterRadius(cHeight,cWidth,margin)
   innerRadius = innerRadius ? checkRadiusDimension(outerRadius, outerRadius, innerRadius, margin) : 0
 
-  const colors = colorScheme
   type ColorScale = d3.ScaleOrdinal<string, string, never>
 
   const translate = `translate(${cWidth/2}, ${cHeight/2})`

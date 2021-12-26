@@ -4,7 +4,7 @@ import { useD3 } from "../hooks/useD3"
 import { ContinuousAxisProps } from "../../types"
 import { getAxisLabelCoordinates } from "../utils"
 
-const ContinuousAxis = ({
+function Axi ({
   x,
   y,
   scale,
@@ -16,7 +16,8 @@ const ContinuousAxis = ({
   xGrid,
   yGrid,
   xTicksValue
-}: ContinuousAxisProps): JSX.Element => {
+}: ContinuousAxisProps): JSX.Element {
+  console.log('axis')
   const gRef = useD3(
     (anchor) => {
       let axis: d3.Axis<d3.NumberValue>
@@ -126,4 +127,9 @@ const ContinuousAxis = ({
   )
 }
 
-export default ContinuousAxis
+function AxisPropsAreEqual (prevAxis:ContinuousAxisProps, newAxis:ContinuousAxisProps) {
+  return prevAxis.scale === newAxis.scale && prevAxis.height === newAxis.height && 
+  prevAxis.width === newAxis.width
+}
+
+export const Axis = React.memo(Axi, AxisPropsAreEqual);

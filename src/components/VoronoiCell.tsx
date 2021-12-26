@@ -1,15 +1,16 @@
 import React from "react"
 import { VoronoiProps } from "../../types"
 
-const VoronoiCell = ({
+export const VoronoiCell = ({
   fill,
   stroke,
   opacity,
   d,
   cellCenter,
   setTooltip,
+  data
 }: VoronoiProps): JSX.Element => {
-  // console.log("Cell center ", cellCenter)
+  console.log('cell rerendered')
   return (
     <path
       fill={fill}
@@ -17,9 +18,10 @@ const VoronoiCell = ({
       pointerEvents="all"
       opacity={opacity}
       d={d}
-      onMouseOver={(e) => (setTooltip ? setTooltip(cellCenter) : null)}
+      onMouseOver={(e) => {setTooltip ? setTooltip(cellCenter) : null}}
       onMouseOut={() => (setTooltip ? setTooltip(false) : null)}
     ></path>
   )
 }
-export default VoronoiCell
+
+

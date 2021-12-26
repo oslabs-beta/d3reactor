@@ -1,15 +1,15 @@
 /** App.js */
-import React, { useState, useMemo } from "react"
+import React, { useState, useMemo, useCallback } from "react"
 import { useResponsive } from "../../hooks/useResponsive"
 import * as d3 from "d3"
-import Axis from "../../components/ContinuousAxis"
-import Line from "../../components/Line"
+import { Axis } from "../../components/ContinuousAxis"
+import { Line } from "../../components/Line"
+import { VoronoiWrapper } from "../../components/VoronoiWrapper"
 import {
   LineChartProps,
   ColorScale,
   xAccessorFunc,
   yAccessorFunc,
-  Data,
   GroupAccessorFunc,
 } from "../../../types"
 import {
@@ -18,8 +18,7 @@ import {
   getMargins,
   inferXDataType,
 } from "../../utils"
-import VoronoiCell from "../../components/VoronoiCell"
-import Tooltip from "../../components/Tooltip"
+import { Tooltip } from "../../components/Tooltip"
 import { yScaleDef } from "../../functionality/yScale"
 import { xScaleDef } from "../../functionality/xScale"
 import { d3Voronoi } from "../../functionality/voronoi"
@@ -61,25 +60,26 @@ export default function LineChart({
   )
 
   const translate = `translate(${margin.left}, ${margin.top})`
-
+  
+  let xType: 'number' | 'date' = inferXDataType(data[0], xKey)
+  if(xDataType !== undefined) xType= xDataType;
   // if no xKey datatype is passed in, determine if it's Date
-  if (!xDataType) {
-    xDataType = inferXDataType(data[0], xKey)
-  }
 
-  const xAccessor: xAccessorFunc =
-    xDataType === "number" ? (d) => d[xKey] : (d) => new Date(d[xKey])
-  const yAccessor: yAccessorFunc = (d) => d[yKey]
 
-  const yScale = yScaleDef(data, yAccessor, margin, cHeight)
-  const { xScale, xMin, xMax } = xScaleDef(
+  const xAccessor: xAccessorFunc = useMemo(() => {return  xType === "number" ? (d) => d[xKey] : (d) => new Date(d[xKey])}, [])
+
+  const yAccessor:yAccessorFunc = useMemo(() => { return (d) => d[yKey] }, [])
+
+  const yScale = useMemo(() => {return yScaleDef(data, yAccessor, margin, cHeight)}, [data, yAccessor, margin, cHeight])
+
+  const { xScale, xMin, xMax } = useMemo(() => {return xScaleDef(
     data,
-    xDataType,
+    xType,
     xAccessor,
     margin,
     cWidth,
     chart
-  )
+  )}, [data, cWidth, margin])
 
   let xTicksValue = [xMin, ...xScale.ticks(), xMax]
 
@@ -95,20 +95,21 @@ export default function LineChart({
     .x((d) => xScale(xAccessor(d)))
     .y((d) => yScale(yAccessor(d)))
 
-  const voronoi = d3Voronoi(
-    data,
-    xScale,
-    yScale,
-    xAccessor,
-    yAccessor,
-    cHeight,
-    cWidth,
-    margin
-  )
+    const voronoi = useMemo (() => {return d3Voronoi(
+      data,
+      xScale,
+      yScale,
+      xAccessor,
+      yAccessor,
+      cHeight,
+      cWidth,
+      margin
+    )}, 
+    [data, xScale, yScale, xAccessor, yAccessor, cHeight, cWidth, margin]
+    );
 
   const colorScale: ColorScale = d3.scaleOrdinal(colorScheme)
   colorScale.domain(keys)
-
   return (
     <svg ref={anchor} width={width} height={height}>
       <g transform={translate}>
@@ -160,22 +161,15 @@ export default function LineChart({
           />
         )}
         {voronoi && (
-          <g className="voronoi-wrapper">
-            {data.map((element: Data, i: number) => (
-              <VoronoiCell
-                key={i}
-                fill="none"
-                stroke="#ff1493"
-                opacity={0.5}
-                d={voronoi.renderCell(i)}
-                cellCenter={{
-                  cx: xScale(xAccessor(element)),
-                  cy: yScale(yAccessor(element)),
-                }}
-                setTooltip={setTooltip}
-              />
-            ))}
-          </g>
+         <VoronoiWrapper
+           data={data}
+           voronoi={voronoi}
+           xScale={xScale}
+           yScale={yScale}
+           xAccessor={xAccessor}
+           yAccessor={yAccessor}
+           setTooltip={setTooltip}
+         />
         )}
 
         {tooltip && <Tooltip x={tooltip.cx} y={tooltip.cy} />}
