@@ -28,7 +28,6 @@ export default function PieChart({
   outerRadius = outerRadius ? checkRadiusDimension(cHeight,cWidth, outerRadius, margin): calculateOuterRadius(cHeight,cWidth,margin)
   innerRadius = innerRadius ? checkRadiusDimension(outerRadius, outerRadius, innerRadius, margin) : 0
 
-  const colors = colorScheme
   type ColorScale = d3.ScaleOrdinal<string, string, never>
 
   const translate = `translate(${cWidth/2}, ${cHeight/2})`

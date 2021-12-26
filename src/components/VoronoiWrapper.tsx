@@ -1,9 +1,8 @@
 import React from 'react';
-import * as d3 from 'd3';
-import {Data, ScaleFunc, xAccessorFunc, yAccessorFunc, VoronoiBody} from '../../types';
+import {Data, VoronoiBody} from '../../types';
 import { VoronoiCell } from './VoronoiCell';
 
-const VoronoiBody = ({data, voronoi, xScale, yScale, xAccessor, yAccessor, setTooltip} : VoronoiBody):JSX.Element  => {
+export const VoronoiWrapper = React.memo(({data, voronoi, xScale, yScale, xAccessor, yAccessor, setTooltip} : VoronoiBody):JSX.Element  => {
   return (
     <g className="voronoi-wrapper">
     {data.map((element: Data, i: number) => (
@@ -23,10 +22,4 @@ const VoronoiBody = ({data, voronoi, xScale, yScale, xAccessor, yAccessor, setTo
     ))}
   </g>  )
 
-}
-
-function voronoiPropsAreEqual (prevVoronoi:VoronoiBody, newVoronoi:VoronoiBody) {
-  return prevVoronoi.data === newVoronoi.data && prevVoronoi.voronoi === newVoronoi.voronoi
-}
-
-export const VoronoiWrapper = React.memo(VoronoiBody, voronoiPropsAreEqual);
+})

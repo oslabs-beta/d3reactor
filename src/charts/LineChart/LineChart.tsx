@@ -70,7 +70,7 @@ export default function LineChart({
 
   const yAccessor:yAccessorFunc = useMemo(() => { return (d) => d[yKey] }, [])
 
-  const yScale = useMemo(() => {return yScaleDef(data, yAccessor, margin, cHeight)}, [data, margin, cHeight])
+  const yScale = useMemo(() => {return yScaleDef(data, yAccessor, margin, cHeight)}, [data, yAccessor, margin, cHeight])
 
   const { xScale, xMin, xMax } = useMemo(() => {return xScaleDef(
     data,
@@ -95,18 +95,18 @@ export default function LineChart({
     .x((d) => xScale(xAccessor(d)))
     .y((d) => yScale(yAccessor(d)))
 
-  const voronoi = useMemo (() => {return d3Voronoi(
-    data,
-    xScale,
-    yScale,
-    xAccessor,
-    yAccessor,
-    cHeight,
-    cWidth,
-    margin
-  )}, 
-  [data, cHeight, cWidth]
-  )
+    const voronoi = useMemo (() => {return d3Voronoi(
+      data,
+      xScale,
+      yScale,
+      xAccessor,
+      yAccessor,
+      cHeight,
+      cWidth,
+      margin
+    )}, 
+    [data, xScale, yScale, xAccessor, yAccessor, cHeight, cWidth, margin]
+    );
 
   const colorScale: ColorScale = d3.scaleOrdinal(colorScheme)
   colorScale.domain(keys)

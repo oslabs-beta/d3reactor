@@ -1,9 +1,8 @@
 import React from 'react';
 import {LineProps} from '../../types'
 
-const LinePath = ({fill = 'none', stroke, strokeWidth = '1px', d }: LineProps):JSX.Element => {
-
-  console.log('Line rendeed')
+export const Line = React.memo(({fill = 'none', stroke, strokeWidth = '1px', d }: LineProps):JSX.Element => {
+  console.log('Line rendered')
   return (
 <path
             className="line"
@@ -12,6 +11,5 @@ const LinePath = ({fill = 'none', stroke, strokeWidth = '1px', d }: LineProps):J
             strokeWidth= {strokeWidth}
             d={d}
           />  )
-}
+})
 
-export const Line = React.memo(LinePath)

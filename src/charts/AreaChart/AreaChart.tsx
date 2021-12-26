@@ -150,24 +150,8 @@ export default function AreaChart({
             fill= {colorScale(layer.key)}
           />
         ))}
-        {voronoi && (
-          <g className="voronoi-wrapper">
-            {data.map((element: Data, i: number) => (
-              <VoronoiCell
-                key={i}
-                fill="none"
-                stroke="#ff1493"
-                opacity={0.5}
-                d={voronoi.renderCell(i)}
-                cellCenter={{
-                  cx: xScale(xAccessor(element)),
-                  cy: yScale(yAccessor(element)),
-                }}
-              />
-            ))}
-          </g>
-        )}
     </g>
       </svg>
   );
 }
+

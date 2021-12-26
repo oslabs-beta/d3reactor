@@ -61,9 +61,8 @@ export default function ScatterPlot({
 
   const translate = `translate(${margin.left}, ${margin.top})`
 
-  if (!xDataType) {
-    xDataType = inferXDataType(data[0], xKey)
-  }
+  let xType: 'number' | 'date' = inferXDataType(data[0], xKey)
+  if(xDataType !== undefined) xType= xDataType;
 
   let keys: string[] = [],
     groups: d3.InternMap<any, any[]>
@@ -71,18 +70,19 @@ export default function ScatterPlot({
   groups = d3.group(data, groupAccessor)
   keys = Array.from(groups).map((group) => group[0])
 
-const xAccessor: xAccessorFunc = xDataType === 'number' ? (d) => d[xKey] : (d) => new Date(d[xKey]);
-const yAccessor: yAccessorFunc = (d) => d[yKey];
+  const xAccessor: xAccessorFunc = useMemo(() => {return  xType === "number" ? (d) => d[xKey] : (d) => new Date(d[xKey])}, [])
+  const yAccessor:yAccessorFunc = useMemo(() => { return (d) => d[yKey] }, [])
 
-  const { xScale } = xScaleDef(
+  const { xScale } = useMemo(() => {return xScaleDef(
     data,
-    xDataType,
+    xType,
     xAccessor,
     margin,
     cWidth,
     chart
-  )
-  const yScale = yScaleDef(data, yAccessor, margin, cHeight)
+  )}, [data, cWidth, margin]);
+  
+  const yScale = useMemo(() => {return yScaleDef(data, yAccessor, margin, cHeight)}, [data, yAccessor, margin, cHeight])
 
   const voronoi = useMemo (() => {return d3Voronoi(
     data,
@@ -94,8 +94,8 @@ const yAccessor: yAccessorFunc = (d) => d[yKey];
     cWidth,
     margin
   )}, 
-  [data, cHeight, cWidth]
-  )
+  [data, xScale, yScale, xAccessor, yAccessor, cHeight, cWidth, margin]
+  );
 
   const colorScale: ColorScale = d3.scaleOrdinal(colorScheme)
   colorScale.domain(keys)

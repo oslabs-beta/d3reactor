@@ -2,9 +2,9 @@ import * as d3 from 'd3';
 import { Margin, Data, Domain, yAccessorFunc } from "../../types"
 
 
-export function yScaleDef (data: Data[], yAccessor: yAccessorFunc, margin: Margin, height: number, chart?: string) {
+export function yScaleDef (data: Data[], yAccessor: yAccessorFunc, margin: Margin, height: number, chart?: string, isNotGrouped?: boolean) {
 
-  const [yMin, yMax] = chart === 'AreaChart' ? [0, d3.max(data, (layer: any) => d3.max(layer, (sequence:[number, number, any]) => sequence[1]))] 
+  const [yMin, yMax] = (chart === 'AreaChart' || (chart === 'BarChart' && !isNotGrouped)) ? [0, d3.max(data, (layer: any) => d3.max(layer, (sequence:[number, number, any]) => sequence[1]))] 
                : d3.extent(data, yAccessor) 
 
   const yScale = d3
