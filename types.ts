@@ -68,6 +68,7 @@ export interface AreaChartProps<T> {
   xAxisLabel?: string
   yAxisLabel?: string
   colorScheme?: string[] | readonly string[]
+  legend?: boolean
 }
 
 export interface PieChartProps {
@@ -172,6 +173,7 @@ export interface ColorLegendProps {
   xPosition?: number
   yPosition?: number
   legendPosition?: "right-center" | "right-top" | "right-bottom"
+  setLegendOffset: React.Dispatch<any>
   fontSize?: number
 }
 export type ScaleFunc =

@@ -1,5 +1,5 @@
 /** App.js */
-import React, { useMemo} from "react";
+import React, { useMemo, useState } from "react";
 import * as d3 from "d3";
 import { AreaChartProps, ColorScale, xAccessorFunc, Data, yAccessorFunc } from '../../../types';
 import {Axis} from "../../components/ContinuousAxis";
@@ -8,6 +8,8 @@ import { useResponsive } from '../../hooks/useResponsive';
 import { xScaleDef } from '../../functionality/xScale';
 import { yScaleDef } from '../../functionality/yScale';
 import { d3Voronoi } from "../../functionality/voronoi"
+import { ColorLegend } from "../../components/ColorLegend";
+
 
 import {
   getXAxisCoordinates,
@@ -32,9 +34,10 @@ export default function AreaChart({
   yGrid = false,
   xAxisLabel,
   yAxisLabel,
+  legend,
   colorScheme = d3.schemeCategory10
 }:AreaChartProps<string | number>):JSX.Element {
-
+  const [legendOffset, setLegendOffset] = useState(0);
   const chart = 'AreaChart';
 
   const {anchor, cHeight, cWidth}  = useResponsive();
@@ -42,6 +45,9 @@ export default function AreaChart({
     () => getMargins(xAxis, yAxis, xAxisLabel, yAxisLabel),
     [xAxis, yAxis, xAxisLabel, yAxisLabel]
   )
+  
+  margin.left = useMemo(() => margin.left + legendOffset, [legendOffset]);
+
   const { xAxisX, xAxisY } = useMemo(
     () => getXAxisCoordinates(xAxis, cHeight, margin),
     [cHeight, xAxis, margin]
@@ -150,6 +156,17 @@ export default function AreaChart({
             fill= {colorScale(layer.key)}
           />
         ))}
+        { // If legend prop is true, render legend component:
+        legend && <ColorLegend 
+          colorLegendLabel={'Fruit' /**we need a way to derive this either from data or as an extra prop passed in */} 
+          xPosition={0 - legendOffset*2 /* Where legend is placed on page */}
+          yPosition={cHeight/3/* Where legend is placed on page */}
+          circleRadius={5 /* Radius of each color swab in legend */}
+          // tickSpacing={22 /* Vertical space between each line of legend */}
+          // tickTextOffset={12 /* How much the text label is pushed to the right of the color swab */}
+          colorScale={colorScale}
+          setLegendOffset={setLegendOffset}
+        />}
     </g>
       </svg>
   );

@@ -9,6 +9,7 @@ export const ColorLegend = ({
   colorLegendLabel = '',
   xPosition,
   yPosition,
+  setLegendOffset,
   fontSize = 16,
 }: ColorLegendProps) => {
   const RECT_MARGIN = 6;
@@ -29,6 +30,7 @@ export const ColorLegend = ({
   });
 
   const rectWidth = tickTextOffset + circleRadius + longestWord*8 + RECT_MARGIN*2;
+  setLegendOffset(rectWidth)
   return (
       <g transform={`translate(${xPosition}, ${yPosition})`}>
         <rect x={0} 

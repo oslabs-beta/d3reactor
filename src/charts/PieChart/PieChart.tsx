@@ -1,5 +1,5 @@
 /** App.js */
-import React from "react";
+import React, { useState } from "react";
 import * as d3 from "d3";
 import { useResponsive } from '../../hooks/useResponsive';
 import { PieChartProps } from "../../../types";
@@ -16,6 +16,7 @@ export default function PieChart({
   colorScheme = d3.schemeCategory10,
   legend
 }: PieChartProps): JSX.Element {
+  const [legendOffset, setLegendOffset] = useState(0);
 
   const {anchor, cHeight, cWidth}  = useResponsive();
   
@@ -25,6 +26,8 @@ export default function PieChart({
     bottom: 20,
     left: 20,
   };
+
+  
   outerRadius = outerRadius ? checkRadiusDimension(cHeight,cWidth, outerRadius, margin): calculateOuterRadius(cHeight,cWidth,margin)
   innerRadius = innerRadius ? checkRadiusDimension(outerRadius, outerRadius, innerRadius, margin) : 0
 
@@ -91,6 +94,7 @@ export default function PieChart({
           // tickSpacing={22 /* Vertical space between each line of legend */}
           // tickTextOffset={12 /* How much the text label is pushed to the right of the color swab */}
           colorScale={colorScale}
+          setLegendOffset={setLegendOffset}
         />}
       </g>
     </svg>
