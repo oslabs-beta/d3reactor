@@ -30,7 +30,7 @@ function App() {
         outerRadius="80%"
       /> 
       <AreaChart
-        data={penguins.slice(0,7)}
+        data={penguins}
         height="700"
         width="100%"
         xKey="body_mass_g"
@@ -42,7 +42,7 @@ function App() {
         yAxis="left"
       />
       <AreaChart
-        data={skinny_fruit.slice(0,40)}
+        data={skinny_fruit}
         height="300"
         xKey="date"
         xDataType="date"
@@ -56,7 +56,7 @@ function App() {
       <ScatterPlot
         height="100%"
         width="100%"
-        data={penguins.concat(penguins)}
+        data={penguins}
         xKey="flipper_length_mm"
         xDataType="number"
         yKey="body_mass_g"
@@ -94,7 +94,7 @@ function App() {
       />
       <LineChart
         height="100%"
-        data={unemployment.slice(0,5000)}
+        data={unemployment}
         xKey="date"
         xDataType="date"
         yKey="unemployment"
@@ -109,7 +109,7 @@ function App() {
       <LineChart
         height="500"
         width='500'
-        data={portfolio.slice(0, 3)}
+        data={portfolio}
         xKey="date"
         xDataType="date"
         yKey="value"

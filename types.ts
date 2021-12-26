@@ -135,6 +135,14 @@ export interface CircleProps {
   color: string
 }
 
+export interface RectangleProps {
+  x: number | undefined
+  y:number
+  width: number
+  height: number
+  fill: string 
+}
+
 export interface LineProps {
   fill: string
   stroke: string
