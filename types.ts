@@ -68,7 +68,8 @@ export interface AreaChartProps<T> {
   xAxisLabel?: string
   yAxisLabel?: string
   colorScheme?: string[] | readonly string[]
-  legend?: boolean
+  legend?: boolean | "top" | "bottom" | "left" | "right" 
+           | "top-left" | "top-right" | "bottom-left" | "bottom-right"
 }
 
 export interface PieChartProps {

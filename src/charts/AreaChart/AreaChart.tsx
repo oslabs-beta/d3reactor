@@ -38,6 +38,7 @@ export default function AreaChart({
   colorScheme = d3.schemeCategory10
 }:AreaChartProps<string | number>):JSX.Element {
   const [legendOffset, setLegendOffset] = useState(0);
+
   const chart = 'AreaChart';
 
   const {anchor, cHeight, cWidth}  = useResponsive();
@@ -46,7 +47,26 @@ export default function AreaChart({
     [xAxis, yAxis, xAxisLabel, yAxisLabel]
   )
   
-  margin.left = useMemo(() => margin.left + legendOffset, [legendOffset]);
+  // make room for legend by adjusting margin
+  switch(legend) {
+    case 'left': 
+    case 'top-left': 
+    case 'bottom-left': 
+    margin.left = useMemo(() => margin.left + legendOffset, [legendOffset]);
+      break;
+    case 'top':
+      margin.top = useMemo(() => margin.top + legendOffset, [legendOffset]);
+      break;
+    case 'bottom':
+      margin.bottom = useMemo(() => margin.bottom + legendOffset, [legendOffset]);
+      break;
+    case 'right':
+    case 'top-right':
+    case 'bottom-right':
+    default:
+      margin.right = useMemo(() => margin.right + legendOffset, [legendOffset]);
+  }
+
 
   const { xAxisX, xAxisY } = useMemo(
     () => getXAxisCoordinates(xAxis, cHeight, margin),

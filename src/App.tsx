@@ -52,7 +52,7 @@ function App() {
         yGrid={true}
         xAxisLabel="Date"
         yAxisLabel="Number of fruit"
-        legend={true}
+        legend={'left'}
       />
       <ScatterPlot
         height="100%"
