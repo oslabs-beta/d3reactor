@@ -1,11 +1,17 @@
 /** App.js */
-import React, { useState, useMemo} from "react";
-import * as d3 from "d3";
-import { AreaChartProps, ColorScale, xAccessorFunc, Data, yAccessorFunc } from '../../../types';
-import {Axis} from "../../components/ContinuousAxis";
-import { useResponsive } from '../../hooks/useResponsive';
-import { xScaleDef } from '../../functionality/xScale';
-import { yScaleDef } from '../../functionality/yScale';
+import React, { useState, useMemo } from "react"
+import * as d3 from "d3"
+import {
+  AreaChartProps,
+  ColorScale,
+  xAccessorFunc,
+  Data,
+  yAccessorFunc,
+} from "../../../types"
+import { Axis } from "../../components/ContinuousAxis"
+import { useResponsive } from "../../hooks/useResponsive"
+import { xScaleDef } from "../../functionality/xScale"
+import { yScaleDef } from "../../functionality/yScale"
 import { d3Voronoi } from "../../functionality/voronoi"
 import ListeningRect from "../../components/ListeningRect"
 import { Tooltip } from "../../components/Tooltip"
@@ -14,9 +20,8 @@ import {
   getYAxisCoordinates,
   getMargins,
   inferXDataType,
-  transformSkinnyToWide
-} from "../../utils";
-
+  transformSkinnyToWide,
+} from "../../utils"
 
 export default function AreaChart({
   data,
@@ -110,46 +115,39 @@ export default function AreaChart({
   colorScale.domain(keys)
 
   return (
-      <svg ref={anchor} width={width} height={height}>
-         <g transform={translate}>
-      {yAxis && (
-        <Axis
-        x={yAxisX}
-        y={yAxisY}
-        height={cHeight}
-        width={cWidth}
-        margin={margin}
-        scale={yScale}
-        type={yAxis}
-        yGrid={yGrid}
-        label={yAxisLabel}
-        />
-      )}
-      {xAxis && (
-        <Axis
-        x={xAxisX}
-        y={xAxisY}
-        height={cHeight}
-        width={cWidth}
-        margin={margin}
-        scale={xScale}
-        xGrid={xGrid}
-        type={xAxis}
-        label={xAxisLabel}
-        xTicksValue={xTicksValue}
-        />
-      )}
-        {layers.map((layer, i) => (
-          <path
-            key={i}
-            d={areaGenerator(layer)}
-            fill= {colorScale(layer.key)}
+    <svg ref={anchor} width={width} height={height}>
+      <g transform={translate}>
+        {yAxis && (
+          <Axis
+            x={yAxisX}
+            y={yAxisY}
+            height={cHeight}
+            width={cWidth}
+            margin={margin}
+            scale={yScale}
+            type={yAxis}
+            yGrid={yGrid}
+            label={yAxisLabel}
           />
+        )}
+        {xAxis && (
+          <Axis
+            x={xAxisX}
+            y={xAxisY}
+            height={cHeight}
+            width={cWidth}
+            margin={margin}
+            scale={xScale}
+            xGrid={xGrid}
+            type={xAxis}
+            label={xAxisLabel}
+            xTicksValue={xTicksValue}
+          />
+        )}
+        {layers.map((layer, i) => (
+          <path key={i} d={areaGenerator(layer)} fill={colorScale(layer.key)} />
         ))}
-       
-        {tooltip && 
-        <Tooltip x={tooltip.cx} y={tooltip.cy} />
-        }
+        {tooltip && <Tooltip x={tooltip.cx} y={tooltip.cy} />}
 
         <ListeningRect
           data={data}

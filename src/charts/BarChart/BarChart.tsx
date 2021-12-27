@@ -1,19 +1,19 @@
 /** App.js */
-import React, { useMemo } from "react";
-import * as d3 from "d3";
+import React, { useState, useMemo } from "react"
+import * as d3 from "d3"
 import { useResponsive } from "../../hooks/useResponsive"
-import { Axis } from "../../components/ContinuousAxis";
-import { DiscreteAxis } from "../../components/DiscreteAxis";
-import { Rectangle } from "../../components/Rectangle";
-import { transformSkinnyToWide } from "../../utils";
-import { BarChartProps, Data, ColorScale, yAccessorFunc } from "../../../types";
+import { Axis } from "../../components/ContinuousAxis"
+import { DiscreteAxis } from "../../components/DiscreteAxis"
+import { Rectangle } from "../../components/Rectangle"
+import { Tooltip } from "../../components/Tooltip"
+import { transformSkinnyToWide } from "../../utils"
+import { BarChartProps, Data, ColorScale, yAccessorFunc } from "../../../types"
 import {
   getXAxisCoordinates,
   getYAxisCoordinates,
   getMargins,
 } from "../../utils"
 import { yScaleDef } from "../../functionality/yScale"
-
 
 export default function BarChart({
   data,
@@ -29,9 +29,11 @@ export default function BarChart({
   yAxisLabel,
   colorScheme = d3.schemeCategory10,
 }: BarChartProps<string | number>): JSX.Element {
-  const chart = 'BarChart';
-  
-  const { anchor, cHeight, cWidth } = useResponsive();
+  const [tooltip, setTooltip] = useState<false | any>(false)
+
+  const chart = "BarChart"
+
+  const { anchor, cHeight, cWidth } = useResponsive()
 
   const margin = useMemo(
     () => getMargins(xAxis, yAxis, xAxisLabel, yAxisLabel),
@@ -60,51 +62,66 @@ export default function BarChart({
     data = transformSkinnyToWide(data, keys, groupBy, xKey, yKey)
   }
   const stack = d3.stack().keys(keys).order(d3.stackOrderAscending)
-  const layers = stack(data as Iterable<{ [key: string]: number; }>)
+  const layers = stack(data as Iterable<{ [key: string]: number }>)
 
-  const xAccessor: (d: Data) => string = useMemo(() => {return (d) => d[xKey]}, [])
-  
-  const yAccessor:yAccessorFunc = useMemo(() => { return (d) => d[yKey] }, [])
+  const xAccessor: (d: Data) => string = useMemo(() => {
+    return (d) => d[xKey]
+  }, [])
 
-  const xScale= useMemo(() => { return d3
-    .scaleBand()
-    .paddingInner(0.1)
-    .paddingOuter(0.1)
-    .domain(data.map(xAccessor))
-    .range([0, cWidth - margin.right - margin.left]) }, [data, xAccessor, cWidth, margin])
+  const yAccessor: yAccessorFunc = useMemo(() => {
+    return (d) => d[yKey]
+  }, [])
 
-  const yScale = useMemo(() => { return yScaleDef(groupBy? layers : data, yAccessor, margin, cHeight, chart, groupBy)}, [data, yAccessor, margin, cHeight, chart, groupBy])
+  const xScale = useMemo(() => {
+    return d3
+      .scaleBand()
+      .paddingInner(0.1)
+      .paddingOuter(0.1)
+      .domain(data.map(xAccessor))
+      .range([0, cWidth - margin.right - margin.left])
+  }, [data, xAccessor, cWidth, margin])
+
+  const yScale = useMemo(() => {
+    return yScaleDef(
+      groupBy ? layers : data,
+      yAccessor,
+      margin,
+      cHeight,
+      chart,
+      groupBy
+    )
+  }, [data, yAccessor, margin, cHeight, chart, groupBy])
 
   const colorScale: ColorScale = d3.scaleOrdinal(colorScheme)
   colorScale.domain(keys)
 
   return (
     <svg ref={anchor} width={width} height={height}>
-    <g transform={translate}>
-      {yAxis && (
-        <Axis
-        x={yAxisX}
-        y={yAxisY}
-        height={cHeight}
-        width={cWidth}
-        margin={margin}
-        scale={yScale}
-        type={yAxis}
-        yGrid={yGrid}
-        label={yAxisLabel}
-        />
+      <g transform={translate}>
+        {yAxis && (
+          <Axis
+            x={yAxisX}
+            y={yAxisY}
+            height={cHeight}
+            width={cWidth}
+            margin={margin}
+            scale={yScale}
+            type={yAxis}
+            yGrid={yGrid}
+            label={yAxisLabel}
+          />
         )}
-      {xAxis && (
-        <DiscreteAxis
-        x={xAxisX}
-        y={xAxisY}
-        height={cHeight}
-        width={cWidth}
-        margin={margin}
-        scale={xScale}
-        type={xAxis}
-        label={xAxisLabel}
-        />
+        {xAxis && (
+          <DiscreteAxis
+            x={xAxisX}
+            y={xAxisY}
+            height={cHeight}
+            width={cWidth}
+            margin={margin}
+            scale={xScale}
+            type={xAxis}
+            label={xAxisLabel}
+          />
         )}
         {groupBy
           ? layers.map((layer: any, i: number) => (
@@ -115,8 +132,13 @@ export default function BarChart({
                     x={xScale(xAccessor(sequence.data))}
                     y={yScale(sequence[1])}
                     width={xScale.bandwidth()}
-                    height={yScale(sequence[0]) - yScale(sequence[1]) > 0 ? yScale(sequence[0]) - yScale(sequence[1]) : 0}
+                    height={
+                      yScale(sequence[0]) - yScale(sequence[1]) > 0
+                        ? yScale(sequence[0]) - yScale(sequence[1])
+                        : 0
+                    }
                     fill={colorScale(layer.key)}
+                    setTooltip={setTooltip}
                   />
                 ))}
               </g>
@@ -127,12 +149,17 @@ export default function BarChart({
                 x={xScale(xAccessor(d))}
                 y={yScale(yAccessor(d))}
                 width={xScale.bandwidth()}
-                height={xAxisY - yScale(yAccessor(d)) > 0 ? xAxisY - yScale(yAccessor(d)) : 0}
+                height={
+                  xAxisY - yScale(yAccessor(d)) > 0
+                    ? xAxisY - yScale(yAccessor(d))
+                    : 0
+                }
                 fill={colorScale(yKey)}
-  
+                setTooltip={setTooltip}
               />
             ))}
-    </g>
+        {tooltip && <Tooltip x={tooltip.cx} y={tooltip.cy} />}
+      </g>
     </svg>
   )
 }
