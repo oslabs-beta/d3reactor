@@ -6,7 +6,6 @@ import {Axis} from "../../components/ContinuousAxis";
 import { useResponsive } from '../../hooks/useResponsive';
 import { xScaleDef } from '../../functionality/xScale';
 import { yScaleDef } from '../../functionality/yScale';
-import { d3Voronoi } from "../../functionality/voronoi"
 import ListeningRect from "../../components/ListeningRect"
 import { Tooltip } from "../../components/Tooltip"
 import {
