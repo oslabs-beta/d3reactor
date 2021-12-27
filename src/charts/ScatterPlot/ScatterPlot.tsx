@@ -12,7 +12,7 @@ import { VoronoiWrapper } from "../../components/VoronoiWrapper"
 import { Tooltip } from "../../components/Tooltip"
 import {
   ScatterPlotProps,
-  xAccessorFunc, 
+  xAccessorFunc,
   yAccessorFunc,
   ColorScale,
 } from "../../../types"
@@ -37,7 +37,7 @@ export default function ScatterPlot({
   yGrid = false,
   xAxisLabel,
   yAxisLabel,
-  colorScheme = d3.schemeCategory10,
+  colorScheme = d3.quantize(d3.interpolateHcl("#9dc8e2", "#07316b"), 8),
 }: ScatterPlotProps<string | number>): JSX.Element {
   const [tooltip, setTooltip] = useState<false | any>(false)
   const chart = "ScatterPlot"
@@ -61,8 +61,8 @@ export default function ScatterPlot({
 
   const translate = `translate(${margin.left}, ${margin.top})`
 
-  let xType: 'number' | 'date' = inferXDataType(data[0], xKey)
-  if(xDataType !== undefined) xType= xDataType;
+  let xType: "number" | "date" = inferXDataType(data[0], xKey)
+  if (xDataType !== undefined) xType = xDataType
 
   let keys: string[] = [],
     groups: d3.InternMap<any, any[]>
@@ -70,32 +70,33 @@ export default function ScatterPlot({
   groups = d3.group(data, groupAccessor)
   keys = Array.from(groups).map((group) => group[0])
 
-  const xAccessor: xAccessorFunc = useMemo(() => {return  xType === "number" ? (d) => d[xKey] : (d) => new Date(d[xKey])}, [])
-  const yAccessor:yAccessorFunc = useMemo(() => { return (d) => d[yKey] }, [])
+  const xAccessor: xAccessorFunc = useMemo(() => {
+    return xType === "number" ? (d) => d[xKey] : (d) => new Date(d[xKey])
+  }, [])
+  const yAccessor: yAccessorFunc = useMemo(() => {
+    return (d) => d[yKey]
+  }, [])
 
-  const { xScale } = useMemo(() => {return xScaleDef(
-    data,
-    xType,
-    xAccessor,
-    margin,
-    cWidth,
-    chart
-  )}, [data, cWidth, margin]);
-  
-  const yScale = useMemo(() => {return yScaleDef(data, yAccessor, margin, cHeight)}, [data, yAccessor, margin, cHeight])
+  const { xScale } = useMemo(() => {
+    return xScaleDef(data, xType, xAccessor, margin, cWidth, chart)
+  }, [data, cWidth, margin])
 
-  const voronoi = useMemo (() => {return d3Voronoi(
-    data,
-    xScale,
-    yScale,
-    xAccessor,
-    yAccessor,
-    cHeight,
-    cWidth,
-    margin
-  )}, 
-  [data, xScale, yScale, xAccessor, yAccessor, cHeight, cWidth, margin]
-  );
+  const yScale = useMemo(() => {
+    return yScaleDef(data, yAccessor, margin, cHeight)
+  }, [data, yAccessor, margin, cHeight])
+
+  const voronoi = useMemo(() => {
+    return d3Voronoi(
+      data,
+      xScale,
+      yScale,
+      xAccessor,
+      yAccessor,
+      cHeight,
+      cWidth,
+      margin
+    )
+  }, [data, xScale, yScale, xAccessor, yAccessor, cHeight, cWidth, margin])
 
   const colorScale: ColorScale = d3.scaleOrdinal(colorScheme)
   colorScale.domain(keys)
@@ -148,16 +149,16 @@ export default function ScatterPlot({
             />
           )
         )}
-       {voronoi && (
-         <VoronoiWrapper
-           data={data}
-           voronoi={voronoi}
-           xScale={xScale}
-           yScale={yScale}
-           xAccessor={xAccessor}
-           yAccessor={yAccessor}
-           setTooltip={setTooltip}
-         />
+        {voronoi && (
+          <VoronoiWrapper
+            data={data}
+            voronoi={voronoi}
+            xScale={xScale}
+            yScale={yScale}
+            xAccessor={xAccessor}
+            yAccessor={yAccessor}
+            setTooltip={setTooltip}
+          />
         )}
         {tooltip && <Tooltip x={tooltip.cx} y={tooltip.cy} />}
       </g>

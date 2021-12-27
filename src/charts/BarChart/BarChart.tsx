@@ -27,7 +27,7 @@ export default function BarChart({
   yGrid = false,
   xAxisLabel,
   yAxisLabel,
-  colorScheme = d3.schemeCategory10,
+  colorScheme = d3.quantize(d3.interpolateHcl("#9dc8e2", "#07316b"), 8),
 }: BarChartProps<string | number>): JSX.Element {
   const [tooltip, setTooltip] = useState<false | any>(false)
 

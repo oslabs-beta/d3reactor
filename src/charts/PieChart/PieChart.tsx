@@ -14,7 +14,7 @@ export default function PieChart({
   value,
   outerRadius,
   innerRadius,
-  colorScheme = d3.schemeCategory10,
+  colorScheme = d3.quantize(d3.interpolateHcl("#9dc8e2", "#07316b"), 8),
   legend,
 }: PieChartProps): JSX.Element {
   const [tooltip, setTooltip] = useState<false | any>(false)
