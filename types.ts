@@ -152,6 +152,15 @@ export interface LineProps {
   id?: string | number
 }
 
+export interface ArcProps {
+  fill: string
+  stroke: string
+  strokeWidth: string
+  d: string | undefined
+  id?: string | number
+  setTooltip?: React.Dispatch<any>
+}
+
 export interface VoronoiProps {
   fill: string
   stroke: string

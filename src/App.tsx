@@ -15,7 +15,7 @@ import skinny_fruit from "./data/skinny_fruit.json"
 function App() {
   return (
     <div className="app">
-      {/* <PieChart
+      <PieChart
         data={fruit}
         label="label"
         value="value"
@@ -67,7 +67,7 @@ function App() {
         // yGrid={true}
         xAxisLabel="Date"
         yAxisLabel="Value"
-      /> */}
+      />
       <BarChart
         height="300"
         data={skinny_fruit}
@@ -92,7 +92,7 @@ function App() {
         xAxisLabel="Date"
         yAxisLabel="Value"
       />
-      {/* <LineChart
+      <LineChart
         height="100%"
         data={unemployment}
         xKey="date"
@@ -108,7 +108,7 @@ function App() {
       />
       <LineChart
         height="500"
-        width='500'
+        width="500"
         data={portfolio}
         xKey="date"
         xDataType="date"
@@ -119,7 +119,7 @@ function App() {
         yGrid={true}
         xAxisLabel="Date"
         yAxisLabel="Value"
-      /> */}
+      />
     </div>
   )
 }
