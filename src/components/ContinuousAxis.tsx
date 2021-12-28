@@ -60,6 +60,42 @@ function Axi({
       break
   }
 
+  const getTickTranslation = (
+    axisType: string,
+    individualTick: number | Date
+  ): string => {
+    switch (type) {
+      case "top":
+        return `translate(${scale(individualTick)}, ${y - 8})`
+      case "right":
+        return `translate(${x + 24}, ${scale(individualTick)})`
+      case "bottom":
+        return `translate(${scale(individualTick)}, ${y + 18})`
+      case "left":
+        return `translate(${x - 12}, ${scale(individualTick)})`
+      default:
+        return `translate(0, 0)`
+    }
+  }
+
+  const getTickStyle = (
+    axisType: string,
+    individualTick: number | Date
+  ): any => {
+    switch (type) {
+      case "top":
+        return { textAnchor: "middle", dominantBaseline: "auto" }
+      case "right":
+        return { textAnchor: "end", dominantBaseline: "middle" }
+      case "bottom":
+        return { textAnchor: "middle", dominantBaseline: "auto" }
+      case "left":
+        return { textAnchor: "end", dominantBaseline: "middle" }
+      default:
+        return { textAnchor: "middle", dominantBaseline: "auto" }
+    }
+  }
+
   //     anchor.call(axis)
   //   },
   //   [type, scale]
@@ -142,32 +178,40 @@ function Axi({
       <line stroke="#bdc3c7" x1={x1} y1={y1} x2={x2} y2={y2} />
       {type === "top" &&
         horizontalTicks.map((tick, i) => (
-          <text key={i} transform={`translate(${scale(tick)}, ${y - 8})`}>
+          <text
+            key={i}
+            style={getTickStyle(type, tick)}
+            transform={getTickTranslation(type, tick)}
+          >
             {formatTick(tick as Date)}
           </text>
         ))}
       {type === "right" &&
         verticalTicks.map((tick, i) => (
           <text
-            style={{ textAnchor: "end", dominantBaseline: "middle" }}
+            style={getTickStyle(type, tick)}
             key={i}
-            transform={`translate(${x + 24}, ${scale(tick)})`}
+            transform={getTickTranslation(type, tick)}
           >
             {tick}
           </text>
         ))}
       {type === "bottom" &&
         horizontalTicks.map((tick, i) => (
-          <text key={i} transform={`translate(${scale(tick)}, ${y + 18})`}>
+          <text
+            key={i}
+            style={getTickStyle(type, tick)}
+            transform={getTickTranslation(type, tick)}
+          >
             {formatTick(tick as Date)}
           </text>
         ))}
       {type === "left" &&
         verticalTicks.map((tick, i) => (
           <text
-            style={{ textAnchor: "end", dominantBaseline: "middle" }}
+            style={getTickStyle(type, tick)}
             key={i}
-            transform={`translate(${x - 12}, ${scale(tick)})`}
+            transform={getTickTranslation(type, tick)}
           >
             {tick}
           </text>
