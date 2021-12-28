@@ -3,8 +3,9 @@ import * as d3 from "d3"
 import { useD3 } from "../hooks/useD3"
 import { ContinuousAxisProps } from "../../types"
 import { getAxisLabelCoordinates } from "../utils"
+import { Line } from "./Line"
 
-function Axi ({
+function Axi({
   x,
   y,
   scale,
@@ -15,107 +16,165 @@ function Axi ({
   margin,
   xGrid,
   yGrid,
-  xTicksValue
+  xTicksValue,
 }: ContinuousAxisProps): JSX.Element {
-  console.log('axis')
-  const gRef = useD3(
-    (anchor) => {
-      let axis: d3.Axis<d3.NumberValue>
+  console.log("axis")
+  // const gRef = useD3(
+  //   (anchor) => {
+  let axis: d3.Axis<d3.NumberValue>
 
-      switch (type) {
-        case "bottom":
-          axis = d3.axisBottom(scale)
-          break
-        case "top":
-          axis = d3.axisTop(scale)
-          break
-        case "left":
-          axis = d3.axisLeft(scale)
-          break
-        case "right":
-          axis = d3.axisRight(scale)
-          break
-        default:
-          axis = d3.axisRight(scale)
-          break
-      }
+  let x1 = 0,
+    y1 = 0,
+    x2 = 0,
+    y2 = 0
+  switch (type) {
+    case "bottom":
+      x1 = x
+      y1 = y
+      x2 = width - margin.right - margin.left
+      y2 = y
+      break
+    case "top":
+      x1 = x
+      y1 = y
+      x2 = width - margin.right - margin.left
+      y2 = y
+      break
+    case "left":
+      x1 = x
+      y1 = 0
+      x2 = x
+      y2 = height - margin.top - margin.bottom
+      break
+    case "right":
+      x1 = x
+      y1 = y
+      x2 = x
+      y2 = height - margin.top - margin.bottom
+      break
+    default:
+      x1 = 0
+      y1 = 0
+      x2 = 0
+      y2 = 0
+      break
+  }
 
-      anchor.call(axis)
-    },
-    [type, scale]
-  )
+  //     anchor.call(axis)
+  //   },
+  //   [type, scale]
+  // )
 
   const { axisLabelX, axisLabelY, rotate } = useMemo(
     () => getAxisLabelCoordinates(x, y, height, width, margin, type),
     [x, y, width, height, margin, type]
   )
- 
-  let grid: JSX.Element[] = []
-  switch (true) {
-    case type === "bottom" && xGrid:
-      grid = (xTicksValue ? xTicksValue : scale.ticks())
-              .map((tick:any, i:number) => (
-          <line
-            key={i}
-            x1={scale(tick)}
-            x2={scale(tick)}
-            y1={0}
-            y2={-height + margin.bottom + margin.top}
-            strokeOpacity="0.2"
-            stroke="currentColor"
-          ></line>
-        ))
-      break
-    case type === "top" && xGrid:
-      grid = (xTicksValue ? xTicksValue : scale.ticks())
-        .map((tick:any, i:number) => (
-          <line
-            key={i}
-            x1={scale(tick)}
-            x2={scale(tick)}
-            y1={0}
-            y2={height - margin.bottom - margin.top}
-            strokeOpacity="0.2"
-            stroke="currentColor"
-          ></line>
-        ))
-      break
-    case type === "left" && yGrid:
-      grid = scale.ticks()
-              .map((tick:any, i:number) => (
-          <line
-            key={i}
-            x1={0}
-            x2={width - margin.right - margin.left}
-            y1={scale(tick)}
-            y2={scale(tick)}
-            strokeOpacity="0.2"
-            stroke="currentColor"
-          ></line>
-        ))
-      break
-    case type === "right" && yGrid :
-      grid = scale.ticks()
-            .map((tick:any, i:number) => (
-          <line
-            key={i}
-            x1={0}
-            x2={-(width - margin.right - margin.left)}
-            y1={scale(tick)}
-            y2={scale(tick)}
-            strokeOpacity="0.2"
-            stroke="currentColor"
-          ></line>
-        ))
-      
-      break
-  }
+
+  // let grid: JSX.Element[] = []
+  // switch (true) {
+  //   case type === "bottom" && xGrid:
+  //     grid = (xTicksValue ? xTicksValue : scale.ticks())
+  //             .map((tick:any, i:number) => (
+  //         <line
+  //           key={i}
+  //           x1={scale(tick)}
+  //           x2={scale(tick)}
+  //           y1={0}
+  //           y2={-height + margin.bottom + margin.top}
+  //           strokeOpacity="0.2"
+  //           stroke="currentColor"
+  //         ></line>
+  //       ))
+  //     break
+  //   case type === "top" && xGrid:
+  //     grid = (xTicksValue ? xTicksValue : scale.ticks())
+  //       .map((tick:any, i:number) => (
+  //         <line
+  //           key={i}
+  //           x1={scale(tick)}
+  //           x2={scale(tick)}
+  //           y1={0}
+  //           y2={height - margin.bottom - margin.top}
+  //           strokeOpacity="0.2"
+  //           stroke="currentColor"
+  //         ></line>
+  //       ))
+  //     break
+  //   case type === "left" && yGrid:
+  //     grid = scale.ticks()
+  //             .map((tick:any, i:number) => (
+  //         <line
+  //           key={i}
+  //           x1={0}
+  //           x2={width - margin.right - margin.left}
+  //           y1={scale(tick)}
+  //           y2={scale(tick)}
+  //           strokeOpacity="0.2"
+  //           stroke="currentColor"
+  //         ></line>
+  //       ))
+  //     break
+  //   case type === "right" && yGrid :
+  //     grid = scale.ticks()
+  //           .map((tick:any, i:number) => (
+  //         <line
+  //           key={i}
+  //           x1={0}
+  //           x2={-(width - margin.right - margin.left)}
+  //           y1={scale(tick)}
+  //           y2={scale(tick)}
+  //           strokeOpacity="0.2"
+  //           stroke="currentColor"
+  //         ></line>
+  //       ))
+
+  //     break
+  // }
+
+  const numberOfHorizontalTicks: number = width / 100
+  const numberOfVerticalTicks: number = height / 100
+  const horizontalTicks = scale.ticks(numberOfHorizontalTicks)
+  const verticalTicks = scale.ticks(numberOfVerticalTicks)
+  const formatTick = d3.timeFormat("%-b %-d")
 
   return (
     <g>
-      <g ref={gRef} transform={`translate(${x}, ${y})`}>
+      <line stroke="#bdc3c7" x1={x1} y1={y1} x2={x2} y2={y2} />
+      {type === "top" &&
+        horizontalTicks.map((tick, i) => (
+          <text key={i} transform={`translate(${scale(tick)}, ${y - 8})`}>
+            {formatTick(tick as Date)}
+          </text>
+        ))}
+      {type === "right" &&
+        verticalTicks.map((tick, i) => (
+          <text
+            style={{ textAnchor: "end", dominantBaseline: "middle" }}
+            key={i}
+            transform={`translate(${x + 24}, ${scale(tick)})`}
+          >
+            {tick}
+          </text>
+        ))}
+      {type === "bottom" &&
+        horizontalTicks.map((tick, i) => (
+          <text key={i} transform={`translate(${scale(tick)}, ${y + 18})`}>
+            {formatTick(tick as Date)}
+          </text>
+        ))}
+      {type === "left" &&
+        verticalTicks.map((tick, i) => (
+          <text
+            style={{ textAnchor: "end", dominantBaseline: "middle" }}
+            key={i}
+            transform={`translate(${x - 12}, ${scale(tick)})`}
+          >
+            {tick}
+          </text>
+        ))}
+      {/* <g ref={gRef} transform={`translate(${x}, ${y})`}>
         {grid}
-      </g>
+      </g> */}
       <text
         transform={`translate(${axisLabelX}, ${axisLabelY}) rotate(${rotate})`}
         textAnchor="middle"
@@ -127,9 +186,15 @@ function Axi ({
   )
 }
 
-function AxisPropsAreEqual (prevAxis:ContinuousAxisProps, newAxis:ContinuousAxisProps) {
-  return prevAxis.scale === newAxis.scale && prevAxis.height === newAxis.height && 
-  prevAxis.width === newAxis.width
+function AxisPropsAreEqual(
+  prevAxis: ContinuousAxisProps,
+  newAxis: ContinuousAxisProps
+) {
+  return (
+    prevAxis.scale === newAxis.scale &&
+    prevAxis.height === newAxis.height &&
+    prevAxis.width === newAxis.width
+  )
 }
 
-export const Axis = React.memo(Axi, AxisPropsAreEqual);
+export const Axis = React.memo(Axi, AxisPropsAreEqual)
