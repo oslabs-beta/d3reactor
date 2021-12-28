@@ -38,39 +38,100 @@ export default function AreaChart({
   yGrid = false,
   xAxisLabel,
   yAxisLabel,
-  legend,
+  legend = 'right',
   colorScheme = d3.quantize(d3.interpolateHcl("#9dc8e2", "#07316b"), 8),
 }: AreaChartProps<string | number>): JSX.Element {
-  const [tooltip, setTooltip] = useState<false | any>(false)
-  const [legendOffset, setLegendOffset] = useState(0);
-  const chart = "AreaChart"
 
-  const { anchor, cHeight, cWidth } = useResponsive()
+  const [tooltip, setTooltip] = useState<false | any>(false);
+  // width & height of legend, so we know how much to squeeze chart by
+  const [legendOffset, setLegendOffset] = useState([0, 0]);
+  // const [legendOffset, setLegendOffset] = useState(0);
+  
+  const chart = "AreaChart";
+
+  const { anchor, cHeight, cWidth } = useResponsive();
   const margin = useMemo(
     () => getMargins(xAxis, yAxis, xAxisLabel, yAxisLabel),
     [xAxis, yAxis, xAxisLabel, yAxisLabel]
   )
   
+  const xOffset = legendOffset[0]
   // make room for legend by adjusting margin
+  let xPosition: number = 0, yPosition: number = cHeight/3;
   switch(legend) {
     case 'left': 
+      margin.left = useMemo(() => margin.left + xOffset, [xOffset]);
+      xPosition -= margin.left;
+      break;
     case 'top-left': 
+      margin.left = useMemo(() => margin.left + xOffset, [xOffset]);
+      xPosition -= margin.left;
+      yPosition = margin.top;
+      break;
     case 'bottom-left': 
-    margin.left = useMemo(() => margin.left + legendOffset, [legendOffset]);
+      margin.left = useMemo(() => margin.left + xOffset, [xOffset]);
+      xPosition -= margin.left;
       break;
     case 'top':
-      margin.top = useMemo(() => margin.top + legendOffset, [legendOffset]);
+      margin.top = useMemo(() => margin.top + xOffset, [xOffset]);
+      // set xPosition to middle
+      
       break;
     case 'bottom':
-      margin.bottom = useMemo(() => margin.bottom + legendOffset, [legendOffset]);
+      margin.bottom = useMemo(() => margin.bottom + xOffset, [xOffset]);
+      // set xPosition to middle
+
       break;
-    case 'right':
-    case 'top-right':
-    case 'bottom-right':
+      case 'top-right':
+        margin.right = useMemo(() => margin.right + xOffset, [xOffset]);
+        xPosition += cWidth - margin.left - margin.right + 20;
+        yPosition = 0;
+        break;
+      case 'bottom-right':
+        margin.right = useMemo(() => margin.right + xOffset, [xOffset]);
+        xPosition += cWidth - margin.left - margin.right + 20;
+        break;
+      case 'right':
     default:
-      margin.right = useMemo(() => margin.right + legendOffset, [legendOffset]);
+      margin.right = useMemo(() => margin.right + xOffset, [xOffset]);
+      xPosition += cWidth - margin.left - margin.right + 20;
   }
 
+
+  // switch(legend) {
+  //   // in the case of 'left', 'top-left', or 'bottom-left'
+  //   case (legend as string).includes('l'):
+  //     console.log('includes left!!!!!!!!!!!!!')
+  //     margin.left = useMemo(() => margin.left + legendOffset, [legendOffset]);
+  //     xPosition -= margin.left;
+  //     break;
+  //   // in the case of 'right', 'top-right', or 'bottom-right'
+  //   case (legend as string).includes('r'):
+  //   default:
+  //     console.log('includes right!!!!!!!!!!!!!')
+
+  //     margin.right = useMemo(() => margin.right + legendOffset, [legendOffset]);
+  //     xPosition += cWidth - margin.left - margin.right + 20;
+  // }
+  // switch(legend) {
+  //   // in the case of 'top', 'top-left', or 'top-right'
+  //   case (legend as string).includes('top'):
+  //     // set yPosition to top
+  //     yPosition = 0;
+  //     if (legend as unknown as string === 'top') {
+  //       // set xPosition to middle
+  //     }
+  //     break;
+  //   // in the case of 'bottom', 'bottom-left', or 'bottom-right'
+  //   case (legend as string).includes('bottom'):
+
+  //     if (legend as unknown as string === 'bottom') {
+  //       // set xPosition to middle
+  //     }
+  //     break;
+  //   default:
+  //     break;
+  // }
 
   const { xAxisX, xAxisY } = useMemo(
     () => getXAxisCoordinates(xAxis, cHeight, margin),
@@ -172,11 +233,12 @@ export default function AreaChart({
         {layers.map((layer, i) => (
           <path key={i} d={areaGenerator(layer)} fill={colorScale(layer.key)} />
         ))}
-        { // If legend prop is true, render legend component:
+
+        { // If legend prop is truthy, render legend component:
         legend && <ColorLegend 
           colorLegendLabel={'Fruit' /**we need a way to derive this either from data or as an extra prop passed in */} 
-          xPosition={0 - legendOffset*2 /* Where legend is placed on page */}
-          yPosition={cHeight/3/* Where legend is placed on page */}
+          xPosition={xPosition /* Where legend is placed on page */}
+          yPosition={yPosition/* Where legend is placed on page */}
           circleRadius={5 /* Radius of each color swab in legend */}
           // tickSpacing={22 /* Vertical space between each line of legend */}
           // tickTextOffset={12 /* How much the text label is pushed to the right of the color swab */}

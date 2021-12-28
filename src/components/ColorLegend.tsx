@@ -4,11 +4,11 @@ import { ColorLegendProps } from "../../types"
 export const ColorLegend = ({
   colorScale,
   circleRadius = 10,
-  tickSpacing = circleRadius*2 + 6,
-  tickTextOffset = circleRadius*1.2 + 3,
+  tickSpacing = circleRadius * 2 + 6,
+  tickTextOffset = circleRadius * 1.2 + 3,
   colorLegendLabel = '',
-  xPosition,
-  yPosition,
+  xPosition = 0,
+  yPosition = 0,
   setLegendOffset,
   fontSize = 16,
 }: ColorLegendProps) => {
@@ -16,6 +16,7 @@ export const ColorLegend = ({
   const domain = colorScale.domain();
   let longestWord = colorLegendLabel ? colorLegendLabel.length : 0;
   const rectHeight = tickSpacing*(domain.length+1) + RECT_MARGIN*2;
+
   // iterate thru category names, create color swab & text for each
   const legend = domain.map((domainValue: string, i: number) => {
     if (domainValue.length > longestWord) longestWord = domainValue.length;
@@ -29,8 +30,11 @@ export const ColorLegend = ({
     )
   });
 
-  const rectWidth = tickTextOffset + circleRadius + longestWord*8 + RECT_MARGIN*2;
-  setLegendOffset(rectWidth)
+
+
+  const rectWidth = tickTextOffset + circleRadius*2 + longestWord*8 + RECT_MARGIN*2;
+  setLegendOffset([rectWidth, rectHeight]);
+  // setLegendOffset(rectWidth);
   return (
       <g transform={`translate(${xPosition}, ${yPosition})`}>
         <rect x={0} 

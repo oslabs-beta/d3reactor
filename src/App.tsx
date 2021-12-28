@@ -15,7 +15,7 @@ import skinny_fruit from "./data/skinny_fruit.json"
 function App() {
   return (
     <div className="app">
-      <PieChart
+      {/* <PieChart
         data={fruit}
         label="label"
         value="value"
@@ -28,7 +28,7 @@ function App() {
         value="value"
         innerRadius="70%"
         outerRadius="80%"
-      />
+      /> */}
       <AreaChart
         data={penguins}
         height="700"
@@ -40,6 +40,7 @@ function App() {
         yGrid={true}
         xAxis="bottom"
         yAxis="left"
+        legend={'right'}
       />
       <AreaChart
         data={skinny_fruit}
@@ -52,7 +53,7 @@ function App() {
         yGrid={true}
         xAxisLabel="Date"
         yAxisLabel="Number of fruit"
-        legend={'left'}
+        legend={'top-left'}
       />
       <ScatterPlot
         height="100%"

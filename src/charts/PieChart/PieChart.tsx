@@ -18,7 +18,7 @@ export default function PieChart({
   legend,
 }: PieChartProps): JSX.Element {
 
-  const [legendOffset, setLegendOffset] = useState(0);
+  const [legendOffset, setLegendOffset] = useState([0, 0]);
   
   const [tooltip, setTooltip] = useState<false | any>(false);
   
