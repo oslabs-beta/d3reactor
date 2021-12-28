@@ -1,5 +1,5 @@
-import * as d3 from 'd3';
-import React from 'react';
+import * as d3 from "d3"
+import React from "react"
 export interface Data {
   [key: string]: any
 }
@@ -139,10 +139,11 @@ export interface CircleProps {
 
 export interface RectangleProps {
   x: number | undefined
-  y:number
+  y: number
   width: number
   height: number
-  fill: string 
+  fill: string
+  setTooltip?: React.Dispatch<any>
 }
 
 export interface LineProps {
@@ -153,14 +154,23 @@ export interface LineProps {
   id?: string | number
 }
 
+export interface ArcProps {
+  fill: string
+  stroke: string
+  strokeWidth: string
+  d: string | undefined
+  id?: string | number
+  setTooltip?: React.Dispatch<any>
+}
+
 export interface VoronoiProps {
   fill: string
   stroke: string
   opacity: number
   d: string | undefined
   cellCenter?: { cx: number; cy: number }
-  setTooltip?: React.Dispatch<any>
   data?: any
+  setTooltip?: React.Dispatch<any>
 }
 
 export type ColorScale = d3.ScaleOrdinal<string, string, never>
@@ -181,9 +191,9 @@ export type ScaleFunc =
   | d3.ScaleLinear<number, number, never>
   | d3.ScaleTime<number, number, never>
 
-export type xAccessorFunc = (d: any) => number | Date;
+export type xAccessorFunc = (d: any) => number | Date
 
-export type yAccessorFunc = (d: any) => number;
+export type yAccessorFunc = (d: any) => number
 
 export type Domain = number | Date | undefined
 
@@ -196,7 +206,7 @@ export interface VoronoiProps {
 export interface VoronoiBody {
   data: Data
   voronoi: d3.Voronoi<string>
-  xScale:ScaleFunc
+  xScale: ScaleFunc
   yScale: ScaleFunc
   xAccessor: xAccessorFunc
   yAccessor: yAccessorFunc
