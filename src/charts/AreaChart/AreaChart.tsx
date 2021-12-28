@@ -13,9 +13,8 @@ import {
   getYAxisCoordinates,
   getMargins,
   inferXDataType,
-  transformSkinnyToWide
-} from "../../utils";
-
+  transformSkinnyToWide,
+} from "../../utils"
 
 export default function AreaChart({
   data,
@@ -31,7 +30,7 @@ export default function AreaChart({
   yGrid = false,
   xAxisLabel,
   yAxisLabel,
-  colorScheme = d3.schemeCategory10,
+  colorScheme = d3.quantize(d3.interpolateHcl("#9dc8e2", "#07316b"), 8),
 }: AreaChartProps<string | number>): JSX.Element {
   const [tooltip, setTooltip] = useState<false | any>(false)
   const chart = "AreaChart"
@@ -109,46 +108,39 @@ export default function AreaChart({
   colorScale.domain(keys)
 
   return (
-      <svg ref={anchor} width={width} height={height}>
-         <g transform={translate}>
-      {yAxis && (
-        <Axis
-        x={yAxisX}
-        y={yAxisY}
-        height={cHeight}
-        width={cWidth}
-        margin={margin}
-        scale={yScale}
-        type={yAxis}
-        yGrid={yGrid}
-        label={yAxisLabel}
-        />
-      )}
-      {xAxis && (
-        <Axis
-        x={xAxisX}
-        y={xAxisY}
-        height={cHeight}
-        width={cWidth}
-        margin={margin}
-        scale={xScale}
-        xGrid={xGrid}
-        type={xAxis}
-        label={xAxisLabel}
-        xTicksValue={xTicksValue}
-        />
-      )}
-        {layers.map((layer, i) => (
-          <path
-            key={i}
-            d={areaGenerator(layer)}
-            fill= {colorScale(layer.key)}
+    <svg ref={anchor} width={width} height={height}>
+      <g transform={translate}>
+        {yAxis && (
+          <Axis
+            x={yAxisX}
+            y={yAxisY}
+            height={cHeight}
+            width={cWidth}
+            margin={margin}
+            scale={yScale}
+            type={yAxis}
+            yGrid={yGrid}
+            label={yAxisLabel}
           />
+        )}
+        {xAxis && (
+          <Axis
+            x={xAxisX}
+            y={xAxisY}
+            height={cHeight}
+            width={cWidth}
+            margin={margin}
+            scale={xScale}
+            xGrid={xGrid}
+            type={xAxis}
+            label={xAxisLabel}
+            xTicksValue={xTicksValue}
+          />
+        )}
+        {layers.map((layer, i) => (
+          <path key={i} d={areaGenerator(layer)} fill={colorScale(layer.key)} />
         ))}
-       
-        {tooltip && 
-        <Tooltip x={tooltip.cx} y={tooltip.cy} />
-        }
+        {tooltip && <Tooltip x={tooltip.cx} y={tooltip.cy} />}
 
         <ListeningRect
           data={data}

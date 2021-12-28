@@ -28,7 +28,7 @@ function App() {
         value="value"
         innerRadius="70%"
         outerRadius="80%"
-      /> 
+      />
       <AreaChart
         data={penguins}
         height="700"
@@ -43,7 +43,7 @@ function App() {
       />
       <AreaChart
         data={skinny_fruit}
-        height="300"
+        height='300'
         xKey="date"
         xDataType="date"
         yKey="value"
@@ -108,7 +108,7 @@ function App() {
       />
       <LineChart
         height="500"
-        width='500'
+        width="500"
         data={portfolio}
         xKey="date"
         xDataType="date"
