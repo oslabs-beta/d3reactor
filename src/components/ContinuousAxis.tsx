@@ -169,53 +169,30 @@ function Axi({
 
   const numberOfHorizontalTicks: number = width / 100
   const numberOfVerticalTicks: number = height / 100
+  const ticks = scale.ticks(10)
   const horizontalTicks = scale.ticks(numberOfHorizontalTicks)
   const verticalTicks = scale.ticks(numberOfVerticalTicks)
   const formatTick = d3.timeFormat("%-b %-d")
+  const getFormattedTick = (individualTick: number | Date) => {
+    if (typeof individualTick === "number") {
+      return individualTick
+    } else {
+      return formatTick(individualTick)
+    }
+  }
 
   return (
     <g>
       <line stroke="#bdc3c7" x1={x1} y1={y1} x2={x2} y2={y2} />
-      {type === "top" &&
-        horizontalTicks.map((tick, i) => (
-          <text
-            key={i}
-            style={getTickStyle(type, tick)}
-            transform={getTickTranslation(type, tick)}
-          >
-            {formatTick(tick as Date)}
-          </text>
-        ))}
-      {type === "right" &&
-        verticalTicks.map((tick, i) => (
-          <text
-            style={getTickStyle(type, tick)}
-            key={i}
-            transform={getTickTranslation(type, tick)}
-          >
-            {tick}
-          </text>
-        ))}
-      {type === "bottom" &&
-        horizontalTicks.map((tick, i) => (
-          <text
-            key={i}
-            style={getTickStyle(type, tick)}
-            transform={getTickTranslation(type, tick)}
-          >
-            {formatTick(tick as Date)}
-          </text>
-        ))}
-      {type === "left" &&
-        verticalTicks.map((tick, i) => (
-          <text
-            style={getTickStyle(type, tick)}
-            key={i}
-            transform={getTickTranslation(type, tick)}
-          >
-            {tick}
-          </text>
-        ))}
+      {ticks.map((tick, i) => (
+        <text
+          key={i}
+          style={getTickStyle(type, tick)}
+          transform={getTickTranslation(type, tick)}
+        >
+          {getFormattedTick(tick)}
+        </text>
+      ))}
       {/* <g ref={gRef} transform={`translate(${x}, ${y})`}>
         {grid}
       </g> */}
