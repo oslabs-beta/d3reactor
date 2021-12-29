@@ -40,6 +40,7 @@ export default function AreaChart({
   xAxisLabel,
   yAxisLabel,
   legend = 'right',
+  legendLabel = groupBy,
   colorScheme = d3.quantize(d3.interpolateHcl("#9dc8e2", "#07316b"), 8),
 }: AreaChartProps<string | number>): JSX.Element {
   const [tooltip, setTooltip] = useState<false | any>(false);
@@ -55,44 +56,7 @@ export default function AreaChart({
                               legend, xOffset, yOffset, cWidth, cHeight),
     [xAxis, yAxis, xAxisLabel, yAxisLabel, legend, xOffset, yOffset, cWidth, cHeight]
   )
-  console.log('%%%%%%%%%%legendOffset ', legendOffset)
-  console.log('%%%%%%%%%%margin ', margin)
-
-  // determine legend placement:
-  let xPosition: number = 0, 
-      yPosition: number = cHeight/2 - legendOffset[1]/2;
-  switch(legend) {
-    case 'left': 
-      xPosition -= margin.left;
-      break;
-    case 'top-left': 
-      xPosition -= margin.left;
-      yPosition = margin.top;
-      break;
-    case 'bottom-left': 
-      xPosition -= margin.left;
-      yPosition = cHeight - yOffset / 2 - margin.bottom;
-      break;
-    case 'top':
-      xPosition = (cWidth - margin.left) / 2 - legendOffset[0] / 2;
-      yPosition = yOffset / 2 - margin.top;
-      break;
-    case 'bottom':
-      xPosition = (cWidth - margin.left) / 2 - legendOffset[0] / 2
-      yPosition = cHeight - yOffset;
-      break;
-    case 'top-right':
-      xPosition += cWidth - margin.left - margin.right + 20;
-      yPosition = margin.top;
-      break;
-    case 'bottom-right':
-      xPosition += cWidth - margin.left - margin.right + 20;
-      yPosition = cHeight - yOffset/2 - margin.bottom;
-      break;
-    case 'right':
-    default:
-      xPosition += cWidth - margin.left - margin.right + 20;
-  }
+ 
 
   const { xAxisX, xAxisY } = useMemo(
     () => getXAxisCoordinates(xAxis, cHeight, margin),
@@ -197,14 +161,16 @@ export default function AreaChart({
 
         { // If legend prop is truthy, render legend component:
         legend && <ColorLegend 
-          colorLegendLabel={'Fruit' /**we need a way to derive this either from data or as an extra prop passed in */} 
-          xPosition={xPosition /* Where legend is placed on page */}
-          yPosition={yPosition/* Where legend is placed on page */}
+          colorLegendLabel={legendLabel /**we need a way to derive this either from data or as an extra prop passed in */} 
           circleRadius={5 /* Radius of each color swab in legend */}
-          // tickSpacing={22 /* Vertical space between each line of legend */}
-          // tickTextOffset={12 /* How much the text label is pushed to the right of the color swab */}
           colorScale={colorScale}
           setLegendOffset={setLegendOffset}
+          legendPosition={legend}
+          xOffset={xOffset}
+          yOffset={yOffset}
+          margin={margin}
+          cWidth={cWidth}
+          cHeight={cHeight}
         />}
         {tooltip && <Tooltip x={tooltip.cx} y={tooltip.cy} />}
 

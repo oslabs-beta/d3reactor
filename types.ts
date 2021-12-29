@@ -69,6 +69,7 @@ export interface AreaChartProps<T> {
   yAxisLabel?: string
   colorScheme?: string[] | readonly string[]
   legend?: LegendPos
+  legendLabel?: string
 }
 
 export interface PieChartProps {
@@ -180,10 +181,13 @@ export interface ColorLegendProps {
   circleRadius: number
   tickTextOffset?: number
   colorLegendLabel?: string
-  xPosition?: number
-  yPosition?: number
-  legendPosition?: "right-center" | "right-top" | "right-bottom"
+  legendPosition: LegendPos
+  xOffset: number
+  yOffset: number
   setLegendOffset: React.Dispatch<any>
+  margin: Margin
+  cWidth: number
+  cHeight: number
   fontSize?: number
 }
 

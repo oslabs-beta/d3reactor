@@ -94,23 +94,21 @@ export default function PieChart({
             </text>
           </g>
         ))}
-        {
-          // If legend prop is true, render legend component:
-          legend && (
-            <ColorLegend
-              colorLegendLabel={
-                "Fruit" /**we need a way to derive this either from data or as an extra prop passed in */
-              }
-              xPosition={outerRadius + 15 /* Where legend is placed on page */}
-              yPosition={0 /* Where legend is placed on page */}
-              circleRadius={5 /* Radius of each color swab in legend */}
-              // tickSpacing={22 /* Vertical space between each line of legend */}
-              // tickTextOffset={12 /* How much the text label is pushed to the right of the color swab */}
-              colorScale={colorScale}
-              setLegendOffset={setLegendOffset}
-            />
-          )
-        }
+        { // If legend prop is truthy, render legend component:
+        legend && <ColorLegend 
+          colorLegendLabel={'Fruit' /**we need a way to derive this either from data or as an extra prop passed in */} 
+          circleRadius={5 /* Radius of each color swab in legend */}
+          // tickSpacing={22 /* Vertical space between each line of legend */}
+          // tickTextOffset={12 /* How much the text label is pushed to the right of the color swab */}
+          colorScale={colorScale}
+          setLegendOffset={setLegendOffset}
+          legendPosition={legend}
+          xOffset={0}
+          yOffset={0}
+          margin={margin}
+          cWidth={cWidth}
+          cHeight={cHeight}
+        />}
         {tooltip && <Tooltip x={tooltip.cx} y={tooltip.cy} />}
       </g>
     </svg>

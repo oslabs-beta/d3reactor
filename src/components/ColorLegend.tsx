@@ -8,15 +8,57 @@ export const ColorLegend = ({
   tickSpacing = circleRadius * 2 + 6,
   tickTextOffset = circleRadius * 1.2 + 3,
   colorLegendLabel = '',
-  xPosition = 0,
-  yPosition = 0,
+  legendPosition,
+  xOffset,
+  yOffset,
   setLegendOffset,
+  margin,
+  cWidth,
+  cHeight,
   fontSize = 16,
 }: ColorLegendProps) => {
   const RECT_MARGIN = 6;
   const domain = colorScale.domain();
   let longestWord = colorLegendLabel ? colorLegendLabel.length : 0;
   const rectHeight = tickSpacing*(domain.length+1) + RECT_MARGIN*2;
+
+// determine legend placement:
+let xPosition: number = 0, 
+    yPosition: number = cHeight/2 - yOffset/2;
+switch(legendPosition) {
+case 'left': 
+xPosition -= margin.left;
+break;
+case 'top-left': 
+xPosition -= margin.left;
+yPosition = margin.top;
+break;
+case 'bottom-left': 
+xPosition -= margin.left;
+yPosition = cHeight - yOffset / 2 - margin.bottom;
+break;
+case 'top':
+xPosition = (cWidth - margin.left) / 2 - xOffset / 2;
+yPosition = yOffset / 2 - margin.top;
+break;
+case 'bottom':
+xPosition = (cWidth - margin.left) / 2 - xOffset / 2
+yPosition = cHeight - yOffset;
+break;
+case 'top-right':
+xPosition += cWidth - margin.left - margin.right + 20;
+yPosition = margin.top;
+break;
+case 'bottom-right':
+xPosition += cWidth - margin.left - margin.right + 20;
+yPosition = cHeight - yOffset/2 - margin.bottom;
+break;
+case 'right':
+default:
+xPosition += cWidth - margin.left - margin.right + 20;
+}
+
+
 
   // iterate thru category names, create color swab & text for each
   const legend = domain.map((domainValue: string, i: number) => {
@@ -31,7 +73,8 @@ export const ColorLegend = ({
     )
   });
 
-  const rectWidth = tickTextOffset + circleRadius*2 + longestWord*8 + RECT_MARGIN*2;
+  const rectWidth = tickTextOffset + circleRadius*2 
+                  + longestWord*(fontSize+1)/2 + RECT_MARGIN*2; //+1 by fontSize is a bit of a kludge
 
   useEffect(() => setLegendOffset([rectWidth, rectHeight]), []);
   // setLegendOffset(rectWidth);
