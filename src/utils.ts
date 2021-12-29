@@ -1,4 +1,5 @@
-import { Margin} from "../types"
+import { Margin, LegendPos } from "../types"
+import { useMemo } from 'react';
 
 export function getXAxisCoordinates(
   xAxis: "top" | "bottom" | false = "bottom",
@@ -68,6 +69,70 @@ export function getMargins(
   if (yAxis) addHorizontalMargin()
   if (yAxis && yAxisLabel) addHorizontalMargin()
 
+  return { left, right, top, bottom }
+}
+
+export function getMarginsWithLegend(
+  xAxis: "top" | "bottom" | false = "bottom",
+  yAxis: "left" | "right" | false = "left",
+  xAxisLabel: string | undefined,
+  yAxisLabel: string | undefined,
+  legend: LegendPos = false,
+  legendOffset: [number, number] = [0, 0], // ideally this should be mandatory if legend is truthy
+  cWidth: number = 0,                      // ideally this should be mandatory if legend is truthy
+  cHeight: number = 0,                     // ideally this should be mandatory if legend is truthy
+) {
+  let left = 20,
+    right = 20,
+    top = 20,
+    bottom = 20
+  function addVerticalMargin() {
+    switch (xAxis) {
+      case "top":
+        top += 40
+        break
+      case "bottom":
+        bottom += 40
+    }
+  }
+  function addHorizontalMargin() {
+    switch (yAxis) {
+      case "left":
+        left += 40
+        break
+      case "right":
+        right += 40
+    }
+  }
+  if (xAxis) addVerticalMargin()
+  if (xAxis && xAxisLabel) addVerticalMargin()
+  if (yAxis) addHorizontalMargin()
+  if (yAxis && yAxisLabel) addHorizontalMargin()
+
+  // make room for legend by adjusting margin:
+  const xOffset = legendOffset[0];
+  const yOffset = legendOffset[1];
+  let marginExt = 0;
+  switch(legend) {
+    case 'top':
+      top = useMemo(() => top + yOffset, [yOffset]);
+      break;
+    case 'bottom':
+      bottom = useMemo(() => bottom + yOffset, [yOffset]);
+      break;
+    case 'left': 
+    case 'top-left': 
+    case 'bottom-left': 
+      marginExt = useMemo(() => left + xOffset, [xOffset]);
+      if (marginExt > 0) left = marginExt;
+      break;
+    case 'top-right':
+    case 'bottom-right':
+    case 'right':
+    default:
+      marginExt = useMemo(() => right + xOffset, [xOffset]);
+      if (marginExt > 0) right = marginExt;
+  }
   return { left, right, top, bottom }
 }
 

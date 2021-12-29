@@ -1,4 +1,5 @@
 
+import { useEffect } from "react";
 import { ColorLegendProps } from "../../types"
 
 export const ColorLegend = ({
@@ -30,17 +31,16 @@ export const ColorLegend = ({
     )
   });
 
-
-
   const rectWidth = tickTextOffset + circleRadius*2 + longestWord*8 + RECT_MARGIN*2;
-  setLegendOffset([rectWidth, rectHeight]);
+
+  useEffect(() => setLegendOffset([rectWidth, rectHeight]), []);
   // setLegendOffset(rectWidth);
   return (
       <g transform={`translate(${xPosition}, ${yPosition})`}>
         <rect x={0} 
               y={-rectHeight/2} 
-              width={rectWidth} 
-              height={rectHeight} 
+              width={rectWidth > 0 ? rectWidth : 20 /* protects against negative legend dimensions */} 
+              height={rectHeight > 0 ? rectHeight : 20} 
               style={{
                 fill:'rgb(180,180,180)', 
                 strokeWidth:2, 

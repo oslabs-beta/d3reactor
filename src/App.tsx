@@ -31,7 +31,7 @@ function App() {
       /> */}
       <AreaChart
         data={penguins}
-        height="700"
+        height="500"
         width="100%"
         xKey="body_mass_g"
         xDataType="number"
@@ -40,7 +40,7 @@ function App() {
         yGrid={true}
         xAxis="bottom"
         yAxis="left"
-        legend={'right'}
+        legend={'bottom'}
       />
       <AreaChart
         data={skinny_fruit}
@@ -53,9 +53,9 @@ function App() {
         yGrid={true}
         xAxisLabel="Date"
         yAxisLabel="Number of fruit"
-        legend={'top-left'}
+        legend={true}
       />
-      <ScatterPlot
+      {/* <ScatterPlot
         height="100%"
         width="100%"
         data={penguins}
@@ -121,7 +121,7 @@ function App() {
         yGrid={true}
         xAxisLabel="Date"
         yAxisLabel="Value"
-      />
+      /> */}
     </div>
   )
 }

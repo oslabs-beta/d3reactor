@@ -68,8 +68,7 @@ export interface AreaChartProps<T> {
   xAxisLabel?: string
   yAxisLabel?: string
   colorScheme?: string[] | readonly string[]
-  legend?: boolean | "top" | "bottom" | "left" | "right" 
-           | "top-left" | "top-right" | "bottom-left" | "bottom-right"
+  legend?: LegendPos
 }
 
 export interface PieChartProps {
@@ -187,6 +186,10 @@ export interface ColorLegendProps {
   setLegendOffset: React.Dispatch<any>
   fontSize?: number
 }
+
+export type LegendPos = boolean | "top" | "bottom" | "left" | "right" 
+| "top-left" | "top-right" | "bottom-left" | "bottom-right";
+
 export type ScaleFunc =
   | d3.ScaleLinear<number, number, never>
   | d3.ScaleTime<number, number, never>

@@ -48,52 +48,61 @@ export default function AreaChart({
   // const [legendOffset, setLegendOffset] = useState(0);
   
   const chart = "AreaChart";
-
   const { anchor, cHeight, cWidth } = useResponsive();
+
   const margin = useMemo(
     () => getMargins(xAxis, yAxis, xAxisLabel, yAxisLabel),
     [xAxis, yAxis, xAxisLabel, yAxisLabel]
   )
-  
-  const xOffset = legendOffset[0]
-  // make room for legend by adjusting margin
-  let xPosition: number = 0, yPosition: number = cHeight/3;
+
+  // make room for legend by adjusting margin, and determine legend placement:
+  const xOffset = legendOffset[0];
+  const yOffset = legendOffset[1];
+  let xPosition: number = 0, yPosition: number = cHeight/2 - legendOffset[1]/2, newMargin = 0;
   switch(legend) {
     case 'left': 
-      margin.left = useMemo(() => margin.left + xOffset, [xOffset]);
+      newMargin = useMemo(() => margin.left + xOffset, [xOffset]);
+      if (newMargin > 0) margin.left = newMargin;
       xPosition -= margin.left;
       break;
     case 'top-left': 
-      margin.left = useMemo(() => margin.left + xOffset, [xOffset]);
+      newMargin = useMemo(() => margin.left + xOffset, [xOffset]);
+      if (newMargin > 0) margin.left = newMargin;
       xPosition -= margin.left;
       yPosition = margin.top;
       break;
     case 'bottom-left': 
-      margin.left = useMemo(() => margin.left + xOffset, [xOffset]);
+      newMargin = useMemo(() => margin.left + xOffset, [xOffset]);
+      if (newMargin > 0) margin.left = newMargin;
       xPosition -= margin.left;
+      yPosition = cHeight - yOffset / 2 - margin.bottom;
       break;
     case 'top':
-      margin.top = useMemo(() => margin.top + xOffset, [xOffset]);
-      // set xPosition to middle
-      
+      margin.top = useMemo(() => margin.top + yOffset, [yOffset]);
+      xPosition = (cWidth - margin.left) / 2 - legendOffset[0]/2
+      yPosition = yOffset / 2 - margin.top;
       break;
     case 'bottom':
-      margin.bottom = useMemo(() => margin.bottom + xOffset, [xOffset]);
-      // set xPosition to middle
-
+      margin.bottom = useMemo(() => margin.bottom + yOffset, [yOffset]);
+      xPosition = (cWidth - margin.left) / 2 - legendOffset[0]/2
+      yPosition = cHeight - yOffset;
       break;
-      case 'top-right':
-        margin.right = useMemo(() => margin.right + xOffset, [xOffset]);
-        xPosition += cWidth - margin.left - margin.right + 20;
-        yPosition = 0;
-        break;
-      case 'bottom-right':
-        margin.right = useMemo(() => margin.right + xOffset, [xOffset]);
-        xPosition += cWidth - margin.left - margin.right + 20;
-        break;
-      case 'right':
+    case 'top-right':
+      newMargin = useMemo(() => margin.right + xOffset, [xOffset]);
+      if (newMargin > 0) margin.right = newMargin;
+      xPosition += cWidth - margin.left - margin.right + 20;
+      yPosition = margin.top;
+      break;
+    case 'bottom-right':
+      newMargin = useMemo(() => margin.right + xOffset, [xOffset]);
+      if (newMargin > 0) margin.right = newMargin;
+      xPosition += cWidth - margin.left - margin.right + 20;
+      yPosition = cHeight - yOffset/2 - margin.bottom;
+      break;
+    case 'right':
     default:
-      margin.right = useMemo(() => margin.right + xOffset, [xOffset]);
+      newMargin = useMemo(() => margin.right + xOffset, [xOffset]);
+      if (newMargin > 0) margin.right = newMargin;
       xPosition += cWidth - margin.left - margin.right + 20;
   }
 
