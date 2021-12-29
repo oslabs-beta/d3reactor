@@ -64,7 +64,7 @@ function Axi({
     axisType: string,
     individualTick: number | Date
   ): string => {
-    switch (type) {
+    switch (axisType) {
       case "top":
         return `translate(${scale(individualTick)}, ${y - 8})`
       case "right":
@@ -74,15 +74,15 @@ function Axi({
       case "left":
         return `translate(${x - 12}, ${scale(individualTick)})`
       default:
-        return `translate(0, 0)`
+        return `translate(0,0)`
     }
   }
 
   const getTickStyle = (
     axisType: string,
     individualTick: number | Date
-  ): any => {
-    switch (type) {
+  ): any => { // TODO remove any
+    switch (axisType) {
       case "top":
         return { textAnchor: "middle", dominantBaseline: "auto" }
       case "right":
@@ -91,8 +91,6 @@ function Axi({
         return { textAnchor: "middle", dominantBaseline: "auto" }
       case "left":
         return { textAnchor: "end", dominantBaseline: "middle" }
-      default:
-        return { textAnchor: "middle", dominantBaseline: "auto" }
     }
   }
 
@@ -167,8 +165,23 @@ function Axi({
   //     break
   // }
 
-  const numberOfHorizontalTicks: number = width / 100
+  let numberOfHorizontalTicks: number;
+  if (width < 480 ) {
+    numberOfHorizontalTicks = width/ 100;
+  }
+  else if (width < 769) {
+    numberOfHorizontalTicks = width/ 120;
+  }
+  else  if ( width < 1024){
+    numberOfHorizontalTicks = width/ 140;
+  }
+  else {
+    numberOfHorizontalTicks = width/ 160;
+  }
+
   const numberOfVerticalTicks: number = height / 100
+  console.log('number horizontal, ', numberOfHorizontalTicks)
+  console.log('number vertical, ', numberOfVerticalTicks)
   const horizontalTicks = scale.ticks(numberOfHorizontalTicks)
   const verticalTicks = scale.ticks(numberOfVerticalTicks)
 
@@ -180,6 +193,11 @@ function Axi({
       return formatTick(individualTick)
     }
   }
+
+  console.log('horizontal, ', horizontalTicks)
+  console.log('vertical, ', verticalTicks)
+
+
   return (
     <g>
       <line stroke="#bdc3c7" x1={x1} y1={y1} x2={x2} y2={y2} />
