@@ -68,7 +68,7 @@ function Axi({
       case "top":
         return `translate(${scale(individualTick)}, ${y - 8})`
       case "right":
-        return `translate(${x + 24}, ${scale(individualTick)})`
+        return `translate(${x + 12}, ${scale(individualTick)})`
       case "bottom":
         return `translate(${scale(individualTick)}, ${y + 18})`
       case "left":
@@ -86,7 +86,7 @@ function Axi({
       case "top":
         return { textAnchor: "middle", dominantBaseline: "auto" }
       case "right":
-        return { textAnchor: "end", dominantBaseline: "middle" }
+        return { textAnchor: "start", dominantBaseline: "middle" }
       case "bottom":
         return { textAnchor: "middle", dominantBaseline: "auto" }
       case "left":
@@ -180,12 +180,11 @@ function Axi({
   }
 
   const numberOfVerticalTicks: number = height / 100
-  console.log('number horizontal, ', numberOfHorizontalTicks)
-  console.log('number vertical, ', numberOfVerticalTicks)
   const horizontalTicks = scale.ticks(numberOfHorizontalTicks)
   const verticalTicks = scale.ticks(numberOfVerticalTicks)
+  console.log('vt',verticalTicks)
 
-  const formatTick = d3.timeFormat("%-b %-d")
+  const formatTick = d3.timeFormat("%x")
   const getFormattedTick = (individualTick: number | Date) => {
     if (typeof individualTick === "number") {
       return individualTick
@@ -194,8 +193,6 @@ function Axi({
     }
   }
 
-  console.log('horizontal, ', horizontalTicks)
-  console.log('vertical, ', verticalTicks)
 
 
   return (
