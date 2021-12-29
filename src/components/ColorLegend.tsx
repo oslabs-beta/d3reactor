@@ -15,6 +15,7 @@ export const ColorLegend = ({
   margin,
   cWidth,
   cHeight,
+  EXTRA_LEGEND_MARGIN = 6,
   fontSize = 16,
 }: ColorLegendProps) => {
   const RECT_MARGIN = 6;
@@ -26,36 +27,52 @@ export const ColorLegend = ({
 let xPosition: number = 0, 
     yPosition: number = cHeight/2 - yOffset/2;
 switch(legendPosition) {
-case 'left': 
-xPosition -= margin.left;
-break;
-case 'top-left': 
-xPosition -= margin.left;
-yPosition = margin.top;
-break;
-case 'bottom-left': 
-xPosition -= margin.left;
-yPosition = cHeight - yOffset / 2 - margin.bottom;
-break;
-case 'top':
-xPosition = (cWidth - margin.left) / 2 - xOffset / 2;
-yPosition = yOffset / 2 - margin.top;
-break;
-case 'bottom':
-xPosition = (cWidth - margin.left) / 2 - xOffset / 2
-yPosition = cHeight - yOffset;
-break;
-case 'top-right':
-xPosition += cWidth - margin.left - margin.right + 20;
-yPosition = margin.top;
-break;
-case 'bottom-right':
-xPosition += cWidth - margin.left - margin.right + 20;
-yPosition = cHeight - yOffset/2 - margin.bottom;
-break;
-case 'right':
-default:
-xPosition += cWidth - margin.left - margin.right + 20;
+  case 'top':
+    xPosition = (cWidth - margin.left) / 2 - xOffset / 2;
+    yPosition = yOffset / 2 - margin.top + EXTRA_LEGEND_MARGIN;
+    break;
+  case 'bottom':
+    xPosition = (cWidth - margin.left) / 2 - xOffset / 2
+    yPosition = cHeight - yOffset;
+    break;
+  case 'left-top':
+    xPosition =  EXTRA_LEGEND_MARGIN - margin.left;
+    yPosition = yOffset / 2 - margin.top + EXTRA_LEGEND_MARGIN;
+    break;
+  case 'left-bottom':
+    xPosition =  EXTRA_LEGEND_MARGIN - margin.left;
+    yPosition = cHeight - yOffset;
+    break;
+  case 'right-top':
+    xPosition = cWidth - margin.left - margin.right - xOffset - EXTRA_LEGEND_MARGIN + 20;
+    yPosition = yOffset / 2 - margin.top + EXTRA_LEGEND_MARGIN;
+    break;
+  case 'right-bottom':
+    xPosition = cWidth - margin.left - margin.right - xOffset - EXTRA_LEGEND_MARGIN + 20;
+    yPosition = cHeight - yOffset;
+    break;
+  case 'left': 
+    xPosition = -margin.left - EXTRA_LEGEND_MARGIN;
+    break;
+  case 'top-left': 
+    xPosition = -margin.left - EXTRA_LEGEND_MARGIN;
+    yPosition = margin.top;
+    break;
+  case 'bottom-left': 
+    xPosition = -margin.left - EXTRA_LEGEND_MARGIN;
+    yPosition = cHeight - yOffset / 2 - margin.bottom;
+    break;
+  case 'top-right':
+    xPosition = cWidth - margin.left - margin.right + 20;
+    yPosition = margin.top;
+    break;
+  case 'bottom-right':
+    xPosition = cWidth - margin.left - margin.right + 20;
+    yPosition = cHeight - yOffset/2 - margin.bottom;
+    break;
+  case 'right':
+  default:
+    xPosition = cWidth - margin.left - margin.right + 20;
 }
 
 

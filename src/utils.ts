@@ -77,38 +77,39 @@ export function getMarginsWithLegend(
   xAxisLabel: string | undefined,
   yAxisLabel: string | undefined,
   legend: LegendPos = false,
-  xOffset: number,
-  yOffset: number,
+  xOffset: number = 0,
+  yOffset: number = 0,
   // legendOffset: [number, number] = [0, 0], // ideally this should be mandatory if legend is truthy
   cWidth: number = 0,                      // ideally this should be mandatory if legend is truthy
   cHeight: number = 0,                     // ideally this should be mandatory if legend is truthy
+  EXTRA_LEGEND_MARGIN = 6
 ) {
   let left = 20,
-    right = 20,
-    top = 20,
-    bottom = 20
+      right = 20,
+      top = 20,
+      bottom = 20;
   function addVerticalMargin() {
     switch (xAxis) {
       case "top":
-        top += 40
+        top += 40;
         break
       case "bottom":
-        bottom += 40
+        bottom += 40;
     }
   }
   function addHorizontalMargin() {
     switch (yAxis) {
       case "left":
-        left += 40
+        left += 40;
         break
       case "right":
-        right += 40
+        right += 40;
     }
   }
-  if (xAxis) addVerticalMargin()
-  if (xAxis && xAxisLabel) addVerticalMargin()
-  if (yAxis) addHorizontalMargin()
-  if (yAxis && yAxisLabel) addHorizontalMargin()
+  if (xAxis) addVerticalMargin();
+  if (xAxis && xAxisLabel) addVerticalMargin();
+  if (yAxis) addHorizontalMargin();
+  if (yAxis && yAxisLabel) addHorizontalMargin();
 
   if (legend) {
     // make room for legend by adjusting margin:
@@ -117,22 +118,26 @@ export function getMarginsWithLegend(
     let marginExt = 0;
     switch(legend) {
       case 'top':
-        top = top + yOffset;
+      case 'left-top':
+      case 'right-top':
+        top = top + yOffset + EXTRA_LEGEND_MARGIN;
         break;
+      case 'left-bottom':
+      case 'right-bottom':
       case 'bottom':
-        bottom = bottom + yOffset;
+        bottom += yOffset - top;
         break;
       case 'left': 
       case 'top-left': 
       case 'bottom-left': 
-        marginExt = left + xOffset;
+        marginExt = left + xOffset + EXTRA_LEGEND_MARGIN;
         if (marginExt > 0) left = marginExt;
         break;
       case 'top-right':
       case 'bottom-right':
       case 'right':
       default:
-        marginExt = right + xOffset;
+        marginExt = right + xOffset + EXTRA_LEGEND_MARGIN;
         if (marginExt > 0) right = marginExt;
     }
   }

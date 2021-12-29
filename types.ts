@@ -188,11 +188,13 @@ export interface ColorLegendProps {
   margin: Margin
   cWidth: number
   cHeight: number
+  EXTRA_LEGEND_MARGIN: number
   fontSize?: number
 }
 
 export type LegendPos = boolean | "top" | "bottom" | "left" | "right" 
-| "top-left" | "top-right" | "bottom-left" | "bottom-right";
+          | "top-left" | "top-right" | "bottom-left" | "bottom-right" 
+          | "left-bottom" | "right-bottom" | "left-top" | "right-top";
 
 export type ScaleFunc =
   | d3.ScaleLinear<number, number, never>

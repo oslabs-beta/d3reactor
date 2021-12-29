@@ -51,9 +51,11 @@ export default function AreaChart({
 
   const xOffset = legendOffset[0];
   const yOffset = legendOffset[1];
+  const EXTRA_LEGEND_MARGIN = 6;
   const margin = useMemo(
     () => getMarginsWithLegend(xAxis, yAxis, xAxisLabel, yAxisLabel, 
-                              legend, xOffset, yOffset, cWidth, cHeight),
+                          legend, xOffset, yOffset, cWidth, cHeight, 
+                          EXTRA_LEGEND_MARGIN),
     [xAxis, yAxis, xAxisLabel, yAxisLabel, legend, xOffset, yOffset, cWidth, cHeight]
   )
  
@@ -171,6 +173,7 @@ export default function AreaChart({
           margin={margin}
           cWidth={cWidth}
           cHeight={cHeight}
+          EXTRA_LEGEND_MARGIN={EXTRA_LEGEND_MARGIN}
         />}
         {tooltip && <Tooltip x={tooltip.cx} y={tooltip.cy} />}
 

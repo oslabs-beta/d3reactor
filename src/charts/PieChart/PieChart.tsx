@@ -108,6 +108,7 @@ export default function PieChart({
           margin={margin}
           cWidth={cWidth}
           cHeight={cHeight}
+          EXTRA_LEGEND_MARGIN={6}
         />}
         {tooltip && <Tooltip x={tooltip.cx} y={tooltip.cy} />}
       </g>
