@@ -20,6 +20,7 @@ import {
   getXAxisCoordinates,
   getYAxisCoordinates,
   getMargins,
+  getMarginsWithLegend,
   inferXDataType,
   transformSkinnyToWide,
 } from "../../utils"
@@ -41,106 +42,57 @@ export default function AreaChart({
   legend = 'right',
   colorScheme = d3.quantize(d3.interpolateHcl("#9dc8e2", "#07316b"), 8),
 }: AreaChartProps<string | number>): JSX.Element {
-
   const [tooltip, setTooltip] = useState<false | any>(false);
   // width & height of legend, so we know how much to squeeze chart by
-  const [legendOffset, setLegendOffset] = useState([0, 0]);
-  // const [legendOffset, setLegendOffset] = useState(0);
-  
+  const [legendOffset, setLegendOffset] = useState<[number, number]>([0, 0]);
   const chart = "AreaChart";
   const { anchor, cHeight, cWidth } = useResponsive();
 
-  const margin = useMemo(
-    () => getMargins(xAxis, yAxis, xAxisLabel, yAxisLabel),
-    [xAxis, yAxis, xAxisLabel, yAxisLabel]
-  )
-
-  // make room for legend by adjusting margin, and determine legend placement:
   const xOffset = legendOffset[0];
   const yOffset = legendOffset[1];
-  let xPosition: number = 0, yPosition: number = cHeight/2 - legendOffset[1]/2, newMargin = 0;
+  const margin = useMemo(
+    () => getMarginsWithLegend(xAxis, yAxis, xAxisLabel, yAxisLabel, 
+                              legend, xOffset, yOffset, cWidth, cHeight),
+    [xAxis, yAxis, xAxisLabel, yAxisLabel, legend, xOffset, yOffset, cWidth, cHeight]
+  )
+  console.log('%%%%%%%%%%legendOffset ', legendOffset)
+  console.log('%%%%%%%%%%margin ', margin)
+
+  // determine legend placement:
+  let xPosition: number = 0, 
+      yPosition: number = cHeight/2 - legendOffset[1]/2;
   switch(legend) {
     case 'left': 
-      newMargin = useMemo(() => margin.left + xOffset, [xOffset]);
-      if (newMargin > 0) margin.left = newMargin;
       xPosition -= margin.left;
       break;
     case 'top-left': 
-      newMargin = useMemo(() => margin.left + xOffset, [xOffset]);
-      if (newMargin > 0) margin.left = newMargin;
       xPosition -= margin.left;
       yPosition = margin.top;
       break;
     case 'bottom-left': 
-      newMargin = useMemo(() => margin.left + xOffset, [xOffset]);
-      if (newMargin > 0) margin.left = newMargin;
       xPosition -= margin.left;
       yPosition = cHeight - yOffset / 2 - margin.bottom;
       break;
     case 'top':
-      margin.top = useMemo(() => margin.top + yOffset, [yOffset]);
-      xPosition = (cWidth - margin.left) / 2 - legendOffset[0]/2
+      xPosition = (cWidth - margin.left) / 2 - legendOffset[0] / 2;
       yPosition = yOffset / 2 - margin.top;
       break;
     case 'bottom':
-      margin.bottom = useMemo(() => margin.bottom + yOffset, [yOffset]);
-      xPosition = (cWidth - margin.left) / 2 - legendOffset[0]/2
+      xPosition = (cWidth - margin.left) / 2 - legendOffset[0] / 2
       yPosition = cHeight - yOffset;
       break;
     case 'top-right':
-      newMargin = useMemo(() => margin.right + xOffset, [xOffset]);
-      if (newMargin > 0) margin.right = newMargin;
       xPosition += cWidth - margin.left - margin.right + 20;
       yPosition = margin.top;
       break;
     case 'bottom-right':
-      newMargin = useMemo(() => margin.right + xOffset, [xOffset]);
-      if (newMargin > 0) margin.right = newMargin;
       xPosition += cWidth - margin.left - margin.right + 20;
       yPosition = cHeight - yOffset/2 - margin.bottom;
       break;
     case 'right':
     default:
-      newMargin = useMemo(() => margin.right + xOffset, [xOffset]);
-      if (newMargin > 0) margin.right = newMargin;
       xPosition += cWidth - margin.left - margin.right + 20;
   }
-
-
-  // switch(legend) {
-  //   // in the case of 'left', 'top-left', or 'bottom-left'
-  //   case (legend as string).includes('l'):
-  //     console.log('includes left!!!!!!!!!!!!!')
-  //     margin.left = useMemo(() => margin.left + legendOffset, [legendOffset]);
-  //     xPosition -= margin.left;
-  //     break;
-  //   // in the case of 'right', 'top-right', or 'bottom-right'
-  //   case (legend as string).includes('r'):
-  //   default:
-  //     console.log('includes right!!!!!!!!!!!!!')
-
-  //     margin.right = useMemo(() => margin.right + legendOffset, [legendOffset]);
-  //     xPosition += cWidth - margin.left - margin.right + 20;
-  // }
-  // switch(legend) {
-  //   // in the case of 'top', 'top-left', or 'top-right'
-  //   case (legend as string).includes('top'):
-  //     // set yPosition to top
-  //     yPosition = 0;
-  //     if (legend as unknown as string === 'top') {
-  //       // set xPosition to middle
-  //     }
-  //     break;
-  //   // in the case of 'bottom', 'bottom-left', or 'bottom-right'
-  //   case (legend as string).includes('bottom'):
-
-  //     if (legend as unknown as string === 'bottom') {
-  //       // set xPosition to middle
-  //     }
-  //     break;
-  //   default:
-  //     break;
-  // }
 
   const { xAxisX, xAxisY } = useMemo(
     () => getXAxisCoordinates(xAxis, cHeight, margin),
