@@ -126,6 +126,9 @@ export interface DiscreteAxisProps {
   height: number
   width: number
   margin: Margin
+  data: Data[]
+  layers: any
+  xAccessor: (d: Data) => string 
 }
 
 export interface CircleProps {

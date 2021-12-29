@@ -121,6 +121,9 @@ export default function BarChart({
             scale={xScale}
             type={xAxis}
             label={xAxisLabel}
+            data={data}
+            layers={layers}
+            xAccessor={xAccessor}
           />
         )}
         {groupBy

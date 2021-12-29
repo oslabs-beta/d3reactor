@@ -53,7 +53,7 @@ function App() {
         xAxisLabel="Date"
         yAxisLabel="Number of fruit"
       /> */}
-      <ScatterPlot
+      {/* <ScatterPlot
         height="100%"
         width="100%"
         data={penguins}
@@ -67,7 +67,7 @@ function App() {
         // yGrid={true}
         xAxisLabel="Date"
         yAxisLabel="Value"
-      />
+      /> */}
       {/* <BarChart
         height="300"
         data={skinny_fruit}
@@ -79,7 +79,7 @@ function App() {
         yGrid={true}
         xAxisLabel="Date"
         yAxisLabel="Value"
-      />
+      /> */}
       <BarChart
         height="300"
         data={skinny_fruit}
@@ -87,12 +87,12 @@ function App() {
         yKey="value"
         // groupBy='fruit'
         xAxis="bottom"
-        yAxis="left"
+        yAxis="right"
         yGrid={true}
         xAxisLabel="Date"
         yAxisLabel="Value"
-      /> */}
-      <LineChart
+      />
+      {/* <LineChart
         height="100%"
         data={unemployment}
         xKey="date"
@@ -119,7 +119,7 @@ function App() {
         yGrid={true}
         xAxisLabel="Date"
         yAxisLabel="Value"
-      />
+      /> */}
     </div>
   )
 }
