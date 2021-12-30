@@ -166,6 +166,8 @@ export interface LineProps {
 }
 
 export interface ArcProps {
+  data: {}
+  key: string
   fill: string
   stroke: string
   strokeWidth: string

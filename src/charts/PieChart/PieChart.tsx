@@ -48,6 +48,8 @@ export default function PieChart({
     }
   }
 
+  console.log("Pie keys ", keys)
+
   const colorScale: ColorScale = d3.scaleOrdinal(colorScheme)
   colorScale.domain(keys)
 
@@ -68,12 +70,14 @@ export default function PieChart({
     return `translate(${x}, ${y})`
   }
 
+  console.log("One Pie Slice ", pie[0])
   return (
     <svg ref={anchor} width={"100%"} height={"100%"}>
       <g transform={translate}>
         {pie.map((d: any, i: number) => (
           <g key={"g" + i}>
             <Arc
+              data={{ [label]: d.data[label], [value]: d.data[value] }}
               key={d.label}
               fill={colorScale(keys[i])}
               stroke="#ffffff"
@@ -114,7 +118,15 @@ export default function PieChart({
             />
           )
         }
-        {tooltip && <Tooltip data={data} x={tooltip.cx} y={tooltip.cy} />}
+        {tooltip && (
+          <Tooltip
+            data={tooltip}
+            x={tooltip.cx}
+            y={tooltip.cy}
+            xKey={label}
+            yKey={value}
+          />
+        )}
       </g>
     </svg>
   )
