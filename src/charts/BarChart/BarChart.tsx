@@ -6,12 +6,14 @@ import { Axis } from "../../components/ContinuousAxis"
 import { DiscreteAxis } from "../../components/DiscreteAxis"
 import { Rectangle } from "../../components/Rectangle"
 import { Tooltip } from "../../components/Tooltip"
+import { ColorLegend } from "../../components/ColorLegend"
 import { transformSkinnyToWide } from "../../utils"
 import { BarChartProps, Data, ColorScale, yAccessorFunc } from "../../../types"
 import {
   getXAxisCoordinates,
   getYAxisCoordinates,
-  getMargins,
+  getMarginsWithLegend,
+  EXTRA_LEGEND_MARGIN
 } from "../../utils"
 import { yScaleDef } from "../../functionality/yScale"
 
@@ -27,6 +29,8 @@ export default function BarChart({
   yGrid = false,
   xAxisLabel,
   yAxisLabel,
+  legend,
+  legendLabel = '',
   colorScheme = d3.quantize(d3.interpolateHcl("#9dc8e2", "#07316b"), 8),
 }: BarChartProps<string | number>): JSX.Element {
   const [tooltip, setTooltip] = useState<false | any>(false)
@@ -35,10 +39,16 @@ export default function BarChart({
 
   const { anchor, cHeight, cWidth } = useResponsive()
 
+  // width & height of legend, so we know how much to squeeze chart by
+  const [legendOffset, setLegendOffset] = useState<[number, number]>([0, 0]);
+  const xOffset = legendOffset[0];
+  const yOffset = legendOffset[1];
   const margin = useMemo(
-    () => getMargins(xAxis, yAxis, xAxisLabel, yAxisLabel),
-    [xAxis, yAxis, xAxisLabel, yAxisLabel]
-  )
+    () => getMarginsWithLegend(
+      xAxis, yAxis, xAxisLabel, yAxisLabel, 
+      legend, xOffset, yOffset, cWidth, cHeight),
+    [xAxis, yAxis, xAxisLabel, yAxisLabel, legend, xOffset, yOffset, cWidth, cHeight]
+  );
 
   const { xAxisX, xAxisY } = useMemo(
     () => getXAxisCoordinates(xAxis, cHeight, margin),
@@ -158,6 +168,22 @@ export default function BarChart({
                 setTooltip={setTooltip}
               />
             ))}
+        
+        { // If legend prop is truthy, render legend component:
+        legend && <ColorLegend 
+          legendLabel={legendLabel} 
+          circleRadius={5 /* Radius of each color swab in legend */}
+          colorScale={colorScale}
+          setLegendOffset={setLegendOffset}
+          legendPosition={legend}
+          xOffset={xOffset}
+          yOffset={yOffset}
+          margin={margin}
+          cWidth={cWidth}
+          cHeight={cHeight}
+          EXTRA_LEGEND_MARGIN={EXTRA_LEGEND_MARGIN}
+        />}
+
         {tooltip && <Tooltip x={tooltip.cx} y={tooltip.cy} />}
       </g>
     </svg>

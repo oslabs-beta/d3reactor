@@ -16,32 +16,32 @@
   },
   {
     "date": "Thu Feb 01 2018 00:00:00 GMT-0500 (Eastern Standard Time)",
-    "fruit": "orange",
+    "fruit": "oranges",
     "value": 15
   },
   {
     "date": "Thu Mar 01 2018 00:00:00 GMT-0500 (Eastern Standard Time)",
-    "fruit": "orange",
+    "fruit": "oranges",
     "value": 15
   },
   {
     "date": "Sun Apr 01 2018 00:00:00 GMT-0400 (Eastern Daylight Time)",
-    "fruit": "orange",
+    "fruit": "oranges",
     "value": 15
   },
   {
     "date": "Thu Feb 01 2018 00:00:00 GMT-0500 (Eastern Standard Time)",
-    "fruit": "banana",
+    "fruit": "bananas",
     "value": 20
   },
   {
     "date": "Thu Mar 01 2018 00:00:00 GMT-0500 (Eastern Standard Time)",
-    "fruit": "banana",
+    "fruit": "bananas",
     "value":15
   },
   {
     "date": "Sun Apr 01 2018 00:00:00 GMT-0400 (Eastern Daylight Time)",
-    "fruit": "banana",
+    "fruit": "bananas",
     "value": 25
   }
 ]

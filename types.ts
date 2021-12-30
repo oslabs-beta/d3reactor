@@ -19,6 +19,8 @@ export interface ScatterPlotProps<T> {
   xAxisLabel?: string
   yAxisLabel?: string
   colorScheme?: string[] | readonly string[]
+  legend?: LegendPos
+  legendLabel?: string
 }
 
 export interface BarChartProps<T> {
@@ -34,6 +36,8 @@ export interface BarChartProps<T> {
   xAxisLabel?: string
   yAxisLabel?: string
   colorScheme?: string[] | readonly string[]
+  legend?: LegendPos
+  legendLabel?: string
 }
 
 export interface LineChartProps<T> {
@@ -51,6 +55,8 @@ export interface LineChartProps<T> {
   xAxisLabel?: string
   yAxisLabel?: string
   colorScheme?: string[] | readonly string[]
+  legend?: LegendPos
+  legendLabel?: string
 }
 
 export interface AreaChartProps<T> {
@@ -68,6 +74,8 @@ export interface AreaChartProps<T> {
   xAxisLabel?: string
   yAxisLabel?: string
   colorScheme?: string[] | readonly string[]
+  legend?: LegendPos
+  legendLabel?: string
 }
 
 export interface PieChartProps {
@@ -77,7 +85,8 @@ export interface PieChartProps {
   innerRadius?: number | string | undefined
   outerRadius?: number | string | undefined
   colorScheme?: string[] | readonly string[]
-  legend?: boolean
+  legend?: LegendPos
+  legendLabel?: string
 }
 
 export interface PieChartBodyProps {
@@ -178,12 +187,22 @@ export interface ColorLegendProps {
   tickSpacing?: number
   circleRadius: number
   tickTextOffset?: number
-  colorLegendLabel?: string
-  xPosition?: number
-  yPosition?: number
-  legendPosition?: "right-center" | "right-top" | "right-bottom"
+  legendLabel?: string
+  legendPosition: LegendPos
+  xOffset: number
+  yOffset: number
+  setLegendOffset: React.Dispatch<any>
+  margin: Margin
+  cWidth: number
+  cHeight: number
+  EXTRA_LEGEND_MARGIN: number
   fontSize?: number
 }
+
+export type LegendPos = boolean | "top" | "bottom" | "left" | "right" 
+          | "top-left" | "top-right" | "bottom-left" | "bottom-right" 
+          | "left-bottom" | "right-bottom" | "left-top" | "right-top";
+
 export type ScaleFunc =
   | d3.ScaleLinear<number, number, never>
   | d3.ScaleTime<number, number, never>
