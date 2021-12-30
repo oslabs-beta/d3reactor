@@ -4,7 +4,7 @@ import { useD3 } from "../hooks/useD3"
 import { ContinuousAxisProps } from "../../types"
 import { getAxisLabelCoordinates } from "../utils"
 
-function Axi ({
+function Axi({
   x,
   y,
   scale,
@@ -15,9 +15,8 @@ function Axi ({
   margin,
   xGrid,
   yGrid,
-  xTicksValue
+  xTicksValue,
 }: ContinuousAxisProps): JSX.Element {
-  console.log('axis')
   const gRef = useD3(
     (anchor) => {
       let axis: d3.Axis<d3.NumberValue>
@@ -49,12 +48,12 @@ function Axi ({
     () => getAxisLabelCoordinates(x, y, height, width, margin, type),
     [x, y, width, height, margin, type]
   )
- 
+
   let grid: JSX.Element[] = []
   switch (true) {
     case type === "bottom" && xGrid:
-      grid = (xTicksValue ? xTicksValue : scale.ticks())
-              .map((tick:any, i:number) => (
+      grid = (xTicksValue ? xTicksValue : scale.ticks()).map(
+        (tick: any, i: number) => (
           <line
             key={i}
             x1={scale(tick)}
@@ -64,11 +63,12 @@ function Axi ({
             strokeOpacity="0.2"
             stroke="currentColor"
           ></line>
-        ))
+        )
+      )
       break
     case type === "top" && xGrid:
-      grid = (xTicksValue ? xTicksValue : scale.ticks())
-        .map((tick:any, i:number) => (
+      grid = (xTicksValue ? xTicksValue : scale.ticks()).map(
+        (tick: any, i: number) => (
           <line
             key={i}
             x1={scale(tick)}
@@ -78,11 +78,13 @@ function Axi ({
             strokeOpacity="0.2"
             stroke="currentColor"
           ></line>
-        ))
+        )
+      )
       break
     case type === "left" && yGrid:
-      grid = scale.ticks()
-              .map((tick:any, i:number) => (
+      grid = scale
+        .ticks()
+        .map((tick: any, i: number) => (
           <line
             key={i}
             x1={0}
@@ -94,9 +96,10 @@ function Axi ({
           ></line>
         ))
       break
-    case type === "right" && yGrid :
-      grid = scale.ticks()
-            .map((tick:any, i:number) => (
+    case type === "right" && yGrid:
+      grid = scale
+        .ticks()
+        .map((tick: any, i: number) => (
           <line
             key={i}
             x1={0}
@@ -107,7 +110,7 @@ function Axi ({
             stroke="currentColor"
           ></line>
         ))
-      
+
       break
   }
 
@@ -127,9 +130,15 @@ function Axi ({
   )
 }
 
-function AxisPropsAreEqual (prevAxis:ContinuousAxisProps, newAxis:ContinuousAxisProps) {
-  return prevAxis.scale === newAxis.scale && prevAxis.height === newAxis.height && 
-  prevAxis.width === newAxis.width
+function AxisPropsAreEqual(
+  prevAxis: ContinuousAxisProps,
+  newAxis: ContinuousAxisProps
+) {
+  return (
+    prevAxis.scale === newAxis.scale &&
+    prevAxis.height === newAxis.height &&
+    prevAxis.width === newAxis.width
+  )
 }
 
-export const Axis = React.memo(Axi, AxisPropsAreEqual);
+export const Axis = React.memo(Axi, AxisPropsAreEqual)

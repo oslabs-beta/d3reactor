@@ -131,6 +131,12 @@ export interface DiscreteAxisProps {
 }
 
 export interface TooltipProps {
+  chartType?:
+    | "bar-chart"
+    | "line-chart"
+    | "area-chart"
+    | "scatter-plot"
+    | "pie-chart"
   data: any
   xAccessor?: xAccessorFunc
   yAccessor?: yAccessorFunc

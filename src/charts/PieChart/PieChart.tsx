@@ -48,7 +48,7 @@ export default function PieChart({
     }
   }
 
-  console.log("Pie keys ", keys)
+  // console.log("Pie keys ", keys)
 
   const colorScale: ColorScale = d3.scaleOrdinal(colorScheme)
   colorScale.domain(keys)
@@ -70,7 +70,7 @@ export default function PieChart({
     return `translate(${x}, ${y})`
   }
 
-  console.log("One Pie Slice ", pie[0])
+  // console.log("One Pie Slice ", pie[0])
   return (
     <svg ref={anchor} width={"100%"} height={"100%"}>
       <g transform={translate}>
@@ -120,6 +120,7 @@ export default function PieChart({
         }
         {tooltip && (
           <Tooltip
+            chartType="pie-chart"
             data={tooltip}
             x={tooltip.cx}
             y={tooltip.cy}

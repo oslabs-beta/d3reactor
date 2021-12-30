@@ -29,15 +29,15 @@ function App() {
         innerRadius="70%"
         outerRadius="80%"
       />
-      {/* <AreaChart
-        data={penguins}
+      <AreaChart
+        data={portfolio}
         height="100%"
         width="100%"
-        xKey="body_mass_g"
-        xDataType="number"
-        yKey="culmen_length_mm"
-        xGrid={true}
-        yGrid={true}
+        xKey="date"
+        xDataType="date"
+        yKey="value"
+        xGrid={false}
+        yGrid={false}
         xAxis="bottom"
         yAxis="left"
       />
@@ -108,8 +108,8 @@ function App() {
         yAxisLabel="Unemployment"
       />
       <LineChart
-        height="100%"
-        width="100%"
+        height="240"
+        width="500"
         data={portfolio}
         xKey="date"
         xDataType="date"
@@ -120,7 +120,7 @@ function App() {
         yGrid={true}
         xAxisLabel="Date"
         yAxisLabel="Value"
-      /> */}
+      />
     </div>
   )
 }

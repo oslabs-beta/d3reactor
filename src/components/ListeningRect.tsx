@@ -46,11 +46,13 @@ export default function ListeningRect({
     const mousePosition = d3.pointer(e)
     const hoveredX = xScale.invert(mousePosition[0]) as Date
     const hoveredY = yScale.invert(mousePosition[1])
-    // console.log("HOVERED Y ", hoveredY)
+    console.log("Inverted yScale ", hoveredY)
+    console.log("Mouse position ", mousePosition)
 
     // ****************************************
     // Find x position
     // ****************************************
+    let closestXValue: any = 0
     const getDistanceFromHoveredX = function (d: any) {
       // This StackOverFlow Article helped me with this TS issue
       // https://stackoverflow.com/questions/48274028/the-left-hand-and-right-hand-side-of-an-arithmetic-operation-must-be-of-type-a
@@ -63,13 +65,15 @@ export default function ListeningRect({
 
     if (typeof closestXIndex === "number") {
       const closestDataPoint = data[closestXIndex]
-      const closestXValue = xAccessor(closestDataPoint)
+      closestXValue = xAccessor(closestDataPoint)
+      console.log("CLOSEST X VALUE: ", closestXValue)
       cellCenter.cx = xScale(closestXValue)
     }
 
     // ****************************************
     // Find y position
     // ****************************************
+    let closestYValue: any = 0
     const closestYSequence = layers.map((layer) => {
       if (typeof closestXIndex === "number") {
         return layer[closestXIndex][1]
@@ -87,10 +91,13 @@ export default function ListeningRect({
     if (typeof closestYIndex === "number") {
       const closestKey = layers[closestYIndex].key
       if (typeof closestXIndex === "number") {
-        const closestValue = layers[closestYIndex][closestXIndex][1]
-        cellCenter.cy = yScale(closestValue)
-        console.log(`The Closest Y is ${closestKey} ${closestValue}`)
-        cellCenter.tooltipData = { [xKey]: closestKey, [yKey]: closestValue }
+        closestYValue = layers[closestYIndex][closestXIndex][1]
+        cellCenter.cy = yScale(closestYValue)
+        console.log(`The Closest Y is ${closestKey} ${closestYValue}`)
+        cellCenter.tooltipData = {
+          [xKey]: closestXValue,
+          [yKey]: closestYValue,
+        }
       }
     }
 

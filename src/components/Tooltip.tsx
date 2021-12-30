@@ -5,6 +5,7 @@ import { TooltipProps } from "../../types"
 // import "./Tooltip.css"
 
 function MemTooltip({
+  chartType,
   data,
   xAccessor,
   yAccessor,
@@ -13,23 +14,19 @@ function MemTooltip({
   xKey,
   yKey,
 }: TooltipProps) {
-  // const { anchor, cHeight, cWidth } = useResponsive()
-
   const tooltipStyle: React.CSSProperties | undefined = {
     margin: "4px 4px",
     padding: "0.2em .5em",
-    width: "140",
-    maxHeight: "28",
     borderRadius: "4px",
-    color: "#3f517e",
+    color: "#1e2023",
     /* You can also use a fixed width and ommit the white-sapce. */
     whiteSpace: "nowrap",
     backgroundColor: "#fff",
     // transform: "translate(calc( -50% + ${x}px), calc(-100% + ${y}px))",
     textAlign: "start",
-    lineHeight: "1.4em",
-    fontSize: "0.9em",
-    zIndex: "10",
+    lineHeight: "1.5em",
+    fontSize: "0.8em",
+    zIndex: "9999",
     transition: "all 0.1s ease-out",
   }
 
@@ -41,22 +38,22 @@ function MemTooltip({
     fill: "#fff",
   }
 
-  const verticalOffset: number = -6
+  const VERTICAL_OFFSET: number = -4
 
   // console.log("X ", x)
   // console.log("Y ", y)
   // console.log("Anchor ", anchor)
   // console.log("cHeight ", cHeight)
-  console.log("Tooltip data ", data)
-  console.log("Tooltip xKey ", xKey)
-  console.log("Tooltip yKey ", yKey)
+  // console.log("Tooltip data ", data)
+  // console.log("Tooltip xKey ", xKey)
+  // console.log("Tooltip yKey ", yKey)
   const getMaxStringLength = (xString: string, yString: string): number => {
     const xLength: number = xString.length
     const yLength: number = yString.length
     return Math.max(xLength, yLength)
   }
 
-  console.log("x String ", `${xKey}: ${data.tooltipData[xKey as string]}`)
+  // console.log("x String ", `${xKey}: ${data.tooltipData[xKey as string]}`)
   const xTooltipText: string = `${xKey}: ${data.tooltipData[xKey as string]}`
   const yTooltipText: string = `${yKey}: ${data.tooltipData[yKey as string]}`
 
@@ -67,25 +64,29 @@ function MemTooltip({
   const tooltipHeight: number = LINE_HEIGHT * 2
   return (
     <g>
-      <circle
-        style={circleStyle}
-        cx={x}
-        cy={y}
-        r={4}
-        fill="white"
-        stroke="#7ba2bf"
-        strokeWidth="2"
-      />
+      {chartType !== "pie-chart" ? (
+        <circle
+          style={circleStyle}
+          cx={x}
+          cy={y}
+          r={4}
+          fill="white"
+          stroke="#7ba2bf"
+          strokeWidth="2"
+          pointerEvents="none"
+        />
+      ) : null}
       <polygon
         style={triangleStyle}
         points={`
-        ${x},${y + verticalOffset}
-        ${x - 10},${y + verticalOffset - 12}
-        ${x + 10},${y + verticalOffset - 12}`}
+        ${x},${y + VERTICAL_OFFSET}
+        ${x - 10},${y + VERTICAL_OFFSET - 10}
+        ${x + 10},${y + VERTICAL_OFFSET - 10}`}
+        pointerEvents="none"
       />
       <foreignObject
         x={x - tooltipWidth / 2}
-        y={y + verticalOffset - tooltipHeight}
+        y={y - tooltipHeight}
         width={tooltipWidth}
         height={tooltipHeight}
         pointerEvents="none"
