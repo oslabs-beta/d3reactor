@@ -79,7 +79,7 @@ export default function ScatterPlot({
     groups: d3.InternMap<any, any[]>
   const groupAccessor = (d: any) => d[groupBy ?? ""]
   groups = d3.group(data, groupAccessor)
-  keys = Array.from(groups).map((group) => group[0])
+  keys = groupBy ? Array.from(groups).map((group) => group[0]) : [yKey];
 
   const xAccessor: xAccessorFunc = useMemo(() => {
     return xType === "number" ? (d) => d[xKey] : (d) => new Date(d[xKey])
@@ -188,7 +188,7 @@ export default function ScatterPlot({
         />}
 
       {tooltip && <Tooltip x={tooltip.cx} y={tooltip.cy} />}
-      
+
       </g>
     </svg>
   )
