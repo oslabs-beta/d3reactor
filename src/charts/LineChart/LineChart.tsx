@@ -46,7 +46,8 @@ export default function LineChart({
   const [tooltip, setTooltip] = useState<false | any>(false)
   const chart = "LineChart"
 
-  const { anchor, cHeight, cWidth } = useResponsive()
+  let { anchor, cHeight, cWidth } = useResponsive()
+
 
   // width & height of legend, so we know how much to squeeze chart by
   const [legendOffset, setLegendOffset] = useState<[number, number]>([0, 0]);
