@@ -47,7 +47,9 @@ function MemTooltip({
   // console.log("Y ", y)
   // console.log("Anchor ", anchor)
   // console.log("cHeight ", cHeight)
-  // console.log("DATA ", data)
+  console.log("Tooltip data ", data)
+  console.log("Tooltip xKey ", xKey)
+  console.log("Tooltip yKey ", yKey)
   const getMaxStringLength = (xString: string, yString: string): number => {
     const xLength: number = xString.length
     const yLength: number = yString.length
@@ -63,8 +65,6 @@ function MemTooltip({
     getMaxStringLength(xTooltipText, yTooltipText) * CHAR_WIDTH
   const LINE_HEIGHT = 30
   const tooltipHeight: number = LINE_HEIGHT * 2
-  console.log("tt width ", tooltipWidth)
-  // console.log("cWidth ", cWidth)
   return (
     <g>
       <circle

@@ -160,7 +160,15 @@ export default function ScatterPlot({
             setTooltip={setTooltip}
           />
         )}
-        {tooltip && <Tooltip data={data} x={tooltip.cx} y={tooltip.cy} />}
+        {tooltip && (
+          <Tooltip
+            data={tooltip}
+            x={tooltip.cx}
+            y={tooltip.cy}
+            xKey={xKey}
+            yKey={yKey}
+          />
+        )}
       </g>
     </svg>
   )
