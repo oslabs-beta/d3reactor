@@ -183,8 +183,6 @@ export default function LineChart({
           />
         )}
 
-        {tooltip && <Tooltip x={tooltip.cx} y={tooltip.cy} />}
-
         { // If legend prop is truthy, render legend component:
         legend && <ColorLegend 
           legendLabel={legendLabel} 
@@ -199,6 +197,9 @@ export default function LineChart({
           cHeight={cHeight}
           EXTRA_LEGEND_MARGIN={EXTRA_LEGEND_MARGIN}
         />}
+
+        {tooltip && <Tooltip x={tooltip.cx} y={tooltip.cy} />}
+
       </g>
     </svg>
   )

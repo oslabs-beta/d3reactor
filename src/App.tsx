@@ -28,7 +28,7 @@ function App() {
         value="value"
         innerRadius="70%"
         outerRadius="80%"
-        legend='left'
+        // legend='left'
       />
       <AreaChart
         data={penguins}
@@ -55,7 +55,8 @@ function App() {
         yGrid={true}
         xAxisLabel="Date"
         yAxisLabel="Number of fruit"
-        legend={true}
+        legend={'top'}
+        
       />
       <ScatterPlot
         height="100%"
@@ -71,7 +72,8 @@ function App() {
         // yGrid={true}
         xAxisLabel="Date"
         yAxisLabel="Value"
-        legend={'right-bottom'}
+        legend={'left'}
+        legendLabel={'Dolphins i mean penguins'}
       />
       <BarChart
         height="300"
@@ -85,6 +87,7 @@ function App() {
         xAxisLabel="Date"
         yAxisLabel="Value"
         legend={'right'}
+        // legendLabel={''}
       />
       <BarChart
         height="500"

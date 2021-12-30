@@ -41,7 +41,7 @@ export default function AreaChart({
   xAxisLabel,
   yAxisLabel,
   legend,
-  legendLabel = groupBy,
+  legendLabel = '',
   colorScheme = d3.quantize(d3.interpolateHcl("#9dc8e2", "#07316b"), 8),
 }: AreaChartProps<string | number>): JSX.Element {
   const [tooltip, setTooltip] = useState<false | any>(false);

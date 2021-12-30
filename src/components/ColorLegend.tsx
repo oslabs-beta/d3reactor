@@ -107,6 +107,21 @@ switch(legendPosition) {
 
   useEffect(() => setLegendOffset([rectWidth, rectHeight]), []);
   // setLegendOffset(rectWidth);
+
+  const style: React.CSSProperties | undefined = {
+    margin: "0px 0px",
+    padding: "0px 0px",
+    maxHeight: "100%",
+    width: rectWidth > 0 ? rectWidth : 20,
+    height: rectHeight > 0 ? rectHeight : 20,
+    border: "1px solid $tooltip-border",
+    borderRadius: "3px",
+    color: "#3f517e",
+    // You can also use a fixed width and ommit the white-sapce.
+    whiteSpace: "nowrap",
+    backgroundColor: "#fff",
+    boxShadow: "rgba(0, 0, 0, 0.3) 0 2px 10px",
+  }
   return (
       <g transform={`translate(${xPosition}, ${yPosition})`}>
         <foreignObject 
@@ -118,22 +133,11 @@ switch(legendPosition) {
           // style={fill: 'red'}
         >
           <div 
-            // x={0} 
-            // y={-rectHeight/2} 
-            // width={rectWidth > 0 ? rectWidth : 20 /* protects against negative legend dimensions */} 
-            // height={rectHeight > 0 ? rectHeight : 20} 
-            style={{
-              fill:'rgb(255,0,0)', 
-              strokeWidth:2, 
-              stroke:'rgb(0,255,0)',
-              height: '100%'
-            }}>
-              🌈🌈🌈🌈🌈🌈🌈🌈🌈🌈🌈🌈🌈🌈🌈🌈🌈🌈🌈🌈🌈🌈🌈🌈🌈🌈🌈
+            style={style}>
           </div>
         </foreignObject>
         
         
-
         <text className={'sectionLabel' /* TODO: implement CSS */} 
           x={rectWidth/2 /* Where to put Legend title label */} 
           y={-rectHeight/2 + RECT_MARGIN/2 + 16 /* Where to put Legend title label */} 
