@@ -106,7 +106,6 @@ switch(legendPosition) {
     + longestWord*(fontSize+1)/2 + RECT_MARGIN*2; //+1 by fontSize is a bit of a kludge
 
   useEffect(() => setLegendOffset([rectWidth, rectHeight]), []);
-  // setLegendOffset(rectWidth);
 
   const style: React.CSSProperties | undefined = {
     margin: "0px 0px",

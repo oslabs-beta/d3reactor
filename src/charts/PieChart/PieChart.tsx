@@ -39,6 +39,8 @@ export default function PieChart({
       ),
     [legend, xOffset, yOffset, cWidth, cHeight]
   );
+
+  console.log('margin$$$$$', margin)
   outerRadius = outerRadius
     ? checkRadiusDimension(cHeight, cWidth, outerRadius, margin)
     : calculateOuterRadius(cHeight, cWidth, margin)
@@ -48,7 +50,7 @@ export default function PieChart({
 
   type ColorScale = d3.ScaleOrdinal<string, string, never>
 
-  const translate = `translate(${cWidth / 2}, ${cHeight / 2})`
+  const translate = `translate(${cWidth / 2 - margin.right}, ${cHeight / 2})`
 
   const keys: string[] = []
   for (let entry of data) {

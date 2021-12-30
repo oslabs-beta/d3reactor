@@ -28,7 +28,7 @@ function App() {
         value="value"
         innerRadius="70%"
         outerRadius="80%"
-        // legend='left'
+        legend='right'
       />
       <AreaChart
         data={penguins}
@@ -101,7 +101,7 @@ function App() {
         yGrid={true}
         xAxisLabel="Date"
         yAxisLabel="Value"
-        // legend={true}
+        legend={true}
       />
       <LineChart
         height="100%"
@@ -132,7 +132,7 @@ function App() {
         yGrid={true}
         xAxisLabel="Date"
         yAxisLabel="Value"
-        // legend={'bottom-right'}
+        legend={'bottom-left'}
       />
     </div>
   )

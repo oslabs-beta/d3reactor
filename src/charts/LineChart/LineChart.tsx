@@ -99,7 +99,7 @@ export default function LineChart({
     return d[groupBy ?? ""]
   }
   const lineGroups: any = d3.group(data, (d) => groupAccessor(d))
-  keys = Array.from(lineGroups).map((group: any) => group[0])
+  keys = groupBy ? Array.from(lineGroups).map((group: any) => group[0]) : [yKey];
   const line: any = d3
     .line()
     .curve(d3.curveLinear)
