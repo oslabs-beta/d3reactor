@@ -108,7 +108,7 @@ export default function LineChart({
     )
   }, [data, xScale, yScale, xAccessor, yAccessor, cHeight, cWidth, margin])
 
-  console.log("TOOLTIP ", tooltip)
+  // console.log("TOOLTIP ", tooltip)
   const colorScale: ColorScale = d3.scaleOrdinal(colorScheme)
   colorScale.domain(keys)
   return (

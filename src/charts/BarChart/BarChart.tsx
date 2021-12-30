@@ -64,7 +64,7 @@ export default function BarChart({
   const stack = d3.stack().keys(keys).order(d3.stackOrderAscending)
   const layers = stack(data as Iterable<{ [key: string]: number }>)
 
-  console.log("Bar chart layers ", layers)
+  // console.log("Bar chart layers ", layers)
   const xAccessor: (d: Data) => string = useMemo(() => {
     return (d) => d[xKey]
   }, [])
