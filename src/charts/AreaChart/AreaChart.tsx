@@ -197,7 +197,15 @@ export default function AreaChart({
             />
           )
         }
-        {tooltip && <Tooltip data={data} x={tooltip.cx} y={tooltip.cy} />}
+        {tooltip && (
+          <Tooltip
+            data={tooltip}
+            x={tooltip.cx}
+            y={tooltip.cy}
+            xKey={xKey}
+            yKey={yKey}
+          />
+        )}
 
         <ListeningRect
           data={data}
@@ -209,6 +217,8 @@ export default function AreaChart({
           yScale={yScale}
           xAccessor={xAccessor}
           yAccessor={yAccessor}
+          xKey={xKey}
+          yKey={yKey}
           setTooltip={setTooltip}
         />
       </g>

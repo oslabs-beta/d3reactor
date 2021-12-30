@@ -40,7 +40,7 @@ function App() {
         yGrid={true}
         xAxis="bottom"
         yAxis="left"
-      />
+      /> */}
       <AreaChart
         data={skinny_fruit}
         height="300"
@@ -53,8 +53,8 @@ function App() {
         xAxisLabel="Date"
         yAxisLabel="Number of fruit"
         legend={true}
-      /> */}
-      <ScatterPlot
+      />
+      {/* <ScatterPlot
         height="100%"
         width="100%"
         data={penguins}
@@ -69,7 +69,7 @@ function App() {
         xAxisLabel="Date"
         yAxisLabel="Value"
       />
-      {/* <BarChart
+      <BarChart
         height="300"
         data={skinny_fruit}
         xKey="date"

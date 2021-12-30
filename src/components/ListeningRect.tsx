@@ -17,6 +17,8 @@ export default function ListeningRect({
   margin,
   xScale,
   yScale,
+  xKey,
+  yKey,
   xAccessor,
   setTooltip,
 }: {
@@ -32,11 +34,13 @@ export default function ListeningRect({
   margin: Margin
   xScale: ScaleFunc
   yScale: ScaleFunc
+  xKey: string
+  yKey: string
   xAccessor: xAccessorFunc
   yAccessor: yAccessorFunc
   setTooltip?: React.Dispatch<any>
 }) {
-  const cellCenter = { cx: 0, cy: 0 }
+  const cellCenter = { cx: 0, cy: 0, tooltipData: {} }
 
   function onMouseMove(e: any) {
     const mousePosition = d3.pointer(e)
@@ -85,7 +89,8 @@ export default function ListeningRect({
       if (typeof closestXIndex === "number") {
         const closestValue = layers[closestYIndex][closestXIndex][1]
         cellCenter.cy = yScale(closestValue)
-        // console.log(`The Closest Y is ${closestKey} ${closestValue}`)
+        console.log(`The Closest Y is ${closestKey} ${closestValue}`)
+        cellCenter.tooltipData = { [xKey]: closestKey, [yKey]: closestValue }
       }
     }
 
