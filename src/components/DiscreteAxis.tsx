@@ -122,7 +122,7 @@ const getFormattedTick = (individualTick: string )  => {
 
   return (
     <g>
-      <line stroke="#bdc3c7" x1={x1} y1={y1} x2={x2} y2={y2} />
+      <line stroke="#77848d" x1={x1} y1={y1} x2={x2} y2={y2} />
       {ticks.map((tick: any, i: number) => (
         <text 
           style={getTickStyle(type, tick)}

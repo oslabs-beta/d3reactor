@@ -3,6 +3,7 @@ import * as d3 from "d3"
 import { useD3 } from "../hooks/useD3"
 import { ContinuousAxisProps } from "../../types"
 import { getAxisLabelCoordinates } from "../utils"
+import { gridGenerator } from '../functionality/grid';
 import { Line } from "./Line"
 
 function Axi({
@@ -18,7 +19,7 @@ function Axi({
   yGrid,
   xTicksValue,
 }: ContinuousAxisProps): JSX.Element {
-  console.log("axis")
+  console.log("xTicksVal", xTicksValue)
   // const gRef = useD3(
   //   (anchor) => {
   let axis: d3.Axis<d3.NumberValue>
@@ -94,76 +95,12 @@ function Axi({
     }
   }
 
-  //     anchor.call(axis)
-  //   },
-  //   [type, scale]
-  // )
-
   const { axisLabelX, axisLabelY, rotate } = useMemo(
     () => getAxisLabelCoordinates(x, y, height, width, margin, type),
     [x, y, width, height, margin, type]
   )
 
-  // let grid: JSX.Element[] = []
-  // switch (true) {
-  //   case type === "bottom" && xGrid:
-  //     grid = (xTicksValue ? xTicksValue : scale.ticks())
-  //             .map((tick:any, i:number) => (
-  //         <line
-  //           key={i}
-  //           x1={scale(tick)}
-  //           x2={scale(tick)}
-  //           y1={0}
-  //           y2={-height + margin.bottom + margin.top}
-  //           strokeOpacity="0.2"
-  //           stroke="currentColor"
-  //         ></line>
-  //       ))
-  //     break
-  //   case type === "top" && xGrid:
-  //     grid = (xTicksValue ? xTicksValue : scale.ticks())
-  //       .map((tick:any, i:number) => (
-  //         <line
-  //           key={i}
-  //           x1={scale(tick)}
-  //           x2={scale(tick)}
-  //           y1={0}
-  //           y2={height - margin.bottom - margin.top}
-  //           strokeOpacity="0.2"
-  //           stroke="currentColor"
-  //         ></line>
-  //       ))
-  //     break
-  //   case type === "left" && yGrid:
-  //     grid = scale.ticks()
-  //             .map((tick:any, i:number) => (
-  //         <line
-  //           key={i}
-  //           x1={0}
-  //           x2={width - margin.right - margin.left}
-  //           y1={scale(tick)}
-  //           y2={scale(tick)}
-  //           strokeOpacity="0.2"
-  //           stroke="currentColor"
-  //         ></line>
-  //       ))
-  //     break
-  //   case type === "right" && yGrid :
-  //     grid = scale.ticks()
-  //           .map((tick:any, i:number) => (
-  //         <line
-  //           key={i}
-  //           x1={0}
-  //           x2={-(width - margin.right - margin.left)}
-  //           y1={scale(tick)}
-  //           y2={scale(tick)}
-  //           strokeOpacity="0.2"
-  //           stroke="currentColor"
-  //         ></line>
-  //       ))
-
-  //     break
-  // }
+ let grid = gridGenerator(type, xGrid, yGrid, xTicksValue, scale, height, width, margin);
 
   let numberOfHorizontalTicks: number;
   if (width < 480 ) {
@@ -197,7 +134,10 @@ function Axi({
 
   return (
     <g>
-      <line stroke="#bdc3c7" x1={x1} y1={y1} x2={x2} y2={y2} />
+      <g transform={`translate(${x}, ${y})`}>
+        {grid}
+      </g>
+      <line stroke="#77848d" x1={x1} y1={y1} x2={x2} y2={y2} />
       {(type === "top" || type === "bottom") &&
         horizontalTicks.map((tick, i) => (
           <text
@@ -218,9 +158,6 @@ function Axi({
             {getFormattedTick(tick)}
           </text>
         ))}
-      {/* <g ref={gRef} transform={`translate(${x}, ${y})`}>
-        {grid}
-      </g> */}
       <text
         transform={`translate(${axisLabelX}, ${axisLabelY}) rotate(${rotate})`}
         textAnchor="middle"

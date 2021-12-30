@@ -98,19 +98,6 @@ export default function BarChart({
   return (
     <svg ref={anchor} width={width} height={height}>
       <g transform={translate}>
-        {yAxis && (
-          <Axis
-            x={yAxisX}
-            y={yAxisY}
-            height={cHeight}
-            width={cWidth}
-            margin={margin}
-            scale={yScale}
-            type={yAxis}
-            yGrid={yGrid}
-            label={yAxisLabel}
-          />
-        )}
         {xAxis && (
           <DiscreteAxis
             x={xAxisX}
@@ -124,6 +111,19 @@ export default function BarChart({
             data={data}
             layers={layers}
             xAccessor={xAccessor}
+          />
+        )}
+        {yAxis && (
+          <Axis
+            x={yAxisX}
+            y={yAxisY}
+            height={cHeight}
+            width={cWidth}
+            margin={margin}
+            scale={yScale}
+            type={yAxis}
+            yGrid={yGrid}
+            label={yAxisLabel}
           />
         )}
         {groupBy
