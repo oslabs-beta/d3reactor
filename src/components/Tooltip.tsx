@@ -13,7 +13,7 @@ function MemTooltip({
   xKey,
   yKey,
 }: TooltipProps) {
-  const { anchor, cHeight, cWidth } = useResponsive()
+  // const { anchor, cHeight, cWidth } = useResponsive()
 
   const tooltipStyle: React.CSSProperties | undefined = {
     margin: "4px 4px",
@@ -43,16 +43,29 @@ function MemTooltip({
 
   const verticalOffset: number = -6
   const tooltipHeight: number = 60
-  const tooltipWidth: number = 160
+  // const tooltipWidth: number = 160
 
   // console.log("X ", x)
   // console.log("Y ", y)
   // console.log("Anchor ", anchor)
   // console.log("cHeight ", cHeight)
   // console.log("cWidth ", cWidth)
-  console.log("DATA ", data)
+  // console.log("DATA ", data)
+  const getMaxStringLength = (xString: string, yString: string): number => {
+    const xLength: number = xString.length
+    const yLength: number = yString.length
+    return Math.max(xLength, yLength)
+  }
+
+  const xTooltipText: string = `${xKey}: ${data.tooltipData[xKey as string]}`
+  const yTooltipText: string = `${yKey}: ${data.tooltipData[yKey as string]}`
+
+  const CHAR_WIDTH = 6
+  const tooltipWidth: number =
+    getMaxStringLength(xTooltipText, yTooltipText) * CHAR_WIDTH
+  console.log("tt width ", tooltipWidth)
   return (
-    <g ref={anchor}>
+    <g>
       <circle
         style={circleStyle}
         cx={x}
