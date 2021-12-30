@@ -64,6 +64,7 @@ export default function BarChart({
   const stack = d3.stack().keys(keys).order(d3.stackOrderAscending)
   const layers = stack(data as Iterable<{ [key: string]: number }>)
 
+  console.log("Bar chart layers ", layers)
   const xAccessor: (d: Data) => string = useMemo(() => {
     return (d) => d[xKey]
   }, [])
@@ -94,6 +95,12 @@ export default function BarChart({
 
   const colorScale: ColorScale = d3.scaleOrdinal(colorScheme)
   colorScale.domain(keys)
+
+  const getSequenceData = (sequence: any) => {
+    const xKeyValue = { [xKey]: sequence.data[xKey] }
+    const yKeyValue = { [yKey]: sequence[1] }
+    return { ...xKeyValue, ...yKeyValue }
+  }
 
   return (
     <svg ref={anchor} width={width} height={height}>
@@ -128,7 +135,7 @@ export default function BarChart({
               <g key={i}>
                 {layer.map((sequence: any, i: number) => (
                   <Rectangle
-                    data={layer}
+                    data={getSequenceData(sequence)}
                     key={i}
                     x={xScale(xAccessor(sequence.data))}
                     y={yScale(sequence[1])}

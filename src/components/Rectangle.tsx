@@ -16,6 +16,8 @@ export const Rectangle = React.memo(
       const cx = x + width / 2
       const cy = y - 50
     }
+
+    console.log("Tooltip data ", data)
     return (
       <rect
         x={x}

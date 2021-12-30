@@ -91,13 +91,9 @@ function MemTooltip({
         pointerEvents="none"
       >
         <div style={tooltipStyle}>
-          <strong>
-            {xKey}: {data.tooltipData[xKey as string]}
-          </strong>
+          {xTooltipText}
           <br></br>
-          <strong>
-            {yKey}: {Math.round(data.tooltipData[yKey as string] * 100) / 100}
-          </strong>
+          {yTooltipText}
         </div>
       </foreignObject>
     </g>

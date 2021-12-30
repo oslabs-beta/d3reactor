@@ -68,7 +68,7 @@ function App() {
         // yGrid={true}
         xAxisLabel="Date"
         yAxisLabel="Value"
-      />
+      /> */}
       <BarChart
         height="300"
         data={skinny_fruit}
@@ -80,7 +80,8 @@ function App() {
         yGrid={true}
         xAxisLabel="Date"
         yAxisLabel="Value"
-      /> */}
+      />
+      {/*
       <BarChart
         height="300"
         data={skinny_fruit}
@@ -93,7 +94,7 @@ function App() {
         xAxisLabel="Date"
         yAxisLabel="Value"
       />
-      {/* <LineChart
+      <LineChart
         height="100%"
         data={unemployment}
         xKey="date"
