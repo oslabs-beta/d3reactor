@@ -108,6 +108,7 @@ export default function LineChart({
     )
   }, [data, xScale, yScale, xAccessor, yAccessor, cHeight, cWidth, margin])
 
+  console.log("TOOLTIP ", tooltip)
   const colorScale: ColorScale = d3.scaleOrdinal(colorScheme)
   colorScale.domain(keys)
   return (
@@ -172,7 +173,15 @@ export default function LineChart({
           />
         )}
 
-        {tooltip && <Tooltip x={tooltip.cx} y={tooltip.cy} />}
+        {tooltip && (
+          <Tooltip
+            data={tooltip}
+            x={tooltip.cx}
+            y={tooltip.cy}
+            xKey={xKey}
+            yKey={yKey}
+          />
+        )}
       </g>
     </svg>
   )

@@ -24,6 +24,7 @@ export const VoronoiWrapper = React.memo(
             cellCenter={{
               cx: xScale(xAccessor(element)),
               cy: yScale(yAccessor(element)),
+              tooltipData: element,
             }}
             setTooltip={setTooltip}
             data={element}

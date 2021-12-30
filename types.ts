@@ -130,6 +130,16 @@ export interface DiscreteAxisProps {
   margin: Margin
 }
 
+export interface TooltipProps {
+  data: any
+  xAccessor?: xAccessorFunc
+  yAccessor?: yAccessorFunc
+  x: number
+  y: number
+  xKey?: string
+  yKey?: string
+}
+
 export interface CircleProps {
   cx: number
   cy: number
@@ -168,7 +178,7 @@ export interface VoronoiProps {
   stroke: string
   opacity: number
   d: string | undefined
-  cellCenter?: { cx: number; cy: number }
+  cellCenter?: { cx: number; cy: number; tooltipData: Data }
   data?: any
   setTooltip?: React.Dispatch<any>
 }
@@ -191,8 +201,16 @@ export interface ColorLegendProps {
   fontSize?: number
 }
 
-export type LegendPos = boolean | "top" | "bottom" | "left" | "right" 
-| "top-left" | "top-right" | "bottom-left" | "bottom-right";
+export type LegendPos =
+  | boolean
+  | "top"
+  | "bottom"
+  | "left"
+  | "right"
+  | "top-left"
+  | "top-right"
+  | "bottom-left"
+  | "bottom-right"
 
 export type ScaleFunc =
   | d3.ScaleLinear<number, number, never>

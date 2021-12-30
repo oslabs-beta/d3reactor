@@ -17,12 +17,11 @@ export default function PieChart({
   colorScheme = d3.quantize(d3.interpolateHcl("#9dc8e2", "#07316b"), 8),
   legend,
 }: PieChartProps): JSX.Element {
+  const [legendOffset, setLegendOffset] = useState([0, 0])
 
-  const [legendOffset, setLegendOffset] = useState([0, 0]);
-  
-  const [tooltip, setTooltip] = useState<false | any>(false);
-  
-  const { anchor, cHeight, cWidth } = useResponsive();
+  const [tooltip, setTooltip] = useState<false | any>(false)
+
+  const { anchor, cHeight, cWidth } = useResponsive()
 
   const margin = {
     top: 20,
@@ -94,22 +93,28 @@ export default function PieChart({
             </text>
           </g>
         ))}
-        { // If legend prop is truthy, render legend component:
-        legend && <ColorLegend 
-          colorLegendLabel={'Fruit' /**we need a way to derive this either from data or as an extra prop passed in */} 
-          circleRadius={5 /* Radius of each color swab in legend */}
-          // tickSpacing={22 /* Vertical space between each line of legend */}
-          // tickTextOffset={12 /* How much the text label is pushed to the right of the color swab */}
-          colorScale={colorScale}
-          setLegendOffset={setLegendOffset}
-          legendPosition={legend}
-          xOffset={0}
-          yOffset={0}
-          margin={margin}
-          cWidth={cWidth}
-          cHeight={cHeight}
-        />}
-        {tooltip && <Tooltip x={tooltip.cx} y={tooltip.cy} />}
+        {
+          // If legend prop is truthy, render legend component:
+          legend && (
+            <ColorLegend
+              colorLegendLabel={
+                "Fruit" /**we need a way to derive this either from data or as an extra prop passed in */
+              }
+              circleRadius={5 /* Radius of each color swab in legend */}
+              // tickSpacing={22 /* Vertical space between each line of legend */}
+              // tickTextOffset={12 /* How much the text label is pushed to the right of the color swab */}
+              colorScale={colorScale}
+              setLegendOffset={setLegendOffset}
+              legendPosition={legend}
+              xOffset={0}
+              yOffset={0}
+              margin={margin}
+              cWidth={cWidth}
+              cHeight={cHeight}
+            />
+          )
+        }
+        {tooltip && <Tooltip data={data} x={tooltip.cx} y={tooltip.cy} />}
       </g>
     </svg>
   )

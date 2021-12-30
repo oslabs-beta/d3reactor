@@ -15,7 +15,7 @@ import { yScaleDef } from "../../functionality/yScale"
 import { d3Voronoi } from "../../functionality/voronoi"
 import ListeningRect from "../../components/ListeningRect"
 import { Tooltip } from "../../components/Tooltip"
-import { ColorLegend } from "../../components/ColorLegend";
+import { ColorLegend } from "../../components/ColorLegend"
 import {
   getXAxisCoordinates,
   getYAxisCoordinates,
@@ -39,24 +39,43 @@ export default function AreaChart({
   yGrid = false,
   xAxisLabel,
   yAxisLabel,
-  legend = 'right',
+  legend = "right",
   legendLabel = groupBy,
   colorScheme = d3.quantize(d3.interpolateHcl("#9dc8e2", "#07316b"), 8),
 }: AreaChartProps<string | number>): JSX.Element {
-  const [tooltip, setTooltip] = useState<false | any>(false);
+  const [tooltip, setTooltip] = useState<false | any>(false)
   // width & height of legend, so we know how much to squeeze chart by
-  const [legendOffset, setLegendOffset] = useState<[number, number]>([0, 0]);
-  const chart = "AreaChart";
-  const { anchor, cHeight, cWidth } = useResponsive();
+  const [legendOffset, setLegendOffset] = useState<[number, number]>([0, 0])
+  const chart = "AreaChart"
+  const { anchor, cHeight, cWidth } = useResponsive()
 
-  const xOffset = legendOffset[0];
-  const yOffset = legendOffset[1];
+  const xOffset = legendOffset[0]
+  const yOffset = legendOffset[1]
   const margin = useMemo(
-    () => getMarginsWithLegend(xAxis, yAxis, xAxisLabel, yAxisLabel, 
-                              legend, xOffset, yOffset, cWidth, cHeight),
-    [xAxis, yAxis, xAxisLabel, yAxisLabel, legend, xOffset, yOffset, cWidth, cHeight]
+    () =>
+      getMarginsWithLegend(
+        xAxis,
+        yAxis,
+        xAxisLabel,
+        yAxisLabel,
+        legend,
+        xOffset,
+        yOffset,
+        cWidth,
+        cHeight
+      ),
+    [
+      xAxis,
+      yAxis,
+      xAxisLabel,
+      yAxisLabel,
+      legend,
+      xOffset,
+      yOffset,
+      cWidth,
+      cHeight,
+    ]
   )
- 
 
   const { xAxisX, xAxisY } = useMemo(
     () => getXAxisCoordinates(xAxis, cHeight, margin),
@@ -159,20 +178,26 @@ export default function AreaChart({
           <path key={i} d={areaGenerator(layer)} fill={colorScale(layer.key)} />
         ))}
 
-        { // If legend prop is truthy, render legend component:
-        legend && <ColorLegend 
-          colorLegendLabel={legendLabel /**we need a way to derive this either from data or as an extra prop passed in */} 
-          circleRadius={5 /* Radius of each color swab in legend */}
-          colorScale={colorScale}
-          setLegendOffset={setLegendOffset}
-          legendPosition={legend}
-          xOffset={xOffset}
-          yOffset={yOffset}
-          margin={margin}
-          cWidth={cWidth}
-          cHeight={cHeight}
-        />}
-        {tooltip && <Tooltip x={tooltip.cx} y={tooltip.cy} />}
+        {
+          // If legend prop is truthy, render legend component:
+          legend && (
+            <ColorLegend
+              colorLegendLabel={
+                legendLabel /**we need a way to derive this either from data or as an extra prop passed in */
+              }
+              circleRadius={5 /* Radius of each color swab in legend */}
+              colorScale={colorScale}
+              setLegendOffset={setLegendOffset}
+              legendPosition={legend}
+              xOffset={xOffset}
+              yOffset={yOffset}
+              margin={margin}
+              cWidth={cWidth}
+              cHeight={cHeight}
+            />
+          )
+        }
+        {tooltip && <Tooltip data={data} x={tooltip.cx} y={tooltip.cy} />}
 
         <ListeningRect
           data={data}
@@ -188,5 +213,5 @@ export default function AreaChart({
         />
       </g>
     </svg>
-  );
+  )
 }

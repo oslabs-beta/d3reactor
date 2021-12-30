@@ -158,7 +158,7 @@ export default function BarChart({
                 setTooltip={setTooltip}
               />
             ))}
-        {tooltip && <Tooltip x={tooltip.cx} y={tooltip.cy} />}
+        {tooltip && <Tooltip data={data} x={tooltip.cx} y={tooltip.cy} />}
       </g>
     </svg>
   )
