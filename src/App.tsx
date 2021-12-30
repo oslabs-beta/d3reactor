@@ -28,11 +28,12 @@ function App() {
         value="value"
         innerRadius="70%"
         outerRadius="80%"
+        // legend='left'
       />
       <AreaChart
         data={penguins}
-        height="700"
-        width="100%"
+        height="300"
+        width="400"
         xKey="body_mass_g"
         xDataType="number"
         yKey="culmen_length_mm"
@@ -40,6 +41,8 @@ function App() {
         yGrid={true}
         xAxis="bottom"
         yAxis="left"
+        legend='left-bottom'
+        legendLabel="🐬"
       />
       <AreaChart
         data={skinny_fruit}
@@ -52,6 +55,8 @@ function App() {
         yGrid={true}
         xAxisLabel="Date"
         yAxisLabel="Number of fruit"
+        legend={'top'}
+        
       />
       <ScatterPlot
         height="100%"
@@ -67,6 +72,8 @@ function App() {
         yGrid={true}
         xAxisLabel="Date"
         yAxisLabel="Value"
+        legend={'left'}
+        legendLabel={'Dolphins i mean penguins'}
       />
       <BarChart
         height="300"
@@ -79,9 +86,12 @@ function App() {
         yGrid={true}
         xAxisLabel="Date"
         yAxisLabel="Value"
+        legend={'right'}
+        // legendLabel={''}
       />
       <BarChart
-        height="300"
+        height="500"
+        width='400'
         data={skinny_fruit}
         xKey="date"
         yKey="value"
@@ -91,6 +101,7 @@ function App() {
         yGrid={true}
         xAxisLabel="Date"
         yAxisLabel="Value"
+        // legend={true}
       />
       <LineChart
         height="100%"
@@ -105,6 +116,8 @@ function App() {
         yGrid={true}
         xAxisLabel="Date"
         yAxisLabel="Unemployment"
+        legend={'bottom-right'}
+        legendLabel="Locations"
       />
       <LineChart
         height="100%"
@@ -119,6 +132,7 @@ function App() {
         yGrid={true}
         xAxisLabel="Date"
         yAxisLabel="Value"
+        // legend={'bottom-right'}
       />
     </div>
   )

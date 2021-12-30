@@ -8,12 +8,15 @@ import { xScaleDef } from '../../functionality/xScale';
 import { yScaleDef } from '../../functionality/yScale';
 import ListeningRect from "../../components/ListeningRect"
 import { Tooltip } from "../../components/Tooltip"
+import { ColorLegend } from "../../components/ColorLegend";
 import {
   getXAxisCoordinates,
   getYAxisCoordinates,
   getMargins,
+  getMarginsWithLegend,
   inferXDataType,
   transformSkinnyToWide,
+  EXTRA_LEGEND_MARGIN
 } from "../../utils"
 
 export default function AreaChart({
@@ -30,16 +33,26 @@ export default function AreaChart({
   yGrid = false,
   xAxisLabel,
   yAxisLabel,
+  legend,
+  legendLabel = '',
   colorScheme = d3.quantize(d3.interpolateHcl("#9dc8e2", "#07316b"), 8),
 }: AreaChartProps<string | number>): JSX.Element {
-  const [tooltip, setTooltip] = useState<false | any>(false)
-  const chart = "AreaChart"
-
-  const { anchor, cHeight, cWidth } = useResponsive()
+  const [tooltip, setTooltip] = useState<false | any>(false);
+  const chart = "AreaChart";
+  const { anchor, cHeight, cWidth } = useResponsive();
+  
+  // width & height of legend, so we know how much to squeeze chart by
+  const [legendOffset, setLegendOffset] = useState<[number, number]>([0, 0]);
+  const xOffset = legendOffset[0];
+  const yOffset = legendOffset[1];
   const margin = useMemo(
-    () => getMargins(xAxis, yAxis, xAxisLabel, yAxisLabel),
-    [xAxis, yAxis, xAxisLabel, yAxisLabel]
-  )
+    () => getMarginsWithLegend(
+      xAxis, yAxis, xAxisLabel, yAxisLabel, 
+      legend, xOffset, yOffset, cWidth, cHeight
+      ),
+    [xAxis, yAxis, xAxisLabel, yAxisLabel, legend, xOffset, yOffset, cWidth, cHeight]
+  );
+
   const { xAxisX, xAxisY } = useMemo(
     () => getXAxisCoordinates(xAxis, cHeight, margin),
     [cHeight, xAxis, margin]
@@ -140,6 +153,22 @@ export default function AreaChart({
         {layers.map((layer, i) => (
           <path key={i} d={areaGenerator(layer)} fill={colorScale(layer.key)} />
         ))}
+
+        { // If legend prop is truthy, render legend component:
+        legend && <ColorLegend 
+          legendLabel={legendLabel } 
+          circleRadius={5 /* Radius of each color swab in legend */}
+          colorScale={colorScale}
+          setLegendOffset={setLegendOffset}
+          legendPosition={legend}
+          xOffset={xOffset}
+          yOffset={yOffset}
+          margin={margin}
+          cWidth={cWidth}
+          cHeight={cHeight}
+          EXTRA_LEGEND_MARGIN={EXTRA_LEGEND_MARGIN}
+        />}
+
         {tooltip && <Tooltip x={tooltip.cx} y={tooltip.cy} />}
 
         <ListeningRect
@@ -156,5 +185,5 @@ export default function AreaChart({
         />
       </g>
     </svg>
-  )
+  );
 }

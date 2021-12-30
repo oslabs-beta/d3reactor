@@ -1,4 +1,6 @@
-import { Margin} from "../types"
+import { Margin, LegendPos } from "../types"
+
+export const EXTRA_LEGEND_MARGIN = 6;
 
 export function getXAxisCoordinates(
   xAxis: "top" | "bottom" | false = "bottom",
@@ -68,6 +70,79 @@ export function getMargins(
   if (yAxis) addHorizontalMargin()
   if (yAxis && yAxisLabel) addHorizontalMargin()
 
+  return { left, right, top, bottom }
+}
+
+export function getMarginsWithLegend(
+  xAxis: "top" | "bottom" | false = "bottom",
+  yAxis: "left" | "right" | false = "left",
+  xAxisLabel: string | undefined,
+  yAxisLabel: string | undefined,
+  legend: LegendPos = false,
+  xOffset: number = 0,
+  yOffset: number = 0,
+  // legendOffset: [number, number] = [0, 0], // ideally this should be mandatory if legend is truthy
+  cWidth: number = 0,                      // ideally this should be mandatory if legend is truthy
+  cHeight: number = 0,                     // ideally this should be mandatory if legend is truthy
+) {
+  let left = 20,
+      right = 20,
+      top = 20,
+      bottom = 20;
+  function addVerticalMargin() {
+    switch (xAxis) {
+      case "top":
+        top += 40;
+        break
+      case "bottom":
+        bottom += 40;
+    }
+  }
+  function addHorizontalMargin() {
+    switch (yAxis) {
+      case "left":
+        left += 40;
+        break
+      case "right":
+        right += 40;
+    }
+  }
+  if (xAxis) addVerticalMargin();
+  if (xAxis && xAxisLabel) addVerticalMargin();
+  if (yAxis) addHorizontalMargin();
+  if (yAxis && yAxisLabel) addHorizontalMargin();
+  
+  if (legend === true) legend = 'right';
+  if (legend) {
+    // make room for legend by adjusting margin:
+    // const xOffset = legendOffset[0];
+    // const yOffset = legendOffset[1];
+    let marginExt = 0;
+    switch(legend) {
+      case 'top':
+      case 'left-top':
+      case 'right-top':
+        top = top + yOffset + EXTRA_LEGEND_MARGIN;
+        break;
+      case 'left-bottom':
+      case 'right-bottom':
+      case 'bottom':
+        bottom += yOffset - top;
+        break;
+      case 'left': 
+      case 'top-left': 
+      case 'bottom-left': 
+        marginExt = left + xOffset + EXTRA_LEGEND_MARGIN;
+        if (marginExt > 0) left = marginExt;
+        break;
+      case 'top-right':
+      case 'bottom-right':
+      case 'right':
+      default:
+        marginExt = right + xOffset + EXTRA_LEGEND_MARGIN;
+        if (marginExt > 0) right = marginExt;
+    }
+  }
   return { left, right, top, bottom }
 }
 
