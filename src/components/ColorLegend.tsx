@@ -29,7 +29,6 @@ export const ColorLegend = ({
     longestWord = 0;
     labelHeightOffset = 0;
   }
-  const rectHeight = tickSpacing*(domain.length + labelHeightOffset) + RECT_MARGIN*2;
 
 // determine legend placement:
 let xPosition: number = 0, 
@@ -83,6 +82,10 @@ switch(legendPosition) {
     xPosition = cWidth - margin.left - margin.right + 20;
 }
 
+const rectHeight = tickSpacing*(domain.length + labelHeightOffset) + RECT_MARGIN*2;
+// trying to make the legend no taller than the chart:
+// const rectHeight = Math.min(tickSpacing*(domain.length + labelHeightOffset) + RECT_MARGIN*2, cHeight);
+
   // iterate thru category names, create color swab & text for each
   const legend = domain.map((domainValue: string, i: number) => {
     if (domainValue.length > longestWord) longestWord = domainValue.length;
@@ -106,7 +109,6 @@ switch(legendPosition) {
     + longestWord*(fontSize+1)/2 + RECT_MARGIN*2; //+1 by fontSize is a bit of a kludge
 
   useEffect(() => setLegendOffset([rectWidth, rectHeight]), []);
-  // setLegendOffset(rectWidth);
 
   const style: React.CSSProperties | undefined = {
     margin: "0px 0px",
@@ -121,6 +123,7 @@ switch(legendPosition) {
     whiteSpace: "nowrap",
     backgroundColor: "#fff",
     boxShadow: "rgba(0, 0, 0, 0.3) 0 2px 10px",
+    // overflowY:"auto",
   }
   return (
       <g transform={`translate(${xPosition}, ${yPosition})`}>

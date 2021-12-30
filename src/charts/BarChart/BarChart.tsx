@@ -67,7 +67,7 @@ export default function BarChart({
     groups: d3.InternMap<any, any[]>
   const groupAccessor = (d: Data) => d[groupBy ?? ""]
   groups = d3.group(data, groupAccessor)
-  keys = Array.from(groups).map((group) => group[0])
+  keys = groupBy ? Array.from(groups).map((group) => group[0]) : [yKey];
   if (groupBy) {
     data = transformSkinnyToWide(data, keys, groupBy, xKey, yKey)
   }
