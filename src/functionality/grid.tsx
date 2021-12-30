@@ -15,7 +15,7 @@ switch (true) {
           x2={scale(tick)}
           y1={0}
           y2={-height + margin.bottom + margin.top}
-          strokeOpacity="0.5"
+          strokeOpacity="0.2"
           stroke="#bdc3c7"
         />
       ))
@@ -29,7 +29,7 @@ switch (true) {
           x2={scale(tick)}
           y1={0}
           y2={height - margin.bottom - margin.top}
-          strokeOpacity="0.5"
+          strokeOpacity="0.2"
           stroke="#bdc3c7"
           />        
         ))   
@@ -43,7 +43,7 @@ switch (true) {
           x2={width - margin.right - margin.left}
           y1={scale(tick)}
           y2={scale(tick)}
-          strokeOpacity="0.5"
+          strokeOpacity="0.2"
           stroke="#bdc3c7"
         />        
 ))
@@ -57,7 +57,7 @@ switch (true) {
           x2={-(width - margin.right - margin.left)}
           y1={scale(tick)}
           y2={scale(tick)}
-          strokeOpacity="0.5"
+          strokeOpacity="0.2"
           stroke="#bdc3c7"
         />
       ))

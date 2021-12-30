@@ -39,8 +39,10 @@ function App() {
         yKey="culmen_length_mm"
         xGrid={true}
         yGrid={true}
-        xAxis="bottom"
-        yAxis="left"
+        // xAxis="bottom"
+        // yAxis="left"
+        xAxisLabel="Date"
+        yAxisLabel="Number of fruit"
         legend='left-bottom'
         legendLabel="🐬"
       />
@@ -53,6 +55,8 @@ function App() {
         groupBy="fruit"
         xGrid={true}
         yGrid={true}
+        xAxis="bottom"
+        yAxis="right"
         xAxisLabel="Date"
         yAxisLabel="Number of fruit"
         legend={'top'}
@@ -66,14 +70,13 @@ function App() {
         xDataType="number"
         yKey="body_mass_g"
         groupBy="species"
-        xAxis="bottom"
-        yAxis="right"
-        xGrid={true}
-        yGrid={true}
+        yAxis='right'
+        xAxis='bottom'
+    
+        // xGrid={true}
+        // yGrid={true}
         xAxisLabel="Date"
         yAxisLabel="Value"
-        legend={'left'}
-        legendLabel={'Dolphins i mean penguins'}
       />
       <BarChart
         height="300"
@@ -99,9 +102,9 @@ function App() {
         xAxis="bottom"
         yAxis="right"
         yGrid={true}
-        xAxisLabel="Date"
-        yAxisLabel="Value"
-        legend={true}
+        // xAxisLabel="Date"
+        // yAxisLabel="Value"
+        // legend={true}
       />
       <LineChart
         height="100%"
@@ -110,14 +113,14 @@ function App() {
         xDataType="date"
         yKey="unemployment"
         groupBy="division"
-        xAxis="bottom"
-        yAxis="left"
-        xGrid={true}
-        yGrid={true}
+        // xAxis="bottom"
+        // yAxis="left"
+        // xGrid={true}
+        // yGrid={true}
         xAxisLabel="Date"
         yAxisLabel="Unemployment"
-        legend={'bottom-right'}
-        legendLabel="Locations"
+        // legend={'bottom-right'}
+        // legendLabel="Locations"
       />
       <LineChart
         height="100%"
@@ -126,14 +129,13 @@ function App() {
         xKey="date"
         xDataType="date"
         yKey="value"
-        xAxis="top"
+        xAxis={false}
         yAxis="left"
         xGrid={true}
         yGrid={true}
         xAxisLabel="Date"
         yAxisLabel="Value"
-        legend={'bottom-left'}
-      />
+      /> 
     </div>
   )
 }

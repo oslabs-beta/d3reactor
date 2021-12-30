@@ -16,6 +16,7 @@ import {
   EXTRA_LEGEND_MARGIN
 } from "../../utils"
 import { yScaleDef } from "../../functionality/yScale"
+import { Label } from "../../components/Label"
 
 export default function BarChart({
   data,
@@ -123,6 +124,18 @@ export default function BarChart({
             xAccessor={xAccessor}
           />
         )}
+        {yAxisLabel &&
+        <Label 
+          x={yAxisX}
+          y={yAxisY}
+          height={cHeight}
+          width={cWidth}
+          margin={margin}
+          type={yAxis ? yAxis : 'left'}
+          axis = {yAxis ? true : false}
+          label={yAxisLabel}
+        />
+        }
         {yAxis && (
           <Axis
             x={yAxisX}
@@ -136,6 +149,18 @@ export default function BarChart({
             label={yAxisLabel}
           />
         )}
+        {xAxisLabel &&
+        <Label 
+          x={xAxisX}
+          y={xAxisY}
+          height={cHeight}
+          width={cWidth}
+          margin={margin}
+          type={xAxis ? xAxis : 'bottom'}
+          axis = {xAxis ? true : false}
+          label={xAxisLabel}
+        />
+        }
         {groupBy
           ? layers.map((layer: any, i: number) => (
               <g key={i}>

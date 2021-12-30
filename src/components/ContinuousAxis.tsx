@@ -1,10 +1,8 @@
 import React, { useMemo } from "react"
 import * as d3 from "d3"
-import { useD3 } from "../hooks/useD3"
 import { ContinuousAxisProps } from "../../types"
 import { getAxisLabelCoordinates } from "../utils"
 import { gridGenerator } from '../functionality/grid';
-import { Line } from "./Line"
 
 function Axi({
   x,
@@ -19,7 +17,6 @@ function Axi({
   yGrid,
   xTicksValue,
 }: ContinuousAxisProps): JSX.Element {
-  console.log("xTicksVal", xTicksValue)
   // const gRef = useD3(
   //   (anchor) => {
   let axis: d3.Axis<d3.NumberValue>
@@ -95,10 +92,6 @@ function Axi({
     }
   }
 
-  const { axisLabelX, axisLabelY, rotate } = useMemo(
-    () => getAxisLabelCoordinates(x, y, height, width, margin, type),
-    [x, y, width, height, margin, type]
-  )
 
  let grid = gridGenerator(type, xGrid, yGrid, xTicksValue, scale, height, width, margin);
 
@@ -129,15 +122,12 @@ function Axi({
       return formatTick(individualTick)
     }
   }
-
-
-
   return (
     <g>
       <g transform={`translate(${x}, ${y})`}>
         {grid}
       </g>
-      <line stroke="#77848d" x1={x1} y1={y1} x2={x2} y2={y2} />
+      <line stroke="#77848d" strokeWidth={1.9} x1={x1} y1={y1} x2={x2} y2={y2} />
       {(type === "top" || type === "bottom") &&
         horizontalTicks.map((tick, i) => (
           <text
@@ -158,13 +148,6 @@ function Axi({
             {getFormattedTick(tick)}
           </text>
         ))}
-      <text
-        transform={`translate(${axisLabelX}, ${axisLabelY}) rotate(${rotate})`}
-        textAnchor="middle"
-      >
-        {label}
-      </text>
-      ;
     </g>
   )
 }

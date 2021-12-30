@@ -47,10 +47,6 @@ export const DiscreteAxis = React.memo(({
   //   [type, scale]
   // )
 
-  const { axisLabelX, axisLabelY, rotate } = useMemo(
-    () => getAxisLabelCoordinates(x, y, height, width, margin, type),
-    [x, y, width, height, margin, type]
-  )
 
   let x1 = 0,
   y1 = 0,
@@ -122,19 +118,14 @@ const getFormattedTick = (individualTick: string )  => {
 
   return (
     <g>
-      <line stroke="#77848d" x1={x1} y1={y1} x2={x2} y2={y2} />
+      <line stroke="#77848d" strokeWidth={1.9} x1={x1} y1={y1} x2={x2} y2={y2} />
       {ticks.map((tick: any, i: number) => (
         <text 
           style={getTickStyle(type, tick)}
           transform={getTickTranslation(type, tick)}>
           {getFormattedTick(tick)}</text>
       ))}
-      <text
-        transform={`translate(${axisLabelX}, ${axisLabelY}) rotate(${rotate})`}
-        textAnchor="middle"
-      >
-        {label}
-      </text>
+    
     </g>
   )
 })
