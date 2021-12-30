@@ -15,7 +15,7 @@ import skinny_fruit from "./data/skinny_fruit.json"
 function App() {
   return (
     <div className="app">
-      {/* <PieChart
+      <PieChart
         data={fruit}
         label="label"
         value="value"
@@ -28,7 +28,8 @@ function App() {
         value="value"
         innerRadius="70%"
         outerRadius="80%"
-      /> */}
+        legend='left'
+      />
       <AreaChart
         data={penguins}
         height="300"
@@ -41,7 +42,7 @@ function App() {
         xAxis="bottom"
         yAxis="left"
         legend='left-bottom'
-        legendLabel="Dolphins"
+        legendLabel="🐬"
       />
       <AreaChart
         data={skinny_fruit}
@@ -54,9 +55,9 @@ function App() {
         yGrid={true}
         xAxisLabel="Date"
         yAxisLabel="Number of fruit"
-        legend='left-bottom'
+        legend={true}
       />
-      {/* <ScatterPlot
+      <ScatterPlot
         height="100%"
         width="100%"
         data={penguins}
@@ -70,6 +71,7 @@ function App() {
         // yGrid={true}
         xAxisLabel="Date"
         yAxisLabel="Value"
+        legend={'right-bottom'}
       />
       <BarChart
         height="300"
@@ -82,9 +84,11 @@ function App() {
         yGrid={true}
         xAxisLabel="Date"
         yAxisLabel="Value"
+        legend={'right'}
       />
       <BarChart
-        height="300"
+        height="500"
+        width='400'
         data={skinny_fruit}
         xKey="date"
         yKey="value"
@@ -94,6 +98,7 @@ function App() {
         yGrid={true}
         xAxisLabel="Date"
         yAxisLabel="Value"
+        // legend={true}
       />
       <LineChart
         height="100%"
@@ -108,6 +113,8 @@ function App() {
         yGrid={true}
         xAxisLabel="Date"
         yAxisLabel="Unemployment"
+        legend={'bottom-right'}
+        legendLabel="Locations"
       />
       <LineChart
         height="500"
@@ -122,7 +129,8 @@ function App() {
         yGrid={true}
         xAxisLabel="Date"
         yAxisLabel="Value"
-      /> */}
+        // legend={'bottom-right'}
+      />
     </div>
   )
 }

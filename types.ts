@@ -19,6 +19,8 @@ export interface ScatterPlotProps<T> {
   xAxisLabel?: string
   yAxisLabel?: string
   colorScheme?: string[] | readonly string[]
+  legend?: LegendPos
+  legendLabel?: string
 }
 
 export interface BarChartProps<T> {
@@ -34,6 +36,8 @@ export interface BarChartProps<T> {
   xAxisLabel?: string
   yAxisLabel?: string
   colorScheme?: string[] | readonly string[]
+  legend?: LegendPos
+  legendLabel?: string
 }
 
 export interface LineChartProps<T> {
@@ -51,6 +55,8 @@ export interface LineChartProps<T> {
   xAxisLabel?: string
   yAxisLabel?: string
   colorScheme?: string[] | readonly string[]
+  legend?: LegendPos
+  legendLabel?: string
 }
 
 export interface AreaChartProps<T> {
@@ -79,7 +85,8 @@ export interface PieChartProps {
   innerRadius?: number | string | undefined
   outerRadius?: number | string | undefined
   colorScheme?: string[] | readonly string[]
-  legend?: boolean
+  legend?: LegendPos
+  legendLabel?: string
 }
 
 export interface PieChartBodyProps {
@@ -180,7 +187,7 @@ export interface ColorLegendProps {
   tickSpacing?: number
   circleRadius: number
   tickTextOffset?: number
-  colorLegendLabel?: string
+  legendLabel?: string
   legendPosition: LegendPos
   xOffset: number
   yOffset: number

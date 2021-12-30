@@ -1,5 +1,7 @@
 import { Margin, LegendPos } from "../types"
 
+export const EXTRA_LEGEND_MARGIN = 6;
+
 export function getXAxisCoordinates(
   xAxis: "top" | "bottom" | false = "bottom",
   height: number,
@@ -82,7 +84,6 @@ export function getMarginsWithLegend(
   // legendOffset: [number, number] = [0, 0], // ideally this should be mandatory if legend is truthy
   cWidth: number = 0,                      // ideally this should be mandatory if legend is truthy
   cHeight: number = 0,                     // ideally this should be mandatory if legend is truthy
-  EXTRA_LEGEND_MARGIN = 6
 ) {
   let left = 20,
       right = 20,
@@ -110,7 +111,8 @@ export function getMarginsWithLegend(
   if (xAxis && xAxisLabel) addVerticalMargin();
   if (yAxis) addHorizontalMargin();
   if (yAxis && yAxisLabel) addHorizontalMargin();
-
+  
+  if (legend === true) legend = 'right';
   if (legend) {
     // make room for legend by adjusting margin:
     // const xOffset = legendOffset[0];
