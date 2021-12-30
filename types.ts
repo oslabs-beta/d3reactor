@@ -148,6 +148,7 @@ export interface CircleProps {
 }
 
 export interface RectangleProps {
+  data: Data
   x: number | undefined
   y: number
   width: number

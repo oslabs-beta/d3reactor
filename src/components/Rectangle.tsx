@@ -2,13 +2,19 @@ import React from "react"
 import { RectangleProps } from "../../types"
 
 export const Rectangle = React.memo(
-  ({ x, y, width, height, fill, setTooltip }: RectangleProps): JSX.Element => {
-    console.log("rectangle rendered")
-    let cellCenter = { cx: 0, cy: 0 }
+  ({
+    data,
+    x,
+    y,
+    width,
+    height,
+    fill,
+    setTooltip,
+  }: RectangleProps): JSX.Element => {
+    let cellCenter = { cx: x, cy: y, tooltipData: data }
     if (typeof x === "number" && typeof y === "number") {
       const cx = x + width / 2
       const cy = y - 50
-      cellCenter = { cx, cy }
     }
     return (
       <rect

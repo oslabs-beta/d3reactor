@@ -128,6 +128,7 @@ export default function BarChart({
               <g key={i}>
                 {layer.map((sequence: any, i: number) => (
                   <Rectangle
+                    data={layer}
                     key={i}
                     x={xScale(xAccessor(sequence.data))}
                     y={yScale(sequence[1])}
@@ -145,6 +146,7 @@ export default function BarChart({
             ))
           : data.map((d: any, i: number) => (
               <Rectangle
+                data={d}
                 key={i}
                 x={xScale(xAccessor(d))}
                 y={yScale(yAccessor(d))}
@@ -158,7 +160,15 @@ export default function BarChart({
                 setTooltip={setTooltip}
               />
             ))}
-        {tooltip && <Tooltip data={data} x={tooltip.cx} y={tooltip.cy} />}
+        {tooltip && (
+          <Tooltip
+            data={tooltip}
+            x={tooltip.cx + xScale.bandwidth() / 2}
+            y={tooltip.cy}
+            xKey={xKey}
+            yKey={yKey}
+          />
+        )}
       </g>
     </svg>
   )
