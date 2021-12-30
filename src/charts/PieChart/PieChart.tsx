@@ -1,12 +1,17 @@
 /** App.js */
-import React, { useState } from "react"
+import React, { useState, useMemo } from "react"
 import * as d3 from "d3"
 import { useResponsive } from "../../hooks/useResponsive"
 import { PieChartProps } from "../../../types"
 import { ColorLegend } from "../../components/ColorLegend"
 import { Arc } from "../../components/Arc"
 import { Tooltip } from "../../components/Tooltip"
-import { checkRadiusDimension, calculateOuterRadius } from "../../utils"
+import { 
+  checkRadiusDimension, 
+  calculateOuterRadius, 
+  getMarginsWithLegend,
+  EXTRA_LEGEND_MARGIN
+ } from "../../utils"
 
 export default function PieChart({
   data,
@@ -14,19 +19,26 @@ export default function PieChart({
   value,
   outerRadius,
   innerRadius,
-  colorScheme = d3.quantize(d3.interpolateHcl("#9dc8e2", "#07316b"), 8),
   legend,
+  legendLabel,
+  colorScheme = d3.quantize(d3.interpolateHcl("#9dc8e2", "#07316b"), 8),
 }: PieChartProps): JSX.Element {
-  const [tooltip, setTooltip] = useState<false | any>(false)
+  
+  const [tooltip, setTooltip] = useState<false | any>(false);
+  
+  const { anchor, cHeight, cWidth } = useResponsive();
 
-  const { anchor, cHeight, cWidth } = useResponsive()
-
-  const margin = {
-    top: 20,
-    right: 20,
-    bottom: 20,
-    left: 20,
-  }
+  // width & height of legend, so we know how much to squeeze chart by
+  const [legendOffset, setLegendOffset] = useState<[number, number]>([0, 0]);
+  const xOffset = legendOffset[0];
+  const yOffset = legendOffset[1];
+  const margin = useMemo(
+    () => getMarginsWithLegend(
+      false, false, undefined, undefined, legend, 
+      xOffset, yOffset, cWidth, cHeight
+      ),
+    [legend, xOffset, yOffset, cWidth, cHeight]
+  );
   outerRadius = outerRadius
     ? checkRadiusDimension(cHeight, cWidth, outerRadius, margin)
     : calculateOuterRadius(cHeight, cWidth, margin)
@@ -91,22 +103,21 @@ export default function PieChart({
             </text>
           </g>
         ))}
-        {
-          // If legend prop is true, render legend component:
-          legend && (
-            <ColorLegend
-              colorLegendLabel={
-                "Fruit" /**we need a way to derive this either from data or as an extra prop passed in */
-              }
-              xPosition={outerRadius + 15 /* Where legend is placed on page */}
-              yPosition={0 /* Where legend is placed on page */}
-              circleRadius={5 /* Radius of each color swab in legend */}
-              // tickSpacing={22 /* Vertical space between each line of legend */}
-              // tickTextOffset={12 /* How much the text label is pushed to the right of the color swab */}
-              colorScale={colorScale}
-            />
-          )
-        }
+    
+        { // If legend prop is truthy, render legend component:
+          legend && <ColorLegend 
+            legendLabel={legendLabel} 
+            circleRadius={5 /* Radius of each color swab in legend */}
+            colorScale={colorScale}
+            setLegendOffset={setLegendOffset}
+            legendPosition={legend}
+            xOffset={xOffset}
+            yOffset={yOffset}
+            margin={margin}
+            cWidth={cWidth}
+            cHeight={cHeight}
+            EXTRA_LEGEND_MARGIN={EXTRA_LEGEND_MARGIN}
+        />}
         {tooltip && <Tooltip x={tooltip.cx} y={tooltip.cy} />}
       </g>
     </svg>
