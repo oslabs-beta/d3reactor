@@ -30,11 +30,6 @@ export const ColorLegend = ({
     longestWord = 0;
     labelHeightOffset = 0;
   }
-<<<<<<< HEAD
-  const rectHeight =
-    tickSpacing * (domain.length + labelHeightOffset) + RECT_MARGIN * 2;
-=======
->>>>>>> dev
 
   // determine legend placement:
   let xPosition: number;
@@ -153,9 +148,10 @@ export const ColorLegend = ({
     }
   }
 
-const rectHeight = tickSpacing*(domain.length + labelHeightOffset) + RECT_MARGIN*2;
-// trying to make the legend no taller than the chart:
-// const rectHeight = Math.min(tickSpacing*(domain.length + labelHeightOffset) + RECT_MARGIN*2, cHeight);
+  const rectHeight =
+    tickSpacing * (domain.length + labelHeightOffset) + RECT_MARGIN * 2;
+  // trying to make the legend no taller than the chart:
+  // const rectHeight = Math.min(tickSpacing*(domain.length + labelHeightOffset) + RECT_MARGIN*2, cHeight);
 
   // iterate thru category names, create color swab & text for each
   const legend = domain.map((domainValue: string, i: number) => {

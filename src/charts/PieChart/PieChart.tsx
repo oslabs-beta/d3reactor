@@ -47,7 +47,7 @@ export default function PieChart({
     [legend, xOffset, yOffset, cWidth, cHeight]
   );
 
-  console.log('margin$$$$$', margin)
+  console.log("margin$$$$$", margin);
   outerRadius = outerRadius
     ? checkRadiusDimension(cHeight, cWidth, outerRadius, margin)
     : calculateOuterRadius(cHeight, cWidth, margin);
@@ -55,21 +55,6 @@ export default function PieChart({
     ? checkRadiusDimension(outerRadius, outerRadius, innerRadius, margin)
     : 0;
   type ColorScale = d3.ScaleOrdinal<string, string, never>;
-
-  // const getTranslateX = (legendPos: string) => {
-  //   if (legendPos.includes("left")) {
-  //     return cWidth / 2 + margin.left;
-  //   } else if (legendPos.includes("right")) {
-  //     return cWidth / 2 - margin.right;
-  //   } else return cWidth / 2;
-  // };
-  // const getTranslateY = (legendPos: string) => {
-  //   if (legendPos.includes("bottom")) {
-  //     return cHeight / 2 - margin.bottom;
-  //   } else if (legendPos.includes("top")) {
-  //     return cHeight / 2 + margin.top;
-  //   } else return cHeight / 2;
-  // };
 
   const translate = `translate(${cWidth / 2}, ${cHeight / 2})`;
 
