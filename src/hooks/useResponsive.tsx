@@ -18,8 +18,8 @@ export const useResponsive = () => {
 
   useEffect(() => {
     const container = anchor.current.getBoundingClientRect()
-    setCHeight(container.height)
-    setCWidth(container.width)
+    setCHeight(container.height > 100 ? container.height : 100);
+    setCWidth(container.width > 100 ? container.width : 100)
   }, [windowSize])
 
   return {anchor, cHeight, cWidth}

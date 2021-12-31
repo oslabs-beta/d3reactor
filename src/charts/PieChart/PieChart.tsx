@@ -46,6 +46,8 @@ export default function PieChart({
       ),
     [legend, xOffset, yOffset, cWidth, cHeight]
   );
+
+  console.log('margin$$$$$', margin)
   outerRadius = outerRadius
     ? checkRadiusDimension(cHeight, cWidth, outerRadius, margin)
     : calculateOuterRadius(cHeight, cWidth, margin);
