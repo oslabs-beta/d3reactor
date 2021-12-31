@@ -197,6 +197,8 @@ export interface ColorLegendProps {
   cHeight: number
   EXTRA_LEGEND_MARGIN: number
   fontSize?: number
+  isPie?: boolean,
+  outerRadius?: number,
 }
 
 export type LegendPos = boolean | "top" | "bottom" | "left" | "right" 

@@ -1,16 +1,16 @@
 /* eslint-disable no-unused-vars */
-import React from "react"
-import "./App.css"
-import BarChart from "./charts/BarChart/BarChart"
-import LineChart from "./charts/LineChart/LineChart"
-import AreaChart from "./charts/AreaChart/AreaChart"
-import ScatterPlot from "./charts/ScatterPlot/ScatterPlot"
-import PieChart from "./charts/PieChart/PieChart"
-import unemployment from "./data/unemployment.json"
-import penguins from "./data/penguins.json"
-import portfolio from "./data/portfolio.json"
-import fruit from "./data/fruit.json"
-import skinny_fruit from "./data/skinny_fruit.json"
+import React from "react";
+import "./App.css";
+import BarChart from "./charts/BarChart/BarChart";
+import LineChart from "./charts/LineChart/LineChart";
+import AreaChart from "./charts/AreaChart/AreaChart";
+import ScatterPlot from "./charts/ScatterPlot/ScatterPlot";
+import PieChart from "./charts/PieChart/PieChart";
+import unemployment from "./data/unemployment.json";
+import penguins from "./data/penguins.json";
+import portfolio from "./data/portfolio.json";
+import fruit from "./data/fruit.json";
+import skinny_fruit from "./data/skinny_fruit.json";
 
 function App() {
   return (
@@ -19,8 +19,9 @@ function App() {
         data={fruit}
         label="label"
         value="value"
-        legend={true}
+        legend="bottom-left"
         outerRadius={240}
+        legendLabel="labelllllllll"
       />
       <PieChart
         data={fruit}
@@ -28,7 +29,7 @@ function App() {
         value="value"
         innerRadius="70%"
         outerRadius="80%"
-        // legend='left'
+        legend="left"
       />
       <AreaChart
         data={penguins}
@@ -41,7 +42,7 @@ function App() {
         yGrid={true}
         xAxis="bottom"
         yAxis="left"
-        legend='left-bottom'
+        legend="left-bottom"
         legendLabel="🐬"
       />
       <AreaChart
@@ -55,8 +56,7 @@ function App() {
         yGrid={true}
         xAxisLabel="Date"
         yAxisLabel="Number of fruit"
-        legend={'top'}
-        
+        legend={"bottom-right"}
       />
       <ScatterPlot
         height="100%"
@@ -72,8 +72,8 @@ function App() {
         // yGrid={true}
         xAxisLabel="Date"
         yAxisLabel="Value"
-        legend={'left'}
-        legendLabel={'Dolphins i mean penguins'}
+        legend={"left"}
+        legendLabel={"Dolphins i mean penguins"}
       />
       <BarChart
         height="300"
@@ -86,12 +86,12 @@ function App() {
         yGrid={true}
         xAxisLabel="Date"
         yAxisLabel="Value"
-        legend={'right'}
+        legend={"right"}
         // legendLabel={''}
       />
       <BarChart
         height="500"
-        width='400'
+        width="400"
         data={skinny_fruit}
         xKey="date"
         yKey="value"
@@ -116,7 +116,7 @@ function App() {
         yGrid={true}
         xAxisLabel="Date"
         yAxisLabel="Unemployment"
-        legend={'bottom-right'}
+        legend={"bottom-right"}
         legendLabel="Locations"
       />
       <LineChart
@@ -135,7 +135,7 @@ function App() {
         // legend={'bottom-right'}
       />
     </div>
-  )
+  );
 }
 
-export default App
+export default App;

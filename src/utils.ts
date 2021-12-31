@@ -3,7 +3,7 @@ import { Margin, LegendPos } from "../types"
 export const EXTRA_LEGEND_MARGIN = 6;
 
 export function getXAxisCoordinates(
-  xAxis: "top" | "bottom" | false = "bottom",
+  xAxis: "top" | "bottom" | false | undefined = "bottom",
   height: number,
   margin: Margin
 ) {
@@ -19,7 +19,7 @@ export function getXAxisCoordinates(
 }
 
 export function getYAxisCoordinates(
-  yAxis: "left" | "right" | false = "left",
+  yAxis: "left" | "right" | false | undefined = "left",
   width: number,
   margin: Margin
 ) {
@@ -74,14 +74,13 @@ export function getMargins(
 }
 
 export function getMarginsWithLegend(
-  xAxis: "top" | "bottom" | false = "bottom",
-  yAxis: "left" | "right" | false = "left",
+  xAxis: "top" | "bottom" | false | undefined = "bottom",
+  yAxis: "left" | "right" | false | undefined = "left",
   xAxisLabel: string | undefined,
   yAxisLabel: string | undefined,
   legend: LegendPos = false,
   xOffset: number = 0,
   yOffset: number = 0,
-  // legendOffset: [number, number] = [0, 0], // ideally this should be mandatory if legend is truthy
   cWidth: number = 0,                      // ideally this should be mandatory if legend is truthy
   cHeight: number = 0,                     // ideally this should be mandatory if legend is truthy
 ) {
@@ -127,7 +126,7 @@ export function getMarginsWithLegend(
       case 'left-bottom':
       case 'right-bottom':
       case 'bottom':
-        bottom += yOffset - top;
+        bottom = -yOffset - bottom - EXTRA_LEGEND_MARGIN;
         break;
       case 'left': 
       case 'top-left': 
