@@ -47,7 +47,6 @@ export default function PieChart({
     [legend, xOffset, yOffset, cWidth, cHeight]
   );
 
-
   outerRadius = outerRadius
     ? checkRadiusDimension(cHeight, cWidth, outerRadius, margin)
     : calculateOuterRadius(cHeight, cWidth, margin);
@@ -84,40 +83,21 @@ export default function PieChart({
     return `translate(${x}, ${y})`;
   };
 
-  let xPosition = outerRadius + margin.left + EXTRA_LEGEND_MARGIN;
+  let xPosition = outerRadius + margin.left;
   let yPosition = EXTRA_LEGEND_MARGIN;
   let translateX = 0;
   let translateY = 0;
+  console.log(margin);
   switch (legend) {
     case "top":
       xPosition = -margin.top / 2 - EXTRA_LEGEND_MARGIN;
-      yPosition = -outerRadius - margin.top/2 - EXTRA_LEGEND_MARGIN;
+      yPosition = -outerRadius - margin.top / 2 - EXTRA_LEGEND_MARGIN;
       translateY = yOffset;
       break;
     case "bottom":
       xPosition = margin.bottom / 2 + EXTRA_LEGEND_MARGIN;
-      yPosition = outerRadius - margin.bottom - EXTRA_LEGEND_MARGIN;
+      yPosition = outerRadius - margin.bottom / 2 + EXTRA_LEGEND_MARGIN;
       translateY = -yOffset;
-      break;
-    case "left-top":
-      xPosition = -outerRadius - margin.top - EXTRA_LEGEND_MARGIN;
-      yPosition = -outerRadius - margin.top/2  - EXTRA_LEGEND_MARGIN;
-      translateY = yOffset;
-      break;
-    case "bottom-left":
-      xPosition = -outerRadius - margin.left + EXTRA_LEGEND_MARGIN;
-      yPosition = outerRadius - margin.bottom - EXTRA_LEGEND_MARGIN;
-      translateX = xOffset;
-      break;
-    case "top-right":
-      xPosition = outerRadius + margin.right;
-      yPosition = -outerRadius;
-      translateX = -xOffset;
-      break;
-    case "bottom-right":
-      xPosition = outerRadius + margin.right;
-      yPosition = outerRadius;
-      translateX = -xOffset;
       break;
     case "left":
       xPosition = -outerRadius - margin.left + EXTRA_LEGEND_MARGIN;
@@ -128,27 +108,47 @@ export default function PieChart({
       yPosition = -outerRadius + margin.top + EXTRA_LEGEND_MARGIN;
       translateX = xOffset;
       break;
+    case "bottom-left":
+      xPosition = -outerRadius - margin.left + EXTRA_LEGEND_MARGIN;
+      yPosition = outerRadius - margin.bottom - EXTRA_LEGEND_MARGIN;
+      translateX = xOffset;
+      break;
+    case "left-top":
+      xPosition = -outerRadius - xOffset + EXTRA_LEGEND_MARGIN;
+      yPosition = -outerRadius - margin.top / 2 - EXTRA_LEGEND_MARGIN;
+      translateY = yOffset;
+      break;
     case "left-bottom":
-      xPosition = -outerRadius - margin.left;
-      yPosition = outerRadius;
-      translateY = -yOffset;
-      break;
-    case "right-top":
-      xPosition = outerRadius + margin.right;
-      yPosition = -outerRadius;
-      translateY = -yOffset;
-      break;
-    case "right-bottom":
-      xPosition = outerRadius + margin.right;
-      yPosition = outerRadius + margin.bottom;
+      xPosition = -outerRadius - xOffset + EXTRA_LEGEND_MARGIN;
+      yPosition = outerRadius - margin.bottom / 2 + EXTRA_LEGEND_MARGIN;
       translateY = -yOffset;
       break;
     case "right":
       translateX = -xOffset;
+      break;
+    case "right-top":
+      xPosition = outerRadius - EXTRA_LEGEND_MARGIN;
+      yPosition = -outerRadius - margin.top / 2 - EXTRA_LEGEND_MARGIN;
+      translateY = yOffset;
+      break;
+    case "top-right":
+      yPosition = -outerRadius + margin.top + EXTRA_LEGEND_MARGIN;
+      translateX = -xOffset;
+      break;
+    case "bottom-right":
+      yPosition = outerRadius - margin.bottom - EXTRA_LEGEND_MARGIN;
+      translateX = -xOffset;
+      break;
+    case "right-bottom":
+      xPosition = outerRadius - EXTRA_LEGEND_MARGIN;
+      yPosition = outerRadius - margin.bottom / 2 - EXTRA_LEGEND_MARGIN;
+      translateY = -yOffset;
+      break;
   }
 
-  const translate = `translate(${cWidth/2 + translateX}, ${cHeight/2 + translateY})`;
-
+  const translate = `translate(${cWidth / 2 + translateX}, ${
+    cHeight / 2 + translateY
+  })`;
 
   return (
     <svg ref={anchor} width={"100%"} height={"100%"}>
