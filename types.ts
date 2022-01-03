@@ -191,14 +191,14 @@ export interface ColorLegendProps {
   legendPosition: LegendPos
   xOffset: number
   yOffset: number
+  xPosition?: number
+  yPosition?: number
   setLegendOffset: React.Dispatch<any>
   margin: Margin
   cWidth: number
   cHeight: number
   EXTRA_LEGEND_MARGIN: number
   fontSize?: number
-  isPie?: boolean,
-  outerRadius?: number,
 }
 
 export type LegendPos = boolean | "top" | "bottom" | "left" | "right" 

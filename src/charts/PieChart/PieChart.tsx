@@ -47,7 +47,7 @@ export default function PieChart({
     [legend, xOffset, yOffset, cWidth, cHeight]
   );
 
-  console.log("margin$$$$$", margin);
+
   outerRadius = outerRadius
     ? checkRadiusDimension(cHeight, cWidth, outerRadius, margin)
     : calculateOuterRadius(cHeight, cWidth, margin);
@@ -55,8 +55,6 @@ export default function PieChart({
     ? checkRadiusDimension(outerRadius, outerRadius, innerRadius, margin)
     : 0;
   type ColorScale = d3.ScaleOrdinal<string, string, never>;
-
-  const translate = `translate(${cWidth / 2}, ${cHeight / 2})`;
 
   const keys: string[] = [];
   for (let entry of data) {
@@ -85,6 +83,72 @@ export default function PieChart({
     const [x, y] = arcGenerator.centroid(d);
     return `translate(${x}, ${y})`;
   };
+
+  let xPosition = outerRadius + margin.left + EXTRA_LEGEND_MARGIN;
+  let yPosition = EXTRA_LEGEND_MARGIN;
+  let translateX = 0;
+  let translateY = 0;
+  switch (legend) {
+    case "top":
+      xPosition = -margin.top / 2 - EXTRA_LEGEND_MARGIN;
+      yPosition = -outerRadius - margin.top/2 - EXTRA_LEGEND_MARGIN;
+      translateY = yOffset;
+      break;
+    case "bottom":
+      xPosition = margin.bottom / 2 + EXTRA_LEGEND_MARGIN;
+      yPosition = outerRadius - margin.bottom - EXTRA_LEGEND_MARGIN;
+      translateY = -yOffset;
+      break;
+    case "left-top":
+      xPosition = -outerRadius - margin.top - EXTRA_LEGEND_MARGIN;
+      yPosition = -outerRadius - margin.top/2  - EXTRA_LEGEND_MARGIN;
+      translateY = yOffset;
+      break;
+    case "bottom-left":
+      xPosition = -outerRadius - margin.left + EXTRA_LEGEND_MARGIN;
+      yPosition = outerRadius - margin.bottom - EXTRA_LEGEND_MARGIN;
+      translateX = xOffset;
+      break;
+    case "top-right":
+      xPosition = outerRadius + margin.right;
+      yPosition = -outerRadius;
+      translateX = -xOffset;
+      break;
+    case "bottom-right":
+      xPosition = outerRadius + margin.right;
+      yPosition = outerRadius;
+      translateX = -xOffset;
+      break;
+    case "left":
+      xPosition = -outerRadius - margin.left + EXTRA_LEGEND_MARGIN;
+      translateX = xOffset;
+      break;
+    case "top-left":
+      xPosition = -outerRadius - margin.left + EXTRA_LEGEND_MARGIN;
+      yPosition = -outerRadius + margin.top + EXTRA_LEGEND_MARGIN;
+      translateX = xOffset;
+      break;
+    case "left-bottom":
+      xPosition = -outerRadius - margin.left;
+      yPosition = outerRadius;
+      translateY = -yOffset;
+      break;
+    case "right-top":
+      xPosition = outerRadius + margin.right;
+      yPosition = -outerRadius;
+      translateY = -yOffset;
+      break;
+    case "right-bottom":
+      xPosition = outerRadius + margin.right;
+      yPosition = outerRadius + margin.bottom;
+      translateY = -yOffset;
+      break;
+    case "right":
+      translateX = -xOffset;
+  }
+
+  const translate = `translate(${cWidth/2 + translateX}, ${cHeight/2 + translateY})`;
+
 
   return (
     <svg ref={anchor} width={"100%"} height={"100%"}>
@@ -123,12 +187,12 @@ export default function PieChart({
               legendPosition={legend}
               xOffset={xOffset}
               yOffset={yOffset}
+              xPosition={xPosition}
+              yPosition={yPosition}
               margin={margin}
               cWidth={cWidth / 2}
               cHeight={cHeight / 2}
               EXTRA_LEGEND_MARGIN={EXTRA_LEGEND_MARGIN}
-              isPie={true}
-              outerRadius={outerRadius}
             />
           )
         }

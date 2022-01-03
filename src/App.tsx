@@ -19,7 +19,7 @@ function App() {
         data={fruit}
         label="label"
         value="value"
-        legend="bottom-left"
+        legend="top"
         outerRadius={240}
         legendLabel="labelllllllll"
       />
@@ -29,9 +29,9 @@ function App() {
         value="value"
         innerRadius="70%"
         outerRadius="80%"
-        legend="left"
+        legend="top"
       />
-      <AreaChart
+      {/* <AreaChart
         data={penguins}
         height="300"
         width="400"
@@ -133,7 +133,7 @@ function App() {
         xAxisLabel="Date"
         yAxisLabel="Value"
         legend={'bottom-left'}
-      />
+      /> */}
     </div>
   );
 }

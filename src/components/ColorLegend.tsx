@@ -16,8 +16,8 @@ export const ColorLegend = ({
   cHeight,
   EXTRA_LEGEND_MARGIN = 6,
   fontSize = 16,
-  isPie,
-  outerRadius,
+  xPosition, 
+  yPosition
 }: ColorLegendProps) => {
   const RECT_MARGIN = 6;
   const domain = colorScale.domain();
@@ -31,59 +31,8 @@ export const ColorLegend = ({
     labelHeightOffset = 0;
   }
 
-  // determine legend placement:
-  let xPosition: number;
-  let yPosition: number;
-  if (isPie && outerRadius) {
-    xPosition = outerRadius + margin.left;
-    yPosition = 0;
-    switch (legendPosition) {
-      case "top":
-        xPosition = -margin.top / 2;
-        yPosition = -outerRadius - margin.top;
-        break;
-      case "bottom":
-        xPosition = margin.bottom / 2;
-        yPosition = outerRadius - margin.bottom;
-        break;
-      case "left-top":
-        xPosition = -outerRadius - margin.top;
-        yPosition = -outerRadius - margin.left;
-        break;
-      case "left-bottom":
-        xPosition = -outerRadius + margin.bottom;
-        yPosition = outerRadius + margin.left;
-        break;
-      case "right-top":
-        xPosition = outerRadius + margin.right;
-        yPosition = -outerRadius;
-        break;
-      case "right-bottom":
-        xPosition = outerRadius + margin.right;
-        yPosition = outerRadius;
-        break;
-      case "left":
-        xPosition = -outerRadius - margin.left;
-        break;
-      case "top-left":
-        xPosition = -outerRadius - margin.left;
-        yPosition = -outerRadius;
-        break;
-      case "bottom-left":
-        xPosition = -outerRadius - margin.left;
-        yPosition = outerRadius;
-        break;
-      case "top-right":
-        xPosition = outerRadius + margin.right;
-        yPosition = -outerRadius;
-        break;
-      case "bottom-right":
-        xPosition = outerRadius + margin.right;
-        yPosition = outerRadius + margin.bottom;
-        break;
-      case "right":
-    }
-  } else {
+  // determine legend placement for any chart except pie:
+  if (!xPosition && !yPosition) {
     xPosition = 0;
     yPosition = cHeight / 2 - yOffset / 2;
     switch (legendPosition) {
