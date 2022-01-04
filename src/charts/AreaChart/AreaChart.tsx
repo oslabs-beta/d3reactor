@@ -1,29 +1,22 @@
 /** App.js */
-import React, { useState, useMemo } from "react"
-import * as d3 from "d3"
-import {
-  AreaChartProps,
-  ColorScale,
-  xAccessorFunc,
-  Data,
-  yAccessorFunc,
-} from "../../../types"
-import { Axis } from "../../components/ContinuousAxis"
-import { useResponsive } from "../../hooks/useResponsive"
-import { xScaleDef } from "../../functionality/xScale"
-import { yScaleDef } from "../../functionality/yScale"
-import { d3Voronoi } from "../../functionality/voronoi"
+import React, { useState, useMemo} from "react";
+import * as d3 from "d3";
+import { AreaChartProps, ColorScale, xAccessorFunc, yAccessorFunc } from '../../../types';
+import { Axis } from "../../components/ContinuousAxis";
+import { Label } from "../../components/Label";
+import { useResponsive } from '../../hooks/useResponsive';
+import { xScaleDef } from '../../functionality/xScale';
+import { yScaleDef } from '../../functionality/yScale';
 import ListeningRect from "../../components/ListeningRect"
 import { Tooltip } from "../../components/Tooltip"
 import { ColorLegend } from "../../components/ColorLegend";
 import {
   getXAxisCoordinates,
   getYAxisCoordinates,
-  getMargins,
   getMarginsWithLegend,
   inferXDataType,
   transformSkinnyToWide,
-  EXTRA_LEGEND_MARGIN
+  EXTRA_LEGEND_MARGIN,
 } from "../../utils"
 
 export default function AreaChart({
@@ -34,8 +27,8 @@ export default function AreaChart({
   yKey,
   xDataType,
   groupBy,
-  xAxis,
-  yAxis,
+  xAxis = 'bottom',
+  yAxis = 'left',
   xGrid = false,
   yGrid = false,
   xAxisLabel,
@@ -126,6 +119,7 @@ export default function AreaChart({
 
   const colorScale: ColorScale = d3.scaleOrdinal(colorScheme)
   colorScale.domain(keys)
+console.log(margin)
 
   return (
     <svg ref={anchor} width={width} height={height}>
@@ -143,6 +137,18 @@ export default function AreaChart({
             label={yAxisLabel}
           />
         )}
+         {yAxisLabel &&
+        <Label 
+          x={yAxisX}
+          y={yAxisY}
+          height={cHeight}
+          width={cWidth}
+          margin={margin}
+          type={yAxis ? yAxis : 'left'}
+          axis = {yAxis ? true : false}
+          label={yAxisLabel}
+        />
+        }
         {xAxis && (
           <Axis
             x={xAxisX}
@@ -157,6 +163,18 @@ export default function AreaChart({
             xTicksValue={xTicksValue}
           />
         )}
+         {xAxisLabel &&
+        <Label 
+          x={xAxisX}
+          y={xAxisY}
+          height={cHeight}
+          width={cWidth}
+          margin={margin}
+          type={xAxis ? xAxis : 'bottom'}
+          axis = {xAxis ? true : false}
+          label={xAxisLabel}
+        />
+        }
         {layers.map((layer, i) => (
           <path key={i} d={areaGenerator(layer)} fill={colorScale(layer.key)} />
         ))}

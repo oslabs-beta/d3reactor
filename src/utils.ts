@@ -3,7 +3,7 @@ import { Margin, LegendPos } from "../types"
 export const EXTRA_LEGEND_MARGIN = 6;
 
 export function getXAxisCoordinates(
-  xAxis: "top" | "bottom" | false | undefined = "bottom",
+  xAxis: "top" | "bottom" | false = "bottom",
   height: number,
   margin: Margin
 ) {
@@ -19,7 +19,7 @@ export function getXAxisCoordinates(
 }
 
 export function getYAxisCoordinates(
-  yAxis: "left" | "right" | false | undefined = "left",
+  yAxis: "left" | "right" | false = "left",
   width: number,
   margin: Margin
 ) {
@@ -74,13 +74,14 @@ export function getMargins(
 }
 
 export function getMarginsWithLegend(
-  xAxis: "top" | "bottom" | false | undefined = "bottom",
-  yAxis: "left" | "right" | false | undefined = "left",
+  xAxis: "top" | "bottom" | false | undefined,
+  yAxis: "left" | "right" | false | undefined,
   xAxisLabel: string | undefined,
   yAxisLabel: string | undefined,
   legend: LegendPos = false,
   xOffset: number = 0,
   yOffset: number = 0,
+  // legendOffset: [number, number] = [0, 0], // ideally this should be mandatory if legend is truthy
   cWidth: number = 0,                      // ideally this should be mandatory if legend is truthy
   cHeight: number = 0,                     // ideally this should be mandatory if legend is truthy
 ) {
@@ -106,10 +107,43 @@ export function getMarginsWithLegend(
         right += 40;
     }
   }
+
+  function addVerticalMargin1() {
+    switch (xAxis) {
+      case "top":
+        top += 20;
+        break
+      case "bottom":
+        bottom += 20;
+        break
+      case undefined:
+        bottom += 20;
+        break
+      case false:
+        bottom += 20;
+        break
+    }
+  }
+  function addHorizontalMargin1() {
+    switch (yAxis) {
+      case "left":
+        left += 20;
+        break
+      case "right":
+        right += 20;
+        break
+        case undefined:
+        left += 20;
+        break
+        case false:
+        left += 20;
+        break
+    }
+  }
   if (xAxis) addVerticalMargin();
-  if (xAxis && xAxisLabel) addVerticalMargin();
+  if (xAxisLabel) addVerticalMargin1();
   if (yAxis) addHorizontalMargin();
-  if (yAxis && yAxisLabel) addHorizontalMargin();
+  if (yAxisLabel) addHorizontalMargin1();
   
   if (legend === true) legend = 'right';
   if (legend) {
@@ -121,12 +155,12 @@ export function getMarginsWithLegend(
       case 'top':
       case 'left-top':
       case 'right-top':
-        top = top + yOffset + EXTRA_LEGEND_MARGIN;
+        top += yOffset + EXTRA_LEGEND_MARGIN;
         break;
       case 'left-bottom':
       case 'right-bottom':
       case 'bottom':
-        bottom += yOffset - top;
+        bottom += yOffset + EXTRA_LEGEND_MARGIN;
         break;
       case 'left': 
       case 'top-left': 
@@ -151,33 +185,41 @@ export function getAxisLabelCoordinates(
   height: number,
   width: number,
   margin: Margin,
-  type: string
+  type: string | boolean,
+  axis: boolean,
+  fontSize = 16 
 ) {
   let rotate = 0
   let axisLabelX: number = 0
   let axisLabelY: number = 0
-  let labelMargin: number = 40
+  let labelMargin: number = 20;
+  let axisMargin:number = 40;
   switch (type) {
     case "top":
       axisLabelX = width / 2 - margin.left / 2 - margin.right / 2
-      axisLabelY = y - labelMargin
+      axisLabelY = y - labelMargin/2 - axisMargin
       rotate = 0
       break
     case "right":
-      axisLabelX = x + labelMargin
+      axisLabelX = x + labelMargin/2 + axisMargin
       axisLabelY = (height - margin.top - margin.bottom) / 2
       rotate = 90
       break
     case "bottom":
       axisLabelX = width / 2 - margin.left / 2 - margin.right / 2
-      axisLabelY = y + labelMargin
+      axisLabelY = axis ? (y + labelMargin/2 + axisMargin) : (y + labelMargin)
       rotate = 0
       break
     case "left":
-      axisLabelX = -labelMargin
+      axisLabelX = axis ? -labelMargin/2 - axisMargin : -labelMargin
       axisLabelY = (height - margin.top - margin.bottom) / 2
       rotate = -90
       break
+    case false:
+      axisLabelX = -labelMargin/2
+      axisLabelY = (height - margin.top - margin.bottom) / 2
+      rotate = -90
+
   }
   return {
     axisLabelX,

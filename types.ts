@@ -116,7 +116,7 @@ export interface ContinuousAxisProps {
   scale:
     | d3.ScaleLinear<number, number, never>
     | d3.ScaleTime<number, number, never>
-  type: string
+  type: "top" | "right" | "bottom" | "left"
   label: string | undefined
   height: number
   width: number
@@ -130,11 +130,14 @@ export interface DiscreteAxisProps {
   xGrid?: boolean
   yGrid?: boolean
   scale: d3.ScaleBand<string>
-  type: string
+  type: "top" | "right" | "bottom" | "left"
   label: string | undefined
   height: number
   width: number
   margin: Margin
+  data: Data[]
+  layers: any
+  xAccessor: (d: Data) => string 
 }
 
 export interface CircleProps {
