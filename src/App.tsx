@@ -29,7 +29,7 @@ function App() {
         value="value"
         innerRadius="70%"
         outerRadius="80%"
-        legend="right"
+        legend="left"
       />
       <AreaChart
         data={penguins}
