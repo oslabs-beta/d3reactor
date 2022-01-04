@@ -39,11 +39,11 @@ function App() {
         yKey="culmen_length_mm"
         xGrid={true}
         yGrid={true}
-        xAxis="top"
-        yAxis="left"
+        xAxis="bottom"
+        yAxis="right"
         xAxisLabel="Date"
         yAxisLabel="Number of fruit"
-        legend='left'
+        legend='right'
         legendLabel="🐬"
       />
       <AreaChart

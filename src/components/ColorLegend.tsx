@@ -59,14 +59,14 @@ switch(legendPosition) {
     yPosition = cHeight - yOffset - EXTRA_LEGEND_MARGIN*2;
     break;
   case 'left': 
-    xPosition = -margin.left - EXTRA_LEGEND_MARGIN;
+    xPosition = -margin.left + EXTRA_LEGEND_MARGIN;
     break;
   case 'top-left': 
-    xPosition = -margin.left - EXTRA_LEGEND_MARGIN;
+    xPosition = -margin.left + EXTRA_LEGEND_MARGIN;
     yPosition = margin.top;
     break;
   case 'bottom-left': 
-    xPosition = -margin.left - EXTRA_LEGEND_MARGIN;
+    xPosition = -margin.left + EXTRA_LEGEND_MARGIN;
     yPosition = cHeight - yOffset / 2 - margin.bottom;
     break;
   case 'top-right':

@@ -160,7 +160,7 @@ export function getMarginsWithLegend(
       case 'left-bottom':
       case 'right-bottom':
       case 'bottom':
-        bottom += yOffset;
+        bottom += yOffset + EXTRA_LEGEND_MARGIN;
         break;
       case 'left': 
       case 'top-left': 
