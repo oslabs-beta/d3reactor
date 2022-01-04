@@ -196,38 +196,43 @@ export function checkRadiusDimension(
   //TODO: add minimum radius here?
 
   let legendMargin = 0;
+  let screenSize = Math.min(height,width);
   switch (legend) {
     case 'top':
     case 'left-top':
     case 'right-top': 
       legendMargin = margin.top;
+      screenSize = height;
       break;
     case 'bottom':
     case 'left-bottom':
     case 'right-bottom': 
-      legendMargin = margin.bottom;
+      legendMargin = Math.abs(margin.bottom);
+      screenSize = height;
       break;
     case 'left':
     case 'top-left':
     case 'bottom-left':
       legendMargin = margin.left;
+      screenSize = width;
       break;
     case 'right':
     case 'top-right':
     case 'top-right':
       legendMargin = margin.right;
+      screenSize = width;
       break;
   }
 
   if(typeof radius === "string" && radius.endsWith("%")) {
     radius = radius.slice(0,-1)   
-    return Number(radius)*Math.min((height-margin.top)/2, (width-margin.left)/2)*0.01
+    return Number(radius)*(screenSize - legendMargin)/2*0.01;
   }
-  if(Number(radius) * 2 > Math.min(height - legendMargin, width - legendMargin)) {
-      return Math.min(height/2,width/2) - margin.left
+  if(Number(radius) > (screenSize - legendMargin)/2) {
+    return (screenSize - legendMargin)/2;
   }
   else {
-    return Number(radius) - legendMargin
+    return Number(radius);
   }
 }
 

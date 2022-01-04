@@ -46,13 +46,19 @@ export default function PieChart({
       ),
     [legend, xOffset, yOffset, cWidth, cHeight]
   );
-
   outerRadius = outerRadius
-    ? checkRadiusDimension(cHeight, cWidth, outerRadius, margin)
+    ? checkRadiusDimension(cHeight, cWidth, outerRadius, margin, legend)
     : calculateOuterRadius(cHeight, cWidth, margin);
-  innerRadius = innerRadius
-    ? checkRadiusDimension(outerRadius, outerRadius, innerRadius, margin)
-    : 0;
+  if (innerRadius) {
+    const checkedRadiusDimension = checkRadiusDimension(
+      outerRadius,
+      outerRadius,
+      innerRadius,
+      margin,
+      legend
+    );
+    innerRadius = checkedRadiusDimension > 0 ? checkedRadiusDimension : 0;
+  } else innerRadius = 0;
   type ColorScale = d3.ScaleOrdinal<string, string, never>;
 
   const keys: string[] = [];
@@ -149,7 +155,7 @@ export default function PieChart({
   }
 
   const translate = `translate(${(cWidth + translateX) / 2}, ${
-    (cHeight + translateY) / 2 
+    (cHeight + translateY) / 2
   })`;
 
   return (

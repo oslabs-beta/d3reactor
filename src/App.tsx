@@ -15,14 +15,14 @@ import skinny_fruit from "./data/skinny_fruit.json";
 function App() {
   return (
     <div className="app">
-      <PieChart
+      {/* <PieChart
         data={fruit}
         label="label"
         value="value"
         legend="top"
         outerRadius={240}
         legendLabel="l"
-      />
+      /> */}
       <PieChart
         data={fruit}
         label="label"
