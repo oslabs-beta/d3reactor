@@ -111,32 +111,32 @@ export function getMarginsWithLegend(
   function addVerticalMargin1() {
     switch (xAxis) {
       case "top":
-        top += 40;
+        top += 20;
         break
       case "bottom":
-        bottom += 40;
+        bottom += 20;
         break
       case undefined:
-        bottom += 40;
+        bottom += 20;
         break
       case false:
-        bottom += 40;
+        bottom += 20;
         break
     }
   }
   function addHorizontalMargin1() {
     switch (yAxis) {
       case "left":
-        left += 40;
+        left += 20;
         break
       case "right":
-        right += 40;
+        right += 20;
         break
         case undefined:
-        left += 40;
+        left += 20;
         break
         case false:
-        left += 40;
+        left += 20;
         break
     }
   }
@@ -155,12 +155,12 @@ export function getMarginsWithLegend(
       case 'top':
       case 'left-top':
       case 'right-top':
-        top = top + yOffset + EXTRA_LEGEND_MARGIN;
+        top += yOffset + EXTRA_LEGEND_MARGIN;
         break;
       case 'left-bottom':
       case 'right-bottom':
       case 'bottom':
-        bottom += yOffset - top;
+        bottom += yOffset;
         break;
       case 'left': 
       case 'top-left': 
@@ -186,35 +186,37 @@ export function getAxisLabelCoordinates(
   width: number,
   margin: Margin,
   type: string | boolean,
-  axis: boolean
+  axis: boolean,
+  fontSize = 16 
 ) {
   let rotate = 0
   let axisLabelX: number = 0
   let axisLabelY: number = 0
-  let labelMargin: number = 40
+  let labelMargin: number = 20;
+  let axisMargin:number = 40;
   switch (type) {
     case "top":
       axisLabelX = width / 2 - margin.left / 2 - margin.right / 2
-      axisLabelY = y - labelMargin*2
+      axisLabelY = y - labelMargin/2 - axisMargin
       rotate = 0
       break
     case "right":
-      axisLabelX = x + labelMargin*2
+      axisLabelX = x + labelMargin/2 + axisMargin
       axisLabelY = (height - margin.top - margin.bottom) / 2
       rotate = 90
       break
     case "bottom":
       axisLabelX = width / 2 - margin.left / 2 - margin.right / 2
-      axisLabelY = axis ? (y + labelMargin*2) : (y + labelMargin)
+      axisLabelY = axis ? (y + labelMargin/2 + axisMargin) : (y + labelMargin)
       rotate = 0
       break
     case "left":
-      axisLabelX = axis ? -labelMargin*2 : -labelMargin
+      axisLabelX = axis ? -labelMargin/2 - axisMargin : -labelMargin
       axisLabelY = (height - margin.top - margin.bottom) / 2
       rotate = -90
       break
     case false:
-      axisLabelX = -labelMargin
+      axisLabelX = -labelMargin/2
       axisLabelY = (height - margin.top - margin.bottom) / 2
       rotate = -90
 
