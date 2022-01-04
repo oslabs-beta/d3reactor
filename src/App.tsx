@@ -15,7 +15,7 @@ import skinny_fruit from "./data/skinny_fruit.json";
 function App() {
   return (
     <div className="app">
-      <PieChart
+      {/* <PieChart
         data={fruit}
         label="label"
         value="value"
@@ -33,8 +33,8 @@ function App() {
       />
       {/* <AreaChart
         data={penguins}
-        height="300"
-        width="400"
+        height="100%"
+        width="100%"
         xKey="body_mass_g"
         xDataType="number"
         yKey="culmen_length_mm"
@@ -47,13 +47,15 @@ function App() {
       />
       <AreaChart
         data={skinny_fruit}
-        // height="600"
+        height='300'
         xKey="date"
         xDataType="date"
         yKey="value"
         groupBy="fruit"
         xGrid={true}
         yGrid={true}
+        xAxis="top"
+        yAxis="right"
         xAxisLabel="Date"
         yAxisLabel="Number of fruit"
         legend={"bottom-right"}
@@ -66,8 +68,9 @@ function App() {
         xDataType="number"
         yKey="body_mass_g"
         groupBy="species"
-        xAxis="bottom"
-        yAxis="right"
+        yAxis='right'
+        xAxis='bottom'
+    
         // xGrid={true}
         // yGrid={true}
         xAxisLabel="Date"
@@ -97,11 +100,11 @@ function App() {
         yKey="value"
         // groupBy='fruit'
         xAxis="bottom"
-        yAxis="left"
+        yAxis="right"
         yGrid={true}
-        xAxisLabel="Date"
-        yAxisLabel="Value"
-        legend={true}
+        // xAxisLabel="Date"
+        // yAxisLabel="Value"
+        // legend={true}
       />
       <LineChart
         height="100%"
@@ -110,24 +113,24 @@ function App() {
         xDataType="date"
         yKey="unemployment"
         groupBy="division"
-        xAxis="bottom"
-        yAxis="left"
-        xGrid={true}
-        yGrid={true}
+        // xAxis="bottom"
+        // yAxis="left"
+        // xGrid={true}
+        // yGrid={true}
         xAxisLabel="Date"
         yAxisLabel="Unemployment"
         legend={"bottom-right"}
         legendLabel="Locations"
       />
       <LineChart
-        height="500"
-        width="500"
+        height="100%"
+        width="100%"
         data={portfolio}
         xKey="date"
         xDataType="date"
         yKey="value"
-        xAxis="bottom"
-        yAxis="left"
+        yAxis="right"
+        xAxis='bottom'
         xGrid={true}
         yGrid={true}
         xAxisLabel="Date"
