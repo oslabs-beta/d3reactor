@@ -190,17 +190,44 @@ export function checkRadiusDimension(
   height: number,
   width: number,
   radius: number | string, 
-  margin: Margin
+  margin: Margin,
+  legend?: LegendPos
 ) {
+  //TODO: add minimum radius here?
+
+  let legendMargin = 0;
+  switch (legend) {
+    case 'top':
+    case 'left-top':
+    case 'right-top': 
+      legendMargin = margin.top;
+      break;
+    case 'bottom':
+    case 'left-bottom':
+    case 'right-bottom': 
+      legendMargin = margin.bottom;
+      break;
+    case 'left':
+    case 'top-left':
+    case 'bottom-left':
+      legendMargin = margin.left;
+      break;
+    case 'right':
+    case 'top-right':
+    case 'top-right':
+      legendMargin = margin.right;
+      break;
+  }
+
   if(typeof radius === "string" && radius.endsWith("%")) {
     radius = radius.slice(0,-1)   
     return Number(radius)*Math.min((height-margin.top)/2, (width-margin.left)/2)*0.01
   }
-  if(Number(radius) > Math.min(height/2, width/2)) {
-      return Math.min(height/2,width/2) - margin.top
+  if(Number(radius) * 2 > Math.min(height - legendMargin, width - legendMargin)) {
+      return Math.min(height/2,width/2) - margin.left
   }
   else {
-    return Number(radius)
+    return Number(radius) - legendMargin
   }
 }
 
@@ -209,7 +236,14 @@ export function calculateOuterRadius(
   width: number,
   margin: Margin,
 ) {
-  return Math.min((height - margin.top - margin.bottom)/2, (width - margin.left - margin.right)/2)
+  const radius = 
+    Math.min(
+      (height - margin.top - margin.bottom)/2, 
+      (width - margin.left - margin.right)/2
+    ); 
+  return (
+    Math.min(radius, 20)
+  )
 }
 
 

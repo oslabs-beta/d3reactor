@@ -19,9 +19,9 @@ function App() {
         data={fruit}
         label="label"
         value="value"
-        legend="right-top"
+        legend="top"
         outerRadius={240}
-        legendLabel="labelllllllll"
+        legendLabel="l"
       />
       <PieChart
         data={fruit}

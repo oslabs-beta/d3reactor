@@ -19,7 +19,7 @@ export const ColorLegend = ({
   xPosition, 
   yPosition
 }: ColorLegendProps) => {
-  const RECT_MARGIN = 6;
+  const RECT_MARGIN = 6; // replace all instances with EXTRA_LEGEND_MARGIN?
   const domain = colorScale.domain();
   let longestWord: number;
   let labelHeightOffset: number;
