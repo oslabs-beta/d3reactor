@@ -8,8 +8,8 @@ export const ColorLegend = ({
   tickTextOffset = circleRadius * 1.2 + 3,
   legendLabel = "",
   legendPosition,
-  legendWidth, // width of legend
-  legendHeight, // height of legend
+  legendWidth, 
+  legendHeight, 
   setLegendOffset,
   margin, // margin of chart
   xAxisPosition = false,
