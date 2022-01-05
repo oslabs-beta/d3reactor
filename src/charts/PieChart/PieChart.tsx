@@ -206,8 +206,8 @@ export default function PieChart({
               colorScale={colorScale}
               setLegendOffset={setLegendOffset}
               legendPosition={legend}
-              xOffset={xOffset}
-              yOffset={yOffset}
+              legendWidth={xOffset}
+              legendHeight={yOffset}
               xPosition={xPosition}
               yPosition={yPosition}
               margin={margin}

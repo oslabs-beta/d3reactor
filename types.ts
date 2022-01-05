@@ -192,16 +192,14 @@ export interface ColorLegendProps {
   tickTextOffset?: number
   legendLabel?: string
   legendPosition: LegendPos
-  xOffset: number
-  yOffset: number
+  legendWidth: number
+  legendHeight: number
   xPosition?: number
   yPosition?: number
   setLegendOffset: React.Dispatch<any>
   margin: Margin
   xAxisPosition?: "top" | "bottom" | false
   yAxisPosition?: "left" | "right" | false
-  xAxisLabel?: boolean
-  yAxisLabel?: boolean
   cWidth: number
   cHeight: number
   EXTRA_LEGEND_MARGIN: number

@@ -112,7 +112,6 @@ function Axi({
   const numberOfVerticalTicks: number = height / 100
   const horizontalTicks = scale.ticks(numberOfHorizontalTicks)
   const verticalTicks = scale.ticks(numberOfVerticalTicks)
-  console.log('vt',verticalTicks)
 
   const formatTick = d3.timeFormat("%x")
   const getFormattedTick = (individualTick: number | Date) => {

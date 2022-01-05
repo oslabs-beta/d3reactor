@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import { ColorLegendProps } from "../../types";
-import { AXIS_MARGIN, LABEL_MARGIN } from "../utils"
 
 export const ColorLegend = ({
   colorScale,
@@ -9,14 +8,12 @@ export const ColorLegend = ({
   tickTextOffset = circleRadius * 1.2 + 3,
   legendLabel = "",
   legendPosition,
-  xOffset, // width of legend
-  yOffset, // height of legend
+  legendWidth, // width of legend
+  legendHeight, // height of legend
   setLegendOffset,
   margin, // margin of chart
   xAxisPosition = false,
   yAxisPosition = false,
-  xAxisLabel = false,
-  yAxisLabel = false,
   cWidth,
   cHeight,
   EXTRA_LEGEND_MARGIN = 6,
@@ -36,76 +33,79 @@ export const ColorLegend = ({
     labelHeightOffset = 0;
   }
 
-  // determine legend placement for any chart except pie:
+  // determine legend placement for any chart except pie, 
+  // or if no manual legend coordinates are passed in
   if (!xPosition && !yPosition) {
     let correctForAxis = 0;
     xPosition = 0;
-    yPosition = cHeight / 2 - yOffset / 2;
+    yPosition = cHeight / 2 - legendHeight / 2;
     switch (legendPosition) {
       case "top":
-        xPosition = (cWidth - margin.left - margin.right) / 2 - xOffset / 2;
-        yPosition = yOffset / 2 - margin.top + EXTRA_LEGEND_MARGIN;
+        xPosition = (cWidth - margin.left - margin.right) / 2 - legendWidth / 2;
+        yPosition = legendHeight / 2 - margin.top + EXTRA_LEGEND_MARGIN;
         break;
       case "left-top":
         xPosition = EXTRA_LEGEND_MARGIN - margin.left;
-        yPosition = yOffset / 2 - margin.top + EXTRA_LEGEND_MARGIN;
+        yPosition = legendHeight / 2 - margin.top + EXTRA_LEGEND_MARGIN;
         break;
       case "right-top":
         xPosition =
           cWidth -
           margin.left -
           margin.right -
-          xOffset -
+          legendWidth -
           EXTRA_LEGEND_MARGIN +
           20;
-        yPosition = yOffset / 2 - margin.top + EXTRA_LEGEND_MARGIN;
+        yPosition = legendHeight / 2 - margin.top + EXTRA_LEGEND_MARGIN;
         break;
       case "bottom":
-        xPosition = (cWidth - margin.left - margin.right) / 2 - xOffset / 2;
+        xPosition = (cWidth - margin.left - margin.right) / 2 - legendWidth / 2;
         correctForAxis = xAxisPosition === 'top' ? margin.bottom : margin.top;
-        yPosition = cHeight - yOffset / 2 - correctForAxis - EXTRA_LEGEND_MARGIN;
+        yPosition = cHeight - legendHeight / 2 - correctForAxis - EXTRA_LEGEND_MARGIN;
         break;
       case "left-bottom":
         xPosition = EXTRA_LEGEND_MARGIN - margin.left;
         correctForAxis = xAxisPosition === 'top' ? margin.bottom : margin.top;
-        yPosition = cHeight - yOffset / 2 - correctForAxis - EXTRA_LEGEND_MARGIN;
+        yPosition = cHeight - legendHeight / 2 - correctForAxis - EXTRA_LEGEND_MARGIN;
         break;
       case "right-bottom":
         xPosition =
           cWidth -
           margin.left -
           margin.right -
-          xOffset -
+          legendWidth -
           EXTRA_LEGEND_MARGIN +
           20;
         correctForAxis = xAxisPosition === 'top' ? margin.bottom : margin.top;
-        yPosition = cHeight - yOffset / 2 - correctForAxis - EXTRA_LEGEND_MARGIN;
+        yPosition = cHeight - legendHeight / 2 - correctForAxis - EXTRA_LEGEND_MARGIN;
         break;
       case "left":
         xPosition = -margin.left + EXTRA_LEGEND_MARGIN;
         break;
       case "top-left":
         xPosition = -margin.left + EXTRA_LEGEND_MARGIN;
-        yPosition = yOffset / 2 - margin.top + EXTRA_LEGEND_MARGIN;
+        yPosition = legendHeight / 2 - margin.top + EXTRA_LEGEND_MARGIN;
         break;
       case "bottom-left":
         xPosition = -margin.left + EXTRA_LEGEND_MARGIN; 
         correctForAxis = xAxisPosition === 'top' ? margin.bottom : margin.top;
-        yPosition = cHeight - yOffset / 2 - correctForAxis - EXTRA_LEGEND_MARGIN;
+        yPosition = cHeight - legendHeight / 2 - correctForAxis - EXTRA_LEGEND_MARGIN;
         break;
       case "top-right":
-        xPosition = cWidth - margin.left - margin.right + 20;
-        yPosition = yOffset / 2 - margin.top + EXTRA_LEGEND_MARGIN;
-
+        correctForAxis = yAxisPosition === 'left' ? margin.right : margin.left;
+        xPosition = cWidth - legendWidth - correctForAxis - EXTRA_LEGEND_MARGIN;
+        yPosition = legendHeight / 2 - margin.top + EXTRA_LEGEND_MARGIN;
         break;
       case "bottom-right":
-        xPosition = cWidth - margin.left - margin.right + 20;
+        correctForAxis = yAxisPosition === 'left' ? margin.right : margin.left;
+        xPosition = cWidth - legendWidth - correctForAxis - EXTRA_LEGEND_MARGIN;
         correctForAxis = xAxisPosition === 'top' ? margin.bottom : margin.top;
-        yPosition = cHeight - yOffset / 2 - correctForAxis - EXTRA_LEGEND_MARGIN;
+        yPosition = cHeight - legendHeight / 2 - correctForAxis - EXTRA_LEGEND_MARGIN;
         break;
       case "right":
       default:
-        xPosition = cWidth - margin.left - margin.right + 20;
+        correctForAxis = yAxisPosition === 'left' ? margin.right : margin.left;
+        xPosition = cWidth - legendWidth - correctForAxis - EXTRA_LEGEND_MARGIN;
     }
   }
 

@@ -205,8 +205,8 @@ export default function ScatterPlot({
           colorScale={colorScale}
           setLegendOffset={setLegendOffset}
           legendPosition={legend}
-          xOffset={xOffset}
-          yOffset={yOffset}
+          legendWidth={xOffset}
+          legendHeight={yOffset}
           margin={margin}
           cWidth={cWidth}
           cHeight={cHeight}
