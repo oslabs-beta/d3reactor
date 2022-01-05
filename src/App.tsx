@@ -27,8 +27,8 @@ function App() {
         data={fruit}
         label="label"
         value="value"
-        innerRadius="70%"
-        outerRadius="80%"
+        innerRadius={240}
+        outerRadius={300}
         legend="left"
       />
       <AreaChart
