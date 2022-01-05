@@ -121,12 +121,12 @@ export function getMarginsWithLegend(
       case 'top':
       case 'left-top':
       case 'right-top':
-        top = top + yOffset + EXTRA_LEGEND_MARGIN;
+        top += yOffset + EXTRA_LEGEND_MARGIN;
         break;
       case 'left-bottom':
       case 'right-bottom':
       case 'bottom':
-        bottom = -yOffset - bottom - EXTRA_LEGEND_MARGIN;
+        bottom += yOffset + EXTRA_LEGEND_MARGIN;
         break;
       case 'left': 
       case 'top-left': 

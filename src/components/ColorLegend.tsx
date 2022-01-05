@@ -73,7 +73,7 @@ export const ColorLegend = ({
         yPosition = cHeight - yOffset - EXTRA_LEGEND_MARGIN * 2;
         break;
       case "left":
-        xPosition = -margin.left - EXTRA_LEGEND_MARGIN;
+        xPosition = -margin.left + EXTRA_LEGEND_MARGIN;
         break;
       case "top-left":
         xPosition = -margin.left - EXTRA_LEGEND_MARGIN;
