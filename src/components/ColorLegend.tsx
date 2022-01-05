@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { ColorLegendProps } from "../../types";
+import { AXIS_MARGIN, LABEL_MARGIN } from "../utils"
 
 export const ColorLegend = ({
   colorScale,
@@ -8,10 +9,14 @@ export const ColorLegend = ({
   tickTextOffset = circleRadius * 1.2 + 3,
   legendLabel = "",
   legendPosition,
-  xOffset,
-  yOffset,
+  xOffset, // width of legend
+  yOffset, // height of legend
   setLegendOffset,
-  margin,
+  margin, // margin of chart
+  xAxisPosition = false,
+  yAxisPosition = false,
+  xAxisLabel = false,
+  yAxisLabel = false,
   cWidth,
   cHeight,
   EXTRA_LEGEND_MARGIN = 6,
@@ -19,8 +24,8 @@ export const ColorLegend = ({
   xPosition, 
   yPosition
 }: ColorLegendProps) => {
-  const RECT_MARGIN = 6; // replace all instances with EXTRA_LEGEND_MARGIN?
   const domain = colorScale.domain();
+  // Make space for legend label
   let longestWord: number;
   let labelHeightOffset: number;
   if (legendLabel) {
@@ -33,6 +38,7 @@ export const ColorLegend = ({
 
   // determine legend placement for any chart except pie:
   if (!xPosition && !yPosition) {
+    let correctForAxis = 0;
     xPosition = 0;
     yPosition = cHeight / 2 - yOffset / 2;
     switch (legendPosition) {
@@ -40,17 +46,9 @@ export const ColorLegend = ({
         xPosition = (cWidth - margin.left - margin.right) / 2 - xOffset / 2;
         yPosition = yOffset / 2 - margin.top + EXTRA_LEGEND_MARGIN;
         break;
-      case "bottom":
-        xPosition = (cWidth - margin.left - margin.right) / 2 - xOffset / 2;
-        yPosition = cHeight - yOffset - EXTRA_LEGEND_MARGIN * 2;
-        break;
       case "left-top":
         xPosition = EXTRA_LEGEND_MARGIN - margin.left;
         yPosition = yOffset / 2 - margin.top + EXTRA_LEGEND_MARGIN;
-        break;
-      case "left-bottom":
-        xPosition = EXTRA_LEGEND_MARGIN - margin.left;
-        yPosition = cHeight - yOffset - EXTRA_LEGEND_MARGIN * 2;
         break;
       case "right-top":
         xPosition =
@@ -62,6 +60,16 @@ export const ColorLegend = ({
           20;
         yPosition = yOffset / 2 - margin.top + EXTRA_LEGEND_MARGIN;
         break;
+      case "bottom":
+        xPosition = (cWidth - margin.left - margin.right) / 2 - xOffset / 2;
+        correctForAxis = xAxisPosition === 'top' ? margin.bottom : margin.top;
+        yPosition = cHeight - yOffset / 2 - correctForAxis - EXTRA_LEGEND_MARGIN;
+        break;
+      case "left-bottom":
+        xPosition = EXTRA_LEGEND_MARGIN - margin.left;
+        correctForAxis = xAxisPosition === 'top' ? margin.bottom : margin.top;
+        yPosition = cHeight - yOffset / 2 - correctForAxis - EXTRA_LEGEND_MARGIN;
+        break;
       case "right-bottom":
         xPosition =
           cWidth -
@@ -70,26 +78,30 @@ export const ColorLegend = ({
           xOffset -
           EXTRA_LEGEND_MARGIN +
           20;
-        yPosition = cHeight - yOffset - EXTRA_LEGEND_MARGIN * 2;
+        correctForAxis = xAxisPosition === 'top' ? margin.bottom : margin.top;
+        yPosition = cHeight - yOffset / 2 - correctForAxis - EXTRA_LEGEND_MARGIN;
         break;
       case "left":
         xPosition = -margin.left + EXTRA_LEGEND_MARGIN;
         break;
       case "top-left":
-        xPosition = -margin.left - EXTRA_LEGEND_MARGIN;
-        yPosition = margin.top;
+        xPosition = -margin.left + EXTRA_LEGEND_MARGIN;
+        yPosition = yOffset / 2 - margin.top + EXTRA_LEGEND_MARGIN;
         break;
       case "bottom-left":
-        xPosition = -margin.left - EXTRA_LEGEND_MARGIN;
-        yPosition = cHeight - yOffset / 2 - margin.bottom;
+        xPosition = -margin.left + EXTRA_LEGEND_MARGIN; 
+        correctForAxis = xAxisPosition === 'top' ? margin.bottom : margin.top;
+        yPosition = cHeight - yOffset / 2 - correctForAxis - EXTRA_LEGEND_MARGIN;
         break;
       case "top-right":
         xPosition = cWidth - margin.left - margin.right + 20;
-        yPosition = margin.top;
+        yPosition = yOffset / 2 - margin.top + EXTRA_LEGEND_MARGIN;
+
         break;
       case "bottom-right":
         xPosition = cWidth - margin.left - margin.right + 20;
-        yPosition = cHeight - yOffset / 2 - margin.bottom;
+        correctForAxis = xAxisPosition === 'top' ? margin.bottom : margin.top;
+        yPosition = cHeight - yOffset / 2 - correctForAxis - EXTRA_LEGEND_MARGIN;
         break;
       case "right":
       default:
@@ -98,9 +110,9 @@ export const ColorLegend = ({
   }
 
   const rectHeight =
-    tickSpacing * (domain.length + labelHeightOffset) + RECT_MARGIN * 2;
+    tickSpacing * (domain.length + labelHeightOffset) + EXTRA_LEGEND_MARGIN * 2;
   // trying to make the legend no taller than the chart:
-  // const rectHeight = Math.min(tickSpacing*(domain.length + labelHeightOffset) + RECT_MARGIN*2, cHeight);
+  // const rectHeight = Math.min(tickSpacing*(domain.length + labelHeightOffset) + EXTRA_LEGEND_MARGIN*2, cHeight);
 
   // iterate thru category names, create color swab & text for each
   const legend = domain.map((domainValue: string, i: number) => {
@@ -109,10 +121,10 @@ export const ColorLegend = ({
       <g
         className="tick"
         key={domainValue}
-        transform={`translate(${RECT_MARGIN + circleRadius}, 
+        transform={`translate(${EXTRA_LEGEND_MARGIN + circleRadius}, 
                    ${
                      (i + labelHeightOffset) * tickSpacing +
-                     RECT_MARGIN -
+                     EXTRA_LEGEND_MARGIN -
                      rectHeight / 2 +
                      circleRadius
                    })`}
@@ -129,7 +141,7 @@ export const ColorLegend = ({
     tickTextOffset +
     circleRadius * 2 +
     (longestWord * (fontSize + 1)) / 2 +
-    RECT_MARGIN * 2; //+1 by fontSize is a bit of a kludge
+    EXTRA_LEGEND_MARGIN * 2; //+1 by fontSize is a bit of a kludge
 
   useEffect(() => setLegendOffset([rectWidth, rectHeight]), []);
 
@@ -165,7 +177,7 @@ export const ColorLegend = ({
         x={rectWidth / 2 /* Where to put Legend title label */}
         y={
           -rectHeight / 2 +
-          RECT_MARGIN / 2 +
+          EXTRA_LEGEND_MARGIN / 2 +
           16 /* Where to put Legend title label */
         }
         textAnchor={"middle"}

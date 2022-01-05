@@ -180,6 +180,9 @@ export function getMarginsWithLegend(
   return { left, right, top, bottom }
 }
 
+export const LABEL_MARGIN = 20;
+export const AXIS_MARGIN = 40;
+
 export function getAxisLabelCoordinates(
   x: number,
   y: number,
@@ -193,8 +196,8 @@ export function getAxisLabelCoordinates(
   let rotate = 0
   let axisLabelX: number = 0
   let axisLabelY: number = 0
-  let labelMargin: number = 20;
-  let axisMargin:number = 40;
+  let labelMargin = LABEL_MARGIN;
+  let axisMargin = AXIS_MARGIN;
   switch (type) {
     case "top":
       axisLabelX = width / 2 - margin.left / 2 - margin.right / 2
