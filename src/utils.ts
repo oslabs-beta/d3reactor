@@ -237,7 +237,7 @@ export function checkRadiusDimension(
   width: number,
   radius: number | string, 
   margin: Margin,
-  legend?: LegendPos
+  legend?: LegendPos,
 ) {
   //TODO: add minimum radius here?
 
@@ -270,13 +270,14 @@ export function checkRadiusDimension(
     radius = radius.slice(0,-1);   
     return Number(radius)*(screenSize - legendMargin)/2*0.01;
   }
-  if(Number(radius) > (screenSize - legendMargin)/2) {
+  else if(Number(radius) > (screenSize - legendMargin)/2) {
     return (screenSize - legendMargin)/2;
   }
   else {
     return Number(radius);
   }
 }
+
 
 export function calculateOuterRadius(
   height: number,

@@ -46,20 +46,32 @@ export default function PieChart({
       ),
     [legend, xOffset, yOffset, cWidth, cHeight]
   );
+  let ratio: number | undefined;
+  if (
+    typeof outerRadius === "number" &&
+    typeof innerRadius === "number" &&
+    innerRadius !== 0
+  ) {
+    ratio = innerRadius / outerRadius;
+  }
 
   outerRadius = outerRadius
     ? checkRadiusDimension(cHeight, cWidth, outerRadius, margin, legend)
     : calculateOuterRadius(cHeight, cWidth, margin);
-  if (innerRadius) {
+
+  if (ratio) {
+    innerRadius = ratio * outerRadius;
+  } else if (innerRadius) {
     const checkedRadiusDimension = checkRadiusDimension(
-      outerRadius,
-      outerRadius,
+      cHeight,
+      cWidth,
       innerRadius,
       margin,
       legend
     );
     innerRadius = checkedRadiusDimension > 0 ? checkedRadiusDimension : 0;
   } else innerRadius = 0;
+
   type ColorScale = d3.ScaleOrdinal<string, string, never>;
 
   const keys: string[] = [];
