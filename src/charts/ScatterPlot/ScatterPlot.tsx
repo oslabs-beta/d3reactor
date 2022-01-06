@@ -24,6 +24,7 @@ import {
   inferXDataType,
   EXTRA_LEGEND_MARGIN
 } from "../../utils"
+import { Label } from "../../components/Label"
 
 export default function ScatterPlot({
   data,
@@ -111,6 +112,7 @@ export default function ScatterPlot({
 
   const colorScale: ColorScale = d3.scaleOrdinal(colorScheme)
   colorScale.domain(keys)
+  console.log('mar', margin)
 
   return (
     <svg ref={anchor} width={width} height={height}>
@@ -128,6 +130,18 @@ export default function ScatterPlot({
             label={yAxisLabel}
           />
         )}
+          {yAxisLabel &&
+            <Label 
+              x={yAxisX}
+              y={yAxisY}
+              height={cHeight}
+              width={cWidth}
+              margin={margin}
+              type={yAxis ? yAxis : 'left'}
+              axis = {yAxis ? true : false}
+              label={yAxisLabel}
+            />
+        }
         {xAxis && (
           <Axis
             x={xAxisX}
@@ -141,6 +155,18 @@ export default function ScatterPlot({
             label={xAxisLabel}
           />
         )}
+        {xAxisLabel &&
+          <Label 
+            x={xAxisX}
+            y={xAxisY}
+            height={cHeight}
+            width={cWidth}
+            margin={margin}
+            type={xAxis ? xAxis : 'bottom'}
+            axis = {xAxis ? true : false}
+            label={xAxisLabel}
+          />
+        }
         {data.map((element: any, i: number) =>
           !groupBy ? (
             <Circle
@@ -179,8 +205,8 @@ export default function ScatterPlot({
           colorScale={colorScale}
           setLegendOffset={setLegendOffset}
           legendPosition={legend}
-          xOffset={xOffset}
-          yOffset={yOffset}
+          legendWidth={xOffset}
+          legendHeight={yOffset}
           margin={margin}
           cWidth={cWidth}
           cHeight={cHeight}

@@ -24,6 +24,7 @@ import { Tooltip } from "../../components/Tooltip"
 import { yScaleDef } from "../../functionality/yScale"
 import { xScaleDef } from "../../functionality/xScale"
 import { d3Voronoi } from "../../functionality/voronoi"
+import { Label } from "../../components/Label"
 
 export default function LineChart({
   data,
@@ -60,6 +61,7 @@ export default function LineChart({
       legend, xOffset, yOffset, cWidth, cHeight),
     [xAxis, yAxis, xAxisLabel, yAxisLabel, legend, xOffset, yOffset, cWidth, cHeight]
   );
+
 
   const { xAxisX, xAxisY } = useMemo(
     () => getXAxisCoordinates(xAxis, cHeight, margin),
@@ -138,6 +140,19 @@ export default function LineChart({
             label={yAxisLabel}
           />
         )}
+        {yAxisLabel &&
+          <Label 
+            x={yAxisX}
+            y={yAxisY}
+            height={cHeight}
+            width={cWidth}
+            margin={margin}
+            type={yAxis ? yAxis : 'left'}
+            axis = {yAxis ? true : false}
+            label={yAxisLabel}
+          />
+        }
+         
         {xAxis && (
           <Axis
             x={xAxisX}
@@ -152,6 +167,18 @@ export default function LineChart({
             xTicksValue={xTicksValue}
           />
         )}
+        {xAxisLabel &&
+        <Label 
+          x={xAxisX}
+          y={xAxisY}
+          height={cHeight}
+          width={cWidth}
+          margin={margin}
+          type={xAxis ? xAxis : 'bottom'}
+          axis = {xAxis ? true : false}
+          label={xAxisLabel}
+        />
+        }
         {groupBy ? (
           d3.map(lineGroups, (lineGroup: [string, []], i) => {
             return (
@@ -191,8 +218,8 @@ export default function LineChart({
           colorScale={colorScale}
           setLegendOffset={setLegendOffset}
           legendPosition={legend}
-          xOffset={xOffset}
-          yOffset={yOffset}
+          legendWidth={xOffset}
+          legendHeight={yOffset}
           margin={margin}
           cWidth={cWidth}
           cHeight={cHeight}
