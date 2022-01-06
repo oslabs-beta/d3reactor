@@ -101,7 +101,6 @@ export default function PieChart({
     const [x, y] = arcGenerator.centroid(d);
     return `translate(${x}, ${y})`;
   };
-
   // Position of the legend
   let xPosition = outerRadius + margin.left;
   let yPosition = EXTRA_LEGEND_MARGIN;
