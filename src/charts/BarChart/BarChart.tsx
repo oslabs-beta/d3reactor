@@ -13,7 +13,7 @@ import {
   getXAxisCoordinates,
   getYAxisCoordinates,
   getMarginsWithLegend,
-  EXTRA_LEGEND_MARGIN
+  EXTRA_LEGEND_MARGIN,
 } from "../../utils"
 import { yScaleDef } from "../../functionality/yScale"
 import { Label } from "../../components/Label"
@@ -31,7 +31,7 @@ export default function BarChart({
   xAxisLabel,
   yAxisLabel,
   legend,
-  legendLabel = '',
+  legendLabel = "",
   colorScheme = d3.quantize(d3.interpolateHcl("#9dc8e2", "#07316b"), 8),
 }: BarChartProps<string | number>): JSX.Element {
   const [tooltip, setTooltip] = useState<false | any>(false)
@@ -41,15 +41,34 @@ export default function BarChart({
   const { anchor, cHeight, cWidth } = useResponsive()
 
   // width & height of legend, so we know how much to squeeze chart by
-  const [legendOffset, setLegendOffset] = useState<[number, number]>([0, 0]);
-  const xOffset = legendOffset[0];
-  const yOffset = legendOffset[1];
+  const [legendOffset, setLegendOffset] = useState<[number, number]>([0, 0])
+  const xOffset = legendOffset[0]
+  const yOffset = legendOffset[1]
   const margin = useMemo(
-    () => getMarginsWithLegend(
-      xAxis, yAxis, xAxisLabel, yAxisLabel, 
-      legend, xOffset, yOffset, cWidth, cHeight),
-    [xAxis, yAxis, xAxisLabel, yAxisLabel, legend, xOffset, yOffset, cWidth, cHeight]
-  );
+    () =>
+      getMarginsWithLegend(
+        xAxis,
+        yAxis,
+        xAxisLabel,
+        yAxisLabel,
+        legend,
+        xOffset,
+        yOffset,
+        cWidth,
+        cHeight
+      ),
+    [
+      xAxis,
+      yAxis,
+      xAxisLabel,
+      yAxisLabel,
+      legend,
+      xOffset,
+      yOffset,
+      cWidth,
+      cHeight,
+    ]
+  )
 
   const { xAxisX, xAxisY } = useMemo(
     () => getXAxisCoordinates(xAxis, cHeight, margin),
@@ -68,13 +87,14 @@ export default function BarChart({
     groups: d3.InternMap<any, any[]>
   const groupAccessor = (d: Data) => d[groupBy ?? ""]
   groups = d3.group(data, groupAccessor)
-  keys = groupBy ? Array.from(groups).map((group) => group[0]) : [yKey];
+  keys = groupBy ? Array.from(groups).map((group) => group[0]) : [yKey]
   if (groupBy) {
     data = transformSkinnyToWide(data, keys, groupBy, xKey, yKey)
   }
   const stack = d3.stack().keys(keys).order(d3.stackOrderAscending)
   const layers = stack(data as Iterable<{ [key: string]: number }>)
 
+  // console.log("Bar chart layers ", layers)
   const xAccessor: (d: Data) => string = useMemo(() => {
     return (d) => d[xKey]
   }, [])
@@ -106,6 +126,12 @@ export default function BarChart({
   const colorScale: ColorScale = d3.scaleOrdinal(colorScheme)
   colorScale.domain(keys)
 
+  const getSequenceData = (sequence: any) => {
+    const xKeyValue = { [xKey]: sequence.data[xKey] }
+    const yKeyValue = { [yKey]: sequence[1] }
+    return { ...xKeyValue, ...yKeyValue }
+  }
+
   return (
     <svg ref={anchor} width={width} height={height}>
       <g transform={translate}>
@@ -124,18 +150,18 @@ export default function BarChart({
             xAccessor={xAccessor}
           />
         )}
-        {yAxisLabel &&
-        <Label 
-          x={yAxisX}
-          y={yAxisY}
-          height={cHeight}
-          width={cWidth}
-          margin={margin}
-          type={yAxis ? yAxis : 'left'}
-          axis = {yAxis ? true : false}
-          label={yAxisLabel}
-        />
-        }
+        {yAxisLabel && (
+          <Label
+            x={yAxisX}
+            y={yAxisY}
+            height={cHeight}
+            width={cWidth}
+            margin={margin}
+            type={yAxis ? yAxis : "left"}
+            axis={yAxis ? true : false}
+            label={yAxisLabel}
+          />
+        )}
         {yAxis && (
           <Axis
             x={yAxisX}
@@ -149,23 +175,24 @@ export default function BarChart({
             label={yAxisLabel}
           />
         )}
-        {xAxisLabel &&
-        <Label 
-          x={xAxisX}
-          y={xAxisY}
-          height={cHeight}
-          width={cWidth}
-          margin={margin}
-          type={xAxis ? xAxis : 'bottom'}
-          axis = {xAxis ? true : false}
-          label={xAxisLabel}
-        />
-        }
+        {xAxisLabel && (
+          <Label
+            x={xAxisX}
+            y={xAxisY}
+            height={cHeight}
+            width={cWidth}
+            margin={margin}
+            type={xAxis ? xAxis : "bottom"}
+            axis={xAxis ? true : false}
+            label={xAxisLabel}
+          />
+        )}
         {groupBy
           ? layers.map((layer: any, i: number) => (
               <g key={i}>
                 {layer.map((sequence: any, i: number) => (
                   <Rectangle
+                    data={getSequenceData(sequence)}
                     key={i}
                     x={xScale(xAccessor(sequence.data))}
                     y={yScale(sequence[1])}
@@ -183,6 +210,7 @@ export default function BarChart({
             ))
           : data.map((d: any, i: number) => (
               <Rectangle
+                data={d}
                 key={i}
                 x={xScale(xAccessor(d))}
                 y={yScale(yAccessor(d))}
@@ -196,23 +224,35 @@ export default function BarChart({
                 setTooltip={setTooltip}
               />
             ))}
-        
-        { // If legend prop is truthy, render legend component:
-        legend && <ColorLegend 
-          legendLabel={legendLabel} 
-          circleRadius={5 /* Radius of each color swab in legend */}
-          colorScale={colorScale}
-          setLegendOffset={setLegendOffset}
-          legendPosition={legend}
-          legendWidth={xOffset}
-          legendHeight={yOffset}
-          margin={margin}
-          cWidth={cWidth}
-          cHeight={cHeight}
-          EXTRA_LEGEND_MARGIN={EXTRA_LEGEND_MARGIN}
-        />}
 
-        {tooltip && <Tooltip x={tooltip.cx} y={tooltip.cy} />}
+        {
+          // If legend prop is truthy, render legend component:
+          legend && (
+            <ColorLegend
+              legendLabel={legendLabel}
+              circleRadius={5 /* Radius of each color swab in legend */}
+              colorScale={colorScale}
+              setLegendOffset={setLegendOffset}
+              legendPosition={legend}
+              legendWidth={xOffset}
+              legendHeight={yOffset}
+              margin={margin}
+              cWidth={cWidth}
+              cHeight={cHeight}
+              EXTRA_LEGEND_MARGIN={EXTRA_LEGEND_MARGIN}
+            />
+          )
+        }
+
+        {tooltip && (
+          <Tooltip
+            data={tooltip}
+            x={tooltip.cx + xScale.bandwidth() / 2}
+            y={tooltip.cy}
+            xKey={xKey}
+            yKey={yKey}
+          />
+        )}
       </g>
     </svg>
   )

@@ -1,14 +1,17 @@
-import React from "react";
-import { RectangleProps } from "../../types";
+import React from "react"
+import { RectangleProps } from "../../types"
 
 export const Rectangle = React.memo(
-  ({ x, y, width, height, fill, setTooltip }: RectangleProps): JSX.Element => {
-    let cellCenter = { cx: 0, cy: 0 };
-    if (typeof x === "number" && typeof y === "number") {
-      const cx = x + width / 2;
-      const cy = y - 50;
-      cellCenter = { cx, cy };
-    }
+  ({
+    data,
+    x,
+    y,
+    width,
+    height,
+    fill,
+    setTooltip,
+  }: RectangleProps): JSX.Element => {
+    let cellCenter = { cx: x, cy: y, tooltipData: data }
     return (
       <rect
         x={x}
@@ -17,10 +20,10 @@ export const Rectangle = React.memo(
         height={height}
         fill={fill}
         onMouseOver={(e) => {
-          setTooltip ? setTooltip(cellCenter) : null;
+          setTooltip ? setTooltip(cellCenter) : null
         }}
         onMouseOut={() => (setTooltip ? setTooltip(false) : null)}
       />
-    );
+    )
   }
-);
+)

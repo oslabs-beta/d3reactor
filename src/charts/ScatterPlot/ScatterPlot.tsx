@@ -22,7 +22,7 @@ import {
   getYAxisCoordinates,
   getMarginsWithLegend,
   inferXDataType,
-  EXTRA_LEGEND_MARGIN
+  EXTRA_LEGEND_MARGIN,
 } from "../../utils"
 import { Label } from "../../components/Label"
 
@@ -50,16 +50,34 @@ export default function ScatterPlot({
   const { anchor, cHeight, cWidth } = useResponsive()
 
   // width & height of legend, so we know how much to squeeze chart by
-  const [legendOffset, setLegendOffset] = useState<[number, number]>([0, 0]);
-  const xOffset = legendOffset[0];
-  const yOffset = legendOffset[1];
+  const [legendOffset, setLegendOffset] = useState<[number, number]>([0, 0])
+  const xOffset = legendOffset[0]
+  const yOffset = legendOffset[1]
   const margin = useMemo(
-    () => getMarginsWithLegend(
-      xAxis, yAxis, xAxisLabel, yAxisLabel, 
-      legend, xOffset, yOffset, cWidth, cHeight
+    () =>
+      getMarginsWithLegend(
+        xAxis,
+        yAxis,
+        xAxisLabel,
+        yAxisLabel,
+        legend,
+        xOffset,
+        yOffset,
+        cWidth,
+        cHeight
       ),
-    [xAxis, yAxis, xAxisLabel, yAxisLabel, legend, xOffset, yOffset, cWidth, cHeight]
-  );
+    [
+      xAxis,
+      yAxis,
+      xAxisLabel,
+      yAxisLabel,
+      legend,
+      xOffset,
+      yOffset,
+      cWidth,
+      cHeight,
+    ]
+  )
 
   const { xAxisX, xAxisY } = useMemo(
     () => getXAxisCoordinates(xAxis, cHeight, margin),
@@ -80,7 +98,7 @@ export default function ScatterPlot({
     groups: d3.InternMap<any, any[]>
   const groupAccessor = (d: any) => d[groupBy ?? ""]
   groups = d3.group(data, groupAccessor)
-  keys = groupBy ? Array.from(groups).map((group) => group[0]) : [yKey];
+  keys = groupBy ? Array.from(groups).map((group) => group[0]) : [yKey]
 
   const xAccessor: xAccessorFunc = useMemo(() => {
     return xType === "number" ? (d) => d[xKey] : (d) => new Date(d[xKey])
@@ -112,7 +130,7 @@ export default function ScatterPlot({
 
   const colorScale: ColorScale = d3.scaleOrdinal(colorScheme)
   colorScale.domain(keys)
-  console.log('mar', margin)
+  console.log("mar", margin)
 
   return (
     <svg ref={anchor} width={width} height={height}>
@@ -130,18 +148,18 @@ export default function ScatterPlot({
             label={yAxisLabel}
           />
         )}
-          {yAxisLabel &&
-            <Label 
-              x={yAxisX}
-              y={yAxisY}
-              height={cHeight}
-              width={cWidth}
-              margin={margin}
-              type={yAxis ? yAxis : 'left'}
-              axis = {yAxis ? true : false}
-              label={yAxisLabel}
-            />
-        }
+        {yAxisLabel && (
+          <Label
+            x={yAxisX}
+            y={yAxisY}
+            height={cHeight}
+            width={cWidth}
+            margin={margin}
+            type={yAxis ? yAxis : "left"}
+            axis={yAxis ? true : false}
+            label={yAxisLabel}
+          />
+        )}
         {xAxis && (
           <Axis
             x={xAxisX}
@@ -155,18 +173,18 @@ export default function ScatterPlot({
             label={xAxisLabel}
           />
         )}
-        {xAxisLabel &&
-          <Label 
+        {xAxisLabel && (
+          <Label
             x={xAxisX}
             y={xAxisY}
             height={cHeight}
             width={cWidth}
             margin={margin}
-            type={xAxis ? xAxis : 'bottom'}
-            axis = {xAxis ? true : false}
+            type={xAxis ? xAxis : "bottom"}
+            axis={xAxis ? true : false}
             label={xAxisLabel}
           />
-        }
+        )}
         {data.map((element: any, i: number) =>
           !groupBy ? (
             <Circle
@@ -198,23 +216,34 @@ export default function ScatterPlot({
           />
         )}
 
-        { // If legend prop is truthy, render legend component:
-        legend && <ColorLegend 
-          legendLabel={legendLabel } 
-          circleRadius={5 /* Radius of each color swab in legend */}
-          colorScale={colorScale}
-          setLegendOffset={setLegendOffset}
-          legendPosition={legend}
-          legendWidth={xOffset}
-          legendHeight={yOffset}
-          margin={margin}
-          cWidth={cWidth}
-          cHeight={cHeight}
-          EXTRA_LEGEND_MARGIN={EXTRA_LEGEND_MARGIN}
-        />}
+        {
+          // If legend prop is truthy, render legend component:
+          legend && (
+            <ColorLegend
+              legendLabel={legendLabel}
+              circleRadius={5 /* Radius of each color swab in legend */}
+              colorScale={colorScale}
+              setLegendOffset={setLegendOffset}
+              legendPosition={legend}
+              legendWidth={xOffset}
+              legendHeight={yOffset}
+              margin={margin}
+              cWidth={cWidth}
+              cHeight={cHeight}
+              EXTRA_LEGEND_MARGIN={EXTRA_LEGEND_MARGIN}
+            />
+          )
+        }
 
-      {tooltip && <Tooltip x={tooltip.cx} y={tooltip.cy} />}
-
+        {tooltip && (
+          <Tooltip
+            data={tooltip}
+            x={tooltip.cx}
+            y={tooltip.cy}
+            xKey={xKey}
+            yKey={yKey}
+          />
+        )}
       </g>
     </svg>
   )

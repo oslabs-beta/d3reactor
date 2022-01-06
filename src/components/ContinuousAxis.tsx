@@ -2,7 +2,7 @@ import React, { useMemo } from "react"
 import * as d3 from "d3"
 import { ContinuousAxisProps } from "../../types"
 import { getAxisLabelCoordinates } from "../utils"
-import { gridGenerator } from '../functionality/grid';
+import { gridGenerator } from "../functionality/grid"
 
 function Axi({
   x,
@@ -79,7 +79,8 @@ function Axi({
   const getTickStyle = (
     axisType: string,
     individualTick: number | Date
-  ): any => { // TODO remove any
+  ): any => {
+    // TODO remove any
     switch (axisType) {
       case "top":
         return { textAnchor: "middle", dominantBaseline: "auto" }
@@ -92,21 +93,26 @@ function Axi({
     }
   }
 
+  let grid = gridGenerator(
+    type,
+    xGrid,
+    yGrid,
+    xTicksValue,
+    scale,
+    height,
+    width,
+    margin
+  )
 
- let grid = gridGenerator(type, xGrid, yGrid, xTicksValue, scale, height, width, margin);
-
-  let numberOfHorizontalTicks: number;
-  if (width < 480 ) {
-    numberOfHorizontalTicks = width/ 100;
-  }
-  else if (width < 769) {
-    numberOfHorizontalTicks = width/ 120;
-  }
-  else  if ( width < 1024){
-    numberOfHorizontalTicks = width/ 140;
-  }
-  else {
-    numberOfHorizontalTicks = width/ 160;
+  let numberOfHorizontalTicks: number
+  if (width < 480) {
+    numberOfHorizontalTicks = width / 100
+  } else if (width < 769) {
+    numberOfHorizontalTicks = width / 120
+  } else if (width < 1024) {
+    numberOfHorizontalTicks = width / 140
+  } else {
+    numberOfHorizontalTicks = width / 160
   }
 
   const numberOfVerticalTicks: number = height / 100
@@ -123,10 +129,15 @@ function Axi({
   }
   return (
     <g>
-      <g transform={`translate(${x}, ${y})`}>
-        {grid}
-      </g>
-      <line stroke="#77848d" strokeWidth={1.9} x1={x1} y1={y1} x2={x2} y2={y2} />
+      <g transform={`translate(${x}, ${y})`}>{grid}</g>
+      <line
+        stroke="#77848d"
+        strokeWidth={1.9}
+        x1={x1}
+        y1={y1}
+        x2={x2}
+        y2={y2}
+      />
       {(type === "top" || type === "bottom") &&
         horizontalTicks.map((tick, i) => (
           <text
@@ -148,7 +159,7 @@ function Axi({
           </text>
         ))}
     </g>
-  );
+  )
 }
 
 function AxisPropsAreEqual(
