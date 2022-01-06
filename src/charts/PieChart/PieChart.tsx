@@ -59,6 +59,7 @@ export default function PieChart({
     ? checkRadiusDimension(cHeight, cWidth, outerRadius, margin, legend)
     : calculateOuterRadius(cHeight, cWidth, margin);
 
+  if (outerRadius < 20) outerRadius = 20;
   if (ratio) {
     innerRadius = ratio * outerRadius;
   } else if (innerRadius) {
