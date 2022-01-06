@@ -110,10 +110,10 @@ export default function PieChart({
   let translateY = 0
   switch (legend) {
     case "top":
-      xPosition = -xOffset / 2 + EXTRA_LEGEND_MARGIN
-      yPosition = -outerRadius - margin.top / 2 - EXTRA_LEGEND_MARGIN
-      translateY = yOffset
-      break
+      xPosition = -xOffset / 2 + EXTRA_LEGEND_MARGIN;
+      yPosition = -outerRadius - margin.top / 2 + EXTRA_LEGEND_MARGIN;
+      translateY = yOffset;
+      break;
     case "bottom":
       xPosition = -xOffset / 2 + EXTRA_LEGEND_MARGIN
       yPosition = outerRadius + margin.bottom / 2 + EXTRA_LEGEND_MARGIN
@@ -134,20 +134,20 @@ export default function PieChart({
       translateX = xOffset
       break
     case "left-top":
-      xPosition = -outerRadius - xOffset + EXTRA_LEGEND_MARGIN
-      yPosition = -outerRadius - margin.top / 2 - EXTRA_LEGEND_MARGIN
-      translateY = yOffset
-      break
+      xPosition = -outerRadius - xOffset + EXTRA_LEGEND_MARGIN;
+      yPosition = -outerRadius - margin.top / 2 + EXTRA_LEGEND_MARGIN;
+      translateY = yOffset;
+      break;
     case "left-bottom":
       xPosition = -outerRadius - xOffset + EXTRA_LEGEND_MARGIN
       yPosition = outerRadius + margin.bottom / 2 + EXTRA_LEGEND_MARGIN
       translateY = -yOffset
       break
     case "right-top":
-      xPosition = outerRadius - EXTRA_LEGEND_MARGIN
-      yPosition = -outerRadius - margin.top / 2 - EXTRA_LEGEND_MARGIN
-      translateY = yOffset
-      break
+      xPosition = outerRadius - EXTRA_LEGEND_MARGIN;
+      yPosition = -outerRadius - margin.top / 2 + EXTRA_LEGEND_MARGIN;
+      translateY = yOffset;
+      break;
     case "top-right":
       yPosition = -outerRadius + margin.top + EXTRA_LEGEND_MARGIN
       translateX = -xOffset
