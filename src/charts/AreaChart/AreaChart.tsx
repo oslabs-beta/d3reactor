@@ -119,7 +119,7 @@ export default function AreaChart({
 
   const colorScale: ColorScale = d3.scaleOrdinal(colorScheme)
   colorScale.domain(keys)
-console.log(margin)
+
 
   return (
     <svg ref={anchor} width={width} height={height}>
@@ -186,8 +186,8 @@ console.log(margin)
           colorScale={colorScale}
           setLegendOffset={setLegendOffset}
           legendPosition={legend}
-          xOffset={xOffset}
-          yOffset={yOffset}
+          legendWidth={xOffset}
+          legendHeight={yOffset}
           margin={margin}
           cWidth={cWidth}
           cHeight={cHeight}

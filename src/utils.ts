@@ -1,4 +1,5 @@
 import { Margin, LegendPos } from "../types"
+import { DiscreteAxis } from "./components/DiscreteAxis";
 
 export const EXTRA_LEGEND_MARGIN = 6;
 
@@ -179,6 +180,9 @@ export function getMarginsWithLegend(
   return { left, right, top, bottom }
 }
 
+export const LABEL_MARGIN = 20;
+export const AXIS_MARGIN = 40;
+
 export function getAxisLabelCoordinates(
   x: number,
   y: number,
@@ -192,8 +196,8 @@ export function getAxisLabelCoordinates(
   let rotate = 0
   let axisLabelX: number = 0
   let axisLabelY: number = 0
-  let labelMargin: number = 20;
-  let axisMargin:number = 40;
+  let labelMargin = LABEL_MARGIN;
+  let axisMargin = AXIS_MARGIN;
   switch (type) {
     case "top":
       axisLabelX = width / 2 - margin.left / 2 - margin.right / 2
@@ -232,26 +236,62 @@ export function checkRadiusDimension(
   height: number,
   width: number,
   radius: number | string, 
-  margin: Margin
+  margin: Margin,
+  legend?: LegendPos,
 ) {
-  if(typeof radius === "string" && radius.endsWith("%")) {
-    radius = radius.slice(0,-1)   
-    return Number(radius)*Math.min((height-margin.top)/2, (width-margin.left)/2)*0.01
+  //TODO: add minimum radius here?
+
+  let legendMargin = 0;
+  let screenSize = Math.min(height,width);
+  switch (legend) {
+    case 'top':
+    case 'left-top':
+    case 'right-top': 
+      legendMargin = margin.top;
+      break;
+    case 'bottom':
+    case 'left-bottom':
+    case 'right-bottom': 
+      legendMargin = Math.abs(margin.bottom);
+      break;
+    case 'left':
+    case 'top-left':
+    case 'bottom-left':
+      legendMargin = margin.left;
+      break;
+    case 'right':
+    case 'top-right':
+    case 'top-right':
+      legendMargin = margin.right;
+      break;
   }
-  if(Number(radius) > Math.min(height/2, width/2)) {
-      return Math.min(height/2,width/2) - margin.top
+
+  if(typeof radius === "string" && radius.endsWith("%")) {
+    radius = radius.slice(0,-1);   
+    return Number(radius)*(screenSize - legendMargin)/2*0.01;
+  }
+  else if(Number(radius) > (screenSize - legendMargin)/2) {
+    return (screenSize - legendMargin)/2;
   }
   else {
-    return Number(radius)
+    return Number(radius);
   }
 }
+
 
 export function calculateOuterRadius(
   height: number,
   width: number,
   margin: Margin,
 ) {
-  return Math.min((height - margin.top - margin.bottom)/2, (width - margin.left - margin.right)/2)
+  const radius = 
+    Math.min(
+      (height - margin.top - margin.bottom)/2, 
+      (width - margin.left - margin.right)/2
+    ); 
+  return (
+    Math.min(radius, 20)
+  )
 }
 
 
