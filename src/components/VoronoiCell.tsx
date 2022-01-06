@@ -10,7 +10,6 @@ export const VoronoiCell = ({
   setTooltip,
   data,
 }: VoronoiProps): JSX.Element => {
-  // console.log('cell rerendered')
   return (
     <path
       fill={fill}

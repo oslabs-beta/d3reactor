@@ -3,7 +3,6 @@ import { CircleProps } from "../../types"
 
 export const Circle = React.memo(
   ({ cx, cy, r = 4, color }: CircleProps): JSX.Element => {
-    // consoleap.log('circle rerendered')
     return (
       <circle
         cx={cx}

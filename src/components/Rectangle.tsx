@@ -12,12 +12,6 @@ export const Rectangle = React.memo(
     setTooltip,
   }: RectangleProps): JSX.Element => {
     let cellCenter = { cx: x, cy: y, tooltipData: data }
-    if (typeof x === "number" && typeof y === "number") {
-      const cx = x + width / 2
-      const cy = y - 50
-    }
-
-    // console.log("Tooltip data ", data)
     return (
       <rect
         x={x}

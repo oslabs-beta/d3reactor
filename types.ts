@@ -19,6 +19,8 @@ export interface ScatterPlotProps<T> {
   xAxisLabel?: string
   yAxisLabel?: string
   colorScheme?: string[] | readonly string[]
+  legend?: LegendPos
+  legendLabel?: string
 }
 
 export interface BarChartProps<T> {
@@ -34,6 +36,8 @@ export interface BarChartProps<T> {
   xAxisLabel?: string
   yAxisLabel?: string
   colorScheme?: string[] | readonly string[]
+  legend?: LegendPos
+  legendLabel?: string
 }
 
 export interface LineChartProps<T> {
@@ -51,6 +55,8 @@ export interface LineChartProps<T> {
   xAxisLabel?: string
   yAxisLabel?: string
   colorScheme?: string[] | readonly string[]
+  legend?: LegendPos
+  legendLabel?: string
 }
 
 export interface AreaChartProps<T> {
@@ -79,7 +85,8 @@ export interface PieChartProps {
   innerRadius?: number | string | undefined
   outerRadius?: number | string | undefined
   colorScheme?: string[] | readonly string[]
-  legend?: boolean
+  legend?: LegendPos
+  legendLabel?: string
 }
 
 export interface PieChartBodyProps {
@@ -109,7 +116,7 @@ export interface ContinuousAxisProps {
   scale:
     | d3.ScaleLinear<number, number, never>
     | d3.ScaleTime<number, number, never>
-  type: string
+  type: "top" | "right" | "bottom" | "left"
   label: string | undefined
   height: number
   width: number
@@ -123,11 +130,14 @@ export interface DiscreteAxisProps {
   xGrid?: boolean
   yGrid?: boolean
   scale: d3.ScaleBand<string>
-  type: string
+  type: "top" | "right" | "bottom" | "left"
   label: string | undefined
   height: number
   width: number
   margin: Margin
+  data: Data[]
+  layers: any
+  xAccessor: (d: Data) => string
 }
 
 export interface TooltipProps {
@@ -199,14 +209,19 @@ export interface ColorLegendProps {
   tickSpacing?: number
   circleRadius: number
   tickTextOffset?: number
-  colorLegendLabel?: string
+  legendLabel?: string
   legendPosition: LegendPos
-  xOffset: number
-  yOffset: number
+  legendWidth: number
+  legendHeight: number
+  xPosition?: number
+  yPosition?: number
   setLegendOffset: React.Dispatch<any>
   margin: Margin
+  xAxisPosition?: "top" | "bottom" | false
+  yAxisPosition?: "left" | "right" | false
   cWidth: number
   cHeight: number
+  EXTRA_LEGEND_MARGIN: number
   fontSize?: number
 }
 
@@ -220,6 +235,10 @@ export type LegendPos =
   | "top-right"
   | "bottom-left"
   | "bottom-right"
+  | "left-bottom"
+  | "right-bottom"
+  | "left-top"
+  | "right-top"
 
 export type ScaleFunc =
   | d3.ScaleLinear<number, number, never>

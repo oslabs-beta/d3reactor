@@ -4,6 +4,7 @@ import * as d3 from "d3"
 import { useResponsive } from "../../hooks/useResponsive"
 import { Axis } from "../../components/ContinuousAxis"
 import { Circle } from "../../components/Circle"
+import { ColorLegend } from "../../components/ColorLegend"
 
 import { d3Voronoi } from "../../functionality/voronoi"
 import { xScaleDef } from "../../functionality/xScale"
@@ -19,9 +20,11 @@ import {
 import {
   getXAxisCoordinates,
   getYAxisCoordinates,
-  getMargins,
+  getMarginsWithLegend,
   inferXDataType,
+  EXTRA_LEGEND_MARGIN,
 } from "../../utils"
+import { Label } from "../../components/Label"
 
 export default function ScatterPlot({
   data,
@@ -37,6 +40,8 @@ export default function ScatterPlot({
   yGrid = false,
   xAxisLabel,
   yAxisLabel,
+  legend,
+  legendLabel,
   colorScheme = d3.quantize(d3.interpolateHcl("#9dc8e2", "#07316b"), 8),
 }: ScatterPlotProps<string | number>): JSX.Element {
   const [tooltip, setTooltip] = useState<false | any>(false)
@@ -44,9 +49,34 @@ export default function ScatterPlot({
 
   const { anchor, cHeight, cWidth } = useResponsive()
 
+  // width & height of legend, so we know how much to squeeze chart by
+  const [legendOffset, setLegendOffset] = useState<[number, number]>([0, 0])
+  const xOffset = legendOffset[0]
+  const yOffset = legendOffset[1]
   const margin = useMemo(
-    () => getMargins(xAxis, yAxis, xAxisLabel, yAxisLabel),
-    [xAxis, yAxis, xAxisLabel, yAxisLabel]
+    () =>
+      getMarginsWithLegend(
+        xAxis,
+        yAxis,
+        xAxisLabel,
+        yAxisLabel,
+        legend,
+        xOffset,
+        yOffset,
+        cWidth,
+        cHeight
+      ),
+    [
+      xAxis,
+      yAxis,
+      xAxisLabel,
+      yAxisLabel,
+      legend,
+      xOffset,
+      yOffset,
+      cWidth,
+      cHeight,
+    ]
   )
 
   const { xAxisX, xAxisY } = useMemo(
@@ -68,7 +98,7 @@ export default function ScatterPlot({
     groups: d3.InternMap<any, any[]>
   const groupAccessor = (d: any) => d[groupBy ?? ""]
   groups = d3.group(data, groupAccessor)
-  keys = Array.from(groups).map((group) => group[0])
+  keys = groupBy ? Array.from(groups).map((group) => group[0]) : [yKey]
 
   const xAccessor: xAccessorFunc = useMemo(() => {
     return xType === "number" ? (d) => d[xKey] : (d) => new Date(d[xKey])
@@ -100,6 +130,7 @@ export default function ScatterPlot({
 
   const colorScale: ColorScale = d3.scaleOrdinal(colorScheme)
   colorScale.domain(keys)
+  console.log("mar", margin)
 
   return (
     <svg ref={anchor} width={width} height={height}>
@@ -117,6 +148,18 @@ export default function ScatterPlot({
             label={yAxisLabel}
           />
         )}
+        {yAxisLabel && (
+          <Label
+            x={yAxisX}
+            y={yAxisY}
+            height={cHeight}
+            width={cWidth}
+            margin={margin}
+            type={yAxis ? yAxis : "left"}
+            axis={yAxis ? true : false}
+            label={yAxisLabel}
+          />
+        )}
         {xAxis && (
           <Axis
             x={xAxisX}
@@ -127,6 +170,18 @@ export default function ScatterPlot({
             margin={margin}
             scale={xScale}
             type={xAxis}
+            label={xAxisLabel}
+          />
+        )}
+        {xAxisLabel && (
+          <Label
+            x={xAxisX}
+            y={xAxisY}
+            height={cHeight}
+            width={cWidth}
+            margin={margin}
+            type={xAxis ? xAxis : "bottom"}
+            axis={xAxis ? true : false}
             label={xAxisLabel}
           />
         )}
@@ -160,6 +215,26 @@ export default function ScatterPlot({
             setTooltip={setTooltip}
           />
         )}
+
+        {
+          // If legend prop is truthy, render legend component:
+          legend && (
+            <ColorLegend
+              legendLabel={legendLabel}
+              circleRadius={5 /* Radius of each color swab in legend */}
+              colorScale={colorScale}
+              setLegendOffset={setLegendOffset}
+              legendPosition={legend}
+              legendWidth={xOffset}
+              legendHeight={yOffset}
+              margin={margin}
+              cWidth={cWidth}
+              cHeight={cHeight}
+              EXTRA_LEGEND_MARGIN={EXTRA_LEGEND_MARGIN}
+            />
+          )
+        }
+
         {tooltip && (
           <Tooltip
             data={tooltip}

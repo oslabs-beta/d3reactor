@@ -1,4 +1,7 @@
 import { Margin, LegendPos } from "../types"
+import { DiscreteAxis } from "./components/DiscreteAxis";
+
+export const EXTRA_LEGEND_MARGIN = 6;
 
 export function getXAxisCoordinates(
   xAxis: "top" | "bottom" | false = "bottom",
@@ -72,44 +75,78 @@ export function getMargins(
 }
 
 export function getMarginsWithLegend(
-  xAxis: "top" | "bottom" | false = "bottom",
-  yAxis: "left" | "right" | false = "left",
+  xAxis: "top" | "bottom" | false | undefined,
+  yAxis: "left" | "right" | false | undefined,
   xAxisLabel: string | undefined,
   yAxisLabel: string | undefined,
   legend: LegendPos = false,
-  xOffset: number,
-  yOffset: number,
+  xOffset: number = 0,
+  yOffset: number = 0,
   // legendOffset: [number, number] = [0, 0], // ideally this should be mandatory if legend is truthy
   cWidth: number = 0,                      // ideally this should be mandatory if legend is truthy
   cHeight: number = 0,                     // ideally this should be mandatory if legend is truthy
 ) {
   let left = 20,
-    right = 20,
-    top = 20,
-    bottom = 20
+      right = 20,
+      top = 20,
+      bottom = 20;
   function addVerticalMargin() {
     switch (xAxis) {
       case "top":
-        top += 40
+        top += 40;
         break
       case "bottom":
-        bottom += 40
+        bottom += 40;
     }
   }
   function addHorizontalMargin() {
     switch (yAxis) {
       case "left":
-        left += 40
+        left += 40;
         break
       case "right":
-        right += 40
+        right += 40;
     }
   }
-  if (xAxis) addVerticalMargin()
-  if (xAxis && xAxisLabel) addVerticalMargin()
-  if (yAxis) addHorizontalMargin()
-  if (yAxis && yAxisLabel) addHorizontalMargin()
 
+  function addVerticalMargin1() {
+    switch (xAxis) {
+      case "top":
+        top += 20;
+        break
+      case "bottom":
+        bottom += 20;
+        break
+      case undefined:
+        bottom += 20;
+        break
+      case false:
+        bottom += 20;
+        break
+    }
+  }
+  function addHorizontalMargin1() {
+    switch (yAxis) {
+      case "left":
+        left += 20;
+        break
+      case "right":
+        right += 20;
+        break
+        case undefined:
+        left += 20;
+        break
+        case false:
+        left += 20;
+        break
+    }
+  }
+  if (xAxis) addVerticalMargin();
+  if (xAxisLabel) addVerticalMargin1();
+  if (yAxis) addHorizontalMargin();
+  if (yAxisLabel) addHorizontalMargin1();
+  
+  if (legend === true) legend = 'right';
   if (legend) {
     // make room for legend by adjusting margin:
     // const xOffset = legendOffset[0];
@@ -117,27 +154,34 @@ export function getMarginsWithLegend(
     let marginExt = 0;
     switch(legend) {
       case 'top':
-        top = top + yOffset;
+      case 'left-top':
+      case 'right-top':
+        top += yOffset + EXTRA_LEGEND_MARGIN;
         break;
+      case 'left-bottom':
+      case 'right-bottom':
       case 'bottom':
-        bottom = bottom + yOffset;
+        bottom += yOffset + EXTRA_LEGEND_MARGIN;
         break;
       case 'left': 
       case 'top-left': 
       case 'bottom-left': 
-        marginExt = left + xOffset;
+        marginExt = left + xOffset + EXTRA_LEGEND_MARGIN;
         if (marginExt > 0) left = marginExt;
         break;
       case 'top-right':
       case 'bottom-right':
       case 'right':
       default:
-        marginExt = right + xOffset;
+        marginExt = right + xOffset + EXTRA_LEGEND_MARGIN;
         if (marginExt > 0) right = marginExt;
     }
   }
   return { left, right, top, bottom }
 }
+
+export const LABEL_MARGIN = 20;
+export const AXIS_MARGIN = 40;
 
 export function getAxisLabelCoordinates(
   x: number,
@@ -145,33 +189,41 @@ export function getAxisLabelCoordinates(
   height: number,
   width: number,
   margin: Margin,
-  type: string
+  type: string | boolean,
+  axis: boolean,
+  fontSize = 16 
 ) {
   let rotate = 0
   let axisLabelX: number = 0
   let axisLabelY: number = 0
-  let labelMargin: number = 40
+  let labelMargin = LABEL_MARGIN;
+  let axisMargin = AXIS_MARGIN;
   switch (type) {
     case "top":
       axisLabelX = width / 2 - margin.left / 2 - margin.right / 2
-      axisLabelY = y - labelMargin
+      axisLabelY = y - labelMargin/2 - axisMargin
       rotate = 0
       break
     case "right":
-      axisLabelX = x + labelMargin
+      axisLabelX = x + labelMargin/2 + axisMargin
       axisLabelY = (height - margin.top - margin.bottom) / 2
       rotate = 90
       break
     case "bottom":
       axisLabelX = width / 2 - margin.left / 2 - margin.right / 2
-      axisLabelY = y + labelMargin
+      axisLabelY = axis ? (y + labelMargin/2 + axisMargin) : (y + labelMargin)
       rotate = 0
       break
     case "left":
-      axisLabelX = -labelMargin
+      axisLabelX = axis ? -labelMargin/2 - axisMargin : -labelMargin
       axisLabelY = (height - margin.top - margin.bottom) / 2
       rotate = -90
       break
+    case false:
+      axisLabelX = -labelMargin/2
+      axisLabelY = (height - margin.top - margin.bottom) / 2
+      rotate = -90
+
   }
   return {
     axisLabelX,
@@ -184,26 +236,62 @@ export function checkRadiusDimension(
   height: number,
   width: number,
   radius: number | string, 
-  margin: Margin
+  margin: Margin,
+  legend?: LegendPos,
 ) {
-  if(typeof radius === "string" && radius.endsWith("%")) {
-    radius = radius.slice(0,-1)   
-    return Number(radius)*Math.min((height-margin.top)/2, (width-margin.left)/2)*0.01
+  //TODO: add minimum radius here?
+
+  let legendMargin = 0;
+  let screenSize = Math.min(height,width);
+  switch (legend) {
+    case 'top':
+    case 'left-top':
+    case 'right-top': 
+      legendMargin = margin.top;
+      break;
+    case 'bottom':
+    case 'left-bottom':
+    case 'right-bottom': 
+      legendMargin = Math.abs(margin.bottom);
+      break;
+    case 'left':
+    case 'top-left':
+    case 'bottom-left':
+      legendMargin = margin.left;
+      break;
+    case 'right':
+    case 'top-right':
+    case 'top-right':
+      legendMargin = margin.right;
+      break;
   }
-  if(Number(radius) > Math.min(height/2, width/2)) {
-      return Math.min(height/2,width/2) - margin.top
+
+  if(typeof radius === "string" && radius.endsWith("%")) {
+    radius = radius.slice(0,-1);   
+    return Number(radius)*(screenSize - legendMargin)/2*0.01;
+  }
+  else if(Number(radius) > (screenSize - legendMargin)/2) {
+    return (screenSize - legendMargin)/2;
   }
   else {
-    return Number(radius)
+    return Number(radius);
   }
 }
+
 
 export function calculateOuterRadius(
   height: number,
   width: number,
   margin: Margin,
 ) {
-  return Math.min((height - margin.top - margin.bottom)/2, (width - margin.left - margin.right)/2)
+  const radius = 
+    Math.min(
+      (height - margin.top - margin.bottom)/2, 
+      (width - margin.left - margin.right)/2
+    ); 
+  return (
+    Math.min(radius, 20)
+  )
 }
 
 

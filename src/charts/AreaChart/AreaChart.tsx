@@ -5,24 +5,23 @@ import {
   AreaChartProps,
   ColorScale,
   xAccessorFunc,
-  Data,
   yAccessorFunc,
 } from "../../../types"
 import { Axis } from "../../components/ContinuousAxis"
+import { Label } from "../../components/Label"
 import { useResponsive } from "../../hooks/useResponsive"
 import { xScaleDef } from "../../functionality/xScale"
 import { yScaleDef } from "../../functionality/yScale"
-import { d3Voronoi } from "../../functionality/voronoi"
 import ListeningRect from "../../components/ListeningRect"
 import { Tooltip } from "../../components/Tooltip"
 import { ColorLegend } from "../../components/ColorLegend"
 import {
   getXAxisCoordinates,
   getYAxisCoordinates,
-  getMargins,
   getMarginsWithLegend,
   inferXDataType,
   transformSkinnyToWide,
+  EXTRA_LEGEND_MARGIN,
 } from "../../utils"
 
 export default function AreaChart({
@@ -39,16 +38,16 @@ export default function AreaChart({
   yGrid = false,
   xAxisLabel,
   yAxisLabel,
-  legend = "right",
-  legendLabel = groupBy,
+  legend,
+  legendLabel = "",
   colorScheme = d3.quantize(d3.interpolateHcl("#9dc8e2", "#07316b"), 8),
 }: AreaChartProps<string | number>): JSX.Element {
   const [tooltip, setTooltip] = useState<false | any>(false)
-  // width & height of legend, so we know how much to squeeze chart by
-  const [legendOffset, setLegendOffset] = useState<[number, number]>([0, 0])
   const chart = "AreaChart"
   const { anchor, cHeight, cWidth } = useResponsive()
 
+  // width & height of legend, so we know how much to squeeze chart by
+  const [legendOffset, setLegendOffset] = useState<[number, number]>([0, 0])
   const xOffset = legendOffset[0]
   const yOffset = legendOffset[1]
   const margin = useMemo(
@@ -160,6 +159,18 @@ export default function AreaChart({
             label={yAxisLabel}
           />
         )}
+        {yAxisLabel && (
+          <Label
+            x={yAxisX}
+            y={yAxisY}
+            height={cHeight}
+            width={cWidth}
+            margin={margin}
+            type={yAxis ? yAxis : "left"}
+            axis={yAxis ? true : false}
+            label={yAxisLabel}
+          />
+        )}
         {xAxis && (
           <Axis
             x={xAxisX}
@@ -174,29 +185,40 @@ export default function AreaChart({
             xTicksValue={xTicksValue}
           />
         )}
+        {xAxisLabel && (
+          <Label
+            x={xAxisX}
+            y={xAxisY}
+            height={cHeight}
+            width={cWidth}
+            margin={margin}
+            type={xAxis ? xAxis : "bottom"}
+            axis={xAxis ? true : false}
+            label={xAxisLabel}
+          />
+        )}
         {layers.map((layer, i) => (
           <path key={i} d={areaGenerator(layer)} fill={colorScale(layer.key)} />
         ))}
-
         {
           // If legend prop is truthy, render legend component:
           legend && (
             <ColorLegend
-              colorLegendLabel={
-                legendLabel /**we need a way to derive this either from data or as an extra prop passed in */
-              }
+              legendLabel={legendLabel}
               circleRadius={5 /* Radius of each color swab in legend */}
               colorScale={colorScale}
               setLegendOffset={setLegendOffset}
               legendPosition={legend}
-              xOffset={xOffset}
-              yOffset={yOffset}
+              legendWidth={xOffset}
+              legendHeight={yOffset}
               margin={margin}
               cWidth={cWidth}
               cHeight={cHeight}
+              EXTRA_LEGEND_MARGIN={EXTRA_LEGEND_MARGIN}
             />
           )
         }
+
         {tooltip && (
           <Tooltip
             data={tooltip}
