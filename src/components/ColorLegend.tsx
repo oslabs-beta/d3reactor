@@ -1,5 +1,5 @@
 
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { ColorLegendProps } from "../../types"
 
 export const ColorLegend = ({
