@@ -59,6 +59,7 @@ export default function PieChart({
     ? checkRadiusDimension(cHeight, cWidth, outerRadius, margin, legend)
     : calculateOuterRadius(cHeight, cWidth, margin);
 
+  if (outerRadius < 20) outerRadius = 20;
   if (ratio) {
     innerRadius = ratio * outerRadius;
   } else if (innerRadius) {
@@ -101,7 +102,6 @@ export default function PieChart({
     const [x, y] = arcGenerator.centroid(d);
     return `translate(${x}, ${y})`;
   };
-
   // Position of the legend
   let xPosition = outerRadius + margin.left;
   let yPosition = EXTRA_LEGEND_MARGIN;
@@ -110,13 +110,13 @@ export default function PieChart({
   let translateY = 0;
   switch (legend) {
     case "top":
-      xPosition = -margin.top / 2 - EXTRA_LEGEND_MARGIN;
+      xPosition = -xOffset / 2 + EXTRA_LEGEND_MARGIN;
       yPosition = -outerRadius - margin.top / 2 - EXTRA_LEGEND_MARGIN;
       translateY = yOffset;
       break;
     case "bottom":
-      xPosition = margin.bottom / 2 + EXTRA_LEGEND_MARGIN;
-      yPosition = outerRadius - margin.bottom / 2 + EXTRA_LEGEND_MARGIN;
+      xPosition = -xOffset / 2 + EXTRA_LEGEND_MARGIN;
+      yPosition = outerRadius + margin.bottom / 2 + EXTRA_LEGEND_MARGIN;
       translateY = -yOffset;
       break;
     case "left":
@@ -140,7 +140,7 @@ export default function PieChart({
       break;
     case "left-bottom":
       xPosition = -outerRadius - xOffset + EXTRA_LEGEND_MARGIN;
-      yPosition = outerRadius - margin.bottom / 2 + EXTRA_LEGEND_MARGIN;
+      yPosition = outerRadius + margin.bottom / 2 + EXTRA_LEGEND_MARGIN;
       translateY = -yOffset;
       break;
     case "right-top":
@@ -158,7 +158,7 @@ export default function PieChart({
       break;
     case "right-bottom":
       xPosition = outerRadius - EXTRA_LEGEND_MARGIN;
-      yPosition = outerRadius - margin.bottom / 2 - EXTRA_LEGEND_MARGIN;
+      yPosition = outerRadius + margin.bottom / 2 + EXTRA_LEGEND_MARGIN;
       translateY = -yOffset;
       break;
     case "right":
