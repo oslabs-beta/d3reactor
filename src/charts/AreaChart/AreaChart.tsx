@@ -149,6 +149,7 @@ export default function AreaChart({
   return (
     <div>
       {position.x}:{position.y}
+      <div className="tooltip"></div>
       <svg ref={anchor} width={width} height={height}>
         <g transform={translate}>
           {yAxis && (
