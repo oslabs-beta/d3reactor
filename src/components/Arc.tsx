@@ -12,12 +12,15 @@ import {
 
 export const Arc = React.memo(
   ({
+    data,
+    key,
     fill = "none",
     stroke,
     strokeWidth = "1px",
     d,
     setTooltip,
   }: ArcProps): JSX.Element => {
+    // console.log("Arc data ", data)
     function onMouseMove(e: any) {
       const mousePosition = d3.pointer(e)
       const hoveredX = mousePosition[0]
@@ -70,7 +73,9 @@ export const Arc = React.memo(
       // }
 
       if (setTooltip) {
-        setTooltip({ cx: hoveredX, cy: hoveredY })
+        const cellCenter = { cx: hoveredX, cy: hoveredY, tooltipData: data }
+        // console.log("CELL CENTER ", cellCenter)
+        setTooltip(cellCenter)
       }
     }
 

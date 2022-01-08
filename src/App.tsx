@@ -1,16 +1,16 @@
 /* eslint-disable no-unused-vars */
-import React from "react";
-import "./App.css";
-import BarChart from "./charts/BarChart/BarChart";
-import LineChart from "./charts/LineChart/LineChart";
-import AreaChart from "./charts/AreaChart/AreaChart";
-import ScatterPlot from "./charts/ScatterPlot/ScatterPlot";
-import PieChart from "./charts/PieChart/PieChart";
-import unemployment from "./data/unemployment.json";
-import penguins from "./data/penguins.json";
-import portfolio from "./data/portfolio.json";
-import fruit from "./data/fruit.json";
-import skinny_fruit from "./data/skinny_fruit.json";
+import React from "react"
+import "./App.css"
+import BarChart from "./charts/BarChart/BarChart"
+import LineChart from "./charts/LineChart/LineChart"
+import AreaChart from "./charts/AreaChart/AreaChart"
+import ScatterPlot from "./charts/ScatterPlot/ScatterPlot"
+import PieChart from "./charts/PieChart/PieChart"
+import unemployment from "./data/unemployment.json"
+import penguins from "./data/penguins.json"
+import portfolio from "./data/portfolio.json"
+import fruit from "./data/fruit.json"
+import skinny_fruit from "./data/skinny_fruit.json"
 
 function App() {
   return (
@@ -29,7 +29,7 @@ function App() {
         value="value"
         innerRadius={"85%"}
         outerRadius={"100%"}
-        legend="right-top"
+        legend="left-top"
       />
       <AreaChart
         data={penguins}
@@ -142,7 +142,7 @@ function App() {
         legend={"bottom-left"}
       />
     </div>
-  );
+  )
 }
 
-export default App;
+export default App

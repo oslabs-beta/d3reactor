@@ -137,7 +137,23 @@ export interface DiscreteAxisProps {
   margin: Margin
   data: Data[]
   layers: any
-  xAccessor: (d: Data) => string 
+  xAccessor: (d: Data) => string
+}
+
+export interface TooltipProps {
+  chartType?:
+    | "bar-chart"
+    | "line-chart"
+    | "area-chart"
+    | "scatter-plot"
+    | "pie-chart"
+  data: any
+  xAccessor?: xAccessorFunc
+  yAccessor?: yAccessorFunc
+  x: number
+  y: number
+  xKey?: string
+  yKey?: string
 }
 
 export interface CircleProps {
@@ -148,6 +164,7 @@ export interface CircleProps {
 }
 
 export interface RectangleProps {
+  data: Data
   x: number | undefined
   y: number
   width: number
@@ -165,6 +182,8 @@ export interface LineProps {
 }
 
 export interface ArcProps {
+  data: {}
+  key: string
   fill: string
   stroke: string
   strokeWidth: string
@@ -178,7 +197,7 @@ export interface VoronoiProps {
   stroke: string
   opacity: number
   d: string | undefined
-  cellCenter?: { cx: number; cy: number }
+  cellCenter?: { cx: number; cy: number; tooltipData: Data }
   data?: any
   setTooltip?: React.Dispatch<any>
 }
@@ -206,9 +225,20 @@ export interface ColorLegendProps {
   fontSize?: number
 }
 
-export type LegendPos = boolean | "top" | "bottom" | "left" | "right" 
-          | "top-left" | "top-right" | "bottom-left" | "bottom-right" 
-          | "left-bottom" | "right-bottom" | "left-top" | "right-top";
+export type LegendPos =
+  | boolean
+  | "top"
+  | "bottom"
+  | "left"
+  | "right"
+  | "top-left"
+  | "top-right"
+  | "bottom-left"
+  | "bottom-right"
+  | "left-bottom"
+  | "right-bottom"
+  | "left-top"
+  | "right-top"
 
 export type ScaleFunc =
   | d3.ScaleLinear<number, number, never>

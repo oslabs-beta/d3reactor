@@ -1,15 +1,20 @@
 /** App.js */
-import React, { useState, useMemo} from "react";
-import * as d3 from "d3";
-import { AreaChartProps, ColorScale, xAccessorFunc, yAccessorFunc } from '../../../types';
-import { Axis } from "../../components/ContinuousAxis";
-import { Label } from "../../components/Label";
-import { useResponsive } from '../../hooks/useResponsive';
-import { xScaleDef } from '../../functionality/xScale';
-import { yScaleDef } from '../../functionality/yScale';
+import React, { useState, useMemo } from "react"
+import * as d3 from "d3"
+import {
+  AreaChartProps,
+  ColorScale,
+  xAccessorFunc,
+  yAccessorFunc,
+} from "../../../types"
+import { Axis } from "../../components/ContinuousAxis"
+import { Label } from "../../components/Label"
+import { useResponsive } from "../../hooks/useResponsive"
+import { xScaleDef } from "../../functionality/xScale"
+import { yScaleDef } from "../../functionality/yScale"
 import ListeningRect from "../../components/ListeningRect"
 import { Tooltip } from "../../components/Tooltip"
-import { ColorLegend } from "../../components/ColorLegend";
+import { ColorLegend } from "../../components/ColorLegend"
 import {
   getXAxisCoordinates,
   getYAxisCoordinates,
@@ -27,31 +32,49 @@ export default function AreaChart({
   yKey,
   xDataType,
   groupBy,
-  xAxis = 'bottom',
-  yAxis = 'left',
+  xAxis = "bottom",
+  yAxis = "left",
   xGrid = false,
   yGrid = false,
   xAxisLabel,
   yAxisLabel,
   legend,
-  legendLabel = '',
+  legendLabel = "",
   colorScheme = d3.quantize(d3.interpolateHcl("#9dc8e2", "#07316b"), 8),
 }: AreaChartProps<string | number>): JSX.Element {
-  const [tooltip, setTooltip] = useState<false | any>(false);
-  const chart = "AreaChart";
-  const { anchor, cHeight, cWidth } = useResponsive();
-  
+  const [tooltip, setTooltip] = useState<false | any>(false)
+  const chart = "AreaChart"
+  const { anchor, cHeight, cWidth } = useResponsive()
+
   // width & height of legend, so we know how much to squeeze chart by
-  const [legendOffset, setLegendOffset] = useState<[number, number]>([0, 0]);
-  const xOffset = legendOffset[0];
-  const yOffset = legendOffset[1];
+  const [legendOffset, setLegendOffset] = useState<[number, number]>([0, 0])
+  const xOffset = legendOffset[0]
+  const yOffset = legendOffset[1]
   const margin = useMemo(
-    () => getMarginsWithLegend(
-      xAxis, yAxis, xAxisLabel, yAxisLabel, 
-      legend, xOffset, yOffset, cWidth, cHeight
+    () =>
+      getMarginsWithLegend(
+        xAxis,
+        yAxis,
+        xAxisLabel,
+        yAxisLabel,
+        legend,
+        xOffset,
+        yOffset,
+        cWidth,
+        cHeight
       ),
-    [xAxis, yAxis, xAxisLabel, yAxisLabel, legend, xOffset, yOffset, cWidth, cHeight]
-  );
+    [
+      xAxis,
+      yAxis,
+      xAxisLabel,
+      yAxisLabel,
+      legend,
+      xOffset,
+      yOffset,
+      cWidth,
+      cHeight,
+    ]
+  )
 
   const { xAxisX, xAxisY } = useMemo(
     () => getXAxisCoordinates(xAxis, cHeight, margin),
@@ -120,7 +143,6 @@ export default function AreaChart({
   const colorScale: ColorScale = d3.scaleOrdinal(colorScheme)
   colorScale.domain(keys)
 
-
   return (
     <svg ref={anchor} width={width} height={height}>
       <g transform={translate}>
@@ -137,18 +159,18 @@ export default function AreaChart({
             label={yAxisLabel}
           />
         )}
-         {yAxisLabel &&
-        <Label 
-          x={yAxisX}
-          y={yAxisY}
-          height={cHeight}
-          width={cWidth}
-          margin={margin}
-          type={yAxis ? yAxis : 'left'}
-          axis = {yAxis ? true : false}
-          label={yAxisLabel}
-        />
-        }
+        {yAxisLabel && (
+          <Label
+            x={yAxisX}
+            y={yAxisY}
+            height={cHeight}
+            width={cWidth}
+            margin={margin}
+            type={yAxis ? yAxis : "left"}
+            axis={yAxis ? true : false}
+            label={yAxisLabel}
+          />
+        )}
         {xAxis && (
           <Axis
             x={xAxisX}
@@ -163,38 +185,49 @@ export default function AreaChart({
             xTicksValue={xTicksValue}
           />
         )}
-         {xAxisLabel &&
-        <Label 
-          x={xAxisX}
-          y={xAxisY}
-          height={cHeight}
-          width={cWidth}
-          margin={margin}
-          type={xAxis ? xAxis : 'bottom'}
-          axis = {xAxis ? true : false}
-          label={xAxisLabel}
-        />
-        }
+        {xAxisLabel && (
+          <Label
+            x={xAxisX}
+            y={xAxisY}
+            height={cHeight}
+            width={cWidth}
+            margin={margin}
+            type={xAxis ? xAxis : "bottom"}
+            axis={xAxis ? true : false}
+            label={xAxisLabel}
+          />
+        )}
         {layers.map((layer, i) => (
           <path key={i} d={areaGenerator(layer)} fill={colorScale(layer.key)} />
         ))}
+        {
+          // If legend prop is truthy, render legend component:
+          legend && (
+            <ColorLegend
+              legendLabel={legendLabel}
+              circleRadius={5 /* Radius of each color swab in legend */}
+              colorScale={colorScale}
+              setLegendOffset={setLegendOffset}
+              legendPosition={legend}
+              legendWidth={xOffset}
+              legendHeight={yOffset}
+              margin={margin}
+              cWidth={cWidth}
+              cHeight={cHeight}
+              EXTRA_LEGEND_MARGIN={EXTRA_LEGEND_MARGIN}
+            />
+          )
+        }
 
-        { // If legend prop is truthy, render legend component:
-        legend && <ColorLegend 
-          legendLabel={legendLabel } 
-          circleRadius={5 /* Radius of each color swab in legend */}
-          colorScale={colorScale}
-          setLegendOffset={setLegendOffset}
-          legendPosition={legend}
-          legendWidth={xOffset}
-          legendHeight={yOffset}
-          margin={margin}
-          cWidth={cWidth}
-          cHeight={cHeight}
-          EXTRA_LEGEND_MARGIN={EXTRA_LEGEND_MARGIN}
-        />}
-
-        {tooltip && <Tooltip x={tooltip.cx} y={tooltip.cy} />}
+        {tooltip && (
+          <Tooltip
+            data={tooltip}
+            x={tooltip.cx}
+            y={tooltip.cy}
+            xKey={xKey}
+            yKey={yKey}
+          />
+        )}
 
         <ListeningRect
           data={data}
@@ -206,9 +239,11 @@ export default function AreaChart({
           yScale={yScale}
           xAccessor={xAccessor}
           yAccessor={yAccessor}
+          xKey={xKey}
+          yKey={yKey}
           setTooltip={setTooltip}
         />
       </g>
     </svg>
-  );
+  )
 }
