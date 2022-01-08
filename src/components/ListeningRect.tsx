@@ -59,9 +59,12 @@ export default function ListeningRect({
       return Math.abs(xAccessor(d).valueOf() - hoveredX.valueOf())
     }
 
+
+
     const closestXIndex = d3.leastIndex(data, (a, b) => {
       return getDistanceFromHoveredX(a) - getDistanceFromHoveredX(b)
     })
+
 
     if (typeof closestXIndex === "number") {
       const closestDataPoint = data[closestXIndex]

@@ -32,12 +32,12 @@ function App() {
         legend="left-top"
       /> */}
       <AreaChart
-        data={penguins}
+        data={portfolio}
         height="100%"
         width="100%"
-        xKey="body_mass_g"
-        xDataType="number"
-        yKey="culmen_length_mm"
+        xKey="date"
+        xDataType="date"
+        yKey="value"
         xGrid={true}
         yGrid={true}
         xAxis="top"
