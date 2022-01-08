@@ -1,6 +1,8 @@
 import React from "react"
 import * as d3 from "d3"
 
+import { useMousePosition } from "../hooks/useMousePosition"
+
 import {
   Data,
   Margin,
@@ -40,12 +42,18 @@ export default function ListeningRect({
   yAccessor: yAccessorFunc
   setTooltip?: React.Dispatch<any>
 }) {
+  const position = useMousePosition()
+  console.log("USE MOUSE POSITION ", position)
   const cellCenter = { cx: 0, cy: 0, tooltipData: {} }
 
   function onMouseMove(e: any) {
     const mousePosition = d3.pointer(e)
-    const hoveredX = xScale.invert(mousePosition[0]) as Date
-    const hoveredY = yScale.invert(mousePosition[1])
+    console.log("EVENT ", e)
+    console.log("MOUSE POSITION ", mousePosition)
+    // const hoveredX = xScale.invert(mousePosition[0]) as Date
+    const hoveredX = xScale.invert(e.screenX) as Date
+    // const hoveredY = yScale.invert(mousePosition[1])
+    const hoveredY = yScale.invert(e.screenY)
     // console.log("Inverted yScale ", hoveredY)
     // console.log("Mouse position ", mousePosition)
 
@@ -59,12 +67,9 @@ export default function ListeningRect({
       return Math.abs(xAccessor(d).valueOf() - hoveredX.valueOf())
     }
 
-
-
     const closestXIndex = d3.leastIndex(data, (a, b) => {
       return getDistanceFromHoveredX(a) - getDistanceFromHoveredX(b)
     })
-
 
     if (typeof closestXIndex === "number") {
       const closestDataPoint = data[closestXIndex]

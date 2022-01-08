@@ -14,7 +14,7 @@ import { xScaleDef } from "../../functionality/xScale"
 import { yScaleDef } from "../../functionality/yScale"
 import ListeningRect from "../../components/ListeningRect"
 import { Tooltip } from "../../components/Tooltip"
-import TooltipDiv from "../../components/Tooltip-div";
+import TooltipDiv from "../../components/Tooltip-div"
 import { ColorLegend } from "../../components/ColorLegend"
 import {
   getXAxisCoordinates,
@@ -148,8 +148,16 @@ export default function AreaChart({
   colorScale.domain(keys)
 
   return (
-    <div ref={anchor} style ={{'width':width, "height":height}}>
-    
+    <div ref={anchor} style={{ width: width, height: height }}>
+      {tooltip && (
+        <TooltipDiv
+          data={tooltip}
+          x={margin.left + tooltip.cx}
+          y={margin.top + tooltip.cy}
+          xKey={xKey}
+          yKey={yKey}
+        />
+      )}
       <svg width={width} height={height}>
         <g transform={translate}>
           {yAxis && (
@@ -228,16 +236,7 @@ export default function AreaChart({
               />
             )
           }
-          {tooltip && 
-            <TooltipDiv 
-              data={tooltip}
-              x={tooltip.cx}
-              y={tooltip.cy}
-              xKey={xKey}
-              yKey={yKey}
-            />
-          }
-          {tooltip && (
+          {/* {tooltip && (
             <Tooltip
               data={tooltip}
               x={tooltip.cx}
@@ -245,7 +244,7 @@ export default function AreaChart({
               xKey={xKey}
               yKey={yKey}
             />
-          )}
+          )} */}
 
           <ListeningRect
             data={data}
