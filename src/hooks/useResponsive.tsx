@@ -1,5 +1,5 @@
-import React, {useState, useEffect, useRef} from 'react';
-import useEnvEffect from './useEnvEffect';
+import React, { useState, useEffect, useRef } from "react"
+import useEnvEffect from "./useEnvEffect"
 export const useResponsive = () => {
   const [windowSize, setWindowSize] = useState<[number, number]>([0, 0])
   const [cHeight, setCHeight] = useState<number>(0)
@@ -9,7 +9,7 @@ export const useResponsive = () => {
     setWindowSize([window.innerWidth, window.innerHeight])
   }
 
-  const anchor = useRef(null as unknown as SVGSVGElement)
+  const anchor = useRef(null as any)
   useEnvEffect(() => {
     window.addEventListener("resize", updateSize)
     updateSize()
@@ -18,9 +18,9 @@ export const useResponsive = () => {
 
   useEffect(() => {
     const container = anchor.current.getBoundingClientRect()
-    setCHeight(container.height > 100 ? container.height : 100);
+    setCHeight(container.height > 100 ? container.height : 100)
     setCWidth(container.width > 100 ? container.width : 100)
   }, [windowSize])
 
-  return {anchor, cHeight, cWidth}
+  return { anchor, cHeight, cWidth }
 }
