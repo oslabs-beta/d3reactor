@@ -258,15 +258,6 @@ export default function LineChart({
             />
           )
         }
-        {tooltip && (
-          <Tooltip
-            data={tooltip}
-            x={tooltip.cx}
-            y={tooltip.cy}
-            xKey={xKey}
-            yKey={yKey}
-          />
-        )}
       </g>
     </svg>
         </div>
