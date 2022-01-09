@@ -25,6 +25,7 @@ import { yScaleDef } from "../../functionality/yScale"
 import { xScaleDef } from "../../functionality/xScale"
 import { d3Voronoi } from "../../functionality/voronoi"
 import { Label } from "../../components/Label"
+import TooltipDiv from "../../components/Tooltip-div"
 
 export default function LineChart({
   data,
@@ -143,8 +144,18 @@ export default function LineChart({
   const colorScale: ColorScale = d3.scaleOrdinal(colorScheme)
   colorScale.domain(keys)
   return (
-    <svg ref={anchor} width={width} height={height}>
-      <g transform={translate}>
+    <div ref={anchor} style={{ width: width, height: height }}>
+    {tooltip && (
+      <TooltipDiv
+        data={tooltip}
+        x={margin.left + tooltip.cx}
+        y={margin.top + tooltip.cy}
+        xKey={xKey}
+        yKey={yKey}
+      />
+    )}    
+    <svg width={cWidth} height={cHeight}>
+    <g transform={translate}>
         {yAxis && (
           <Axis
             x={yAxisX}
@@ -258,5 +269,7 @@ export default function LineChart({
         )}
       </g>
     </svg>
+        </div>
+
   )
 }

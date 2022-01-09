@@ -15,7 +15,6 @@ import skinny_fruit from "./data/skinny_fruit.json"
 function App() {
   return (
     <div className="app">
-      <div style={{height: '1000px'}}></div>
         {/* <PieChart
           data={fruit}
           label="label"
@@ -69,8 +68,8 @@ function App() {
         legendLabel="fdsafd"
       /> */}
       <ScatterPlot
-        height="100%"
-        width="100%"
+        height={'100%'}
+        width={'100%'}
         data={penguins}
         xKey="flipper_length_mm"
         xDataType="number"
@@ -84,7 +83,7 @@ function App() {
         yAxisLabel="Value"
         legend='left'
       />
-      <BarChart
+      {/* <BarChart
         height="300"
         data={skinny_fruit}
         xKey="date"
@@ -111,7 +110,7 @@ function App() {
         // xAxisLabel="Date"
         // yAxisLabel="Value"
         // legend={true}
-      />
+      /> */}
       <LineChart
         height="100%"
         data={unemployment}

@@ -143,7 +143,7 @@ export default function ScatterPlot({
         yKey={yKey}
       />
     )}
-    <svg width={width} height={height}>
+    <svg width={cWidth} height={cHeight}>
       <g className="spbody" transform={translate}>
         {yAxis && (
           <Axis
