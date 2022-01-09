@@ -14,7 +14,7 @@ import { xScaleDef } from "../../functionality/xScale"
 import { yScaleDef } from "../../functionality/yScale"
 import ListeningRect from "../../components/ListeningRect"
 import { Tooltip } from "../../components/Tooltip"
-import TooltipDiv from "../../components/Tooltip-div"
+import TooltipDiv from "../../components/TooltipDiv"
 import { ColorLegend } from "../../components/ColorLegend"
 import {
   getXAxisCoordinates,

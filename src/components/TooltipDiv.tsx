@@ -1,10 +1,7 @@
 import React from "react"
-import { useResponsive } from "../hooks/useResponsive"
 import { TooltipProps } from "../../types"
 
-// import "./Tooltip.css"
-
-function MemTooltip({
+const TooltipDiv = ({
   chartType,
   data,
   xAccessor,
@@ -13,93 +10,88 @@ function MemTooltip({
   y,
   xKey,
   yKey,
-}: TooltipProps) {
-  const tooltipStyle: React.CSSProperties | undefined = {
-    margin: "4px 4px",
-    padding: "0.2em .5em",
-    borderRadius: "4px",
-    color: "#1e2023",
-    /* You can also use a fixed width and ommit the white-sapce. */
-    whiteSpace: "nowrap",
-    backgroundColor: "#fff",
-    // transform: "translate(calc( -50% + ${x}px), calc(-100% + ${y}px))",
-    textAlign: "start",
-    lineHeight: "1.5em",
-    fontSize: "0.8em",
-    zIndex: "9999",
-    transition: "all 0.1s ease-out",
-    pointerEvents:'none'
+}: TooltipProps): JSX.Element => {
+  const tooltipWrapperStyle: React.CSSProperties | undefined = {
+    left: x,
+    top: y,
+    transform: "translate(-50%, -50%)",
+    position: "absolute",
+    pointerEvents: "none",
   }
 
-  const circleStyle: React.CSSProperties | undefined = {
-    opacity: 1,
+  const backgroundColor = "#fff"
+  const boarderColor = "#ddd"
+  const pointerSize = 12
+
+  const contentStyle: React.CSSProperties | undefined = {
+    // opacity: 0.2,
+    position: "absolute",
+    margin: "4px 4px",
+    padding: "0.6em 1em",
+    borderRadius: "4px",
+    maxWidth: "280px",
+    transform: `translate(-50%, calc(-100% - ${pointerSize + 4}px)`,
+    // background: "#fff",
+    background: backgroundColor,
+    textAlign: "center",
+    lineHeight: "1.4em",
+    fontSize: "0.9em",
+    color: "#1e2023",
+    border: `1px solid ${boarderColor}`,
+    zIndex: "9",
+    transition: "all 0.1s ease-out",
+    boxShadow: "0px 5px 15px 0px rgba(0,0,0,0.3)",
   }
 
   const triangleStyle: React.CSSProperties | undefined = {
-    fill: "#fff",
+    content: "",
+    position: "absolute",
+    width: `${pointerSize}px`,
+    height: `${pointerSize}px`,
+    background: backgroundColor,
+    transform: `translate(-50%, calc(-102% - ${
+      pointerSize / 2
+    }px)) rotate(45deg)`,
+    zIndex: "10",
   }
 
-  const VERTICAL_OFFSET: number = -4
-
-  // console.log("X ", x)
-  // console.log("Y ", y)
-  // console.log("Anchor ", anchor)
-  // console.log("cHeight ", cHeight)
-  // console.log("Tooltip data ", data)
-  // console.log("Tooltip xKey ", xKey)
-  // console.log("Tooltip yKey ", yKey)
-  const getMaxStringLength = (xString: string, yString: string): number => {
-    const xLength: number = xString.length
-    const yLength: number = yString.length
-    return Math.max(xLength, yLength)
+  const triangleBorderStyle: React.CSSProperties | undefined = {
+    content: "",
+    position: "absolute",
+    width: `${pointerSize}px`,
+    height: `${pointerSize}px`,
+    background: boarderColor,
+    transform: `translate(-50%, calc(-100% - ${
+      pointerSize / 2
+    }px)) rotate(45deg)`,
+    boxShadow: "1px 1px 20px 0px rgba(0,0,0,0.6)",
+    zIndex: "8",
   }
 
-  // console.log("x String ", `${xKey}: ${data.tooltipData[xKey as string]}`)
+  const circleStyle: React.CSSProperties | undefined = {
+    width: "2px",
+    height: "2px",
+    borderRadius: "50%",
+    position: "absolute",
+    transform: "translateX(-10px, -10px)",
+    backgroundColor: "black",
+  }
+
   const xTooltipText: string = `${xKey}: ${data.tooltipData[xKey as string]}`
   const yTooltipText: string = `${yKey}: ${data.tooltipData[yKey as string]}`
 
-  const CHAR_WIDTH = 9
-  const tooltipWidth: number =
-    getMaxStringLength(xTooltipText, yTooltipText) * CHAR_WIDTH
-  const LINE_HEIGHT = 30
-  const tooltipHeight: number = LINE_HEIGHT * 2
   return (
-    <g>
-      {chartType !== "pie-chart" ? (
-        <circle
-          style={circleStyle}
-          cx={x}
-          cy={y}
-          r={4}
-          fill="white"
-          stroke="#7ba2bf"
-          strokeWidth="2"
-          pointerEvents="none"
-        />
-      ) : null}
-      <polygon
-        style={triangleStyle}
-        points={`
-        ${x},${y + VERTICAL_OFFSET}
-        ${x - 10},${y + VERTICAL_OFFSET - 10}
-        ${x + 10},${y + VERTICAL_OFFSET - 10}`}
-        pointerEvents="none"
-      />
-      <foreignObject
-        x={x - tooltipWidth / 2}
-        y={y - tooltipHeight}
-        width={tooltipWidth}
-        height={tooltipHeight}
-        pointerEvents="none"
-      >
-        <div style={tooltipStyle}>
-          {xTooltipText}
-          <br></br>
-          {yTooltipText}
-        </div>
-      </foreignObject>
-    </g>
+    <div style={tooltipWrapperStyle}>
+      <div style={contentStyle}>
+        {xTooltipText}
+        <br />
+        {yTooltipText}
+      </div>
+      <div style={triangleStyle}></div>
+      <div style={triangleBorderStyle}></div>
+      {chartType !== "scatter-plot" && <div style={circleStyle}></div>}
+    </div>
   )
 }
 
-export const Tooltip = React.memo(MemTooltip)
+export default TooltipDiv

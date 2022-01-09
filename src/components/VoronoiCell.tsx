@@ -18,20 +18,23 @@ export const VoronoiCell = ({
       opacity={opacity}
       d={d}
       onMouseOver={(e) => {
-        // console.log('e', e.nativeEvent.clientY)
         if (cellCenter) {
-          cellCenter.cy = e.nativeEvent.pageY - e.nativeEvent.offsetY + cellCenter.cy
-          cellCenter.cx = e.nativeEvent.pageX - e.nativeEvent.offsetX + cellCenter.cx
+          cellCenter.cy =
+            e.nativeEvent.pageY - e.nativeEvent.offsetY + cellCenter.cy
+          cellCenter.cx =
+            e.nativeEvent.pageX - e.nativeEvent.offsetX + cellCenter.cx
         }
         setTooltip ? setTooltip(cellCenter) : null
       }}
       onMouseOut={(e) => {
         if (cellCenter) {
-          cellCenter.cy = cellCenter.cy - e.nativeEvent.pageY + e.nativeEvent.offsetY
-          cellCenter.cx = cellCenter.cx - e.nativeEvent.pageX + e.nativeEvent.offsetX
-
-        };
-        setTooltip ? setTooltip(false) : null}}
+          cellCenter.cy =
+            cellCenter.cy - e.nativeEvent.pageY + e.nativeEvent.offsetY
+          cellCenter.cx =
+            cellCenter.cx - e.nativeEvent.pageX + e.nativeEvent.offsetX
+        }
+        setTooltip ? setTooltip(false) : null
+      }}
     ></path>
   )
 }

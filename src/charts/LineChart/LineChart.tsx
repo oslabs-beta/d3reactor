@@ -25,7 +25,7 @@ import { yScaleDef } from "../../functionality/yScale"
 import { xScaleDef } from "../../functionality/xScale"
 import { d3Voronoi } from "../../functionality/voronoi"
 import { Label } from "../../components/Label"
-import TooltipDiv from "../../components/Tooltip-div"
+import TooltipDiv from "../../components/TooltipDiv"
 
 export default function LineChart({
   data,
@@ -145,122 +145,121 @@ export default function LineChart({
   colorScale.domain(keys)
   return (
     <div ref={anchor} style={{ width: width, height: height }}>
-    {tooltip && (
-      <TooltipDiv
-        data={tooltip}
-        x={margin.left + tooltip.cx}
-        y={margin.top + tooltip.cy}
-        xKey={xKey}
-        yKey={yKey}
-      />
-    )}    
-    <svg width={cWidth} height={cHeight}>
-    <g transform={translate}>
-        {yAxis && (
-          <Axis
-            x={yAxisX}
-            y={yAxisY}
-            height={cHeight}
-            width={cWidth}
-            margin={margin}
-            scale={yScale}
-            type={yAxis}
-            yGrid={yGrid}
-            label={yAxisLabel}
-          />
-        )}
-        {yAxisLabel && (
-          <Label
-            x={yAxisX}
-            y={yAxisY}
-            height={cHeight}
-            width={cWidth}
-            margin={margin}
-            type={yAxis ? yAxis : "left"}
-            axis={yAxis ? true : false}
-            label={yAxisLabel}
-          />
-        )}
+      {tooltip && (
+        <TooltipDiv
+          data={tooltip}
+          x={margin.left + tooltip.cx}
+          y={margin.top + tooltip.cy}
+          xKey={xKey}
+          yKey={yKey}
+        />
+      )}
+      <svg width={cWidth} height={cHeight}>
+        <g transform={translate}>
+          {yAxis && (
+            <Axis
+              x={yAxisX}
+              y={yAxisY}
+              height={cHeight}
+              width={cWidth}
+              margin={margin}
+              scale={yScale}
+              type={yAxis}
+              yGrid={yGrid}
+              label={yAxisLabel}
+            />
+          )}
+          {yAxisLabel && (
+            <Label
+              x={yAxisX}
+              y={yAxisY}
+              height={cHeight}
+              width={cWidth}
+              margin={margin}
+              type={yAxis ? yAxis : "left"}
+              axis={yAxis ? true : false}
+              label={yAxisLabel}
+            />
+          )}
 
-        {xAxis && (
-          <Axis
-            x={xAxisX}
-            y={xAxisY}
-            height={cHeight}
-            width={cWidth}
-            margin={margin}
-            scale={xScale}
-            type={xAxis}
-            xGrid={xGrid}
-            label={xAxisLabel}
-            xTicksValue={xTicksValue}
-          />
-        )}
-        {xAxisLabel && (
-          <Label
-            x={xAxisX}
-            y={xAxisY}
-            height={cHeight}
-            width={cWidth}
-            margin={margin}
-            type={xAxis ? xAxis : "bottom"}
-            axis={xAxis ? true : false}
-            label={xAxisLabel}
-          />
-        )}
-        {groupBy ? (
-          d3.map(lineGroups, (lineGroup: [string, []], i) => {
-            return (
-              <Line
-                key={i}
-                fill="none"
-                stroke={colorScale(lineGroup[0])}
-                strokeWidth="1px"
-                d={line(lineGroup[1])}
+          {xAxis && (
+            <Axis
+              x={xAxisX}
+              y={xAxisY}
+              height={cHeight}
+              width={cWidth}
+              margin={margin}
+              scale={xScale}
+              type={xAxis}
+              xGrid={xGrid}
+              label={xAxisLabel}
+              xTicksValue={xTicksValue}
+            />
+          )}
+          {xAxisLabel && (
+            <Label
+              x={xAxisX}
+              y={xAxisY}
+              height={cHeight}
+              width={cWidth}
+              margin={margin}
+              type={xAxis ? xAxis : "bottom"}
+              axis={xAxis ? true : false}
+              label={xAxisLabel}
+            />
+          )}
+          {groupBy ? (
+            d3.map(lineGroups, (lineGroup: [string, []], i) => {
+              return (
+                <Line
+                  key={i}
+                  fill="none"
+                  stroke={colorScale(lineGroup[0])}
+                  strokeWidth="1px"
+                  d={line(lineGroup[1])}
+                />
+              )
+            })
+          ) : (
+            <Line
+              fill="none"
+              stroke={colorScale(yKey)}
+              strokeWidth="1px"
+              d={line(data)}
+            />
+          )}
+          {voronoi && (
+            <VoronoiWrapper
+              data={data}
+              voronoi={voronoi}
+              xScale={xScale}
+              yScale={yScale}
+              xAccessor={xAccessor}
+              yAccessor={yAccessor}
+              setTooltip={setTooltip}
+            />
+          )}
+
+          {
+            // If legend prop is truthy, render legend component:
+            legend && (
+              <ColorLegend
+                legendLabel={legendLabel}
+                circleRadius={5 /* Radius of each color swab in legend */}
+                colorScale={colorScale}
+                setLegendOffset={setLegendOffset}
+                legendPosition={legend}
+                legendWidth={xOffset}
+                legendHeight={yOffset}
+                margin={margin}
+                cWidth={cWidth}
+                cHeight={cHeight}
+                EXTRA_LEGEND_MARGIN={EXTRA_LEGEND_MARGIN}
               />
             )
-          })
-        ) : (
-          <Line
-            fill="none"
-            stroke={colorScale(yKey)}
-            strokeWidth="1px"
-            d={line(data)}
-          />
-        )}
-        {voronoi && (
-          <VoronoiWrapper
-            data={data}
-            voronoi={voronoi}
-            xScale={xScale}
-            yScale={yScale}
-            xAccessor={xAccessor}
-            yAccessor={yAccessor}
-            setTooltip={setTooltip}
-          />
-        )}
-
-        {
-          // If legend prop is truthy, render legend component:
-          legend && (
-            <ColorLegend
-              legendLabel={legendLabel}
-              circleRadius={5 /* Radius of each color swab in legend */}
-              colorScale={colorScale}
-              setLegendOffset={setLegendOffset}
-              legendPosition={legend}
-              legendWidth={xOffset}
-              legendHeight={yOffset}
-              margin={margin}
-              cWidth={cWidth}
-              cHeight={cHeight}
-              EXTRA_LEGEND_MARGIN={EXTRA_LEGEND_MARGIN}
-            />
-          )
-        }
-      </g>
-    </svg>
-        </div>
-
+          }
+        </g>
+      </svg>
+    </div>
   )
 }

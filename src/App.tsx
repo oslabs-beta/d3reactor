@@ -15,7 +15,7 @@ import skinny_fruit from "./data/skinny_fruit.json"
 function App() {
   return (
     <div className="app">
-        {/* <PieChart
+      {/* <PieChart
           data={fruit}
           label="label"
           value="value"
@@ -23,7 +23,6 @@ function App() {
           outerRadius={100}
           legendLabel="l"
         />
-      </div>
       <PieChart
         data={fruit}
         label="label"
@@ -31,7 +30,7 @@ function App() {
         innerRadius={"85%"}
         outerRadius={"100%"}
         legend="left-top"
-      />
+      /> */}
       <AreaChart
         data={portfolio}
         height="400px"
@@ -49,7 +48,7 @@ function App() {
         // legend="left-top"
         legendLabel="🐬"
       />
-      <AreaChart
+      {/*<AreaChart
         data={skinny_fruit}
         height="300"
         xKey="date"
@@ -68,8 +67,8 @@ function App() {
         legendLabel="fdsafd"
       /> */}
       <ScatterPlot
-        height={'100%'}
-        width={'100%'}
+        height={"100%"}
+        width={"100%"}
         data={penguins}
         xKey="flipper_length_mm"
         xDataType="number"
@@ -81,7 +80,7 @@ function App() {
         // yGrid={true}
         xAxisLabel="Date"
         yAxisLabel="Value"
-        legend='left'
+        legend="left"
       />
       {/* <BarChart
         height="300"

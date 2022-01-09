@@ -10,7 +10,7 @@ import { d3Voronoi } from "../../functionality/voronoi"
 import { xScaleDef } from "../../functionality/xScale"
 import { yScaleDef } from "../../functionality/yScale"
 import { VoronoiWrapper } from "../../components/VoronoiWrapper"
-import TooltipDiv from "../../components/Tooltip-div"
+import TooltipDiv from "../../components/TooltipDiv"
 import { Tooltip } from "../../components/Tooltip"
 import {
   ScatterPlotProps,
@@ -134,119 +134,119 @@ export default function ScatterPlot({
 
   return (
     <div ref={anchor} style={{ width: width, height: height }}>
-    {tooltip && (
-      <TooltipDiv
-        data={tooltip}
-        x={margin.left + tooltip.cx}
-        y={margin.top + tooltip.cy}
-        xKey={xKey}
-        yKey={yKey}
-      />
-    )}
-    <svg width={cWidth} height={cHeight}>
-      <g className="spbody" transform={translate}>
-        {yAxis && (
-          <Axis
-            x={yAxisX}
-            y={yAxisY}
-            yGrid={yGrid}
-            height={cHeight}
-            width={cWidth}
-            margin={margin}
-            scale={yScale}
-            type={yAxis}
-            label={yAxisLabel}
-          />
-        )}
-        {yAxisLabel && (
-          <Label
-            x={yAxisX}
-            y={yAxisY}
-            height={cHeight}
-            width={cWidth}
-            margin={margin}
-            type={yAxis ? yAxis : "left"}
-            axis={yAxis ? true : false}
-            label={yAxisLabel}
-          />
-        )}
-        {xAxis && (
-          <Axis
-            x={xAxisX}
-            y={xAxisY}
-            xGrid={xGrid}
-            height={cHeight}
-            width={cWidth}
-            margin={margin}
-            scale={xScale}
-            type={xAxis}
-            label={xAxisLabel}
-          />
-        )}
-        {xAxisLabel && (
-          <Label
-            x={xAxisX}
-            y={xAxisY}
-            height={cHeight}
-            width={cWidth}
-            margin={margin}
-            type={xAxis ? xAxis : "bottom"}
-            axis={xAxis ? true : false}
-            label={xAxisLabel}
-          />
-        )}
-        {data.map((element: any, i: number) =>
-          !groupBy ? (
-            <Circle
-              key={i}
-              cx={xScale(xAccessor(element))}
-              cy={yScale(yAccessor(element))}
-              r={5}
-              color="steelblue"
-            />
-          ) : (
-            <Circle
-              key={i}
-              cx={xScale(xAccessor(element))}
-              cy={yScale(yAccessor(element))}
-              r={5}
-              color={colorScale(element[groupBy])}
-            />
-          )
-        )}
-        {voronoi && (
-          <VoronoiWrapper
-            data={data}
-            voronoi={voronoi}
-            xScale={xScale}
-            yScale={yScale}
-            xAccessor={xAccessor}
-            yAccessor={yAccessor}
-            setTooltip={setTooltip}
-          />
-        )}
-
-        {
-          // If legend prop is truthy, render legend component:
-          legend && (
-            <ColorLegend
-              legendLabel={legendLabel}
-              circleRadius={5 /* Radius of each color swab in legend */}
-              colorScale={colorScale}
-              setLegendOffset={setLegendOffset}
-              legendPosition={legend}
-              legendWidth={xOffset}
-              legendHeight={yOffset}
+      {tooltip && (
+        <TooltipDiv
+          chartType="scatter-plot"
+          data={tooltip}
+          x={margin.left + tooltip.cx}
+          y={margin.top + tooltip.cy}
+          xKey={xKey}
+          yKey={yKey}
+        />
+      )}
+      <svg width={cWidth} height={cHeight}>
+        <g className="spbody" transform={translate}>
+          {yAxis && (
+            <Axis
+              x={yAxisX}
+              y={yAxisY}
+              yGrid={yGrid}
+              height={cHeight}
+              width={cWidth}
               margin={margin}
-              cWidth={cWidth}
-              cHeight={cHeight}
-              EXTRA_LEGEND_MARGIN={EXTRA_LEGEND_MARGIN}
+              scale={yScale}
+              type={yAxis}
+              label={yAxisLabel}
             />
-          )
-        }
+          )}
+          {yAxisLabel && (
+            <Label
+              x={yAxisX}
+              y={yAxisY}
+              height={cHeight}
+              width={cWidth}
+              margin={margin}
+              type={yAxis ? yAxis : "left"}
+              axis={yAxis ? true : false}
+              label={yAxisLabel}
+            />
+          )}
+          {xAxis && (
+            <Axis
+              x={xAxisX}
+              y={xAxisY}
+              xGrid={xGrid}
+              height={cHeight}
+              width={cWidth}
+              margin={margin}
+              scale={xScale}
+              type={xAxis}
+              label={xAxisLabel}
+            />
+          )}
+          {xAxisLabel && (
+            <Label
+              x={xAxisX}
+              y={xAxisY}
+              height={cHeight}
+              width={cWidth}
+              margin={margin}
+              type={xAxis ? xAxis : "bottom"}
+              axis={xAxis ? true : false}
+              label={xAxisLabel}
+            />
+          )}
+          {data.map((element: any, i: number) =>
+            !groupBy ? (
+              <Circle
+                key={i}
+                cx={xScale(xAccessor(element))}
+                cy={yScale(yAccessor(element))}
+                r={5}
+                color="steelblue"
+              />
+            ) : (
+              <Circle
+                key={i}
+                cx={xScale(xAccessor(element))}
+                cy={yScale(yAccessor(element))}
+                r={5}
+                color={colorScale(element[groupBy])}
+              />
+            )
+          )}
+          {voronoi && (
+            <VoronoiWrapper
+              data={data}
+              voronoi={voronoi}
+              xScale={xScale}
+              yScale={yScale}
+              xAccessor={xAccessor}
+              yAccessor={yAccessor}
+              setTooltip={setTooltip}
+            />
+          )}
 
-      </g>
-    </svg>
+          {
+            // If legend prop is truthy, render legend component:
+            legend && (
+              <ColorLegend
+                legendLabel={legendLabel}
+                circleRadius={5 /* Radius of each color swab in legend */}
+                colorScale={colorScale}
+                setLegendOffset={setLegendOffset}
+                legendPosition={legend}
+                legendWidth={xOffset}
+                legendHeight={yOffset}
+                margin={margin}
+                cWidth={cWidth}
+                cHeight={cHeight}
+                EXTRA_LEGEND_MARGIN={EXTRA_LEGEND_MARGIN}
+              />
+            )
+          }
+        </g>
+      </svg>
     </div>
   )
 }
