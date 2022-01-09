@@ -172,8 +172,6 @@ export default function PieChart({
     (cHeight + translateY) / 2
   })`
 
-  console.log("TOOLTIP ", tooltip)
-
   return (
     <div ref={anchor} style={{ width: "100%", height: "100%" }}>
       {tooltip && (

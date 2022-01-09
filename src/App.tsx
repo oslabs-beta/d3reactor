@@ -67,8 +67,8 @@ function App() {
         legendLabel="fdsafd"
       />
       <ScatterPlot
-        height={"100%"}
-        width={"100%"}
+        height={"500px"}
+        width={"500px"}
         data={penguins}
         xKey="flipper_length_mm"
         xDataType="number"
@@ -83,7 +83,7 @@ function App() {
         legend="left"
       />
       <BarChart
-        height="300"
+        height="300px"
         data={skinny_fruit}
         xKey="date"
         yKey="value"
@@ -97,8 +97,8 @@ function App() {
         // legendLabel={''}
       />
       <BarChart
-        height="500"
-        width="400"
+        height="500px"
+        width="400px"
         data={skinny_fruit}
         xKey="date"
         yKey="value"

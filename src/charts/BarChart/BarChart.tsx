@@ -5,7 +5,7 @@ import { useResponsive } from "../../hooks/useResponsive"
 import { Axis } from "../../components/ContinuousAxis"
 import { DiscreteAxis } from "../../components/DiscreteAxis"
 import { Rectangle } from "../../components/Rectangle"
-import { Tooltip } from "../../components/Tooltip"
+import TooltipDiv from "../../components/TooltipDiv"
 import { ColorLegend } from "../../components/ColorLegend"
 import { transformSkinnyToWide } from "../../utils"
 import { BarChartProps, Data, ColorScale, yAccessorFunc } from "../../../types"
@@ -94,7 +94,6 @@ export default function BarChart({
   const stack = d3.stack().keys(keys).order(d3.stackOrderAscending)
   const layers = stack(data as Iterable<{ [key: string]: number }>)
 
-  // console.log("Bar chart layers ", layers)
   const xAccessor: (d: Data) => string = useMemo(() => {
     return (d) => d[xKey]
   }, [])
@@ -133,127 +132,129 @@ export default function BarChart({
   }
 
   return (
-    <svg ref={anchor} width={width} height={height}>
-      <g transform={translate}>
-        {xAxis && (
-          <DiscreteAxis
-            x={xAxisX}
-            y={xAxisY}
-            height={cHeight}
-            width={cWidth}
-            margin={margin}
-            scale={xScale}
-            type={xAxis}
-            label={xAxisLabel}
-            data={data}
-            layers={layers}
-            xAccessor={xAccessor}
-          />
-        )}
-        {yAxisLabel && (
-          <Label
-            x={yAxisX}
-            y={yAxisY}
-            height={cHeight}
-            width={cWidth}
-            margin={margin}
-            type={yAxis ? yAxis : "left"}
-            axis={yAxis ? true : false}
-            label={yAxisLabel}
-          />
-        )}
-        {yAxis && (
-          <Axis
-            x={yAxisX}
-            y={yAxisY}
-            height={cHeight}
-            width={cWidth}
-            margin={margin}
-            scale={yScale}
-            type={yAxis}
-            yGrid={yGrid}
-            label={yAxisLabel}
-          />
-        )}
-        {xAxisLabel && (
-          <Label
-            x={xAxisX}
-            y={xAxisY}
-            height={cHeight}
-            width={cWidth}
-            margin={margin}
-            type={xAxis ? xAxis : "bottom"}
-            axis={xAxis ? true : false}
-            label={xAxisLabel}
-          />
-        )}
-        {groupBy
-          ? layers.map((layer: any, i: number) => (
-              <g key={i}>
-                {layer.map((sequence: any, i: number) => (
-                  <Rectangle
-                    data={getSequenceData(sequence)}
-                    key={i}
-                    x={xScale(xAccessor(sequence.data))}
-                    y={yScale(sequence[1])}
-                    width={xScale.bandwidth()}
-                    height={
-                      yScale(sequence[0]) - yScale(sequence[1]) > 0
-                        ? yScale(sequence[0]) - yScale(sequence[1])
-                        : 0
-                    }
-                    fill={colorScale(layer.key)}
-                    setTooltip={setTooltip}
-                  />
-                ))}
-              </g>
-            ))
-          : data.map((d: any, i: number) => (
-              <Rectangle
-                data={d}
-                key={i}
-                x={xScale(xAccessor(d))}
-                y={yScale(yAccessor(d))}
-                width={xScale.bandwidth()}
-                height={
-                  xAxisY - yScale(yAccessor(d)) > 0
-                    ? xAxisY - yScale(yAccessor(d))
-                    : 0
-                }
-                fill={colorScale(yKey)}
-                setTooltip={setTooltip}
-              />
-            ))}
-
-        {
-          // If legend prop is truthy, render legend component:
-          legend && (
-            <ColorLegend
-              legendLabel={legendLabel}
-              circleRadius={5 /* Radius of each color swab in legend */}
-              colorScale={colorScale}
-              setLegendOffset={setLegendOffset}
-              legendPosition={legend}
-              legendWidth={xOffset}
-              legendHeight={yOffset}
+    <div ref={anchor} style={{ width: width, height: height }}>
+      {tooltip && (
+        <TooltipDiv
+          chartType="bar-chart"
+          data={tooltip}
+          x={tooltip.cx + xScale.bandwidth() / 2 + margin.left}
+          y={tooltip.cy + margin.top}
+          xKey={xKey}
+          yKey={yKey}
+        />
+      )}
+      <svg width={cWidth} height={cHeight}>
+        <g transform={translate}>
+          {xAxis && (
+            <DiscreteAxis
+              x={xAxisX}
+              y={xAxisY}
+              height={cHeight}
+              width={cWidth}
               margin={margin}
-              cWidth={cWidth}
-              cHeight={cHeight}
-              EXTRA_LEGEND_MARGIN={EXTRA_LEGEND_MARGIN}
+              scale={xScale}
+              type={xAxis}
+              label={xAxisLabel}
+              data={data}
+              layers={layers}
+              xAccessor={xAccessor}
             />
-          )
-        }
+          )}
+          {yAxisLabel && (
+            <Label
+              x={yAxisX}
+              y={yAxisY}
+              height={cHeight}
+              width={cWidth}
+              margin={margin}
+              type={yAxis ? yAxis : "left"}
+              axis={yAxis ? true : false}
+              label={yAxisLabel}
+            />
+          )}
+          {yAxis && (
+            <Axis
+              x={yAxisX}
+              y={yAxisY}
+              height={cHeight}
+              width={cWidth}
+              margin={margin}
+              scale={yScale}
+              type={yAxis}
+              yGrid={yGrid}
+              label={yAxisLabel}
+            />
+          )}
+          {xAxisLabel && (
+            <Label
+              x={xAxisX}
+              y={xAxisY}
+              height={cHeight}
+              width={cWidth}
+              margin={margin}
+              type={xAxis ? xAxis : "bottom"}
+              axis={xAxis ? true : false}
+              label={xAxisLabel}
+            />
+          )}
+          {groupBy
+            ? layers.map((layer: any, i: number) => (
+                <g key={i}>
+                  {layer.map((sequence: any, i: number) => (
+                    <Rectangle
+                      data={getSequenceData(sequence)}
+                      key={i}
+                      x={xScale(xAccessor(sequence.data))}
+                      y={yScale(sequence[1])}
+                      width={xScale.bandwidth()}
+                      height={
+                        yScale(sequence[0]) - yScale(sequence[1]) > 0
+                          ? yScale(sequence[0]) - yScale(sequence[1])
+                          : 0
+                      }
+                      fill={colorScale(layer.key)}
+                      setTooltip={setTooltip}
+                    />
+                  ))}
+                </g>
+              ))
+            : data.map((d: any, i: number) => (
+                <Rectangle
+                  data={d}
+                  key={i}
+                  x={xScale(xAccessor(d))}
+                  y={yScale(yAccessor(d))}
+                  width={xScale.bandwidth()}
+                  height={
+                    xAxisY - yScale(yAccessor(d)) > 0
+                      ? xAxisY - yScale(yAccessor(d))
+                      : 0
+                  }
+                  fill={colorScale(yKey)}
+                  setTooltip={setTooltip}
+                />
+              ))}
 
-        {tooltip && (
-          <Tooltip
-            data={tooltip}
-            x={tooltip.cx + xScale.bandwidth() / 2}
-            y={tooltip.cy}
-            xKey={xKey}
-            yKey={yKey}
-          />
-        )}
-      </g>
-    </svg>
+          {
+            // If legend prop is truthy, render legend component:
+            legend && (
+              <ColorLegend
+                legendLabel={legendLabel}
+                circleRadius={5 /* Radius of each color swab in legend */}
+                colorScale={colorScale}
+                setLegendOffset={setLegendOffset}
+                legendPosition={legend}
+                legendWidth={xOffset}
+                legendHeight={yOffset}
+                margin={margin}
+                cWidth={cWidth}
+                cHeight={cHeight}
+                EXTRA_LEGEND_MARGIN={EXTRA_LEGEND_MARGIN}
+              />
+            )
+          }
+        </g>
+      </svg>
+    </div>
   )
 }

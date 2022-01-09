@@ -29,7 +29,7 @@ const TooltipDiv = ({
     margin: "4px 4px",
     padding: "0.6em 1em",
     borderRadius: "4px",
-    maxWidth: "280px",
+    maxWidth: "380px",
     transform: `translate(-50%, calc(-100% - ${pointerSize + 4}px)`,
     // background: "#fff",
     background: backgroundColor,

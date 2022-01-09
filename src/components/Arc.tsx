@@ -18,12 +18,16 @@ export const Arc = React.memo(
     stroke,
     strokeWidth = "1px",
     d,
-    cellCenter,
     setTooltip,
   }: ArcProps): JSX.Element => {
+    let cellCenter = {
+      cx: 0,
+      cy: 0,
+      tooltipData: data,
+    }
     const onMouseMove = (e: any) => {
       if (setTooltip) {
-        const cellCenter = {
+        cellCenter = {
           cx: e.pageX,
           cy: e.pageY,
           tooltipData: data,
@@ -34,11 +38,6 @@ export const Arc = React.memo(
 
     const onMouseLeave = (e: any) => {
       if (setTooltip) {
-        const cellCenter = {
-          cx: -e.pageX,
-          cy: -e.pageY,
-          tooltipData: data,
-        }
         setTooltip ? setTooltip(false) : null
       }
     }

@@ -2,8 +2,6 @@ import React from "react"
 import { useResponsive } from "../hooks/useResponsive"
 import { TooltipProps } from "../../types"
 
-// import "./Tooltip.css"
-
 function MemTooltip({
   chartType,
   data,
@@ -19,10 +17,8 @@ function MemTooltip({
     padding: "0.2em .5em",
     borderRadius: "4px",
     color: "#1e2023",
-    /* You can also use a fixed width and ommit the white-sapce. */
     whiteSpace: "nowrap",
     backgroundColor: "#fff",
-    // transform: "translate(calc( -50% + ${x}px), calc(-100% + ${y}px))",
     textAlign: "start",
     lineHeight: "1.5em",
     fontSize: "0.8em",
@@ -39,21 +35,12 @@ function MemTooltip({
   }
 
   const VERTICAL_OFFSET: number = -4
-
-  // console.log("X ", x)
-  // console.log("Y ", y)
-  // console.log("Anchor ", anchor)
-  // console.log("cHeight ", cHeight)
-  // console.log("Tooltip data ", data)
-  // console.log("Tooltip xKey ", xKey)
-  // console.log("Tooltip yKey ", yKey)
   const getMaxStringLength = (xString: string, yString: string): number => {
     const xLength: number = xString.length
     const yLength: number = yString.length
     return Math.max(xLength, yLength)
   }
 
-  // console.log("x String ", `${xKey}: ${data.tooltipData[xKey as string]}`)
   const xTooltipText: string = `${xKey}: ${data.tooltipData[xKey as string]}`
   const yTooltipText: string = `${yKey}: ${data.tooltipData[yKey as string]}`
 

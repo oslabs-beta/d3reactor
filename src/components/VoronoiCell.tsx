@@ -29,6 +29,7 @@ export const VoronoiCell = ({
     }
     setTooltip ? setTooltip(false) : null
   }
+
   return (
     <path
       fill={fill}
