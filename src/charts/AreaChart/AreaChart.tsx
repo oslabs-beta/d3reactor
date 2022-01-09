@@ -13,7 +13,6 @@ import { useResponsive } from "../../hooks/useResponsive"
 import { xScaleDef } from "../../functionality/xScale"
 import { yScaleDef } from "../../functionality/yScale"
 import ListeningRect from "../../components/ListeningRect"
-import { Tooltip } from "../../components/Tooltip"
 import TooltipDiv from "../../components/TooltipDiv"
 import { ColorLegend } from "../../components/ColorLegend"
 import {
@@ -158,7 +157,7 @@ export default function AreaChart({
           yKey={yKey}
         />
       )}
-      <svg width={width} height={height}>
+      <svg width={cWidth} height={cHeight}>
         <g transform={translate}>
           {yAxis && (
             <Axis

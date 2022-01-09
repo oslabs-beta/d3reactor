@@ -89,7 +89,9 @@ const TooltipDiv = ({
       </div>
       <div style={triangleStyle}></div>
       <div style={triangleBorderStyle}></div>
-      {chartType !== "scatter-plot" && <div style={circleStyle}></div>}
+      {chartType !== "scatter-plot" && chartType !== "pie-chart" && (
+        <div style={circleStyle}></div>
+      )}
     </div>
   )
 }

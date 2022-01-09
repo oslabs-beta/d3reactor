@@ -5,6 +5,7 @@ import { useResponsive } from "../../hooks/useResponsive"
 import { PieChartProps } from "../../../types"
 import { ColorLegend } from "../../components/ColorLegend"
 import { Arc } from "../../components/Arc"
+import TooltipDiv from "../../components/TooltipDiv"
 import { Tooltip } from "../../components/Tooltip"
 import {
   checkRadiusDimension,
@@ -110,10 +111,10 @@ export default function PieChart({
   let translateY = 0
   switch (legend) {
     case "top":
-      xPosition = -xOffset / 2 + EXTRA_LEGEND_MARGIN;
-      yPosition = -outerRadius - margin.top / 2 + EXTRA_LEGEND_MARGIN;
-      translateY = yOffset;
-      break;
+      xPosition = -xOffset / 2 + EXTRA_LEGEND_MARGIN
+      yPosition = -outerRadius - margin.top / 2 + EXTRA_LEGEND_MARGIN
+      translateY = yOffset
+      break
     case "bottom":
       xPosition = -xOffset / 2 + EXTRA_LEGEND_MARGIN
       yPosition = outerRadius + margin.bottom / 2 + EXTRA_LEGEND_MARGIN
@@ -134,20 +135,20 @@ export default function PieChart({
       translateX = xOffset
       break
     case "left-top":
-      xPosition = -outerRadius - xOffset + EXTRA_LEGEND_MARGIN;
-      yPosition = -outerRadius - margin.top / 2 + EXTRA_LEGEND_MARGIN;
-      translateY = yOffset;
-      break;
+      xPosition = -outerRadius - xOffset + EXTRA_LEGEND_MARGIN
+      yPosition = -outerRadius - margin.top / 2 + EXTRA_LEGEND_MARGIN
+      translateY = yOffset
+      break
     case "left-bottom":
       xPosition = -outerRadius - xOffset + EXTRA_LEGEND_MARGIN
       yPosition = outerRadius + margin.bottom / 2 + EXTRA_LEGEND_MARGIN
       translateY = -yOffset
       break
     case "right-top":
-      xPosition = outerRadius - EXTRA_LEGEND_MARGIN;
-      yPosition = -outerRadius - margin.top / 2 + EXTRA_LEGEND_MARGIN;
-      translateY = yOffset;
-      break;
+      xPosition = outerRadius - EXTRA_LEGEND_MARGIN
+      yPosition = -outerRadius - margin.top / 2 + EXTRA_LEGEND_MARGIN
+      translateY = yOffset
+      break
     case "top-right":
       yPosition = -outerRadius + margin.top + EXTRA_LEGEND_MARGIN
       translateX = -xOffset
@@ -171,63 +172,77 @@ export default function PieChart({
     (cHeight + translateY) / 2
   })`
 
+  console.log("TOOLTIP ", tooltip)
+
   return (
-    <svg ref={anchor} width={"100%"} height={"100%"}>
-      <g transform={translate}>
-        {pie.map((d: any, i: number) => (
-          <g key={"g" + i}>
-            <Arc
-              data={{ [label]: d.data[label], [value]: d.data[value] }}
-              key={d.label}
-              fill={colorScale(keys[i])}
-              stroke="#ffffff"
-              strokeWidth="0px"
-              d={arcGenerator(d)}
-              id={"arc-" + i}
-              setTooltip={setTooltip}
+    <div ref={anchor} style={{ width: "100%", height: "100%" }}>
+      {tooltip && (
+        <TooltipDiv
+          chartType="pie-chart"
+          data={tooltip}
+          x={tooltip.cx}
+          y={tooltip.cy}
+          xKey={label}
+          yKey={value}
+        />
+      )}
+      <svg ref={anchor} width={"100%"} height={"100%"}>
+        <g transform={translate}>
+          {pie.map((d: any, i: number) => (
+            <g key={"g" + i}>
+              <Arc
+                data={{ [label]: d.data[label], [value]: d.data[value] }}
+                key={d.label}
+                fill={colorScale(keys[i])}
+                stroke="#ffffff"
+                strokeWidth="0px"
+                d={arcGenerator(d)}
+                id={"arc-" + i}
+                setTooltip={setTooltip}
+              />
+              <text
+                style={{ pointerEvents: "none" }}
+                transform={textTranform(d)}
+                textAnchor={"middle"}
+                alignmentBaseline={"middle"}
+                fill={"black"}
+              >
+                {d.data[value]}
+              </text>
+            </g>
+          ))}
+          {
+            // If legend prop is truthy, render legend component:
+            legend && (
+              <ColorLegend
+                legendLabel={legendLabel}
+                circleRadius={5 /* Radius of each color swab in legend */}
+                colorScale={colorScale}
+                setLegendOffset={setLegendOffset}
+                legendPosition={legend}
+                legendWidth={xOffset}
+                legendHeight={yOffset}
+                xPosition={xPosition}
+                yPosition={yPosition}
+                margin={margin}
+                cWidth={cWidth / 2}
+                cHeight={cHeight / 2}
+                EXTRA_LEGEND_MARGIN={EXTRA_LEGEND_MARGIN}
+              />
+            )
+          }
+          {/* {tooltip && (
+            <Tooltip
+              chartType="pie-chart"
+              data={tooltip}
+              x={tooltip.cx}
+              y={tooltip.cy}
+              xKey={label}
+              yKey={value}
             />
-            <text
-              style={{ pointerEvents: "none" }}
-              transform={textTranform(d)}
-              textAnchor={"middle"}
-              alignmentBaseline={"middle"}
-              fill={"black"}
-            >
-              {d.data[value]}
-            </text>
-          </g>
-        ))}
-        {
-          // If legend prop is truthy, render legend component:
-          legend && (
-            <ColorLegend
-              legendLabel={legendLabel}
-              circleRadius={5 /* Radius of each color swab in legend */}
-              colorScale={colorScale}
-              setLegendOffset={setLegendOffset}
-              legendPosition={legend}
-              legendWidth={xOffset}
-              legendHeight={yOffset}
-              xPosition={xPosition}
-              yPosition={yPosition}
-              margin={margin}
-              cWidth={cWidth / 2}
-              cHeight={cHeight / 2}
-              EXTRA_LEGEND_MARGIN={EXTRA_LEGEND_MARGIN}
-            />
-          )
-        }
-        {tooltip && (
-          <Tooltip
-            chartType="pie-chart"
-            data={tooltip}
-            x={tooltip.cx}
-            y={tooltip.cy}
-            xKey={label}
-            yKey={value}
-          />
-        )}
-      </g>
-    </svg>
+          )} */}
+        </g>
+      </svg>
+    </div>
   )
 }
