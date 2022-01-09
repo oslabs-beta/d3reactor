@@ -15,7 +15,23 @@ import skinny_fruit from "./data/skinny_fruit.json";
 function App() {
   return (
     <div className='app'>
-      <PieChart data={fruit} label='label' value='value' outerRadius={240} />
+      <PieChart
+        data={fruit}
+        label='label'
+        value='value'
+        legend='top-right'
+        outerRadius={240}
+        legendLabel='l'
+        pieLabel={true}
+      />
+      <PieChart
+        data={fruit}
+        label='label'
+        value='value'
+        innerRadius={"85%"}
+        outerRadius={"100%"}
+        legend='left-top'
+      />
       <AreaChart
         data={penguins}
         height='100%'
@@ -81,7 +97,7 @@ function App() {
         legend={"right"}
         // legendLabel={''}
       />
-      {/* <BarChart
+      <BarChart
         height='500'
         width='400'
         data={skinny_fruit}
@@ -96,8 +112,7 @@ function App() {
         // legend={true}
       /> */}
       <LineChart
-        height={500}
-        width={600}
+        height='100%'
         data={unemployment}
         xKey='date'
         xDataType='date'
