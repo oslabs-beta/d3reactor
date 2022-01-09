@@ -12,7 +12,8 @@
     "build": "webpack --config webpack.prod.ts",
     "dev": "webpack-dev-server --config webpack.dev.ts --open",
     "release": "npm run build && npm pack",
-    "cypress:open": "cypress open"
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run"
   },
   "repository": {
     "type": "git",
