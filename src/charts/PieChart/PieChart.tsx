@@ -174,7 +174,7 @@ export default function PieChart({
 
   return (
     <svg ref={anchor} width={"100%"} height={"100%"}>
-      <g transform={translate}>
+      <g transform={translate} data-test-id='pie-chart'>
         {pie.map((d: any, i: number) => (
           <g key={"g" + i}>
             <Arc
