@@ -10,6 +10,7 @@ import { d3Voronoi } from "../../functionality/voronoi"
 import { xScaleDef } from "../../functionality/xScale"
 import { yScaleDef } from "../../functionality/yScale"
 import { VoronoiWrapper } from "../../components/VoronoiWrapper"
+import TooltipDiv from "../../components/Tooltip-div"
 import { Tooltip } from "../../components/Tooltip"
 import {
   ScatterPlotProps,
@@ -130,10 +131,19 @@ export default function ScatterPlot({
 
   const colorScale: ColorScale = d3.scaleOrdinal(colorScheme)
   colorScale.domain(keys)
-  console.log("mar", margin)
 
   return (
-    <svg ref={anchor} width={width} height={height}>
+    <div ref={anchor} style={{ width: width, height: height }}>
+    {tooltip && (
+      <TooltipDiv
+        data={tooltip}
+        x={margin.left + tooltip.cx}
+        y={margin.top + tooltip.cy}
+        xKey={xKey}
+        yKey={yKey}
+      />
+    )}
+    <svg width={width} height={height}>
       <g className="spbody" transform={translate}>
         {yAxis && (
           <Axis
@@ -235,7 +245,7 @@ export default function ScatterPlot({
           )
         }
 
-        {tooltip && (
+        {/* {tooltip && (
           <Tooltip
             data={tooltip}
             x={tooltip.cx}
@@ -243,8 +253,9 @@ export default function ScatterPlot({
             xKey={xKey}
             yKey={yKey}
           />
-        )}
+        )} */}
       </g>
     </svg>
+    </div>
   )
 }

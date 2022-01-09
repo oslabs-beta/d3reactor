@@ -28,6 +28,7 @@ function MemTooltip({
     fontSize: "0.8em",
     zIndex: "9999",
     transition: "all 0.1s ease-out",
+    pointerEvents:'none'
   }
 
   const circleStyle: React.CSSProperties | undefined = {

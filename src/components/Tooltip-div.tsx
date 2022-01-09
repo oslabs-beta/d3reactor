@@ -18,6 +18,7 @@ const TooltipDiv = ({
     position: "absolute",
     boxShadow: "0px 5px 15px 0px rgba(0,0,0,0.3)",
     zIndex: "9999",
+    pointerEvents:'none'
   }
 
   const contentStyle: React.CSSProperties | undefined = {
@@ -68,7 +69,6 @@ const TooltipDiv = ({
     backgroundColor: "black",
   }
 
-  console.log("x, y", x, y)
   const xTooltipText: string = `${xKey}: ${data.tooltipData[xKey as string]}`
   const yTooltipText: string = `${yKey}: ${data.tooltipData[yKey as string]}`
 

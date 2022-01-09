@@ -43,13 +43,13 @@ export default function ListeningRect({
   setTooltip?: React.Dispatch<any>
 }) {
   const position = useMousePosition()
-  console.log("USE MOUSE POSITION ", position)
+  //console.log("USE MOUSE POSITION ", position)
   const cellCenter = { cx: 0, cy: 0, tooltipData: {} }
 
   function onMouseMove(e: any) {
     const mousePosition = d3.pointer(e)
-    console.log("EVENT ", e)
-    console.log("MOUSE POSITION ", mousePosition)
+    // console.log("EVENT ", e)
+    // console.log("MOUSE POSITION ", mousePosition)
     // const hoveredX = xScale.invert(mousePosition[0]) as Date
     const hoveredX = xScale.invert(e.screenX) as Date
     // const hoveredY = yScale.invert(mousePosition[1])
