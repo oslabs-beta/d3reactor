@@ -110,7 +110,7 @@ function App() {
         // xAxisLabel="Date"
         // yAxisLabel="Value"
         // legend={true}
-      /> */}
+      /> 
       <LineChart
         height='100%'
         data={unemployment}
