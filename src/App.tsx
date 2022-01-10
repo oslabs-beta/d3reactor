@@ -97,13 +97,13 @@ function App() {
         // legendLabel={''}
       />
       <BarChart
-        height="500"
+        height="700"
         width="400"
         data={skinny_fruit}
         xKey="date"
         yKey="value"
         // groupBy='fruit'
-        xAxis="bottom"
+        xAxis="top"
         yAxis="right"
         yGrid={true}
         // xAxisLabel="Date"
