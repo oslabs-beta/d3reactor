@@ -14,7 +14,7 @@ import skinny_fruit from "./data/skinny_fruit.json"
 
 function App() {
   return (
-    <div className="app">
+    <div className="app" style={{height: 220}}>
       <PieChart
         data={fruit}
         label="label"
@@ -134,12 +134,12 @@ function App() {
         xDataType="date"
         yKey="value"
         yAxis="right"
-        xAxis="bottom"
+        xAxis="top"
         xGrid={true}
         yGrid={true}
         xAxisLabel="Date"
         yAxisLabel="Value"
-        legend={"bottom-left"}
+        legend={"right"}
       />
     </div>
   )

@@ -103,13 +103,14 @@ export default function BarChart({
     return (d) => d[yKey]
   }, [])
 
+  const rangeMax = cWidth - margin.right - margin.left;
   const xScale = useMemo(() => {
     return d3
       .scaleBand()
       .paddingInner(0.1)
       .paddingOuter(0.1)
       .domain(data.map(xAccessor))
-      .range([0, cWidth - margin.right - margin.left])
+      .range([0, rangeMax > 40 ? rangeMax : 40])
   }, [data, xAccessor, cWidth, margin])
 
   const yScale = useMemo(() => {
