@@ -84,7 +84,7 @@ export default function BarChart({
 
   // When the yKey key has been assigned to the groupBy variable we know the user didn't specify grouping
   let keys: string[] = [],
-    groups: d3.InternMap<any, any[]>
+      groups: d3.InternMap<any, any[]>
   const groupAccessor = (d: Data) => d[groupBy ?? ""]
   groups = d3.group(data, groupAccessor)
   keys = groupBy ? Array.from(groups).map((group) => group[0]) : [yKey]
@@ -103,13 +103,14 @@ export default function BarChart({
     return (d) => d[yKey]
   }, [])
 
+  const rangeMax = cWidth - margin.right - margin.left;
   const xScale = useMemo(() => {
     return d3
       .scaleBand()
       .paddingInner(0.1)
       .paddingOuter(0.1)
       .domain(data.map(xAccessor))
-      .range([0, cWidth - margin.right - margin.left])
+      .range([0, rangeMax > 40 ? rangeMax : 40])
   }, [data, xAccessor, cWidth, margin])
 
   const yScale = useMemo(() => {
@@ -190,10 +191,10 @@ export default function BarChart({
         {groupBy
           ? layers.map((layer: any, i: number) => (
               <g key={i}>
-                {layer.map((sequence: any, i: number) => (
+                {layer.map((sequence: any, j: number) => (
                   <Rectangle
                     data={getSequenceData(sequence)}
-                    key={i}
+                    key={j}
                     x={xScale(xAccessor(sequence.data))}
                     y={yScale(sequence[1])}
                     width={xScale.bandwidth()}
