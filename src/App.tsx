@@ -20,7 +20,7 @@ function App() {
         label="label"
         value="value"
         legend="top-right"
-        outerRadius={100}
+        outerRadius={240}
         legendLabel="l"
       />
       <PieChart
@@ -32,58 +32,60 @@ function App() {
         legend="left-top"
       />
       <AreaChart
-        data={portfolio}
-        height="300px"
-        width="600px"
-        xKey="date"
-        xDataType="date"
-        yKey="value"
-        xGrid={false}
-        yGrid={false}
-        xAxis="bottom"
+        data={penguins}
+        height="100%"
+        width="100%"
+        xKey="body_mass_g"
+        xDataType="number"
+        yKey="culmen_length_mm"
+        xGrid={true}
+        yGrid={true}
+        xAxis="top"
         yAxis="right"
-        // xAxisLabel="Date"
-        // yAxisLabel="Number of fruit"
-        legend={false}
+        xAxisLabel="Date"
+        yAxisLabel="Number of fruit"
+        legend={true}
         // legend="left-top"
         legendLabel="🐬"
       />
       <AreaChart
         data={skinny_fruit}
-        height="300px"
-        width="600px"
+        height="300"
         xKey="date"
         xDataType="date"
         yKey="value"
         groupBy="fruit"
-        xGrid={false}
-        yGrid={false}
-        xAxis="bottom"
+        xGrid={true}
+        yGrid={true}
+        // xAxis="bottom"
+        xAxis={false}
         yAxis="right"
-        // xAxisLabel="Date"
-        // yAxisLabel="Number of fruit"
-        // legend={"right-bottom"}
-        // legend={"bottom-right"}
-        // legendLabel="fdsafd"
-      />
-      <ScatterPlot
-        height={"500px"}
-        width={"500px"}
-        data={penguins}
-        xKey="flipper_length_mm"
-        xDataType="number"
-        yKey="body_mass_g"
-        groupBy="species"
-        yAxis="left"
-        xAxis="bottom"
-        // xGrid={true}
-        // yGrid={true}
         xAxisLabel="Date"
-        yAxisLabel="Value"
-        legend="left"
+        yAxisLabel="Number of fruit"
+        // legend={"right-bottom"}
+        legend={"bottom-right"}
+        legendLabel="fdsafd"
       />
+      <div style={{ width: "400px" }}>
+        <ScatterPlot
+          height="100%"
+          width="100%"
+          data={penguins}
+          xKey="flipper_length_mm"
+          xDataType="number"
+          yKey="body_mass_g"
+          groupBy="species"
+          yAxis="right"
+          xAxis="bottom"
+          // xGrid={true}
+          // yGrid={true}
+          xAxisLabel="Date"
+          yAxisLabel="Value"
+          //legend='right'
+        />
+      </div>
       <BarChart
-        height="300px"
+        height="300"
         data={skinny_fruit}
         xKey="date"
         yKey="value"
@@ -97,13 +99,13 @@ function App() {
         // legendLabel={''}
       />
       <BarChart
-        height="500px"
-        width="400px"
+        height="700"
+        width="400"
         data={skinny_fruit}
         xKey="date"
         yKey="value"
         // groupBy='fruit'
-        xAxis="bottom"
+        xAxis="top"
         yAxis="right"
         yGrid={true}
         // xAxisLabel="Date"
@@ -134,12 +136,12 @@ function App() {
         xDataType="date"
         yKey="value"
         yAxis="right"
-        xAxis="bottom"
+        xAxis="top"
         xGrid={true}
         yGrid={true}
         xAxisLabel="Date"
         yAxisLabel="Value"
-        legend={"bottom-left"}
+        legend={"right"}
       />
     </div>
   )

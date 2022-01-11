@@ -18,32 +18,6 @@ export const DiscreteAxis = React.memo(
     layers,
     xAccessor,
   }: DiscreteAxisProps): JSX.Element => {
-    // const gRef = useD3(
-    //   (anchor) => {
-    //     let axis = d3.axisBottom(scale)
-    //     switch (type) {
-    //       case "bottom":
-    //         axis = d3.axisBottom(scale)
-    //         break
-    //       case "top":
-    //         axis = d3.axisTop(scale)
-    //         break
-    //       case "left":
-    //         axis = d3.axisLeft(scale)
-    //         break
-    //       case "right":
-    //         axis = d3.axisRight(scale)
-    //         break
-    //       default:
-    //         axis = d3.axisRight(scale)
-    //         break
-    //     }
-
-    //     anchor.call(axis)
-    //   },
-    //   [type, scale]
-    // )
-
     let x1 = 0,
       y1 = 0,
       x2 = 0,
@@ -53,12 +27,14 @@ export const DiscreteAxis = React.memo(
         x1 = x
         y1 = y
         x2 = width - margin.right - margin.left
+        if (x2 < 40) x2 = 40
         y2 = y
         break
       case "top":
         x1 = x
         y1 = y
         x2 = width - margin.right - margin.left
+        if (x2 < 40) x2 = 40
         y2 = y
         break
 
@@ -98,6 +74,9 @@ export const DiscreteAxis = React.memo(
       }
     }
 
+    // const horizontalTicks = scale.ticks(width/120)
+    // const verticalTicks = scale.ticks(numberOfVerticalTicks)
+    // console.log('vt',verticalTicks)
     const ticks = data.map((d) => xAccessor(d))
 
     const formatTick = d3.timeFormat("%x")

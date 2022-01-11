@@ -14,14 +14,15 @@ import {
 } from "../../utils"
 
 export default function PieChart({
+  colorScheme = d3.quantize(d3.interpolateHcl("#9dc8e2", "#07316b"), 8),
   data,
-  label,
-  value,
-  outerRadius,
   innerRadius,
+  label,
   legend,
   legendLabel,
-  colorScheme = d3.quantize(d3.interpolateHcl("#9dc8e2", "#07316b"), 8),
+  outerRadius,
+  pieLabel,
+  value,
 }: PieChartProps): JSX.Element {
   const [tooltip, setTooltip] = useState<false | any>(false)
 
@@ -183,8 +184,8 @@ export default function PieChart({
           yKey={value}
         />
       )}
-      <svg ref={anchor} width={"100%"} height={"100%"}>
-        <g transform={translate}>
+      <svg width={"100%"} height={"100%"}>
+        <g transform={translate} data-test-id="pie-chart">
           {pie.map((d: any, i: number) => (
             <g key={"g" + i}>
               <Arc
@@ -197,15 +198,17 @@ export default function PieChart({
                 id={"arc-" + i}
                 setTooltip={setTooltip}
               />
-              <text
-                style={{ pointerEvents: "none" }}
-                transform={textTranform(d)}
-                textAnchor={"middle"}
-                alignmentBaseline={"middle"}
-                fill={"black"}
-              >
-                {d.data[value]}
-              </text>
+              {pieLabel && (
+                <text
+                  style={{ pointerEvents: "none" }}
+                  transform={textTranform(d)}
+                  textAnchor={"middle"}
+                  alignmentBaseline={"middle"}
+                  fill={"black"}
+                >
+                  {d.data[value]}
+                </text>
+              )}
             </g>
           ))}
           {

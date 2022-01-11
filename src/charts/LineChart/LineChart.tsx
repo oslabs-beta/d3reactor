@@ -139,6 +139,7 @@ export default function LineChart({
     )
   }, [data, xScale, yScale, xAccessor, yAccessor, cHeight, cWidth, margin])
 
+  // console.log("TOOLTIP ", tooltip)
   const colorScale: ColorScale = d3.scaleOrdinal(colorScheme)
   colorScale.domain(keys)
   return (
@@ -152,7 +153,7 @@ export default function LineChart({
           yKey={yKey}
         />
       )}
-      <svg width={cWidth} height={cHeight}>
+      <svg width={cWidth} height={cHeight} data-test-id="line-chart">
         <g transform={translate}>
           {yAxis && (
             <Axis
@@ -177,6 +178,64 @@ export default function LineChart({
               type={yAxis ? yAxis : "left"}
               axis={yAxis ? true : false}
               label={yAxisLabel}
+            />
+          )}
+
+          {xAxis && (
+            <Axis
+              x={xAxisX}
+              y={xAxisY}
+              height={cHeight}
+              width={cWidth}
+              margin={margin}
+              scale={xScale}
+              type={xAxis}
+              xGrid={xGrid}
+              label={xAxisLabel}
+              xTicksValue={xTicksValue}
+            />
+          )}
+          {xAxisLabel && (
+            <Label
+              x={xAxisX}
+              y={xAxisY}
+              height={cHeight}
+              width={cWidth}
+              margin={margin}
+              type={xAxis ? xAxis : "bottom"}
+              axis={xAxis ? true : false}
+              label={xAxisLabel}
+            />
+          )}
+          {groupBy ? (
+            d3.map(lineGroups, (lineGroup: [string, []], i) => {
+              return (
+                <Line
+                  key={i}
+                  fill="none"
+                  stroke={colorScale(lineGroup[0])}
+                  strokeWidth="1px"
+                  d={line(lineGroup[1])}
+                />
+              )
+            })
+          ) : (
+            <Line
+              fill="none"
+              stroke={colorScale(yKey)}
+              strokeWidth="1px"
+              d={line(data)}
+            />
+          )}
+          {voronoi && (
+            <VoronoiWrapper
+              data={data}
+              voronoi={voronoi}
+              xScale={xScale}
+              yScale={yScale}
+              xAccessor={xAccessor}
+              yAccessor={yAccessor}
+              setTooltip={setTooltip}
             />
           )}
 

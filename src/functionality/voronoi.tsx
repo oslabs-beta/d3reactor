@@ -8,14 +8,15 @@ export function d3Voronoi (data: Data[], xScale:ScaleFunc, yScale: d3.ScaleLinea
     (d) => xScale(xAccessor(d)),
     (d) => yScale(yAccessor(d))
   )
-
-  let voronoi: d3.Voronoi<string> = null as unknown as d3.Voronoi<string>
+  let voronoi: d3.Voronoi<string> = null as unknown as d3.Voronoi<string>;
+  const xMax = width - margin.right - margin.left;
+  const yMax = height - margin.bottom - margin.top;
   if (height && width) {
     voronoi = delaunay.voronoi([
       0,
       0,
-      width - margin.right - margin.left,
-      height - margin.bottom - margin.top,
+      xMax > 40 ? xMax : 40,
+      yMax > 40 ? yMax : 40,
     ])
   }
   return voronoi;

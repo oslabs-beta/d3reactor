@@ -10,6 +10,11 @@
     "value": 15
   },
   {
+    "date": "Thu Mar 08 2018 00:00:00 GMT-0500 (Eastern Standard Time)",
+    "fruit": "apples",
+    "value": 38
+  },
+  {
     "date": "Sun Apr 01 2018 00:00:00 GMT-0400 (Eastern Daylight Time)",
     "fruit": "apples",
     "value": 20
@@ -25,9 +30,14 @@
     "value": 15
   },
   {
+    "date": "Thu Mar 08 2018 00:00:00 GMT-0500 (Eastern Standard Time)",
+    "fruit": "oranges",
+    "value": 18
+  },
+  {
     "date": "Sun Apr 01 2018 00:00:00 GMT-0400 (Eastern Daylight Time)",
     "fruit": "oranges",
-    "value": 15
+    "value": 33
   },
   {
     "date": "Thu Feb 01 2018 00:00:00 GMT-0500 (Eastern Standard Time)",
@@ -38,6 +48,11 @@
     "date": "Thu Mar 01 2018 00:00:00 GMT-0500 (Eastern Standard Time)",
     "fruit": "bananas",
     "value":15
+  },
+  {
+    "date": "Thu Mar 08 2018 00:00:00 GMT-0500 (Eastern Standard Time)",
+    "fruit": "bananas",
+    "value": 6
   },
   {
     "date": "Sun Apr 01 2018 00:00:00 GMT-0400 (Eastern Daylight Time)",
@@ -53,6 +68,11 @@
     "date": "Thu Mar 01 2018 00:00:00 GMT-0500 (Eastern Standard Time)",
     "fruit": "apricots",
     "value":3
+  },
+  {
+    "date": "Thu Mar 08 2018 00:00:00 GMT-0500 (Eastern Standard Time)",
+    "fruit": "apricots",
+    "value": 3
   },
   {
     "date": "Sun Apr 01 2018 00:00:00 GMT-0400 (Eastern Daylight Time)",
