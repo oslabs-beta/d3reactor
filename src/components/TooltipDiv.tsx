@@ -22,16 +22,15 @@ const TooltipDiv = ({
   const backgroundColor = "#fff"
   const boarderColor = "#ddd"
   const pointerSize = 12
+  const shadowElevationHigh = `0 0 10px 0 rgba(80, 80, 80, 0.2)`
 
   const contentStyle: React.CSSProperties | undefined = {
-    // opacity: 0.2,
     position: "absolute",
     margin: "4px 4px",
     padding: "0.6em 1em",
     borderRadius: "4px",
     maxWidth: "380px",
     transform: `translate(-50%, calc(-100% - ${pointerSize + 4}px)`,
-    // background: "#fff",
     background: backgroundColor,
     textAlign: "center",
     lineHeight: "1.4em",
@@ -40,7 +39,8 @@ const TooltipDiv = ({
     border: `1px solid ${boarderColor}`,
     zIndex: "9",
     transition: "all 0.1s ease-out",
-    boxShadow: "0px 5px 15px 0px rgba(0,0,0,0.3)",
+    boxShadow: shadowElevationHigh,
+    pointerEvents: "none",
   }
 
   const triangleStyle: React.CSSProperties | undefined = {
@@ -52,7 +52,9 @@ const TooltipDiv = ({
     transform: `translate(-50%, calc(-102% - ${
       pointerSize / 2
     }px)) rotate(45deg)`,
+    transformOrigin: "center center",
     zIndex: "10",
+    pointerEvents: "none",
   }
 
   const triangleBorderStyle: React.CSSProperties | undefined = {
@@ -64,17 +66,22 @@ const TooltipDiv = ({
     transform: `translate(-50%, calc(-100% - ${
       pointerSize / 2
     }px)) rotate(45deg)`,
-    boxShadow: "1px 1px 20px 0px rgba(0,0,0,0.6)",
+    transformOrigin: "center center",
+    boxShadow: "1px 1px 14px 0px rgba(0,0,0,0.2)",
     zIndex: "8",
+    pointerEvents: "none",
   }
 
   const circleStyle: React.CSSProperties | undefined = {
-    width: "2px",
-    height: "2px",
+    width: "4px",
+    height: "4px",
     borderRadius: "50%",
+    border: "1px solid #0184c7",
     position: "absolute",
-    transform: "translateX(-10px, -10px)",
-    backgroundColor: "black",
+    transform: "translate(-50%, -50%)",
+    backgroundColor: "#f0f9ff",
+    boxShadow: "1px 1px 2px 1px rgba(0,0,0,0.15)",
+    pointerEvents: "none",
   }
 
   const xTooltipText: string = `${xKey}: ${data.tooltipData[xKey as string]}`

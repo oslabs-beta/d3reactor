@@ -47,10 +47,8 @@ export default function ListeningRect({
 
   function onMouseMove(e: any) {
     const mousePosition = d3.pointer(e)
-    // const hoveredX = xScale.invert(mousePosition[0]) as Date
-    const hoveredX = xScale.invert(e.screenX) as Date
-    // const hoveredY = yScale.invert(mousePosition[1])
-    const hoveredY = yScale.invert(e.screenY)
+    const hoveredX = xScale.invert(mousePosition[0]) as Date
+    const hoveredY = yScale.invert(mousePosition[1])
 
     // ****************************************
     // Find x position
@@ -69,7 +67,7 @@ export default function ListeningRect({
     if (typeof closestXIndex === "number") {
       const closestDataPoint = data[closestXIndex]
       closestXValue = xAccessor(closestDataPoint)
-      cellCenter.cx = xScale(closestXValue)
+      cellCenter.cx = e.pageX - e.nativeEvent.offsetX + xScale(closestXValue)
     }
 
     // ****************************************
@@ -94,7 +92,7 @@ export default function ListeningRect({
       const closestKey = layers[closestYIndex].key
       if (typeof closestXIndex === "number") {
         closestYValue = layers[closestYIndex][closestXIndex][1]
-        cellCenter.cy = yScale(closestYValue)
+        cellCenter.cy = e.pageY - e.nativeEvent.offsetY + yScale(closestYValue)
         cellCenter.tooltipData = {
           [xKey]: closestXValue,
           [yKey]: closestYValue,

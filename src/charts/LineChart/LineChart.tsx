@@ -20,7 +20,6 @@ import {
   EXTRA_LEGEND_MARGIN,
 } from "../../utils"
 import { ColorLegend } from "../../components/ColorLegend"
-import { Tooltip } from "../../components/Tooltip"
 import { yScaleDef } from "../../functionality/yScale"
 import { xScaleDef } from "../../functionality/xScale"
 import { d3Voronoi } from "../../functionality/voronoi"

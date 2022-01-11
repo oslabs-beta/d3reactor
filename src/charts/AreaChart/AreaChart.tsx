@@ -235,16 +235,6 @@ export default function AreaChart({
               />
             )
           }
-          {/* {tooltip && (
-            <Tooltip
-              data={tooltip}
-              x={tooltip.cx}
-              y={tooltip.cy}
-              xKey={xKey}
-              yKey={yKey}
-            />
-          )} */}
-
           <ListeningRect
             data={data}
             layers={layers}

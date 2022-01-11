@@ -33,14 +33,14 @@ function App() {
       />
       <AreaChart
         data={portfolio}
-        height="400px"
-        width="700px"
+        height="300px"
+        width="600px"
         xKey="date"
         xDataType="date"
         yKey="value"
-        xGrid={true}
-        yGrid={true}
-        xAxis="top"
+        xGrid={false}
+        yGrid={false}
+        xAxis="bottom"
         yAxis="right"
         // xAxisLabel="Date"
         // yAxisLabel="Number of fruit"
@@ -50,21 +50,21 @@ function App() {
       />
       <AreaChart
         data={skinny_fruit}
-        height="300"
+        height="300px"
+        width="600px"
         xKey="date"
         xDataType="date"
         yKey="value"
         groupBy="fruit"
-        xGrid={true}
-        yGrid={true}
-        // xAxis="bottom"
-        xAxis={false}
+        xGrid={false}
+        yGrid={false}
+        xAxis="bottom"
         yAxis="right"
-        xAxisLabel="Date"
-        yAxisLabel="Number of fruit"
+        // xAxisLabel="Date"
+        // yAxisLabel="Number of fruit"
         // legend={"right-bottom"}
-        legend={"bottom-right"}
-        legendLabel="fdsafd"
+        // legend={"bottom-right"}
+        // legendLabel="fdsafd"
       />
       <ScatterPlot
         height={"500px"}

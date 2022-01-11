@@ -6,7 +6,6 @@ import { PieChartProps } from "../../../types"
 import { ColorLegend } from "../../components/ColorLegend"
 import { Arc } from "../../components/Arc"
 import TooltipDiv from "../../components/TooltipDiv"
-import { Tooltip } from "../../components/Tooltip"
 import {
   checkRadiusDimension,
   calculateOuterRadius,
@@ -229,16 +228,6 @@ export default function PieChart({
               />
             )
           }
-          {/* {tooltip && (
-            <Tooltip
-              chartType="pie-chart"
-              data={tooltip}
-              x={tooltip.cx}
-              y={tooltip.cy}
-              xKey={label}
-              yKey={value}
-            />
-          )} */}
         </g>
       </svg>
     </div>

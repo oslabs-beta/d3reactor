@@ -11,7 +11,6 @@ import { xScaleDef } from "../../functionality/xScale"
 import { yScaleDef } from "../../functionality/yScale"
 import { VoronoiWrapper } from "../../components/VoronoiWrapper"
 import TooltipDiv from "../../components/TooltipDiv"
-import { Tooltip } from "../../components/Tooltip"
 import {
   ScatterPlotProps,
   xAccessorFunc,
