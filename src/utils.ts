@@ -85,6 +85,7 @@ export function getMarginsWithLegend(
   // legendOffset: [number, number] = [0, 0], // ideally this should be mandatory if legend is truthy
   cWidth: number = 0,                      // ideally this should be mandatory if legend is truthy
   cHeight: number = 0,                     // ideally this should be mandatory if legend is truthy
+  tickMargin?: number
 ) {
   let left = 20,
       right = 20,
@@ -115,7 +116,9 @@ export function getMarginsWithLegend(
         top += 20;
         break
       case "bottom":
-        bottom += 20;
+        bottom += tickMargin? tickMargin + 20 : 20;
+        console.log('bottom, ',bottom)
+        
         break
       case undefined:
         bottom += 20;
@@ -191,13 +194,15 @@ export function getAxisLabelCoordinates(
   margin: Margin,
   type: string | boolean,
   axis: boolean,
-  fontSize = 16 
-) {
+  tickMargin = 0
+) {  
+  let fontSize = 16;
+
   let rotate = 0
   let axisLabelX: number = 0
   let axisLabelY: number = 0
   let labelMargin = LABEL_MARGIN;
-  let axisMargin = AXIS_MARGIN;
+  let axisMargin = AXIS_MARGIN + tickMargin;
   switch (type) {
     case "top":
       axisLabelX = width / 2 - margin.left / 2 - margin.right / 2
@@ -211,7 +216,7 @@ export function getAxisLabelCoordinates(
       break
     case "bottom":
       axisLabelX = width / 2 - margin.left / 2 - margin.right / 2
-      axisLabelY = axis ? (y + labelMargin/2 + axisMargin) : (y + labelMargin)
+      axisLabelY = axis ? (y + labelMargin + axisMargin) : (y + labelMargin)
       rotate = 0
       break
     case "left":

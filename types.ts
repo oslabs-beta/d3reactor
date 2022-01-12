@@ -138,7 +138,8 @@ export interface DiscreteAxisProps {
   margin: Margin
   data: Data[]
   layers: any
-  xAccessor: (d: Data) => string
+  xAccessor: (d: Data) => string,
+  setTickMargin: React.Dispatch<any>
 }
 
 export interface TooltipProps {
