@@ -11,11 +11,12 @@ import penguins from "./data/penguins.json";
 import portfolio from "./data/portfolio.json";
 import fruit from "./data/fruit.json";
 import skinny_fruit from "./data/skinny_fruit.json";
+import sales from "./data/sales.json";
 
 function App() {
   return (
     <div className='app'>
-      <PieChart
+      {/* <PieChart
         data={fruit}
         label='label'
         value='value'
@@ -110,8 +111,8 @@ function App() {
         // xAxisLabel="Date"
         // yAxisLabel="Value"
         // legend={true}
-      />
-      <LineChart
+      /> */}
+      {/* <LineChart
         height='100%'
         data={unemployment}
         xKey='date'
@@ -126,20 +127,20 @@ function App() {
         yAxisLabel='Unemployment'
         // legend={'bottom-right'}
         // legendLabel="Locations"
-      />
+      /> */}
       <LineChart
         height='100%'
         width='100%'
-        data={portfolio}
-        xKey='date'
-        xDataType='date'
-        yKey='value'
+        data={sales}
+        xKey='year'
+        xDataType='number'
+        yKey='sales'
         yAxis='right'
         xAxis='bottom'
         xGrid={true}
         yGrid={true}
-        xAxisLabel='Date'
-        yAxisLabel='Value'
+        xAxisLabel='Year'
+        yAxisLabel='Sales'
         legend={"bottom-left"}
       />
     </div>
