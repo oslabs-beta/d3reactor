@@ -11,10 +11,25 @@ import penguins from "./data/penguins.json";
 import portfolio from "./data/portfolio.json";
 import fruit from "./data/fruit.json";
 import skinny_fruit from "./data/skinny_fruit.json";
+import sales from "./data/sales.json";
 
 function App() {
   return (
     <div className="app" style={{height: 220}}>
+      <BarChart
+        height="700"
+        width="100%"
+        data={skinny_fruit}
+        xKey='date'
+        yKey='value'
+        // groupBy='fruit'
+        xAxis="bottom"
+        yAxis="right"
+        yGrid={true}
+        xAxisLabel="Date"
+        yAxisLabel="Value"
+        legend={'bottom'}
+      /> 
       <PieChart
         data={fruit}
         label='label'
@@ -31,7 +46,7 @@ function App() {
         innerRadius={"85%"}
         outerRadius={"100%"}
         legend='left-top'
-      />
+      /> 
       <AreaChart
         data={penguins}
         height='100%'
@@ -61,12 +76,26 @@ function App() {
         // xAxis="bottom"
         xAxis={false}
         yAxis='right'
-        xAxisLabel='Date'
+        // xAxisLabel='Date'
         yAxisLabel='Number of fruit'
         // legend={"right-bottom"}
-        legend={"bottom-right"}
-        legendLabel='fdsafd'
+        // legend={"bottom-right"}
+        // legendLabel='fdsafd'
       />
+        <BarChart
+          height='100%'
+          data={fruit}
+          xKey='label'
+          yKey='value'
+          // groupBy='fruit'
+          xAxis='bottom'
+          yAxis='left'
+          yGrid={true}
+          xAxisLabel='Date'
+          yAxisLabel='Value'
+          legend={"bottom"}
+          // legendLabel={''}
+        />
       <ScatterPlot
         height='100%'
         width='100%'
@@ -81,37 +110,10 @@ function App() {
         // yGrid={true}
         xAxisLabel='Date'
         yAxisLabel='Value'
-        //legend='right'
+        legend='bottom'
       />
-      <BarChart
-        height='300'
-        data={skinny_fruit}
-        xKey='date'
-        yKey='value'
-        groupBy='fruit'
-        xAxis='bottom'
-        yAxis='left'
-        yGrid={true}
-        xAxisLabel='Date'
-        yAxisLabel='Value'
-        legend={"right"}
-        // legendLabel={''}
-      />
-      <BarChart
-        height="700"
-        width="400"
-        data={skinny_fruit}
-        xKey='date'
-        yKey='value'
-        // groupBy='fruit'
-        xAxis="top"
-        yAxis="right"
-        yGrid={true}
-        // xAxisLabel="Date"
-        // yAxisLabel="Value"
-        // legend={true}
-      /> 
-      <LineChart
+  
+    <LineChart
         height='100%'
         data={unemployment}
         xKey='date'
@@ -138,10 +140,10 @@ function App() {
         xAxis="top"
         xGrid={true}
         yGrid={true}
-        xAxisLabel="Date"
-        yAxisLabel="Value"
-        legend={"right"}
-      />
+        xAxisLabel='Date'
+        yAxisLabel='Value'
+        legend={"bottom-left"}
+      /> 
     </div>
   );
 }

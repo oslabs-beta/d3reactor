@@ -150,8 +150,8 @@ export default function AreaChart({
           <Axis
             x={yAxisX}
             y={yAxisY}
-            height={cHeight}
-            width={cWidth}
+            height={cHeight < 150 ? 150 : cHeight}
+            width={cWidth < 150 ? 150 : cWidth}
             margin={margin}
             scale={yScale}
             type={yAxis}
@@ -163,8 +163,8 @@ export default function AreaChart({
           <Label
             x={yAxisX}
             y={yAxisY}
-            height={cHeight}
-            width={cWidth}
+            height={cHeight < 150 ? 150 : cHeight}
+            width={cWidth < 150 ? 150 : cWidth}
             margin={margin}
             type={yAxis ? yAxis : "left"}
             axis={yAxis ? true : false}
@@ -175,8 +175,8 @@ export default function AreaChart({
           <Axis
             x={xAxisX}
             y={xAxisY}
-            height={cHeight}
-            width={cWidth}
+            height={cHeight < 150 ? 150 : cHeight}
+            width={cWidth < 150 ? 150 : cWidth}
             margin={margin}
             scale={xScale}
             xGrid={xGrid}
@@ -189,8 +189,8 @@ export default function AreaChart({
           <Label
             x={xAxisX}
             y={xAxisY}
-            height={cHeight}
-            width={cWidth}
+            height={cHeight < 150 ? 150 : cHeight}
+            width={cWidth < 150 ? 150 : cWidth}
             margin={margin}
             type={xAxis ? xAxis : "bottom"}
             axis={xAxis ? true : false}
@@ -212,8 +212,8 @@ export default function AreaChart({
               legendWidth={xOffset}
               legendHeight={yOffset}
               margin={margin}
-              cWidth={cWidth}
-              cHeight={cHeight}
+              cWidth={cWidth < 150 ? 150 : cWidth}
+              cHeight={cHeight < 150 ? 150 : cHeight}
               EXTRA_LEGEND_MARGIN={EXTRA_LEGEND_MARGIN}
             />
           )
@@ -232,8 +232,8 @@ export default function AreaChart({
         <ListeningRect
           data={data}
           layers={layers}
-          width={cWidth}
-          height={cHeight}
+          width={cWidth < 150 ? 150 : cWidth}
+          height={cHeight < 150 ? 150 : cHeight}
           margin={margin}
           xScale={xScale}
           yScale={yScale}
