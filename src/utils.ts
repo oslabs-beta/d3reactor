@@ -9,7 +9,8 @@ export function getXAxisCoordinates(
   margin: Margin
 ) {
   let xAxisX: number = 0
-  let xAxisY: number = height - margin.top - margin.bottom
+  const marginDifference = height - margin.top - margin.bottom;
+  let xAxisY: number = marginDifference > 40 ? marginDifference : 40; 
 
   if (xAxis === "top") xAxisY = 0
 
@@ -26,8 +27,8 @@ export function getYAxisCoordinates(
 ) {
   let yAxisX: number = 0
   let yAxisY: number = 0
-
-  if (yAxis === "right") yAxisX = width - margin.left - margin.right
+  const marginDifference = width - margin.left - margin.right;
+  if (yAxis === "right") yAxisX = marginDifference > 40 ? marginDifference : 40; 
 
   return {
     yAxisX,
@@ -87,10 +88,11 @@ export function getMarginsWithLegend(
   cHeight: number = 0,                     // ideally this should be mandatory if legend is truthy
   tickMargin?: number
 ) {
+  console.log('tickMargin:', tickMargin)
   let left = 20,
       right = 20,
       top = 20,
-      bottom = 20;
+      bottom = tickMargin? tickMargin + 20 :20
   function addVerticalMargin() {
     switch (xAxis) {
       case "top":
@@ -116,7 +118,7 @@ export function getMarginsWithLegend(
         top += 20;
         break
       case "bottom":
-        bottom += tickMargin? tickMargin + 20 : 20;
+        bottom += 20;
         console.log('bottom, ',bottom)
         
         break
@@ -203,25 +205,30 @@ export function getAxisLabelCoordinates(
   let axisLabelY: number = 0
   let labelMargin = LABEL_MARGIN;
   let axisMargin = AXIS_MARGIN + tickMargin;
+  let position: number;
   switch (type) {
     case "top":
-      axisLabelX = width / 2 - margin.left / 2 - margin.right / 2
-      axisLabelY = y - labelMargin/2 - axisMargin
+      position = width - margin.right - margin.left;
+      axisLabelX = position > 40 ? position / 2 : 40 / 2;
+      axisLabelY = y - labelMargin / 2 - axisMargin
       rotate = 0
       break
     case "right":
-      axisLabelX = x + labelMargin/2 + axisMargin
-      axisLabelY = (height - margin.top - margin.bottom) / 2
+      axisLabelX = x + labelMargin / 2 + axisMargin
+      position = height - margin.top - margin.bottom;
+      axisLabelY = position > 40 ? position / 2 : 40 / 2;
       rotate = 90
       break
     case "bottom":
-      axisLabelX = width / 2 - margin.left / 2 - margin.right / 2
+      position = width - margin.right - margin.left;
+      axisLabelX = position > 40 ? position/2 : 40/2;
       axisLabelY = axis ? (y + labelMargin + axisMargin) : (y + labelMargin)
       rotate = 0
       break
     case "left":
       axisLabelX = axis ? -labelMargin/2 - axisMargin : -labelMargin
-      axisLabelY = (height - margin.top - margin.bottom) / 2
+      position = height - margin.top - margin.bottom;
+      axisLabelY = position > 40 ? position / 2 : 40 / 2;
       rotate = -90
       break
     case false:

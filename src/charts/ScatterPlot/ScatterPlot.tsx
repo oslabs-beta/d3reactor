@@ -130,7 +130,6 @@ export default function ScatterPlot({
 
   const colorScale: ColorScale = d3.scaleOrdinal(colorScheme)
   colorScale.domain(keys)
-  console.log("mar", margin)
 
   return (
     <svg ref={anchor} width={width} height={height}>

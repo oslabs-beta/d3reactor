@@ -15,7 +15,21 @@ import sales from "./data/sales.json";
 
 function App() {
   return (
-    <div className='app'>
+    <div className="app" style={{height: 220}}>
+      <BarChart
+        height="700"
+        width="100%"
+        data={skinny_fruit}
+        xKey='date'
+        yKey='value'
+        // groupBy='fruit'
+        xAxis="bottom"
+        yAxis="right"
+        yGrid={true}
+        xAxisLabel="Date"
+        yAxisLabel="Value"
+        legend={'bottom'}
+      /> 
       <PieChart
         data={fruit}
         label='label'
@@ -62,11 +76,11 @@ function App() {
         // xAxis="bottom"
         xAxis={false}
         yAxis='right'
-        xAxisLabel='Date'
+        // xAxisLabel='Date'
         yAxisLabel='Number of fruit'
         // legend={"right-bottom"}
-        legend={"bottom-right"}
-        legendLabel='fdsafd'
+        // legend={"bottom-right"}
+        // legendLabel='fdsafd'
       />
         <BarChart
           height='100%'
@@ -79,7 +93,7 @@ function App() {
           yGrid={true}
           xAxisLabel='Date'
           yAxisLabel='Value'
-          legend={"top"}
+          legend={"bottom"}
           // legendLabel={''}
         />
       <ScatterPlot
@@ -98,21 +112,8 @@ function App() {
         yAxisLabel='Value'
         legend='bottom'
       />
-      {/* <BarChart
-        height='500'
-        width='400'
-        data={skinny_fruit}
-        xKey='date'
-        yKey='value'
-        // groupBy='fruit'
-        xAxis='bottom'
-        yAxis='right'
-        yGrid={true}
-        // xAxisLabel="Date"
-        // yAxisLabel="Value"
-        // legend={true}
-      /> */}
-      {/* <LineChart
+  
+    <LineChart
         height='100%'
         data={unemployment}
         xKey='date'
@@ -132,17 +133,17 @@ function App() {
         height='100%'
         width='100%'
         data={portfolio}
-        xKey='date'
-        xDataType='date'
-        yKey='value'
-        yAxis='right'
-        xAxis='bottom'
+        xKey="date"
+        xDataType="date"
+        yKey="value"
+        yAxis="right"
+        xAxis="top"
         xGrid={true}
         yGrid={true}
         xAxisLabel='Date'
         yAxisLabel='Value'
         legend={"bottom-left"}
-      /> */}
+      /> 
     </div>
   );
 }
