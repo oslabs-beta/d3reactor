@@ -20,20 +20,22 @@ function Axi({
   let axis: d3.Axis<d3.NumberValue>
 
   let x1 = 0,
-    y1 = 0,
-    x2 = 0,
-    y2 = 0
+      y1 = 0,
+      x2 = 0,
+      y2 = 0;
   switch (type) {
     case "bottom":
       x1 = x
       y1 = y
       x2 = width - margin.right - margin.left
+      if (x2 < 40) x2 = 40;
       y2 = y
       break
     case "top":
       x1 = x
       y1 = y
       x2 = width - margin.right - margin.left
+      if (x2 < 40) x2 = 40;
       y2 = y
       break
     case "left":
@@ -41,12 +43,14 @@ function Axi({
       y1 = 0
       x2 = x
       y2 = height - margin.top - margin.bottom
+      if (y2 < 40) y2 = 40;
       break
     case "right":
       x1 = x
       y1 = y
       x2 = x
       y2 = height - margin.top - margin.bottom
+      if (y2 < 40) y2 = 40;
       break
     default:
       x1 = 0

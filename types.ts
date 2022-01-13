@@ -78,15 +78,16 @@ export interface AreaChartProps<T> {
   legendLabel?: string
 }
 
-export interface PieChartProps {
-  data: any
-  value: string
-  label: string
-  innerRadius?: number | string | undefined
-  outerRadius?: number | string | undefined
+export interface PieChartProps {  
   colorScheme?: string[] | readonly string[]
+  data: any
+  innerRadius?: number | string | undefined
+  label: string
   legend?: LegendPos
   legendLabel?: string
+  outerRadius?: number | string | undefined
+  pieLabel?: boolean
+  value: string
 }
 
 export interface PieChartBodyProps {

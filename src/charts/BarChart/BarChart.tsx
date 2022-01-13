@@ -102,13 +102,14 @@ export default function BarChart({
     return (d) => d[yKey]
   }, [])
 
+  const rangeMax = cWidth - margin.right - margin.left
   const xScale = useMemo(() => {
     return d3
       .scaleBand()
       .paddingInner(0.1)
       .paddingOuter(0.1)
       .domain(data.map(xAccessor))
-      .range([0, cWidth - margin.right - margin.left])
+      .range([0, rangeMax > 40 ? rangeMax : 40])
   }, [data, xAccessor, cWidth, margin])
 
   const yScale = useMemo(() => {
@@ -160,6 +161,99 @@ export default function BarChart({
               xAccessor={xAccessor}
             />
           )}
+          {yAxisLabel && (
+            <Label
+              x={yAxisX}
+              y={yAxisY}
+              height={cHeight}
+              width={cWidth}
+              margin={margin}
+              type={yAxis ? yAxis : "left"}
+              axis={yAxis ? true : false}
+              label={yAxisLabel}
+            />
+          )}
+          {yAxis && (
+            <Axis
+              x={yAxisX}
+              y={yAxisY}
+              height={cHeight}
+              width={cWidth}
+              margin={margin}
+              scale={yScale}
+              type={yAxis}
+              yGrid={yGrid}
+              label={yAxisLabel}
+            />
+          )}
+          {xAxisLabel && (
+            <Label
+              x={xAxisX}
+              y={xAxisY}
+              height={cHeight}
+              width={cWidth}
+              margin={margin}
+              type={xAxis ? xAxis : "bottom"}
+              axis={xAxis ? true : false}
+              label={xAxisLabel}
+            />
+          )}
+          {groupBy
+            ? layers.map((layer: any, i: number) => (
+                <g key={i}>
+                  {layer.map((sequence: any, j: number) => (
+                    <Rectangle
+                      data={getSequenceData(sequence)}
+                      key={j}
+                      x={xScale(xAccessor(sequence.data))}
+                      y={yScale(sequence[1])}
+                      width={xScale.bandwidth()}
+                      height={
+                        yScale(sequence[0]) - yScale(sequence[1]) > 0
+                          ? yScale(sequence[0]) - yScale(sequence[1])
+                          : 0
+                      }
+                      fill={colorScale(layer.key)}
+                      setTooltip={setTooltip}
+                    />
+                  ))}
+                </g>
+              ))
+            : data.map((d: any, i: number) => (
+                <Rectangle
+                  data={d}
+                  key={i}
+                  x={xScale(xAccessor(d))}
+                  y={yScale(yAccessor(d))}
+                  width={xScale.bandwidth()}
+                  height={
+                    xAxisY - yScale(yAccessor(d)) > 0
+                      ? xAxisY - yScale(yAccessor(d))
+                      : 0
+                  }
+                  fill={colorScale(yKey)}
+                  setTooltip={setTooltip}
+                />
+              ))}
+
+          {
+            // If legend prop is truthy, render legend component:
+            legend && (
+              <ColorLegend
+                legendLabel={legendLabel}
+                circleRadius={5 /* Radius of each color swab in legend */}
+                colorScale={colorScale}
+                setLegendOffset={setLegendOffset}
+                legendPosition={legend}
+                legendWidth={xOffset}
+                legendHeight={yOffset}
+                margin={margin}
+                cWidth={cWidth}
+                cHeight={cHeight}
+                EXTRA_LEGEND_MARGIN={EXTRA_LEGEND_MARGIN}
+              />
+            )
+          }
           {yAxisLabel && (
             <Label
               x={yAxisX}

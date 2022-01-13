@@ -165,7 +165,10 @@ export const ColorLegend = ({
     boxShadow: "rgba(0, 0, 0, 0.3) 0 2px 10px",
   }
   return (
-    <g transform={`translate(${xPosition}, ${yPosition})`}>
+    <g
+      data-test-id="color-legend"
+      transform={`translate(${xPosition}, ${yPosition})`}
+    >
       <foreignObject
         x={0}
         y={-rectHeight / 2}
