@@ -1,15 +1,13 @@
 import React from "react";
-import * as d3 from "d3";
 import { cleanup, render } from "@testing-library/react";
 import { Axis } from "../ContinuousAxis";
 import { ContinuousAxisProps } from "../../../types";
-import { xScaleDef } from "../../functionality/xScale";
 
 const AxisProps: ContinuousAxisProps = {
   x: 0,
   y: 869,
   xGrid: false,
-  scale : jest.fn(),
+  scale: jest.fn(),
   type: "bottom",
   label: "testAxis",
   height: 969,
@@ -31,6 +29,5 @@ describe("Axis test", () => {
   });
   test("it should render Axis", () => {
     setup();
-
   });
 });

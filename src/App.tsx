@@ -32,7 +32,7 @@ function App() {
         innerRadius={"85%"}
         outerRadius={"100%"}
         legend='left-top'
-      />
+      /> 
       <AreaChart
         data={penguins}
         height='100%'
@@ -62,12 +62,26 @@ function App() {
         // xAxis="bottom"
         xAxis={false}
         yAxis='right'
-        xAxisLabel='Date'
+        // xAxisLabel='Date'
         yAxisLabel='Number of fruit'
         // legend={"right-bottom"}
-        legend={"bottom-right"}
-        legendLabel='fdsafd'
+        // legend={"bottom-right"}
+        // legendLabel='fdsafd'
       />
+        <BarChart
+          height='100%'
+          data={fruit}
+          xKey='label'
+          yKey='value'
+          // groupBy='fruit'
+          xAxis='bottom'
+          yAxis='left'
+          yGrid={true}
+          xAxisLabel='Date'
+          yAxisLabel='Value'
+          legend={"bottom"}
+          // legendLabel={''}
+        />
       <ScatterPlot
         height='100%'
         width='100%'
@@ -82,7 +96,7 @@ function App() {
         // yGrid={true}
         xAxisLabel='Date'
         yAxisLabel='Value'
-        //legend='right'
+        legend='bottom'
       />
       <BarChart
         height='300'
@@ -142,7 +156,7 @@ function App() {
         xAxisLabel='Year'
         yAxisLabel='Sales'
         legend={"bottom-left"}
-      />
+      /> 
     </div>
   );
 }

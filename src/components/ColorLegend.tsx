@@ -1,6 +1,5 @@
-
 import React, { useEffect } from "react";
-import { ColorLegendProps } from "../../types"
+import { ColorLegendProps } from "../../types";
 
 export const ColorLegend = ({
   colorScale,
@@ -9,8 +8,8 @@ export const ColorLegend = ({
   tickTextOffset = circleRadius * 1.2 + 3,
   legendLabel = "",
   legendPosition,
-  legendWidth, 
-  legendHeight, 
+  legendWidth,
+  legendHeight,
   setLegendOffset,
   margin, // margin of chart
   xAxisPosition = false,
@@ -19,8 +18,8 @@ export const ColorLegend = ({
   cHeight,
   EXTRA_LEGEND_MARGIN = 6,
   fontSize = 16,
-  xPosition, 
-  yPosition
+  xPosition,
+  yPosition,
 }: ColorLegendProps) => {
   const domain = colorScale.domain();
   // Make space for legend label
@@ -34,7 +33,7 @@ export const ColorLegend = ({
     labelHeightOffset = 0;
   }
 
-  // determine legend placement for any chart except pie, 
+  // determine legend placement for any chart except pie,
   // or if no manual legend coordinates are passed in
   if (!xPosition && !yPosition) {
     let correctForAxis = 0;
@@ -61,13 +60,15 @@ export const ColorLegend = ({
         break;
       case "bottom":
         xPosition = (cWidth - margin.left - margin.right) / 2 - legendWidth / 2;
-        correctForAxis = xAxisPosition === 'top' ? margin.bottom : margin.top;
-        yPosition = cHeight - legendHeight / 2 - correctForAxis - EXTRA_LEGEND_MARGIN;
+        correctForAxis = xAxisPosition === "top" ? margin.bottom : margin.top;
+        yPosition =
+          cHeight - legendHeight / 2 - correctForAxis - EXTRA_LEGEND_MARGIN;
         break;
       case "left-bottom":
         xPosition = EXTRA_LEGEND_MARGIN - margin.left;
-        correctForAxis = xAxisPosition === 'top' ? margin.bottom : margin.top;
-        yPosition = cHeight - legendHeight / 2 - correctForAxis - EXTRA_LEGEND_MARGIN;
+        correctForAxis = xAxisPosition === "top" ? margin.bottom : margin.top;
+        yPosition =
+          cHeight - legendHeight / 2 - correctForAxis - EXTRA_LEGEND_MARGIN;
         break;
       case "right-bottom":
         xPosition =
@@ -77,8 +78,9 @@ export const ColorLegend = ({
           legendWidth -
           EXTRA_LEGEND_MARGIN +
           20;
-        correctForAxis = xAxisPosition === 'top' ? margin.bottom : margin.top;
-        yPosition = cHeight - legendHeight / 2 - correctForAxis - EXTRA_LEGEND_MARGIN;
+        correctForAxis = xAxisPosition === "top" ? margin.bottom : margin.top;
+        yPosition =
+          cHeight - legendHeight / 2 - correctForAxis - EXTRA_LEGEND_MARGIN;
         break;
       case "left":
         xPosition = -margin.left + EXTRA_LEGEND_MARGIN;
@@ -88,24 +90,26 @@ export const ColorLegend = ({
         yPosition = legendHeight / 2 - margin.top + EXTRA_LEGEND_MARGIN;
         break;
       case "bottom-left":
-        xPosition = -margin.left + EXTRA_LEGEND_MARGIN; 
-        correctForAxis = xAxisPosition === 'top' ? margin.bottom : margin.top;
-        yPosition = cHeight - legendHeight / 2 - correctForAxis - EXTRA_LEGEND_MARGIN;
+        xPosition = -margin.left + EXTRA_LEGEND_MARGIN;
+        correctForAxis = xAxisPosition === "top" ? margin.bottom : margin.top;
+        yPosition =
+          cHeight - legendHeight / 2 - correctForAxis - EXTRA_LEGEND_MARGIN;
         break;
       case "top-right":
-        correctForAxis = yAxisPosition === 'left' ? margin.right : margin.left;
+        correctForAxis = yAxisPosition === "left" ? margin.right : margin.left;
         xPosition = cWidth - legendWidth - correctForAxis - EXTRA_LEGEND_MARGIN;
         yPosition = legendHeight / 2 - margin.top + EXTRA_LEGEND_MARGIN;
         break;
       case "bottom-right":
-        correctForAxis = yAxisPosition === 'left' ? margin.right : margin.left;
+        correctForAxis = yAxisPosition === "left" ? margin.right : margin.left;
         xPosition = cWidth - legendWidth - correctForAxis - EXTRA_LEGEND_MARGIN;
-        correctForAxis = xAxisPosition === 'top' ? margin.bottom : margin.top;
-        yPosition = cHeight - legendHeight / 2 - correctForAxis - EXTRA_LEGEND_MARGIN;
+        correctForAxis = xAxisPosition === "top" ? margin.bottom : margin.top;
+        yPosition =
+          cHeight - legendHeight / 2 - correctForAxis - EXTRA_LEGEND_MARGIN;
         break;
       case "right":
       default:
-        correctForAxis = yAxisPosition === 'left' ? margin.right : margin.left;
+        correctForAxis = yAxisPosition === "left" ? margin.right : margin.left;
         xPosition = cWidth - legendWidth - correctForAxis - EXTRA_LEGEND_MARGIN;
     }
   }
@@ -120,7 +124,7 @@ export const ColorLegend = ({
     if (domainValue.length > longestWord) longestWord = domainValue.length;
     return (
       <g
-        className="tick"
+        className='tick'
         key={domainValue}
         transform={`translate(${EXTRA_LEGEND_MARGIN + circleRadius}, 
                    ${
@@ -131,7 +135,7 @@ export const ColorLegend = ({
                    })`}
       >
         <circle fill={colorScale(domainValue)} r={circleRadius} />
-        <text x={tickTextOffset} dy=".32em">
+        <text x={tickTextOffset} dy='.32em'>
           {domainValue}
         </text>
       </g>
@@ -161,13 +165,16 @@ export const ColorLegend = ({
     boxShadow: "rgba(0, 0, 0, 0.3) 0 2px 10px",
   };
   return (
-    <g transform={`translate(${xPosition}, ${yPosition})`}>
+    <g
+      data-test-id='color-legend'
+      transform={`translate(${xPosition}, ${yPosition})`}
+    >
       <foreignObject
         x={0}
         y={-rectHeight / 2}
         width={rectWidth > 0 ? rectWidth : 20}
         height={rectHeight > 0 ? rectHeight : 20}
-        pointerEvents="none"
+        pointerEvents='none'
         // style={fill: 'red'}
       >
         <div style={style}></div>

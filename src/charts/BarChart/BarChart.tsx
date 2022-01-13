@@ -1,5 +1,5 @@
 /** App.js */
-import React, { useState, useMemo } from "react"
+import React, { useState, useMemo, useCallback } from "react"
 import * as d3 from "d3"
 import { useResponsive } from "../../hooks/useResponsive"
 import { Axis } from "../../components/ContinuousAxis"
@@ -41,7 +41,8 @@ export default function BarChart({
   const { anchor, cHeight, cWidth } = useResponsive()
 
   // width & height of legend, so we know how much to squeeze chart by
-  const [legendOffset, setLegendOffset] = useState<[number, number]>([0, 0])
+  const [legendOffset, setLegendOffset] = useState<[number, number]>([0, 0]);
+  const [tickMargin, setTickMargin] = useState(0);
   const xOffset = legendOffset[0]
   const yOffset = legendOffset[1]
   const margin = useMemo(
@@ -55,7 +56,8 @@ export default function BarChart({
         xOffset,
         yOffset,
         cWidth,
-        cHeight
+        cHeight,
+        tickMargin
       ),
     [
       xAxis,
@@ -67,6 +69,7 @@ export default function BarChart({
       yOffset,
       cWidth,
       cHeight,
+      tickMargin
     ]
   )
 
@@ -84,7 +87,7 @@ export default function BarChart({
 
   // When the yKey key has been assigned to the groupBy variable we know the user didn't specify grouping
   let keys: string[] = [],
-    groups: d3.InternMap<any, any[]>
+      groups: d3.InternMap<any, any[]>
   const groupAccessor = (d: Data) => d[groupBy ?? ""]
   groups = d3.group(data, groupAccessor)
   keys = groupBy ? Array.from(groups).map((group) => group[0]) : [yKey]
@@ -103,13 +106,14 @@ export default function BarChart({
     return (d) => d[yKey]
   }, [])
 
+  const rangeMax = cWidth - margin.right - margin.left;
   const xScale = useMemo(() => {
     return d3
       .scaleBand()
       .paddingInner(0.1)
       .paddingOuter(0.1)
       .domain(data.map(xAccessor))
-      .range([0, cWidth - margin.right - margin.left])
+      .range([0, rangeMax > 40 ? rangeMax : 40])
   }, [data, xAccessor, cWidth, margin])
 
   const yScale = useMemo(() => {
@@ -148,6 +152,7 @@ export default function BarChart({
             data={data}
             layers={layers}
             xAccessor={xAccessor}
+            setTickMargin={setTickMargin}
           />
         )}
         {yAxisLabel && (
@@ -185,15 +190,16 @@ export default function BarChart({
             type={xAxis ? xAxis : "bottom"}
             axis={xAxis ? true : false}
             label={xAxisLabel}
+            tickMargin={tickMargin}
           />
         )}
         {groupBy
           ? layers.map((layer: any, i: number) => (
               <g key={i}>
-                {layer.map((sequence: any, i: number) => (
+                {layer.map((sequence: any, j: number) => (
                   <Rectangle
                     data={getSequenceData(sequence)}
-                    key={i}
+                    key={j}
                     x={xScale(xAccessor(sequence.data))}
                     y={yScale(sequence[1])}
                     width={xScale.bandwidth()}
@@ -211,7 +217,7 @@ export default function BarChart({
           : data.map((d: any, i: number) => (
               <Rectangle
                 data={d}
-                key={i}
+                key={i + 'R'}
                 x={xScale(xAccessor(d))}
                 y={yScale(yAccessor(d))}
                 width={xScale.bandwidth()}
