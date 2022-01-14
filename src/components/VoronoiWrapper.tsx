@@ -18,7 +18,7 @@ export const VoronoiWrapper = React.memo(
           <VoronoiCell
             key={i}
             fill="none"
-            stroke="none"
+            stroke="red"
             opacity={0.5}
             d={voronoi.renderCell(i)}
             cellCenter={{

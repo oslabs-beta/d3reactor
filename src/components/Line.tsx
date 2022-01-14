@@ -8,7 +8,6 @@ export const Line = React.memo(
     strokeWidth = "1px",
     d,
   }: LineProps): JSX.Element => {
-    // console.log('Line rendered')
     return (
       <path
         className="line"

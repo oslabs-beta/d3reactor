@@ -191,6 +191,7 @@ export interface ArcProps {
   strokeWidth: string
   d: string | undefined
   id?: string | number
+  cellCenter?: { cx: number; cy: number; tooltipData: Data }
   setTooltip?: React.Dispatch<any>
 }
 

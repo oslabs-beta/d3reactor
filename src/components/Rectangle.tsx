@@ -11,7 +11,29 @@ export const Rectangle = React.memo(
     fill,
     setTooltip,
   }: RectangleProps): JSX.Element => {
-    let cellCenter = { cx: x, cy: y, tooltipData: data }
+    let cellCenter = {
+      cx: 0,
+      cy: 0,
+      tooltipData: data,
+    }
+
+    const mouseOver = (e: any) => {
+      if (setTooltip) {
+        cellCenter = {
+          cx: e.pageX - e.nativeEvent.offsetX + (x ?? 0),
+          cy: e.pageY - e.nativeEvent.offsetY + (y ?? 0),
+          tooltipData: data,
+        }
+        setTooltip(cellCenter)
+      }
+    }
+
+    const mouseOut = (e: any) => {
+      if (setTooltip) {
+        setTooltip ? setTooltip(false) : null
+      }
+    }
+
     return (
       <rect
         x={x}
@@ -19,10 +41,8 @@ export const Rectangle = React.memo(
         width={width}
         height={height}
         fill={fill}
-        onMouseOver={(e) => {
-          setTooltip ? setTooltip(cellCenter) : null
-        }}
-        onMouseOut={() => (setTooltip ? setTooltip(false) : null)}
+        onMouseOver={(e) => mouseOver(e)}
+        onMouseOut={(e) => mouseOut(e)}
       />
     )
   }

@@ -13,7 +13,7 @@ import { useResponsive } from "../../hooks/useResponsive"
 import { xScaleDef } from "../../functionality/xScale"
 import { yScaleDef } from "../../functionality/yScale"
 import ListeningRect from "../../components/ListeningRect"
-import { Tooltip } from "../../components/Tooltip"
+import TooltipDiv from "../../components/TooltipDiv"
 import { ColorLegend } from "../../components/ColorLegend"
 import {
   getXAxisCoordinates,
@@ -23,6 +23,8 @@ import {
   transformSkinnyToWide,
   EXTRA_LEGEND_MARGIN,
 } from "../../utils"
+
+import { useMousePosition } from "../../hooks/useMousePosition"
 
 export default function AreaChart({
   data,
@@ -42,6 +44,7 @@ export default function AreaChart({
   legendLabel = "",
   colorScheme = d3.quantize(d3.interpolateHcl("#9dc8e2", "#07316b"), 8),
 }: AreaChartProps<string | number>): JSX.Element {
+  const position = useMousePosition()
   const [tooltip, setTooltip] = useState<false | any>(false)
   const chart = "AreaChart"
   const { anchor, cHeight, cWidth } = useResponsive()
@@ -144,106 +147,110 @@ export default function AreaChart({
   colorScale.domain(keys)
 
   return (
-    <svg ref={anchor} width={width} height={height}>
-      <g transform={translate}>
-        {yAxis && (
-          <Axis
-            x={yAxisX}
-            y={yAxisY}
-            height={cHeight < 150 ? 150 : cHeight}
-            width={cWidth < 150 ? 150 : cWidth}
-            margin={margin}
-            scale={yScale}
-            type={yAxis}
-            yGrid={yGrid}
-            label={yAxisLabel}
-          />
-        )}
-        {yAxisLabel && (
-          <Label
-            x={yAxisX}
-            y={yAxisY}
-            height={cHeight < 150 ? 150 : cHeight}
-            width={cWidth < 150 ? 150 : cWidth}
-            margin={margin}
-            type={yAxis ? yAxis : "left"}
-            axis={yAxis ? true : false}
-            label={yAxisLabel}
-          />
-        )}
-        {xAxis && (
-          <Axis
-            x={xAxisX}
-            y={xAxisY}
-            height={cHeight < 150 ? 150 : cHeight}
-            width={cWidth < 150 ? 150 : cWidth}
-            margin={margin}
-            scale={xScale}
-            xGrid={xGrid}
-            type={xAxis}
-            label={xAxisLabel}
-            xTicksValue={xTicksValue}
-          />
-        )}
-        {xAxisLabel && (
-          <Label
-            x={xAxisX}
-            y={xAxisY}
-            height={cHeight < 150 ? 150 : cHeight}
-            width={cWidth < 150 ? 150 : cWidth}
-            margin={margin}
-            type={xAxis ? xAxis : "bottom"}
-            axis={xAxis ? true : false}
-            label={xAxisLabel}
-          />
-        )}
-        {layers.map((layer, i) => (
-          <path key={i} d={areaGenerator(layer)} fill={colorScale(layer.key)} />
-        ))}
-        {
-          // If legend prop is truthy, render legend component:
-          legend && (
-            <ColorLegend
-              legendLabel={legendLabel}
-              circleRadius={5 /* Radius of each color swab in legend */}
-              colorScale={colorScale}
-              setLegendOffset={setLegendOffset}
-              legendPosition={legend}
-              legendWidth={xOffset}
-              legendHeight={yOffset}
-              margin={margin}
-              cWidth={cWidth < 150 ? 150 : cWidth}
-              cHeight={cHeight < 150 ? 150 : cHeight}
-              EXTRA_LEGEND_MARGIN={EXTRA_LEGEND_MARGIN}
-            />
-          )
-        }
-
-        {tooltip && (
-          <Tooltip
-            data={tooltip}
-            x={tooltip.cx}
-            y={tooltip.cy}
-            xKey={xKey}
-            yKey={yKey}
-          />
-        )}
-
-        <ListeningRect
-          data={data}
-          layers={layers}
-          width={cWidth < 150 ? 150 : cWidth}
-          height={cHeight < 150 ? 150 : cHeight}
-          margin={margin}
-          xScale={xScale}
-          yScale={yScale}
-          xAccessor={xAccessor}
-          yAccessor={yAccessor}
+    <div ref={anchor} style={{ width: width, height: height }}>
+      {tooltip && (
+        <TooltipDiv
+          data={tooltip}
+          x={margin.left + tooltip.cx}
+          y={margin.top + tooltip.cy}
           xKey={xKey}
           yKey={yKey}
-          setTooltip={setTooltip}
         />
-      </g>
-    </svg>
+      )}
+      <svg width={cWidth} height={cHeight}>
+        <g transform={translate}>
+          {yAxis && (
+            <Axis
+              x={yAxisX}
+              y={yAxisY}
+              height={cHeight}
+              width={cWidth}
+              margin={margin}
+              scale={yScale}
+              type={yAxis}
+              yGrid={yGrid}
+              label={yAxisLabel}
+            />
+          )}
+          {yAxisLabel && (
+            <Label
+              x={yAxisX}
+              y={yAxisY}
+              height={cHeight}
+              width={cWidth}
+              margin={margin}
+              type={yAxis ? yAxis : "left"}
+              axis={yAxis ? true : false}
+              label={yAxisLabel}
+            />
+          )}
+          {xAxis && (
+            <Axis
+              x={xAxisX}
+              y={xAxisY}
+              height={cHeight}
+              width={cWidth}
+              margin={margin}
+              scale={xScale}
+              xGrid={xGrid}
+              type={xAxis}
+              label={xAxisLabel}
+              xTicksValue={xTicksValue}
+            />
+          )}
+          {xAxisLabel && (
+            <Label
+              x={xAxisX}
+              y={xAxisY}
+              height={cHeight}
+              width={cWidth}
+              margin={margin}
+              type={xAxis ? xAxis : "bottom"}
+              axis={xAxis ? true : false}
+              label={xAxisLabel}
+            />
+          )}
+          {layers.map((layer, i) => (
+            <path
+              key={i}
+              d={areaGenerator(layer)}
+              fill={colorScale(layer.key)}
+            />
+          ))}
+          {
+            // If legend prop is truthy, render legend component:
+            legend && (
+              <ColorLegend
+                legendLabel={legendLabel}
+                circleRadius={5 /* Radius of each color swab in legend */}
+                colorScale={colorScale}
+                setLegendOffset={setLegendOffset}
+                legendPosition={legend}
+                legendWidth={xOffset}
+                legendHeight={yOffset}
+                margin={margin}
+                cWidth={cWidth}
+                cHeight={cHeight}
+                EXTRA_LEGEND_MARGIN={EXTRA_LEGEND_MARGIN}
+              />
+            )
+          }
+          <ListeningRect
+            data={data}
+            layers={layers}
+            width={cWidth}
+            height={cHeight}
+            margin={margin}
+            xScale={xScale}
+            yScale={yScale}
+            xAccessor={xAccessor}
+            yAccessor={yAccessor}
+            xKey={xKey}
+            yKey={yKey}
+            setTooltip={setTooltip}
+          />
+        </g>
+      </svg>
+    </div>
   )
 }
