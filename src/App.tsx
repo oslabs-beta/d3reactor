@@ -15,22 +15,8 @@ import sales from "./data/sales.json"
 
 function App() {
   return (
-    <div className="app">
-      <BarChart
-        height="700px"
-        width="100%"
-        data={portfolio.slice(5, 10)}
-        xKey="date"
-        yKey="value"
-        // groupBy='fruit'
-        xAxis="bottom"
-        yAxis="right"
-        yGrid={true}
-        xAxisLabel="Date"
-        yAxisLabel="Value"
-        legend={"bottom"}
-      />
-      <PieChart
+    <div className='app'>
+      {/* <PieChart
         data={fruit}
         label="label"
         value="value"
@@ -111,9 +97,36 @@ function App() {
         yAxisLabel="Value"
         legend="bottom"
       />
-
-      <LineChart
-        height="200px"
+      <BarChart
+        height='300'
+        data={skinny_fruit}
+        xKey='date'
+        yKey='value'
+        groupBy='fruit'
+        xAxis='bottom'
+        yAxis='left'
+        yGrid={true}
+        xAxisLabel='Date'
+        yAxisLabel='Value'
+        legend={"right"}
+        // legendLabel={''}
+      />
+      <BarChart
+        height='500'
+        width='400'
+        data={skinny_fruit}
+        xKey='date'
+        yKey='value'
+        // groupBy='fruit'
+        xAxis='bottom'
+        yAxis='right'
+        yGrid={true}
+        // xAxisLabel="Date"
+        // yAxisLabel="Value"
+        // legend={true}
+      /> */}
+      {/* <LineChart
+        height='100%'
         data={unemployment}
         xKey="date"
         xDataType="date"
@@ -123,26 +136,26 @@ function App() {
         // yAxis="left"
         // xGrid={true}
         // yGrid={true}
-        xAxisLabel="Date"
-        yAxisLabel="Unemployment"
-        legend={"right"}
-        legendLabel="Locations"
-      />
+        xAxisLabel='Date'
+        yAxisLabel='Unemployment'
+        // legend={'bottom-right'}
+        // legendLabel="Locations"
+      /> */}
       <LineChart
-        height="100%"
-        width="100%"
-        data={portfolio}
-        xKey="date"
-        xDataType="date"
-        yKey="value"
-        yAxis="right"
-        xAxis="top"
+        height='100%'
+        width='100%'
+        data={sales}
+        xKey='year'
+        xDataType='number'
+        yKey='sales'
+        yAxis='right'
+        xAxis='bottom'
         xGrid={true}
         yGrid={true}
-        xAxisLabel="Date"
-        yAxisLabel="Value"
-        legend={"right"}
-      />
+        xAxisLabel='Year'
+        yAxisLabel='Sales'
+        legend={"bottom-left"}
+      /> 
     </div>
   )
 }
