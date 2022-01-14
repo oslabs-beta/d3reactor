@@ -1,5 +1,5 @@
 {
-  "name": "d3reacts",
+  "name": "@oslabs-beta/d3reactor",
   "version": "1.0.0",
   "description": "placeholder",
   "main": "./dist/index.js",
