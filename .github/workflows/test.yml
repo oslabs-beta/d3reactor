@@ -23,5 +23,8 @@ jobs:
       - name: Install
         run: npm install
 
-      - name: Test
+      - name: Jest Test
         run: npm test
+
+      - name: Cypress Test
+        run: npm cypress:run
