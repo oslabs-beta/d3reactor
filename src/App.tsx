@@ -6,6 +6,9 @@ import LineChart from "./charts/LineChart/LineChart"
 import AreaChart from "./charts/AreaChart/AreaChart"
 import ScatterPlot from "./charts/ScatterPlot/ScatterPlot"
 import PieChart from "./charts/PieChart/PieChart"
+
+import Test from "./components/Test"
+
 import unemployment from "./data/unemployment.json"
 import penguins from "./data/penguins.json"
 import portfolio from "./data/portfolio.json"
@@ -16,6 +19,7 @@ import sales from "./data/sales.json"
 function App() {
   return (
     <div className='app'>
+      <Test />
       {/* <PieChart
         data={fruit}
         label="label"
@@ -141,7 +145,7 @@ function App() {
         // legend={'bottom-right'}
         // legendLabel="Locations"
       /> */}
-      <LineChart
+      {/* <LineChart
         height='100%'
         width='100%'
         data={sales}
@@ -155,7 +159,7 @@ function App() {
         xAxisLabel='Year'
         yAxisLabel='Sales'
         legend={"bottom-left"}
-      /> 
+      />  */}
     </div>
   )
 }
