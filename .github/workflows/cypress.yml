@@ -12,17 +12,14 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  test:
+  cypress-run:
     runs-on: ubuntu-latest
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
-
-      # Install dependencies
-      - name: Install
-        run: npm install
-
-      - name: Test
-        run: npm test
+      - uses: cypress-io/github-action@v2
+        with:
+          start: npm run dev
+          wait-on: "http://localhost:8080"
+          browser: chrome
+          headless: true
 
