@@ -135,7 +135,7 @@ export default function AreaChart({
   );
   const yScale = yScaleDef(layers, yAccessor, margin, cHeight, chart);
 
-  let xTicksValue = [xMin, ...xScale.ticks(), xMax];
+  const xTicksValue = [xMin, ...xScale.ticks(), xMax];
 
   const areaGenerator: any = d3
     .area()

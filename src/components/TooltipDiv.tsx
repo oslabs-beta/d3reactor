@@ -84,8 +84,8 @@ const TooltipDiv = ({
     pointerEvents: 'none',
   };
 
-  const xTooltipText: string = `${xKey}: ${data.tooltipData[xKey as string]}`;
-  const yTooltipText: string = `${yKey}: ${data.tooltipData[yKey as string]}`;
+  const xTooltipText = `${xKey}: ${data.tooltipData[xKey as string]}`;
+  const yTooltipText = `${yKey}: ${data.tooltipData[yKey as string]}`;
 
   return (
     <div style={tooltipWrapperStyle}>

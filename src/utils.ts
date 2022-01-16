@@ -8,7 +8,7 @@ export function getXAxisCoordinates(
   height: number,
   margin: Margin
 ) {
-  let xAxisX: number = 0;
+  const xAxisX = 0;
   const marginDifference = height - margin.top - margin.bottom;
   let xAxisY: number = marginDifference > 40 ? marginDifference : 40;
 
@@ -25,8 +25,8 @@ export function getYAxisCoordinates(
   width: number,
   margin: Margin
 ) {
-  let yAxisX: number = 0;
-  let yAxisY: number = 0;
+  let yAxisX = 0;
+  const yAxisY = 0;
   const marginDifference = width - margin.left - margin.right;
   if (yAxis === 'right') yAxisX = marginDifference > 40 ? marginDifference : 40;
 
@@ -81,11 +81,11 @@ export function getMarginsWithLegend(
   xAxisLabel: string | undefined,
   yAxisLabel: string | undefined,
   legend: LegendPos = false,
-  xOffset: number = 0,
-  yOffset: number = 0,
+  xOffset = 0,
+  yOffset = 0,
   // legendOffset: [number, number] = [0, 0], // ideally this should be mandatory if legend is truthy
-  cWidth: number = 0, // ideally this should be mandatory if legend is truthy
-  cHeight: number = 0, // ideally this should be mandatory if legend is truthy
+  cWidth = 0, // ideally this should be mandatory if legend is truthy
+  cHeight = 0, // ideally this should be mandatory if legend is truthy
   tickMargin?: number
 ) {
   console.log('tickMargin:', tickMargin);
@@ -198,13 +198,13 @@ export function getAxisLabelCoordinates(
   axis: boolean,
   tickMargin = 0
 ) {
-  let fontSize = 16;
+  const fontSize = 16;
 
   let rotate = 0;
-  let axisLabelX: number = 0;
-  let axisLabelY: number = 0;
-  let labelMargin = LABEL_MARGIN;
-  let axisMargin = AXIS_MARGIN + tickMargin;
+  let axisLabelX = 0;
+  let axisLabelY = 0;
+  const labelMargin = LABEL_MARGIN;
+  const axisMargin = AXIS_MARGIN + tickMargin;
   let position: number;
   switch (type) {
     case 'top':
@@ -253,7 +253,7 @@ export function checkRadiusDimension(
   //TODO: add minimum radius here?
 
   let legendMargin = 0;
-  let screenSize = Math.min(height, width);
+  const screenSize = Math.min(height, width);
   switch (legend) {
     case 'top':
     case 'left-top':

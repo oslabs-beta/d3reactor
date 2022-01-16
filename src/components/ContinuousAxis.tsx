@@ -95,7 +95,7 @@ function Axi({
     }
   };
 
-  let grid = gridGenerator(
+  const grid = gridGenerator(
     type,
     xGrid,
     yGrid,

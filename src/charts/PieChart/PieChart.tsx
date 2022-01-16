@@ -77,7 +77,7 @@ export default function PieChart({
   type ColorScale = d3.ScaleOrdinal<string, string, never>;
 
   const keys: string[] = [];
-  for (let entry of data) {
+  for (const entry of data) {
     const property = entry[label];
     if (property && !keys.includes(property)) {
       keys.push(property);
