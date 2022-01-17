@@ -1,5 +1,5 @@
-import React from "react"
-import { VoronoiProps } from "../../types"
+import React from 'react';
+import { VoronoiProps } from '../../types';
 
 export const VoronoiCell = ({
   fill,
@@ -13,22 +13,22 @@ export const VoronoiCell = ({
   const onMouseMove = (e: any) => {
     if (cellCenter) {
       cellCenter.cy =
-        e.nativeEvent.pageY - e.nativeEvent.offsetY + cellCenter.cy
+        e.nativeEvent.pageY - e.nativeEvent.offsetY + cellCenter.cy;
       cellCenter.cx =
-        e.nativeEvent.pageX - e.nativeEvent.offsetX + cellCenter.cx
+        e.nativeEvent.pageX - e.nativeEvent.offsetX + cellCenter.cx;
     }
-    setTooltip ? setTooltip(cellCenter) : null
-  }
+    setTooltip ? setTooltip(cellCenter) : null;
+  };
 
   const onMouseOut = (e: any) => {
     if (cellCenter) {
       cellCenter.cy =
-        cellCenter.cy - e.nativeEvent.pageY + e.nativeEvent.offsetY
+        cellCenter.cy - e.nativeEvent.pageY + e.nativeEvent.offsetY;
       cellCenter.cx =
-        cellCenter.cx - e.nativeEvent.pageX + e.nativeEvent.offsetX
+        cellCenter.cx - e.nativeEvent.pageX + e.nativeEvent.offsetX;
     }
-    setTooltip ? setTooltip(false) : null
-  }
+    setTooltip ? setTooltip(false) : null;
+  };
 
   return (
     <path
@@ -40,5 +40,5 @@ export const VoronoiCell = ({
       onMouseOver={(e) => onMouseMove(e)}
       onMouseOut={(e) => onMouseOut(e)}
     ></path>
-  )
-}
+  );
+};

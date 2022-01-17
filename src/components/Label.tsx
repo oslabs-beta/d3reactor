@@ -1,6 +1,6 @@
-import React, { useMemo } from "react"
-import { getAxisLabelCoordinates } from "../utils"
-import { Margin } from "../../types"
+import React, { useMemo } from 'react';
+import { getAxisLabelCoordinates } from '../utils';
+import { Margin } from '../../types';
 
 export function Label({
   x,
@@ -13,15 +13,15 @@ export function Label({
   label,
   tickMargin,
 }: {
-  x: number
-  y: number
-  height: number
-  width: number
-  margin: Margin
-  type: string
-  axis: boolean
-  label: string
-  tickMargin?: number
+  x: number;
+  y: number;
+  height: number;
+  width: number;
+  margin: Margin;
+  type: string;
+  axis: boolean;
+  label: string;
+  tickMargin?: number;
 }): JSX.Element {
   const { axisLabelX, axisLabelY, rotate } = useMemo(
     () =>
@@ -36,7 +36,7 @@ export function Label({
         tickMargin
       ),
     [x, y, width, height, margin, type, axis, tickMargin]
-  )
+  );
   return (
     <text
       transform={`translate(${axisLabelX}, ${axisLabelY}) rotate(${rotate})`}
@@ -44,5 +44,5 @@ export function Label({
     >
       {label}
     </text>
-  )
+  );
 }

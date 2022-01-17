@@ -1,5 +1,5 @@
-import React from "react"
-import { CircleProps } from "../../types"
+import React from 'react';
+import { CircleProps } from '../../types';
 
 export const Circle = React.memo(
   ({ cx, cy, r = 4, color }: CircleProps): JSX.Element => {
@@ -13,6 +13,6 @@ export const Circle = React.memo(
         stroke={color}
         strokeWidth={1.4}
       />
-    )
+    );
   }
-)
+);

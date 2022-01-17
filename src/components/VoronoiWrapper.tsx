@@ -1,6 +1,6 @@
-import React from "react"
-import { Data, VoronoiBody } from "../../types"
-import { VoronoiCell } from "./VoronoiCell"
+import React from 'react';
+import { Data, VoronoiBody } from '../../types';
+import { VoronoiCell } from './VoronoiCell';
 
 export const VoronoiWrapper = React.memo(
   ({
@@ -31,6 +31,6 @@ export const VoronoiWrapper = React.memo(
           />
         ))}
       </g>
-    )
+    );
   }
-)
+);
