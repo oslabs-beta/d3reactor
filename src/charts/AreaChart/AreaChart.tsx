@@ -107,7 +107,9 @@ export default function AreaChart({
       }
     }
     data = transformSkinnyToWide(data, keys, groupBy, xKey, yKey)
+    console.log('wide data ', data)
   } else {
+    // if no groupBy, then the only group is the value at yKey
     keys.push(yKey)
   }
 
@@ -118,8 +120,8 @@ export default function AreaChart({
     for (const series of layersTemp) {
       series.sort((a, b) => b.data[xKey] - a.data[xKey])
     }
-    return layersTemp
-  }, [data, keys])
+    return layersTemp;
+  }, [data, keys]);
 
   const xAccessor: xAccessorFunc =
     xDataType === "number" ? (d) => d[xKey] : (d) => new Date(d[xKey])

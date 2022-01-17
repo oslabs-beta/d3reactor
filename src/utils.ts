@@ -88,7 +88,6 @@ export function getMarginsWithLegend(
   cHeight: number = 0, // ideally this should be mandatory if legend is truthy
   tickMargin?: number
 ) {
-  console.log("tickMargin:", tickMargin)
   let left = 20,
     right = 20,
     top = 20,
@@ -119,8 +118,6 @@ export function getMarginsWithLegend(
         break
       case "bottom":
         bottom += 20
-        console.log("bottom, ", bottom)
-
         break
       case undefined:
         bottom += 20
@@ -370,7 +367,7 @@ export function transformSkinnyToWide(
         } else {
           return val
         }
-      }, undefined)
+      }, null)
     }
     outputArr.push(rowObj)
   }

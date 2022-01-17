@@ -41,7 +41,7 @@ export default function LineChart({
   xAxisLabel,
   yAxisLabel,
   legend,
-  legendLabel = groupBy,
+  legendLabel = "",
   colorScheme = d3.quantize(d3.interpolateHcl("#9dc8e2", "#07316b"), 8),
 }: LineChartProps<string | number>): JSX.Element {
   const [tooltip, setTooltip] = useState<false | any>(false);
@@ -113,6 +113,11 @@ export default function LineChart({
 
   let xTicksValue = [xMin, ...xScale.ticks(), xMax];
 
+  // remove data entries with null values (which breaks line generator)
+  data = data.filter((el) => {
+    if (el[yKey] !== null) return el;
+  })
+  // generate unique keys to group by
   let keys: Iterable<string> = [];
   const groupAccessor: GroupAccessorFunc = (d) => {
     return d[groupBy ?? ""];
@@ -125,7 +130,9 @@ export default function LineChart({
     .line()
     .curve(d3.curveLinear)
     .x((d) => xScale(xAccessor(d)))
-    .y((d) => yScale(yAccessor(d)));
+    .y((d: any) => {
+      return d[yKey] ? yScale(yAccessor(d)) : yScale(0);
+    });
 
   const voronoi = useMemo(() => {
     return d3Voronoi(
