@@ -1,5 +1,5 @@
-import React from "react"
-import { RectangleProps } from "../../types"
+import React from 'react';
+import { RectangleProps } from '../../types';
 
 export const Rectangle = React.memo(
   ({
@@ -15,7 +15,7 @@ export const Rectangle = React.memo(
       cx: 0,
       cy: 0,
       tooltipData: data,
-    }
+    };
 
     const mouseOver = (e: any) => {
       if (setTooltip) {
@@ -23,16 +23,16 @@ export const Rectangle = React.memo(
           cx: e.pageX - e.nativeEvent.offsetX + (x ?? 0),
           cy: e.pageY - e.nativeEvent.offsetY + (y ?? 0),
           tooltipData: data,
-        }
-        setTooltip(cellCenter)
+        };
+        setTooltip(cellCenter);
       }
-    }
+    };
 
     const mouseOut = (e: any) => {
       if (setTooltip) {
-        setTooltip ? setTooltip(false) : null
+        setTooltip ? setTooltip(false) : null;
       }
-    }
+    };
 
     return (
       <rect
@@ -44,6 +44,6 @@ export const Rectangle = React.memo(
         onMouseOver={(e) => mouseOver(e)}
         onMouseOut={(e) => mouseOut(e)}
       />
-    )
+    );
   }
-)
+);

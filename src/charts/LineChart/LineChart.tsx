@@ -1,41 +1,41 @@
 /** App.js */
-import React, { useState, useMemo } from "react";
-import { useResponsive } from "../../hooks/useResponsive";
-import * as d3 from "d3";
-import { Axis } from "../../components/ContinuousAxis";
-import { Line } from "../../components/Line";
-import { VoronoiWrapper } from "../../components/VoronoiWrapper";
+import React, { useState, useMemo } from 'react';
+import { useResponsive } from '../../hooks/useResponsive';
+import * as d3 from 'd3';
+import { Axis } from '../../components/ContinuousAxis';
+import { Line } from '../../components/Line';
+import { VoronoiWrapper } from '../../components/VoronoiWrapper';
 import {
   LineChartProps,
   ColorScale,
   xAccessorFunc,
   yAccessorFunc,
   GroupAccessorFunc,
-} from "../../../types";
+} from '../../../types';
 import {
   getXAxisCoordinates,
   getYAxisCoordinates,
   getMarginsWithLegend,
   inferXDataType,
   EXTRA_LEGEND_MARGIN,
-} from "../../utils";
-import { ColorLegend } from "../../components/ColorLegend";
-import { yScaleDef } from "../../functionality/yScale";
-import { xScaleDef } from "../../functionality/xScale";
-import { d3Voronoi } from "../../functionality/voronoi";
-import { Label } from "../../components/Label";
-import TooltipDiv from "../../components/TooltipDiv";
+} from '../../utils';
+import { ColorLegend } from '../../components/ColorLegend';
+import { yScaleDef } from '../../functionality/yScale';
+import { xScaleDef } from '../../functionality/xScale';
+import { d3Voronoi } from '../../functionality/voronoi';
+import { Label } from '../../components/Label';
+import TooltipDiv from '../../components/TooltipDiv';
 
 export default function LineChart({
   data,
-  height = "100%",
-  width = "100%",
+  height = '100%',
+  width = '100%',
   xKey,
   yKey,
   xDataType,
   groupBy,
-  xAxis = "bottom",
-  yAxis = "left",
+  xAxis = 'bottom',
+  yAxis = 'left',
   xGrid = false,
   yGrid = false,
   xAxisLabel,
@@ -45,9 +45,9 @@ export default function LineChart({
   colorScheme = d3.quantize(d3.interpolateHcl("#9dc8e2", "#07316b"), 8),
 }: LineChartProps<string | number>): JSX.Element {
   const [tooltip, setTooltip] = useState<false | any>(false);
-  const chart = "LineChart";
+  const chart = 'LineChart';
 
-  let { anchor, cHeight, cWidth } = useResponsive();
+  const { anchor, cHeight, cWidth } = useResponsive();
 
   // width & height of legend, so we know how much to squeeze chart by
   const [legendOffset, setLegendOffset] = useState<[number, number]>([0, 0]);
@@ -91,12 +91,12 @@ export default function LineChart({
 
   const translate = `translate(${margin.left}, ${margin.top})`;
 
-  let xType: "number" | "date" = inferXDataType(data[0], xKey);
+  let xType: 'number' | 'date' = inferXDataType(data[0], xKey);
   if (xDataType !== undefined) xType = xDataType;
   // if no xKey datatype is passed in, determine if it's Date
 
   const xAccessor: xAccessorFunc = useMemo(() => {
-    return xType === "number" ? (d) => d[xKey] : (d) => new Date(d[xKey]);
+    return xType === 'number' ? (d) => d[xKey] : (d) => new Date(d[xKey]);
   }, []);
 
   const yAccessor: yAccessorFunc = useMemo(() => {
@@ -111,7 +111,7 @@ export default function LineChart({
     return xScaleDef(data, xType, xAccessor, margin, cWidth, chart);
   }, [data, cWidth, margin]);
 
-  let xTicksValue = [xMin, ...xScale.ticks(), xMax];
+  const xTicksValue = [xMin, ...xScale.ticks(), xMax];
 
   // remove data entries with null values (which breaks line generator)
   data = data.filter((el) => {
@@ -120,7 +120,7 @@ export default function LineChart({
   // generate unique keys to group by
   let keys: Iterable<string> = [];
   const groupAccessor: GroupAccessorFunc = (d) => {
-    return d[groupBy ?? ""];
+    return d[groupBy ?? ''];
   };
   const lineGroups: any = d3.group(data, (d) => groupAccessor(d));
   keys = groupBy
@@ -161,7 +161,7 @@ export default function LineChart({
           yKey={yKey}
         />
       )}
-      <svg width={cWidth} height={cHeight} data-test-id='line-chart'>
+      <svg width={cWidth} height={cHeight} data-test-id="line-chart">
         <g transform={translate}>
           {yAxis && (
             <Axis
@@ -183,7 +183,7 @@ export default function LineChart({
               height={cHeight}
               width={cWidth}
               margin={margin}
-              type={yAxis ? yAxis : "left"}
+              type={yAxis ? yAxis : 'left'}
               axis={yAxis ? true : false}
               label={yAxisLabel}
             />
@@ -210,7 +210,7 @@ export default function LineChart({
               height={cHeight}
               width={cWidth}
               margin={margin}
-              type={xAxis ? xAxis : "bottom"}
+              type={xAxis ? xAxis : 'bottom'}
               axis={xAxis ? true : false}
               label={xAxisLabel}
             />
@@ -220,18 +220,18 @@ export default function LineChart({
               return (
                 <Line
                   key={i}
-                  fill='none'
+                  fill="none"
                   stroke={colorScale(lineGroup[0])}
-                  strokeWidth='1px'
+                  strokeWidth="1px"
                   d={line(lineGroup[1])}
                 />
               );
             })
           ) : (
             <Line
-              fill='none'
+              fill="none"
               stroke={colorScale(yKey)}
-              strokeWidth='1px'
+              strokeWidth="1px"
               d={line(data)}
             />
           )}
@@ -268,7 +268,7 @@ export default function LineChart({
               height={cHeight}
               width={cWidth}
               margin={margin}
-              type={xAxis ? xAxis : "bottom"}
+              type={xAxis ? xAxis : 'bottom'}
               axis={xAxis ? true : false}
               label={xAxisLabel}
             />
@@ -278,18 +278,18 @@ export default function LineChart({
               return (
                 <Line
                   key={i}
-                  fill='none'
+                  fill="none"
                   stroke={colorScale(lineGroup[0])}
-                  strokeWidth='1px'
+                  strokeWidth="1px"
                   d={line(lineGroup[1])}
                 />
               );
             })
           ) : (
             <Line
-              fill='none'
+              fill="none"
               stroke={colorScale(yKey)}
-              strokeWidth='1px'
+              strokeWidth="1px"
               d={line(data)}
             />
           )}

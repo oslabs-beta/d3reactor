@@ -1,113 +1,113 @@
-import { Margin, LegendPos } from "../types"
-import { DiscreteAxis } from "./components/DiscreteAxis"
+import { Margin, LegendPos } from '../types';
+import { DiscreteAxis } from './components/DiscreteAxis';
 
-export const EXTRA_LEGEND_MARGIN = 6
+export const EXTRA_LEGEND_MARGIN = 6;
 
 export function getXAxisCoordinates(
-  xAxis: "top" | "bottom" | false = "bottom",
+  xAxis: 'top' | 'bottom' | false = 'bottom',
   height: number,
   margin: Margin
 ) {
-  let xAxisX: number = 0
-  const marginDifference = height - margin.top - margin.bottom
-  let xAxisY: number = marginDifference > 40 ? marginDifference : 40
+  const xAxisX = 0;
+  const marginDifference = height - margin.top - margin.bottom;
+  let xAxisY: number = marginDifference > 40 ? marginDifference : 40;
 
-  if (xAxis === "top") xAxisY = 0
+  if (xAxis === 'top') xAxisY = 0;
 
   return {
     xAxisX,
     xAxisY,
-  }
+  };
 }
 
 export function getYAxisCoordinates(
-  yAxis: "left" | "right" | false = "left",
+  yAxis: 'left' | 'right' | false = 'left',
   width: number,
   margin: Margin
 ) {
-  let yAxisX: number = 0
-  let yAxisY: number = 0
-  const marginDifference = width - margin.left - margin.right
-  if (yAxis === "right") yAxisX = marginDifference > 40 ? marginDifference : 40
+  let yAxisX = 0;
+  const yAxisY = 0;
+  const marginDifference = width - margin.left - margin.right;
+  if (yAxis === 'right') yAxisX = marginDifference > 40 ? marginDifference : 40;
 
   return {
     yAxisX,
     yAxisY,
-  }
+  };
 }
 
 export function getMargins(
-  xAxis: "top" | "bottom" | false = "bottom",
-  yAxis: "left" | "right" | false = "left",
+  xAxis: 'top' | 'bottom' | false = 'bottom',
+  yAxis: 'left' | 'right' | false = 'left',
   xAxisLabel: string | undefined,
   yAxisLabel: string | undefined
 ) {
   let left = 20,
     right = 20,
     top = 20,
-    bottom = 20
+    bottom = 20;
 
   function addVerticalMargin() {
     switch (xAxis) {
-      case "top":
-        top += 40
-        break
-      case "bottom":
-        bottom += 40
+      case 'top':
+        top += 40;
+        break;
+      case 'bottom':
+        bottom += 40;
     }
   }
 
   function addHorizontalMargin() {
     switch (yAxis) {
-      case "left":
-        left += 40
-        break
-      case "right":
-        right += 40
+      case 'left':
+        left += 40;
+        break;
+      case 'right':
+        right += 40;
     }
   }
 
-  if (xAxis) addVerticalMargin()
-  if (xAxis && xAxisLabel) addVerticalMargin()
-  if (yAxis) addHorizontalMargin()
-  if (yAxis && yAxisLabel) addHorizontalMargin()
+  if (xAxis) addVerticalMargin();
+  if (xAxis && xAxisLabel) addVerticalMargin();
+  if (yAxis) addHorizontalMargin();
+  if (yAxis && yAxisLabel) addHorizontalMargin();
 
-  return { left, right, top, bottom }
+  return { left, right, top, bottom };
 }
 
 export function getMarginsWithLegend(
-  xAxis: "top" | "bottom" | false | undefined,
-  yAxis: "left" | "right" | false | undefined,
+  xAxis: 'top' | 'bottom' | false | undefined,
+  yAxis: 'left' | 'right' | false | undefined,
   xAxisLabel: string | undefined,
   yAxisLabel: string | undefined,
   legend: LegendPos = false,
-  xOffset: number = 0,
-  yOffset: number = 0,
+  xOffset = 0,
+  yOffset = 0,
   // legendOffset: [number, number] = [0, 0], // ideally this should be mandatory if legend is truthy
-  cWidth: number = 0, // ideally this should be mandatory if legend is truthy
-  cHeight: number = 0, // ideally this should be mandatory if legend is truthy
+  cWidth = 0, // ideally this should be mandatory if legend is truthy
+  cHeight = 0, // ideally this should be mandatory if legend is truthy
   tickMargin?: number
 ) {
   let left = 20,
     right = 20,
     top = 20,
-    bottom = tickMargin ? tickMargin + 20 : 20
+    bottom = tickMargin ? tickMargin + 20 : 20;
   function addVerticalMargin() {
     switch (xAxis) {
-      case "top":
-        top += 40
-        break
-      case "bottom":
-        bottom += 40
+      case 'top':
+        top += 40;
+        break;
+      case 'bottom':
+        bottom += 40;
     }
   }
   function addHorizontalMargin() {
     switch (yAxis) {
-      case "left":
-        left += 40
-        break
-      case "right":
-        right += 40
+      case 'left':
+        left += 40;
+        break;
+      case 'right':
+        right += 40;
     }
   }
 
@@ -120,70 +120,70 @@ export function getMarginsWithLegend(
         bottom += 20
         break
       case undefined:
-        bottom += 20
-        break
+        bottom += 20;
+        break;
       case false:
-        bottom += 20
-        break
+        bottom += 20;
+        break;
     }
   }
   function addHorizontalMargin1() {
     switch (yAxis) {
-      case "left":
-        left += 20
-        break
-      case "right":
-        right += 20
-        break
+      case 'left':
+        left += 20;
+        break;
+      case 'right':
+        right += 20;
+        break;
       case undefined:
-        left += 20
-        break
+        left += 20;
+        break;
       case false:
-        left += 20
-        break
+        left += 20;
+        break;
     }
   }
-  if (xAxis) addVerticalMargin()
-  if (xAxisLabel) addVerticalMargin1()
-  if (yAxis) addHorizontalMargin()
-  if (yAxisLabel) addHorizontalMargin1()
+  if (xAxis) addVerticalMargin();
+  if (xAxisLabel) addVerticalMargin1();
+  if (yAxis) addHorizontalMargin();
+  if (yAxisLabel) addHorizontalMargin1();
 
-  if (legend === true) legend = "right"
+  if (legend === true) legend = 'right';
   if (legend) {
     // make room for legend by adjusting margin:
     // const xOffset = legendOffset[0];
     // const yOffset = legendOffset[1];
-    let marginExt = 0
+    let marginExt = 0;
     switch (legend) {
-      case "top":
-      case "left-top":
-      case "right-top":
-        top += yOffset + EXTRA_LEGEND_MARGIN
-        break
-      case "left-bottom":
-      case "right-bottom":
-      case "bottom":
-        bottom += yOffset + EXTRA_LEGEND_MARGIN
-        break
-      case "left":
-      case "top-left":
-      case "bottom-left":
-        marginExt = left + xOffset + EXTRA_LEGEND_MARGIN
-        if (marginExt > 0) left = marginExt
-        break
-      case "top-right":
-      case "bottom-right":
-      case "right":
+      case 'top':
+      case 'left-top':
+      case 'right-top':
+        top += yOffset + EXTRA_LEGEND_MARGIN;
+        break;
+      case 'left-bottom':
+      case 'right-bottom':
+      case 'bottom':
+        bottom += yOffset + EXTRA_LEGEND_MARGIN;
+        break;
+      case 'left':
+      case 'top-left':
+      case 'bottom-left':
+        marginExt = left + xOffset + EXTRA_LEGEND_MARGIN;
+        if (marginExt > 0) left = marginExt;
+        break;
+      case 'top-right':
+      case 'bottom-right':
+      case 'right':
       default:
-        marginExt = right + xOffset + EXTRA_LEGEND_MARGIN
-        if (marginExt > 0) right = marginExt
+        marginExt = right + xOffset + EXTRA_LEGEND_MARGIN;
+        if (marginExt > 0) right = marginExt;
     }
   }
-  return { left, right, top, bottom }
+  return { left, right, top, bottom };
 }
 
-export const LABEL_MARGIN = 20
-export const AXIS_MARGIN = 40
+export const LABEL_MARGIN = 20;
+export const AXIS_MARGIN = 40;
 
 export function getAxisLabelCoordinates(
   x: number,
@@ -195,49 +195,49 @@ export function getAxisLabelCoordinates(
   axis: boolean,
   tickMargin = 0
 ) {
-  let fontSize = 16
+  const fontSize = 16;
 
-  let rotate = 0
-  let axisLabelX: number = 0
-  let axisLabelY: number = 0
-  let labelMargin = LABEL_MARGIN
-  let axisMargin = AXIS_MARGIN + tickMargin
-  let position: number
+  let rotate = 0;
+  let axisLabelX = 0;
+  let axisLabelY = 0;
+  const labelMargin = LABEL_MARGIN;
+  const axisMargin = AXIS_MARGIN + tickMargin;
+  let position: number;
   switch (type) {
-    case "top":
-      position = width - margin.right - margin.left
-      axisLabelX = position > 40 ? position / 2 : 40 / 2
-      axisLabelY = y - labelMargin / 2 - axisMargin
-      rotate = 0
-      break
-    case "right":
-      axisLabelX = x + labelMargin / 2 + axisMargin
-      position = height - margin.top - margin.bottom
-      axisLabelY = position > 40 ? position / 2 : 40 / 2
-      rotate = 90
-      break
-    case "bottom":
-      position = width - margin.right - margin.left
-      axisLabelX = position > 40 ? position / 2 : 40 / 2
-      axisLabelY = axis ? y + labelMargin + axisMargin : y + labelMargin
-      rotate = 0
-      break
-    case "left":
-      axisLabelX = axis ? -labelMargin / 2 - axisMargin : -labelMargin
-      position = height - margin.top - margin.bottom
-      axisLabelY = position > 40 ? position / 2 : 40 / 2
-      rotate = -90
-      break
+    case 'top':
+      position = width - margin.right - margin.left;
+      axisLabelX = position > 40 ? position / 2 : 40 / 2;
+      axisLabelY = y - labelMargin / 2 - axisMargin;
+      rotate = 0;
+      break;
+    case 'right':
+      axisLabelX = x + labelMargin / 2 + axisMargin;
+      position = height - margin.top - margin.bottom;
+      axisLabelY = position > 40 ? position / 2 : 40 / 2;
+      rotate = 90;
+      break;
+    case 'bottom':
+      position = width - margin.right - margin.left;
+      axisLabelX = position > 40 ? position / 2 : 40 / 2;
+      axisLabelY = axis ? y + labelMargin + axisMargin : y + labelMargin;
+      rotate = 0;
+      break;
+    case 'left':
+      axisLabelX = axis ? -labelMargin / 2 - axisMargin : -labelMargin;
+      position = height - margin.top - margin.bottom;
+      axisLabelY = position > 40 ? position / 2 : 40 / 2;
+      rotate = -90;
+      break;
     case false:
-      axisLabelX = -labelMargin / 2
-      axisLabelY = (height - margin.top - margin.bottom) / 2
-      rotate = -90
+      axisLabelX = -labelMargin / 2;
+      axisLabelY = (height - margin.top - margin.bottom) / 2;
+      rotate = -90;
   }
   return {
     axisLabelX,
     axisLabelY,
     rotate,
-  }
+  };
 }
 
 export function checkRadiusDimension(
@@ -249,38 +249,38 @@ export function checkRadiusDimension(
 ) {
   //TODO: add minimum radius here?
 
-  let legendMargin = 0
-  let screenSize = Math.min(height, width)
+  let legendMargin = 0;
+  const screenSize = Math.min(height, width);
   switch (legend) {
-    case "top":
-    case "left-top":
-    case "right-top":
-      legendMargin = margin.top
-      break
-    case "bottom":
-    case "left-bottom":
-    case "right-bottom":
-      legendMargin = Math.abs(margin.bottom)
-      break
-    case "left":
-    case "top-left":
-    case "bottom-left":
-      legendMargin = margin.left
-      break
-    case "right":
-    case "top-right":
-    case "top-right":
-      legendMargin = margin.right
-      break
+    case 'top':
+    case 'left-top':
+    case 'right-top':
+      legendMargin = margin.top;
+      break;
+    case 'bottom':
+    case 'left-bottom':
+    case 'right-bottom':
+      legendMargin = Math.abs(margin.bottom);
+      break;
+    case 'left':
+    case 'top-left':
+    case 'bottom-left':
+      legendMargin = margin.left;
+      break;
+    case 'right':
+    case 'top-right':
+    case 'top-right':
+      legendMargin = margin.right;
+      break;
   }
 
-  if (typeof radius === "string" && radius.endsWith("%")) {
-    radius = radius.slice(0, -1)
-    return ((Number(radius) * (screenSize - legendMargin)) / 2) * 0.01
+  if (typeof radius === 'string' && radius.endsWith('%')) {
+    radius = radius.slice(0, -1);
+    return ((Number(radius) * (screenSize - legendMargin)) / 2) * 0.01;
   } else if (Number(radius) > (screenSize - legendMargin) / 2) {
-    return (screenSize - legendMargin) / 2
+    return (screenSize - legendMargin) / 2;
   } else {
-    return Number(radius)
+    return Number(radius);
   }
 }
 
@@ -292,50 +292,50 @@ export function calculateOuterRadius(
   const radius = Math.min(
     (height - margin.top - margin.bottom) / 2,
     (width - margin.left - margin.right) / 2
-  )
-  return Math.min(radius, 20)
+  );
+  return Math.min(radius, 20);
 }
 
 interface CountryDataProps {
-  key: string
-  values: Array<Array<number>>
+  key: string;
+  values: Array<Array<number>>;
 }
 
 interface CorrectedCountryDataProps {
-  key: string
-  values: Array<Array<number>>
+  key: string;
+  values: Array<Array<number>>;
 }
 
 export function findYDomainMax(data: any, keyArr: string[]) {
-  let yDomainMax = 0
+  let yDomainMax = 0;
   data.forEach((obj: any) => {
-    let stackedHeight = 0
+    let stackedHeight = 0;
     for (const key of keyArr) {
-      stackedHeight += obj[key]
-      if (stackedHeight > yDomainMax) yDomainMax = stackedHeight
+      stackedHeight += obj[key];
+      if (stackedHeight > yDomainMax) yDomainMax = stackedHeight;
     }
-  })
-  return yDomainMax
+  });
+  return yDomainMax;
 }
 
 interface CountryDataProps {
-  key: string
-  values: Array<Array<number>>
+  key: string;
+  values: Array<Array<number>>;
 }
 
 export function transformCountryData(arr: CountryDataProps[]) {
-  const transformed = []
+  const transformed = [];
   for (let i = 0; i < arr[0].values.length; i++) {
     const entry: any = {
       // TODO: get rid of any?
       date: arr[0].values[i][0],
-    }
+    };
     for (let j = 0; j < arr.length; j++) {
-      entry[arr[j].key] = arr[j].values[i][1]
+      entry[arr[j].key] = arr[j].values[i][1];
     }
-    transformed.push(entry)
+    transformed.push(entry);
   }
-  return transformed
+  return transformed;
 }
 
 export function transformSkinnyToWide(
@@ -345,46 +345,46 @@ export function transformSkinnyToWide(
   xDataKey: string | undefined,
   yDataKey: string | undefined
 ) {
-  const outputArr = []
+  const outputArr = [];
   // Find unique x vals. create 1 object with date prop for each date
-  const rowsArr: any = []
+  const rowsArr: any = [];
   for (const entry of arr) {
-    if (!rowsArr.includes(entry[xDataKey ?? ""]))
-      rowsArr.push(entry[xDataKey ?? ""])
+    if (!rowsArr.includes(entry[xDataKey ?? '']))
+      rowsArr.push(entry[xDataKey ?? '']);
   }
   // create 1 prop with key for each val in keys, and associated val of 'value' from input arr at the object with current date & key name
   for (const rowValue of rowsArr) {
-    const rowObj: any = {}
-    rowObj[xDataKey ?? ""] = rowValue
+    const rowObj: any = {};
+    rowObj[xDataKey ?? ''] = rowValue;
 
     for (const key of keys) {
       rowObj[key] = arr.reduce((val: number | undefined, currentRow: any) => {
         if (
-          currentRow[xDataKey ?? ""] === rowValue &&
-          currentRow[groupBy ?? ""] === key
+          currentRow[xDataKey ?? ''] === rowValue &&
+          currentRow[groupBy ?? ''] === key
         ) {
-          return currentRow[yDataKey ?? ""]
+          return currentRow[yDataKey ?? ''];
         } else {
-          return val
+          return val;
         }
       }, null)
     }
-    outputArr.push(rowObj)
+    outputArr.push(rowObj);
   }
-  return outputArr
+  return outputArr;
 }
 
 export function inferXDataType(el: any, xKey: string) {
-  let xDataType: "number" | "date" | undefined
+  let xDataType: 'number' | 'date' | undefined;
   if (
-    (typeof el[xKey] === "string" && !isNaN(Date.parse(el[xKey]))) ||
+    (typeof el[xKey] === 'string' && !isNaN(Date.parse(el[xKey]))) ||
     el[xKey] instanceof Date
   ) {
-    xDataType = "date"
-  } else if (typeof el[xKey] === "number") {
-    xDataType = "number"
+    xDataType = 'date';
+  } else if (typeof el[xKey] === 'number') {
+    xDataType = 'number';
   } else {
-    throw new Error("Incorrect datatype")
+    throw new Error('Incorrect datatype');
   }
-  return xDataType
+  return xDataType;
 }

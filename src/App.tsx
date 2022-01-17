@@ -1,10 +1,10 @@
-import React from "react";
-import "./App.css";
-import Test from "./components/Test";
+import React from 'react';
+import './App.css';
+import Test from './components/Test';
 
 function App() {
   return (
-    <div className='app'>
+    <div className="app">
       <Test />
     </div>
   );

@@ -1,41 +1,41 @@
 /** App.js */
-import React, { useState, useMemo } from "react"
-import * as d3 from "d3"
-import { useResponsive } from "../../hooks/useResponsive"
-import { Axis } from "../../components/ContinuousAxis"
-import { Circle } from "../../components/Circle"
-import { ColorLegend } from "../../components/ColorLegend"
+import React, { useState, useMemo } from 'react';
+import * as d3 from 'd3';
+import { useResponsive } from '../../hooks/useResponsive';
+import { Axis } from '../../components/ContinuousAxis';
+import { Circle } from '../../components/Circle';
+import { ColorLegend } from '../../components/ColorLegend';
 
-import { d3Voronoi } from "../../functionality/voronoi"
-import { xScaleDef } from "../../functionality/xScale"
-import { yScaleDef } from "../../functionality/yScale"
-import { VoronoiWrapper } from "../../components/VoronoiWrapper"
-import TooltipDiv from "../../components/TooltipDiv"
+import { d3Voronoi } from '../../functionality/voronoi';
+import { xScaleDef } from '../../functionality/xScale';
+import { yScaleDef } from '../../functionality/yScale';
+import { VoronoiWrapper } from '../../components/VoronoiWrapper';
+import TooltipDiv from '../../components/TooltipDiv';
 import {
   ScatterPlotProps,
   xAccessorFunc,
   yAccessorFunc,
   ColorScale,
-} from "../../../types"
+} from '../../../types';
 import {
   getXAxisCoordinates,
   getYAxisCoordinates,
   getMarginsWithLegend,
   inferXDataType,
   EXTRA_LEGEND_MARGIN,
-} from "../../utils"
-import { Label } from "../../components/Label"
+} from '../../utils';
+import { Label } from '../../components/Label';
 
 export default function ScatterPlot({
   data,
-  height = "100%",
-  width = "100%",
+  height = '100%',
+  width = '100%',
   xKey,
   xDataType,
   yKey,
   groupBy,
-  xAxis = "bottom",
-  yAxis = "left",
+  xAxis = 'bottom',
+  yAxis = 'left',
   xGrid = false,
   yGrid = false,
   xAxisLabel,
@@ -44,15 +44,15 @@ export default function ScatterPlot({
   legendLabel = "",
   colorScheme = d3.quantize(d3.interpolateHcl("#9dc8e2", "#07316b"), 8),
 }: ScatterPlotProps<string | number>): JSX.Element {
-  const [tooltip, setTooltip] = useState<false | any>(false)
-  const chart = "ScatterPlot"
+  const [tooltip, setTooltip] = useState<false | any>(false);
+  const chart = 'ScatterPlot';
 
-  const { anchor, cHeight, cWidth } = useResponsive()
+  const { anchor, cHeight, cWidth } = useResponsive();
 
   // width & height of legend, so we know how much to squeeze chart by
-  const [legendOffset, setLegendOffset] = useState<[number, number]>([0, 0])
-  const xOffset = legendOffset[0]
-  const yOffset = legendOffset[1]
+  const [legendOffset, setLegendOffset] = useState<[number, number]>([0, 0]);
+  const xOffset = legendOffset[0];
+  const yOffset = legendOffset[1];
   const margin = useMemo(
     () =>
       getMarginsWithLegend(
@@ -77,43 +77,43 @@ export default function ScatterPlot({
       cWidth,
       cHeight,
     ]
-  )
+  );
 
   const { xAxisX, xAxisY } = useMemo(
     () => getXAxisCoordinates(xAxis, cHeight, margin),
     [cHeight, xAxis, margin]
-  )
+  );
 
   const { yAxisX, yAxisY } = useMemo(
     () => getYAxisCoordinates(yAxis, cWidth, margin),
     [cWidth, yAxis, margin]
-  )
+  );
 
-  const translate = `translate(${margin.left}, ${margin.top})`
+  const translate = `translate(${margin.left}, ${margin.top})`;
 
-  let xType: "number" | "date" = inferXDataType(data[0], xKey)
-  if (xDataType !== undefined) xType = xDataType
+  let xType: 'number' | 'date' = inferXDataType(data[0], xKey);
+  if (xDataType !== undefined) xType = xDataType;
 
   let keys: string[] = [],
-    groups: d3.InternMap<any, any[]>
-  const groupAccessor = (d: any) => d[groupBy ?? ""]
-  groups = d3.group(data, groupAccessor)
-  keys = groupBy ? Array.from(groups).map((group) => group[0]) : [yKey]
+    groups: d3.InternMap<any, any[]>;
+  const groupAccessor = (d: any) => d[groupBy ?? ''];
+  groups = d3.group(data, groupAccessor);
+  keys = groupBy ? Array.from(groups).map((group) => group[0]) : [yKey];
 
   const xAccessor: xAccessorFunc = useMemo(() => {
-    return xType === "number" ? (d) => d[xKey] : (d) => new Date(d[xKey])
-  }, [])
+    return xType === 'number' ? (d) => d[xKey] : (d) => new Date(d[xKey]);
+  }, []);
   const yAccessor: yAccessorFunc = useMemo(() => {
-    return (d) => d[yKey]
-  }, [])
+    return (d) => d[yKey];
+  }, []);
 
   const { xScale } = useMemo(() => {
-    return xScaleDef(data, xType, xAccessor, margin, cWidth, chart)
-  }, [data, cWidth, margin])
+    return xScaleDef(data, xType, xAccessor, margin, cWidth, chart);
+  }, [data, cWidth, margin]);
 
   const yScale = useMemo(() => {
-    return yScaleDef(data, yAccessor, margin, cHeight)
-  }, [data, yAccessor, margin, cHeight])
+    return yScaleDef(data, yAccessor, margin, cHeight);
+  }, [data, yAccessor, margin, cHeight]);
 
   const voronoi = useMemo(() => {
     return d3Voronoi(
@@ -125,11 +125,11 @@ export default function ScatterPlot({
       cHeight,
       cWidth,
       margin
-    )
-  }, [data, xScale, yScale, xAccessor, yAccessor, cHeight, cWidth, margin])
+    );
+  }, [data, xScale, yScale, xAccessor, yAccessor, cHeight, cWidth, margin]);
 
-  const colorScale: ColorScale = d3.scaleOrdinal(colorScheme)
-  colorScale.domain(keys)
+  const colorScale: ColorScale = d3.scaleOrdinal(colorScheme);
+  colorScale.domain(keys);
 
   return (
     <div ref={anchor} style={{ width: width, height: height }}>
@@ -165,7 +165,7 @@ export default function ScatterPlot({
               height={cHeight}
               width={cWidth}
               margin={margin}
-              type={yAxis ? yAxis : "left"}
+              type={yAxis ? yAxis : 'left'}
               axis={yAxis ? true : false}
               label={yAxisLabel}
             />
@@ -190,7 +190,7 @@ export default function ScatterPlot({
               height={cHeight}
               width={cWidth}
               margin={margin}
-              type={xAxis ? xAxis : "bottom"}
+              type={xAxis ? xAxis : 'bottom'}
               axis={xAxis ? true : false}
               label={xAxisLabel}
             />
@@ -247,5 +247,5 @@ export default function ScatterPlot({
         </g>
       </svg>
     </div>
-  )
+  );
 }
