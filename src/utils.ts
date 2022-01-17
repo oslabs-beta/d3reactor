@@ -88,7 +88,6 @@ export function getMarginsWithLegend(
   cHeight = 0, // ideally this should be mandatory if legend is truthy
   tickMargin?: number
 ) {
-  console.log('tickMargin:', tickMargin);
   let left = 20,
     right = 20,
     top = 20,
@@ -114,14 +113,12 @@ export function getMarginsWithLegend(
 
   function addVerticalMargin1() {
     switch (xAxis) {
-      case 'top':
-        top += 20;
-        break;
-      case 'bottom':
-        bottom += 20;
-        console.log('bottom, ', bottom);
-
-        break;
+      case "top":
+        top += 20
+        break
+      case "bottom":
+        bottom += 20
+        break
       case undefined:
         bottom += 20;
         break;
@@ -370,7 +367,7 @@ export function transformSkinnyToWide(
         } else {
           return val;
         }
-      }, undefined);
+      }, null)
     }
     outputArr.push(rowObj);
   }

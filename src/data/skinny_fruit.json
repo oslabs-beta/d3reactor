@@ -7,7 +7,7 @@
   {
     "date": "Thu Mar 01 2018 00:00:00 GMT-0500 (Eastern Standard Time)",
     "fruit": "apples",
-    "value": 15
+    "value": 19
   },
   {
     "date": "Thu Mar 08 2018 00:00:00 GMT-0500 (Eastern Standard Time)",
@@ -22,22 +22,22 @@
   {
     "date": "Thu Feb 01 2018 00:00:00 GMT-0500 (Eastern Standard Time)",
     "fruit": "oranges",
-    "value": 15
+    "value": 13
   },
   {
     "date": "Thu Mar 01 2018 00:00:00 GMT-0500 (Eastern Standard Time)",
     "fruit": "oranges",
-    "value": 15
+    "value": null
   },
   {
     "date": "Thu Mar 08 2018 00:00:00 GMT-0500 (Eastern Standard Time)",
     "fruit": "oranges",
-    "value": 18
+    "value": 4
   },
   {
     "date": "Sun Apr 01 2018 00:00:00 GMT-0400 (Eastern Daylight Time)",
     "fruit": "oranges",
-    "value": 33
+    "value": 10
   },
   {
     "date": "Thu Feb 01 2018 00:00:00 GMT-0500 (Eastern Standard Time)",

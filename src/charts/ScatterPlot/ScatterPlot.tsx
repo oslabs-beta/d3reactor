@@ -41,8 +41,8 @@ export default function ScatterPlot({
   xAxisLabel,
   yAxisLabel,
   legend,
-  legendLabel,
-  colorScheme = d3.quantize(d3.interpolateHcl('#9dc8e2', '#07316b'), 8),
+  legendLabel = "",
+  colorScheme = d3.quantize(d3.interpolateHcl("#9dc8e2", "#07316b"), 8),
 }: ScatterPlotProps<string | number>): JSX.Element {
   const [tooltip, setTooltip] = useState<false | any>(false);
   const chart = 'ScatterPlot';
