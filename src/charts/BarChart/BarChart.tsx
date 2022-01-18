@@ -84,16 +84,21 @@ export default function BarChart({
   const translate = `translate(${margin.left}, ${margin.top})`;
 
   // When the yKey key has been assigned to the groupBy variable we know the user didn't specify grouping
-  let keys: string[] = [],
-    groups: d3.InternMap<any, any[]>;
-  const groupAccessor = (d: Data) => d[groupBy ?? ''];
-  groups = d3.group(data, groupAccessor);
-  keys = groupBy ? Array.from(groups).map((group) => group[0]) : [yKey];
-  if (groupBy) {
-    data = transformSkinnyToWide(data, keys, groupBy, xKey, yKey);
-  }
+  const keys = useMemo(() => {
+    let groups: d3.InternMap<any, any[]>;
+    const groupAccessor = (d: Data) => d[groupBy ?? ''];
+    groups = d3.group(data, groupAccessor);
+    return groupBy ? Array.from(groups).map((group) => group[0]) : [yKey]
+  }, [groupBy, yKey]);
+
+  const transData = useMemo(() => {
+    return groupBy ? transformSkinnyToWide(data, keys, groupBy, xKey, yKey) : data
+  }, [data, keys, groupBy, xKey, yKey])
+
   const stack = d3.stack().keys(keys).order(d3.stackOrderAscending);
-  const layers = stack(data as Iterable<{ [key: string]: number }>);
+  const layers = useMemo(() => {
+    return stack(transData as Iterable<{ [key: string]: number }>);
+  }, [transData])
 
   const xAccessor: (d: Data) => string = useMemo(() => {
     return (d) => d[xKey];
@@ -111,17 +116,17 @@ export default function BarChart({
       .paddingOuter(0.1)
       .domain(data.map(xAccessor))
       .range([0, rangeMax > 40 ? rangeMax : 40]);
-  }, [data, xAccessor, cWidth, margin]);
+  }, [transData, xAccessor, cWidth, margin]);
 
   const yScale = useMemo(() => {
     return yScaleDef(
-      groupBy ? layers : data,
+      groupBy ? layers : transData,
       yAccessor,
       margin,
       cHeight,
       groupBy
     );
-  }, [data, yAccessor, margin, cHeight, groupBy]);
+  }, [transData, yAccessor, margin, cHeight, groupBy]);
 
   const colorScale: ColorScale = d3.scaleOrdinal(colorScheme);
   colorScale.domain(keys);
@@ -156,7 +161,7 @@ export default function BarChart({
               scale={xScale}
               type={xAxis}
               label={xAxisLabel}
-              data={data}
+              data={transData}
               layers={layers}
               xAccessor={xAccessor}
               setTickMargin={setTickMargin}

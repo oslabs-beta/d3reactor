@@ -2,7 +2,7 @@
 import React, { useState, useMemo } from 'react';
 import * as d3 from 'd3';
 import { useResponsive } from '../../hooks/useResponsive';
-import { PieChartProps } from '../../../types';
+import { PieChartProps, Data } from '../../../types';
 import { ColorLegend } from '../../components/ColorLegend';
 import { Arc } from '../../components/Arc';
 import TooltipDiv from '../../components/TooltipDiv';
@@ -56,11 +56,13 @@ export default function PieChart({
     ratio = innerRadius / outerRadius;
   }
 
-  outerRadius = outerRadius
-    ? checkRadiusDimension(cHeight, cWidth, outerRadius, margin, legend)
-    : calculateOuterRadius(cHeight, cWidth, margin);
-
-  if (outerRadius < 20) outerRadius = 20;
+  outerRadius = useMemo(() => {
+    const tempRad = outerRadius ? 
+      checkRadiusDimension(cHeight, cWidth, outerRadius, margin, legend)
+      : calculateOuterRadius(cHeight, cWidth, margin);
+      return tempRad > 20 ? tempRad : 20;
+    }, [cHeight, cWidth, outerRadius, margin, legend])
+    
   if (ratio) {
     innerRadius = ratio * outerRadius;
   } else if (innerRadius) {
@@ -76,13 +78,12 @@ export default function PieChart({
 
   type ColorScale = d3.ScaleOrdinal<string, string, never>;
 
-  const keys: string[] = [];
-  for (const entry of data) {
-    const property = entry[label];
-    if (property && !keys.includes(property)) {
-      keys.push(property);
-    }
-  }
+  const keys = useMemo(() => {
+    let groups: d3.InternMap<any, any[]>;
+    const groupAccessor = (d: Data) => d[label ?? ''];
+    groups = d3.group(data, groupAccessor);
+    return Array.from(groups).map((group) => group[0])
+  }, [label]);
 
   const colorScale: ColorScale = d3.scaleOrdinal(colorScheme);
   colorScale.domain(keys);

@@ -96,7 +96,6 @@ export default function AreaChart({
     xDataType = inferXDataType(data[0], xKey);
   }
   // generate arr of keys. these are used to render discrete areas to be displayed
-  
 
   const keys = useMemo(() => {
     let groups: d3.InternMap<any, any[]>;
@@ -109,7 +108,6 @@ export default function AreaChart({
     return groupBy ? transformSkinnyToWide(data, keys, groupBy, xKey, yKey) : data
   }, [data, keys, groupBy, xKey, yKey])
 
-
   // generate stack: an array of Series representing the x and associated y0 & y1 values for each area
   const stack = d3.stack().keys(keys);
   const layers = useMemo(() => {
@@ -117,28 +115,29 @@ export default function AreaChart({
     for (const series of layersTemp) {
       series.sort((a, b) => b.data[xKey] - a.data[xKey]);
     }
-    console.log('defining layers##############')
     return layersTemp;
   }, [transData, keys]); // add transformeddata to dependencies, remove data
 
   const xAccessor: xAccessorFunc =
     xDataType === 'number' ? (d) => d[xKey] : (d) => new Date(d[xKey]);
 
-  const { xScale, xMin, xMax } = xScaleDef(
-    transData,
-    xDataType,
-    xAccessor,
-    margin,
-    cWidth,
-    chart
-  );
-
+  const { xScale, xMin, xMax } = useMemo(() => { 
+    return xScaleDef(
+      transData, 
+      xDataType as 'number' | 'date', 
+      xAccessor, 
+      margin, 
+      cWidth, 
+      chart);
+  }, [transData, xDataType, xAccessor, margin, cWidth, chart]);
+  
   const yAccessor: yAccessorFunc = (d) => d[yKey];
-  const layerYAccessor = (d: any) => d.data[yKey];
-
-  const yScale = 
-    groupBy ? yScaleDef(layers, yAccessor, margin, cHeight, groupBy)
-            : yScaleDef(layers[0], layerYAccessor, margin, cHeight)
+  const yScale = useMemo(() => {
+    const layerYAccessor = (d: any) => d.data[yKey];
+    return groupBy ? 
+      yScaleDef(layers, yAccessor, margin, cHeight, groupBy)
+      : yScaleDef(layers[0], layerYAccessor, margin, cHeight)
+  }, [layers, yAccessor, margin, cHeight, groupBy])
 
   const xTicksValue = [xMin, ...xScale.ticks(), xMax];
 
