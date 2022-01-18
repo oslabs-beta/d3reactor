@@ -36,8 +36,6 @@ export default function BarChart({
 }: BarChartProps<string | number>): JSX.Element {
   const [tooltip, setTooltip] = useState<false | any>(false);
 
-  const chart = 'BarChart';
-
   const { anchor, cHeight, cWidth } = useResponsive();
 
   // width & height of legend, so we know how much to squeeze chart by
@@ -121,10 +119,9 @@ export default function BarChart({
       yAccessor,
       margin,
       cHeight,
-      chart,
       groupBy
     );
-  }, [data, yAccessor, margin, cHeight, chart, groupBy]);
+  }, [data, yAccessor, margin, cHeight, groupBy]);
 
   const colorScale: ColorScale = d3.scaleOrdinal(colorScheme);
   colorScale.domain(keys);

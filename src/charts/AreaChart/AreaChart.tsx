@@ -121,7 +121,7 @@ export default function AreaChart({
     for (const series of layersTemp) {
       series.sort((a, b) => b.data[xKey] - a.data[xKey]);
     }
-    console.log('defining layers##############')
+    // console.log('defining layers##############')
     return layersTemp;
   }, [data, keys]); // add transformeddata to dependencies, remove data
 
@@ -141,8 +141,8 @@ export default function AreaChart({
   const layerYAccessor = (d: any) => d.data[yKey];
 
   const yScale = 
-    groupBy ? yScaleDef(layers, yAccessor, margin, cHeight, chart, groupBy)
-            : yScaleDef(layers[0], layerYAccessor, margin, cHeight, chart)
+    groupBy ? yScaleDef(layers, yAccessor, margin, cHeight, groupBy)
+            : yScaleDef(layers[0], layerYAccessor, margin, cHeight)
 
   const xTicksValue = [xMin, ...xScale.ticks(), xMax];
 
