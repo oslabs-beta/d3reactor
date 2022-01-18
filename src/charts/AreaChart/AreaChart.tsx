@@ -98,6 +98,9 @@ export default function AreaChart({
   }
 
   // generate arr of keys. these are used to render discrete areas to be displayed
+  
+  //# declare transformedData variable #######
+  // wrap keys in usememo
   const keys: string[] = [];
   if (groupBy) {
     for (const entry of data) {
@@ -118,12 +121,12 @@ export default function AreaChart({
     for (const series of layersTemp) {
       series.sort((a, b) => b.data[xKey] - a.data[xKey]);
     }
+    // console.log('defining layers##############')
     return layersTemp;
-  }, [data, keys]);
+  }, [data, keys]); // add transformeddata to dependencies, remove data
 
   const xAccessor: xAccessorFunc =
     xDataType === 'number' ? (d) => d[xKey] : (d) => new Date(d[xKey]);
-  const yAccessor: yAccessorFunc = (d) => d[yKey];
 
   const { xScale, xMin, xMax } = xScaleDef(
     data,
@@ -133,7 +136,13 @@ export default function AreaChart({
     cWidth,
     chart
   );
-  const yScale = yScaleDef(layers, yAccessor, margin, cHeight, chart);
+
+  const yAccessor: yAccessorFunc = (d) => d[yKey];
+  const layerYAccessor = (d: any) => d.data[yKey];
+
+  const yScale = 
+    groupBy ? yScaleDef(layers, yAccessor, margin, cHeight, groupBy)
+            : yScaleDef(layers[0], layerYAccessor, margin, cHeight)
 
   const xTicksValue = [xMin, ...xScale.ticks(), xMax];
 

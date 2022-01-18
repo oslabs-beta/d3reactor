@@ -251,7 +251,7 @@ export type ScaleFunc =
 
 export type xAccessorFunc = (d: any) => number | Date
 
-export type yAccessorFunc = (d: any) => number
+export type yAccessorFunc = (d: any, i?:number) => number
 
 export type Domain = number | Date | undefined
 
