@@ -4,6 +4,7 @@ import { ColorLegendProps } from '../../types';
 export const ColorLegend = ({
   colorScale,
   circleRadius = 10,
+  dataTestId = 'color-legend',
   tickSpacing = circleRadius * 2 + 6,
   tickTextOffset = circleRadius * 1.2 + 3,
   legendLabel = '',
@@ -166,8 +167,8 @@ export const ColorLegend = ({
   };
   return (
     <g
-      data-test-id="color-legend"
-      transform={`translate(${xPosition}, ${yPosition})`}
+      data-test-id={dataTestId}
+      transform={`translate(${xPosition as number}, ${yPosition as number})`}
     >
       <foreignObject
         x={0}

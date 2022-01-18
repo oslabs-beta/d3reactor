@@ -12,11 +12,12 @@ import fruit from '../data/fruit.json';
 import skinny_fruit from '../data/skinny_fruit.json';
 import sales from '../data/sales.json';
 
+// eslint-disable-next-line react/display-name
 const Test = React.memo((): JSX.Element => {
   return (
     <div style={{ width: '100%', height: '100%' }}>
       <BarChart
-        height="700px"
+        height="100%"
         width="100%"
         data={portfolio.slice(5, 10)}
         xKey="date"
@@ -54,20 +55,6 @@ const Test = React.memo((): JSX.Element => {
         legend={true}
         // legend="left-top"
         legendLabel="🐬"
-      />
-      <BarChart
-        height="100%"
-        data={fruit}
-        xKey="label"
-        yKey="value"
-        // groupBy='fruit'
-        xAxis="bottom"
-        yAxis="left"
-        yGrid={true}
-        xAxisLabel="Date"
-        yAxisLabel="Value"
-        legend={'bottom'}
-        // legendLabel={''}
       />
       <ScatterPlot
         height="100%"
