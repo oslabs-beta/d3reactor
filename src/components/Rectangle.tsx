@@ -4,6 +4,7 @@ import { RectangleProps } from '../../types';
 export const Rectangle = React.memo(
   ({
     data,
+    dataTestId = 'rectangle',
     x,
     y,
     width,
@@ -36,6 +37,7 @@ export const Rectangle = React.memo(
 
     return (
       <rect
+        data-test-id={dataTestId}
         x={x}
         y={y}
         width={width}

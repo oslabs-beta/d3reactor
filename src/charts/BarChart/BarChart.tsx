@@ -144,7 +144,7 @@ export default function BarChart({
           yKey={yKey}
         />
       )}
-      <svg width={cWidth} height={cHeight}>
+      <svg width={cWidth} height={cHeight} data-test-id="bar-chart">
         <g transform={translate}>
           {xAxis && (
             <DiscreteAxis
@@ -206,6 +206,7 @@ export default function BarChart({
                   {layer.map((sequence: any, j: number) => (
                     <Rectangle
                       data={getSequenceData(sequence)}
+                      dataTestId={`rectangle-${j}`}
                       key={j}
                       x={xScale(xAccessor(sequence.data))}
                       y={yScale(sequence[1])}
@@ -224,6 +225,7 @@ export default function BarChart({
             : data.map((d: any, i: number) => (
                 <Rectangle
                   data={d}
+                  dataTestId={`rectangle-${i}`}
                   key={i + 'R'}
                   x={xScale(xAccessor(d))}
                   y={yScale(yAccessor(d))}
@@ -245,6 +247,7 @@ export default function BarChart({
                 legendLabel={legendLabel}
                 circleRadius={5 /* Radius of each color swab in legend */}
                 colorScale={colorScale}
+                dataTestId="bar-chart-legend"
                 setLegendOffset={setLegendOffset}
                 legendPosition={legend}
                 legendWidth={xOffset}
