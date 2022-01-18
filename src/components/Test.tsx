@@ -12,6 +12,7 @@ import fruit from '../data/fruit.json';
 import skinny_fruit from '../data/skinny_fruit.json';
 import sales from '../data/sales.json';
 
+// eslint-disable-next-line react/display-name
 const Test = React.memo((): JSX.Element => {
   return (
     <div style={{ width: '100%', height: '100%' }}>

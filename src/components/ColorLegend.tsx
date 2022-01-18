@@ -168,7 +168,7 @@ export const ColorLegend = ({
   return (
     <g
       data-test-id={dataTestId}
-      transform={`translate(${xPosition}, ${yPosition})`}
+      transform={`translate(${xPosition as number}, ${yPosition as number})`}
     >
       <foreignObject
         x={0}
