@@ -167,6 +167,7 @@ export interface CircleProps {
 
 export interface RectangleProps {
   data: Data
+  dataTestId?: string
   x: number | undefined
   y: number
   width: number
@@ -209,6 +210,7 @@ export type ColorScale = d3.ScaleOrdinal<string, string, never>
 
 export interface ColorLegendProps {
   colorScale: ColorScale
+  dataTestId?: string
   tickSpacing?: number
   circleRadius: number
   tickTextOffset?: number
