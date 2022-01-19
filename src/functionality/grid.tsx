@@ -27,7 +27,6 @@ export function gridGenerator(
               x2={scale(tick)}
               y1={0}
               y2={y2 < -40 ? y2 : -40}
-              strokeOpacity="0.2"
               stroke="#bdc3c7"
             />
           );
@@ -45,7 +44,6 @@ export function gridGenerator(
               x2={scale(tick)}
               y1={0}
               y2={y2 > 40 ? y2 : 40}
-              strokeOpacity="0.2"
               stroke="#bdc3c7"
             />
           );
@@ -58,12 +56,12 @@ export function gridGenerator(
           const x2 = width - margin.right - margin.left;
           return (
             <line
+              className="grid-line"
               key={i}
               x1={0}
               x2={x2 > 40 ? x2 : 40}
               y1={scale(tick)}
               y2={scale(tick)}
-              strokeOpacity="0.2"
               stroke="#bdc3c7"
             />
           );
@@ -76,12 +74,12 @@ export function gridGenerator(
           const x2 = -width + margin.right + margin.left;
           return (
             <line
+              className="grid-line"
               key={i}
               x1={0}
               x2={x2 < -40 ? x2 : -40}
               y1={scale(tick)}
               y2={scale(tick)}
-              strokeOpacity="0.2"
               stroke="#bdc3c7"
             />
           );

@@ -102,16 +102,10 @@ export const DiscreteAxis = React.memo(
     // console.log('vt',verticalTicks)
     return (
       <g>
-        <line
-          stroke="#77848D"
-          strokeWidth={1.9}
-          x1={x1}
-          y1={y1}
-          x2={x2}
-          y2={y2}
-        />
+        <line className="axis-baseline" x1={x1} y1={y1} x2={x2} y2={y2} />
         {ticks.map((tick: any, i: number) => (
           <text
+            className="tick-text"
             key={i}
             style={getTickStyle(type, tick)}
             transform={getTickTranslation(type, tick, i)}

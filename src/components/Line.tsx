@@ -10,7 +10,6 @@ export const Line = React.memo(
   }: LineProps): JSX.Element => {
     return (
       <path
-        className="line"
         data-test-id="line"
         fill={fill}
         stroke={stroke}
