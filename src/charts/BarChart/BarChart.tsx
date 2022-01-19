@@ -32,7 +32,7 @@ export default function BarChart({
   yAxisLabel,
   legend,
   legendLabel = '',
-  colorScheme = d3.quantize(d3.interpolateHcl('#9dc8e2', '#07316b'), 8),
+  colorScheme = d3.quantize(d3.interpolateHcl('#003f5c', '#ffa600'), 10),
 }: BarChartProps<string | number>): JSX.Element {
   const [tooltip, setTooltip] = useState<false | any>(false);
 

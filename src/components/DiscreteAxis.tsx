@@ -99,7 +99,6 @@ export const DiscreteAxis = React.memo(
     };
     // const horizontalTicks = scale.ticks(width/120)
     // const verticalTicks = scale.ticks(numberOfVerticalTicks)
-    // console.log('vt',verticalTicks)
     return (
       <g>
         <line className="axis-baseline" x1={x1} y1={y1} x2={x2} y2={y2} />

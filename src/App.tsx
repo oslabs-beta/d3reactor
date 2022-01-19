@@ -1,15 +1,19 @@
 import React from 'react';
 import './App.css';
 import BarChart from './charts/BarChart/BarChart';
+import AreaChart from './charts/AreaChart/AreaChart';
+import LineChart from './charts/LineChart/LineChart';
+import ScatterPlot from './charts/ScatterPlot/ScatterPlot';
 import portfolio from './data/portfolio.json';
+import penguins from './data/penguins.json';
 
 function App() {
   return (
     <div className="app">
-      <BarChart
+      {/* <BarChart
         height="100%"
         width="100%"
-        data={portfolio.slice(5, 10)}
+        data={portfolio.slice(30, 38)}
         xKey="date"
         yKey="value"
         xAxis="bottom"
@@ -18,6 +22,45 @@ function App() {
         xAxisLabel="Date"
         yAxisLabel="Value"
       />
+      <AreaChart
+        height="100%"
+        width="100%"
+        data={portfolio.slice(30, 60)}
+        xKey="date"
+        yKey="value"
+        xAxis="bottom"
+        yAxis="right"
+        yGrid={true}
+        xAxisLabel="Date"
+        yAxisLabel="Value"
+      /> */}
+      <LineChart
+        height="100%"
+        width="100%"
+        data={portfolio}
+        xKey="date"
+        xDataType="date"
+        yKey="value"
+        xAxis="bottom"
+        yAxis="left"
+        yGrid={true}
+        xAxisLabel="Date"
+        yAxisLabel="Value"
+      />
+      {/* <ScatterPlot
+        height="100%"
+        width="100%"
+        data={penguins}
+        xKey="flipper_length_mm"
+        xDataType="number"
+        xGrid={true}
+        xAxis="bottom"
+        xAxisLabel="Flipper Length"
+        yKey="body_mass_g"
+        yGrid={true}
+        yAxis="right"
+        yAxisLabel="Body Mass"
+      /> */}
     </div>
   );
 }

@@ -42,7 +42,7 @@ export default function AreaChart({
   yAxisLabel,
   legend,
   legendLabel = '',
-  colorScheme = d3.quantize(d3.interpolateHcl('#9dc8e2', '#07316b'), 8),
+  colorScheme = d3.quantize(d3.interpolateHcl('#003f5c', '#ffa600'), 10),
 }: AreaChartProps<string | number>): JSX.Element {
   const position = useMousePosition();
   const [tooltip, setTooltip] = useState<false | any>(false);
@@ -212,6 +212,7 @@ export default function AreaChart({
           )}
           {layers.map((layer, i) => (
             <path
+              className="area"
               key={i}
               d={areaGenerator(layer)}
               fill={colorScale(layer.key)}

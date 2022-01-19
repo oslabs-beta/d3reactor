@@ -41,8 +41,8 @@ export default function LineChart({
   xAxisLabel,
   yAxisLabel,
   legend,
-  legendLabel = "",
-  colorScheme = d3.quantize(d3.interpolateHcl("#9dc8e2", "#07316b"), 8),
+  legendLabel = '',
+  colorScheme = d3.quantize(d3.interpolateHcl('#003f5c', '#ffa600'), 10),
 }: LineChartProps<string | number>): JSX.Element {
   const [tooltip, setTooltip] = useState<false | any>(false);
   const chart = 'LineChart';
@@ -116,9 +116,9 @@ export default function LineChart({
   // remove data entries with null values (which breaks line generator)
   data = data.filter((el) => {
     if (el[yKey] !== null) return el;
-  })
+  });
   // generate unique keys to group by
-  let keys: Iterable<string> = [];
+  let keys: string[] = [];
   const groupAccessor: GroupAccessorFunc = (d) => {
     return d[groupBy ?? ''];
   };
@@ -147,9 +147,10 @@ export default function LineChart({
     );
   }, [data, xScale, yScale, xAccessor, yAccessor, cHeight, cWidth, margin]);
 
-  // console.log("TOOLTIP ", tooltip)
   const colorScale: ColorScale = d3.scaleOrdinal(colorScheme);
   colorScale.domain(keys);
+
+  console.log('COLOR SCALE ', colorScale(keys[0]));
   return (
     <div ref={anchor} style={{ width: width, height: height }}>
       {tooltip && (
@@ -228,12 +229,7 @@ export default function LineChart({
               );
             })
           ) : (
-            <Line
-              fill="none"
-              stroke={colorScale(yKey)}
-              strokeWidth="1px"
-              d={line(data)}
-            />
+            <Line stroke={colorScale(keys[0])} d={line(data)} />
           )}
           {voronoi && (
             <VoronoiWrapper
@@ -288,7 +284,7 @@ export default function LineChart({
           ) : (
             <Line
               fill="none"
-              stroke={colorScale(yKey)}
+              stroke={colorScale(keys[0])}
               strokeWidth="1px"
               d={line(data)}
             />

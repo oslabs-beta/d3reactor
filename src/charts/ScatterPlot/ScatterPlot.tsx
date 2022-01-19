@@ -41,8 +41,8 @@ export default function ScatterPlot({
   xAxisLabel,
   yAxisLabel,
   legend,
-  legendLabel = "",
-  colorScheme = d3.quantize(d3.interpolateHcl("#9dc8e2", "#07316b"), 8),
+  legendLabel = '',
+  colorScheme = d3.quantize(d3.interpolateHcl('#003f5c', '#ffa600'), 10),
 }: ScatterPlotProps<string | number>): JSX.Element {
   const [tooltip, setTooltip] = useState<false | any>(false);
   const chart = 'ScatterPlot';
@@ -130,6 +130,7 @@ export default function ScatterPlot({
 
   const colorScale: ColorScale = d3.scaleOrdinal(colorScheme);
   colorScale.domain(keys);
+  console.log('KEYS ', keys);
 
   return (
     <div ref={anchor} style={{ width: width, height: height }}>
@@ -147,6 +148,7 @@ export default function ScatterPlot({
         <g className="spbody" transform={translate}>
           {yAxis && (
             <Axis
+              chartType="scatter-plot"
               x={yAxisX}
               y={yAxisY}
               yGrid={yGrid}
@@ -202,7 +204,7 @@ export default function ScatterPlot({
                 cx={xScale(xAccessor(element))}
                 cy={yScale(yAccessor(element))}
                 r={5}
-                color="steelblue"
+                color={colorScale(keys[0])}
               />
             ) : (
               <Circle

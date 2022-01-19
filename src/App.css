@@ -8,6 +8,23 @@ text {
   color: #737373;
 }
 
+circle {
+  fill-opacity: 0.7;
+  stroke-width: 1.4;
+}
+
+.bar,
+.area {
+  fill-opacity: 0.7;
+}
+
+.line {
+  fill: none;
+  stroke-width: 2;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
 .tick-text {
   font-size: 12px;
 }
