@@ -35,9 +35,24 @@ export interface BarChartProps<T> {
   yGrid?: boolean;
   xAxisLabel?: string;
   yAxisLabel?: string;
-  colorScheme?: string[] | readonly string[];
   legend?: LegendPos;
   legendLabel?: string;
+  colorScheme?:
+    | 'schemeRdYlGn'
+    | 'schemeRdYlBu'
+    | 'schemeRdGy'
+    | 'schemeRdBu'
+    | 'schemePuOr'
+    | 'schemePiYG'
+    | 'schemePRGn'
+    | 'schemeBrBG'
+    | 'schemeReds'
+    | 'schemePurples'
+    | 'schemeOranges'
+    | 'schemeGreys'
+    | 'schemeGreens'
+    | 'schemeBlues'
+    | 'schemeSpectral';
 }
 
 export interface LineChartProps<T> {
@@ -88,7 +103,6 @@ export interface PieChartProps {
   pieLabel?: boolean;
   value: string;
   colorScheme?:
-    | 'schemePurples'
     | 'schemeRdYlGn'
     | 'schemeRdYlBu'
     | 'schemeRdGy'

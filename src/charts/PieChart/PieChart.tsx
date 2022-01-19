@@ -22,7 +22,7 @@ export default function PieChart({
   legendLabel,
   outerRadius,
   pieLabel,
-  colorScheme = 'schemeRdYlGn',
+  colorScheme = 'schemePurples',
   value,
 }: PieChartProps): JSX.Element {
   const [tooltip, setTooltip] = useState<false | any>(false);
@@ -86,7 +86,7 @@ export default function PieChart({
   }
 
   const discreteColors = Math.min(keys.length, 9);
-  const computedScheme = d3[`${colorScheme}`][9];
+  const computedScheme = d3[`${colorScheme}`][discreteColors];
   const colorScale = d3.scaleOrdinal(computedScheme);
   colorScale.domain(keys);
 

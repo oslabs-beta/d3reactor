@@ -1,5 +1,6 @@
 /** App.js */
 import React, { useState, useMemo, useCallback } from 'react';
+/*eslint import/namespace: ['error', { allowComputed: true }]*/
 import * as d3 from 'd3';
 import { useResponsive } from '../../hooks/useResponsive';
 import { Axis } from '../../components/ContinuousAxis';
@@ -32,7 +33,7 @@ export default function BarChart({
   yAxisLabel,
   legend,
   legendLabel = '',
-  colorScheme = d3.quantize(d3.interpolateHcl('#003f5c', '#ffa600'), 10),
+  colorScheme = 'schemePurples',
 }: BarChartProps<string | number>): JSX.Element {
   const [tooltip, setTooltip] = useState<false | any>(false);
 
@@ -86,11 +87,12 @@ export default function BarChart({
   const translate = `translate(${margin.left}, ${margin.top})`;
 
   // When the yKey key has been assigned to the groupBy variable we know the user didn't specify grouping
-  let keys: string[] = [],
-    groups: d3.InternMap<any, any[]>;
+  let keys: string[] = [];
   const groupAccessor = (d: Data) => d[groupBy ?? ''];
-  groups = d3.group(data, groupAccessor);
+  const groups: d3.InternMap<any, any[]> = d3.group(data, groupAccessor);
+  console.log('GROUPS ', groups);
   keys = groupBy ? Array.from(groups).map((group) => group[0]) : [yKey];
+  console.log('KEYS ', keys);
   if (groupBy) {
     data = transformSkinnyToWide(data, keys, groupBy, xKey, yKey);
   }
@@ -126,7 +128,10 @@ export default function BarChart({
     );
   }, [data, yAccessor, margin, cHeight, chart, groupBy]);
 
-  const colorScale: ColorScale = d3.scaleOrdinal(colorScheme);
+  const discreteColors =
+    Array.from(keys).length < 4 ? 3 : Math.min(Array.from(keys).length, 9);
+  const computedScheme = d3[`${colorScheme}`][discreteColors];
+  const colorScale = d3.scaleOrdinal(computedScheme);
   colorScale.domain(keys);
 
   const getSequenceData = (sequence: any) => {
@@ -219,7 +224,7 @@ export default function BarChart({
                           ? yScale(sequence[0]) - yScale(sequence[1])
                           : 0
                       }
-                      fill={colorScale(layer.key)}
+                      fill={colorScale(layer.key[i])}
                       setTooltip={setTooltip}
                     />
                   ))}
@@ -229,7 +234,7 @@ export default function BarChart({
                 <Rectangle
                   data={d}
                   dataTestId={`rectangle-${i}`}
-                  key={i + 'R'}
+                  key={i}
                   x={xScale(xAccessor(d))}
                   y={yScale(yAccessor(d))}
                   width={xScale.bandwidth()}

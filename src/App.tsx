@@ -14,14 +14,14 @@ import fruit from './data/fruit.json';
 function App() {
   return (
     <div className="app">
-      <PieChart
+      {/* <PieChart
         data={fruit}
         label="label"
         value="value"
         outerRadius={240}
-        colorScheme="schemeGreys"
-      />
-      {/* <BarChart
+        colorScheme="schemePurples"
+      /> */}
+      <BarChart
         height="100%"
         width="100%"
         data={portfolio.slice(30, 38)}
@@ -32,8 +32,9 @@ function App() {
         yGrid={true}
         xAxisLabel="Date"
         yAxisLabel="Value"
+        colorScheme="schemeBlues"
       />
-      <AreaChart
+      {/* <AreaChart
         height="100%"
         width="100%"
         data={portfolio.slice(30, 60)}
