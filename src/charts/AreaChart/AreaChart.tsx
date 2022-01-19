@@ -132,12 +132,20 @@ export default function AreaChart({
   }, [transData, xDataType, xAccessor, margin, cWidth, chart]);
   
   const yAccessor: yAccessorFunc = (d) => d[yKey];
+  // const yScale = useMemo(() => {
+  //   const layerYAccessor = (d: any) => d.data[yKey];
+  //   return groupBy ? 
+  //     yScaleDef(layers, yAccessor, margin, cHeight, groupBy)
+  //     : yScaleDef(layers[0], layerYAccessor, margin, cHeight)
+  // }, [layers, yAccessor, margin, cHeight, groupBy]);
   const yScale = useMemo(() => {
-    const layerYAccessor = (d: any) => d.data[yKey];
-    return groupBy ? 
-      yScaleDef(layers, yAccessor, margin, cHeight, groupBy)
-      : yScaleDef(layers[0], layerYAccessor, margin, cHeight)
-  }, [layers, yAccessor, margin, cHeight, groupBy])
+    return yScaleDef(
+      groupBy ? layers : transData, 
+      yAccessor, 
+      margin, 
+      cHeight, 
+      groupBy)
+  }, [layers, yAccessor, margin, cHeight, groupBy]);
 
   const xTicksValue = [xMin, ...xScale.ticks(), xMax];
 
