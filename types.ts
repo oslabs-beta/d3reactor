@@ -79,7 +79,6 @@ export interface AreaChartProps<T> {
 }
 
 export interface PieChartProps {
-  colorScheme?: string[] | readonly string[];
   data: any;
   innerRadius?: number | string | undefined;
   label: string;
@@ -88,6 +87,23 @@ export interface PieChartProps {
   outerRadius?: number | string | undefined;
   pieLabel?: boolean;
   value: string;
+  colorScheme?:
+    | 'schemePurples'
+    | 'schemeRdYlGn'
+    | 'schemeRdYlBu'
+    | 'schemeRdGy'
+    | 'schemeRdBu'
+    | 'schemePuOr'
+    | 'schemePiYG'
+    | 'schemePRGn'
+    | 'schemeBrBG'
+    | 'schemeReds'
+    | 'schemePurples'
+    | 'schemeOranges'
+    | 'schemeGreys'
+    | 'schemeGreens'
+    | 'schemeBlues'
+    | 'schemeSpectral';
 }
 
 export interface PieChartBodyProps {
@@ -98,8 +114,8 @@ export interface PieChartBodyProps {
   outerRadius: number;
   value: string;
   label: string;
-  colorScheme?: string[] | readonly string[];
   legend?: boolean;
+  colorScheme?: string;
 }
 
 export interface Margin {

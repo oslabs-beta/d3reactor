@@ -38,6 +38,7 @@ const Test = React.memo((): JSX.Element => {
         outerRadius={240}
         legendLabel="l"
         pieLabel={true}
+        colorScheme="schemeRdYlGn"
       />
       <AreaChart
         data={penguins}
