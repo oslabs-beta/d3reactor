@@ -1,5 +1,5 @@
 /** App.js */
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useCallback } from 'react';
 import * as d3 from 'd3';
 import {
   Data,
@@ -116,10 +116,11 @@ export default function AreaChart({
       series.sort((a, b) => b.data[xKey] - a.data[xKey]);
     }
     return layersTemp;
-  }, [transData, keys]); // add transformeddata to dependencies, remove data
+  }, [transData, keys]); 
 
-  const xAccessor: xAccessorFunc =
-    xDataType === 'number' ? (d) => d[xKey] : (d) => new Date(d[xKey]);
+  const xAccessor: xAccessorFunc = useMemo(() => {
+    return xDataType === 'number' ? (d) => d[xKey] : (d) => new Date(d[xKey]);
+  }, [xKey]);
 
   const { xScale, xMin, xMax } = useMemo(() => { 
     return xScaleDef(
@@ -131,13 +132,10 @@ export default function AreaChart({
       chart);
   }, [transData, xDataType, xAccessor, margin, cWidth, chart]);
   
-  const yAccessor: yAccessorFunc = (d) => d[yKey];
-  // const yScale = useMemo(() => {
-  //   const layerYAccessor = (d: any) => d.data[yKey];
-  //   return groupBy ? 
-  //     yScaleDef(layers, yAccessor, margin, cHeight, groupBy)
-  //     : yScaleDef(layers[0], layerYAccessor, margin, cHeight)
-  // }, [layers, yAccessor, margin, cHeight, groupBy]);
+  const yAccessor: yAccessorFunc = useMemo(() => {
+    return (d) => d[yKey];
+  }, [yKey]);
+ 
   const yScale = useMemo(() => {
     return yScaleDef(
       groupBy ? layers : transData, 
@@ -145,7 +143,7 @@ export default function AreaChart({
       margin, 
       cHeight, 
       groupBy)
-  }, [layers, yAccessor, margin, cHeight, groupBy]);
+  }, [layers, transData, yAccessor, margin, cHeight, groupBy]);
 
   const xTicksValue = [xMin, ...xScale.ticks(), xMax];
 
