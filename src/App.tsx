@@ -4,13 +4,15 @@ import BarChart from './charts/BarChart/BarChart';
 import AreaChart from './charts/AreaChart/AreaChart';
 import LineChart from './charts/LineChart/LineChart';
 import ScatterPlot from './charts/ScatterPlot/ScatterPlot';
+
+import unemployment from './data/unemployment.json';
 import portfolio from './data/portfolio.json';
 import penguins from './data/penguins.json';
 
 function App() {
   return (
     <div className="app">
-      {/* <BarChart
+      <BarChart
         height="100%"
         width="100%"
         data={portfolio.slice(30, 38)}
@@ -33,7 +35,7 @@ function App() {
         yGrid={true}
         xAxisLabel="Date"
         yAxisLabel="Value"
-      /> */}
+      />
       <LineChart
         height="100%"
         width="100%"
@@ -47,7 +49,7 @@ function App() {
         xAxisLabel="Date"
         yAxisLabel="Value"
       />
-      {/* <ScatterPlot
+      <ScatterPlot
         height="100%"
         width="100%"
         data={penguins}
@@ -60,7 +62,7 @@ function App() {
         yGrid={true}
         yAxis="right"
         yAxisLabel="Body Mass"
-      /> */}
+      />
     </div>
   );
 }
