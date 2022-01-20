@@ -39,6 +39,7 @@ export function Label({
   );
   return (
     <text
+      className="axis-label"
       transform={`translate(${axisLabelX}, ${axisLabelY}) rotate(${rotate})`}
       textAnchor="middle"
     >

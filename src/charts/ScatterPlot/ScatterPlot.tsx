@@ -1,5 +1,7 @@
 /** App.js */
 import React, { useState, useMemo } from 'react';
+
+/*eslint import/namespace: ['error', { allowComputed: true }]*/
 import * as d3 from 'd3';
 import { useResponsive } from '../../hooks/useResponsive';
 import { Axis } from '../../components/ContinuousAxis';
@@ -16,7 +18,7 @@ import {
   xAccessorFunc,
   yAccessorFunc,
   ColorScale,
-  Data
+  Data,
 } from '../../../types';
 import {
   getXAxisCoordinates,
@@ -42,8 +44,8 @@ export default function ScatterPlot({
   xAxisLabel,
   yAxisLabel,
   legend,
-  legendLabel = "",
-  colorScheme = d3.quantize(d3.interpolateHcl("#9dc8e2", "#07316b"), 8),
+  legendLabel = '',
+  colorScheme = 'schemePurples',
 }: ScatterPlotProps<string | number>): JSX.Element {
   const [tooltip, setTooltip] = useState<false | any>(false);
   const chart = 'ScatterPlot';
@@ -99,7 +101,7 @@ export default function ScatterPlot({
     let groups: d3.InternMap<any, any[]>;
     const groupAccessor = (d: Data) => d[groupBy ?? ''];
     groups = d3.group(data, groupAccessor);
-    return groupBy ? Array.from(groups).map((group) => group[0]) : [yKey]
+    return groupBy ? Array.from(groups).map((group) => group[0]) : [yKey];
   }, [groupBy, yKey]);
 
   const xAccessor: xAccessorFunc = useMemo(() => {
@@ -130,7 +132,11 @@ export default function ScatterPlot({
     );
   }, [data, xScale, yScale, xAccessor, yAccessor, cHeight, cWidth, margin]);
 
-  const colorScale: ColorScale = d3.scaleOrdinal(colorScheme);
+  // discreteColors must be between 3 and 9, so here we create a range.
+  const discreteColors =
+    Array.from(keys).length < 4 ? 3 : Math.min(Array.from(keys).length, 9);
+  const computedScheme = d3[`${colorScheme}`][discreteColors];
+  const colorScale = d3.scaleOrdinal(Array.from(computedScheme).reverse());
   colorScale.domain(keys);
 
   return (
@@ -149,6 +155,7 @@ export default function ScatterPlot({
         <g className="spbody" transform={translate}>
           {yAxis && (
             <Axis
+              chartType="scatter-plot"
               x={yAxisX}
               y={yAxisY}
               yGrid={yGrid}
@@ -202,7 +209,7 @@ export default function ScatterPlot({
                 cx={xScale(xAccessor(element))}
                 cy={yScale(yAccessor(element))}
                 r='5'
-                color="steelblue"
+                color={colorScale(keys[1])}
               />
             ) : (
               <Circle

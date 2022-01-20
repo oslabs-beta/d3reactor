@@ -10,23 +10,23 @@ export function yScaleDef(
 ) {
   let yMin: number;
   let yMax: number;
-  
+
   if (groupBy) {
-    yMax = // scan each layer's data points for the highest value 
-      d3.max(data, (layer: any) => {
-        return d3.max(layer, (sequence: [number, number, any]) => sequence[1]);
-      }) as number;
-    yMin = // scan each layer's data points for the lowest value 
-      d3.min(data, (layer: any) => {
-        return d3.min(layer, (sequence: [number, number, any]) => sequence[0]);
-      }) as number;
-  } else  {
+    yMax = d3.max(data, (layer: any) => {
+      // scan each layer's data points for the highest value
+      return d3.max(layer, (sequence: [number, number, any]) => sequence[1]);
+    }) as number;
+    yMin = d3.min(data, (layer: any) => {
+      // scan each layer's data points for the lowest value
+      return d3.min(layer, (sequence: [number, number, any]) => sequence[0]);
+    }) as number;
+  } else {
     yMax = d3.max(data, yAccessor) as number;
     yMin = d3.min(data, yAccessor) as number;
   }
 
-  console.log('yMin', yMin)
-  console.log('yMax', yMax)
+  console.log('yMin', yMin);
+  console.log('yMax', yMax);
 
   const rangeMax = height - margin.top - margin.bottom;
   const yScale = d3
