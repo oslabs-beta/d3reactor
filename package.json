@@ -7,14 +7,16 @@
   "files": [
     "dist/**/*"
   ],
-  "sideEffects": false,
+  "sideEffects": [
+    "*.css"
+  ],
   "scripts": {
     "build": "webpack --config webpack.prod.ts",
     "dev": "webpack-dev-server --config webpack.dev.ts --open",
     "format": "prettier --write \"src/**/*.{ts,tsx}\"",
     "lint": "eslint \"src/**/*.{js,jsx,ts,tsx}\" --quiet",
     "release": "npm run build && npm pack",
-    "test": "jest",
+    "test": "jest --config jest.config.ts",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run"
   },
@@ -37,7 +39,7 @@
     "@testing-library/react": "^12.1.2",
     "@types/html-webpack-plugin": "^3.2.6",
     "@types/jest": "^27.4.0",
-    "@types/node": "^16.11.8",
+    "@types/node": "^16.11.21",
     "@types/react": "^17.0.34",
     "@types/react-dom": "^17.0.11",
     "@types/webpack": "^5.28.0",

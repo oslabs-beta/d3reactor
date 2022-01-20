@@ -196,7 +196,6 @@ export default function BarChart({
               scale={yScale}
               type={yAxis}
               yGrid={yGrid}
-              label={yAxisLabel}
             />
           )}
           {xAxisLabel && (

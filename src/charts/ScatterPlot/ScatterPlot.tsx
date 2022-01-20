@@ -164,7 +164,6 @@ export default function ScatterPlot({
               margin={margin}
               scale={yScale}
               type={yAxis}
-              label={yAxisLabel}
             />
           )}
           {yAxisLabel && (
@@ -189,7 +188,6 @@ export default function ScatterPlot({
               margin={margin}
               scale={xScale}
               type={xAxis}
-              label={xAxisLabel}
             />
           )}
           {xAxisLabel && (
@@ -210,7 +208,7 @@ export default function ScatterPlot({
                 key={i}
                 cx={xScale(xAccessor(element))}
                 cy={yScale(yAccessor(element))}
-                r={5}
+                r='5'
                 color={colorScale(keys[1])}
               />
             ) : (
@@ -218,7 +216,7 @@ export default function ScatterPlot({
                 key={i}
                 cx={xScale(xAccessor(element))}
                 cy={yScale(yAccessor(element))}
-                r={5}
+                r='5'
                 color={colorScale(element[groupBy])}
               />
             )

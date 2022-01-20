@@ -187,7 +187,6 @@ export default function AreaChart({
               scale={yScale}
               type={yAxis}
               yGrid={yGrid}
-              label={yAxisLabel}
             />
           )}
           {yAxisLabel && (
@@ -212,7 +211,6 @@ export default function AreaChart({
               scale={xScale}
               xGrid={xGrid}
               type={xAxis}
-              label={xAxisLabel}
               xTicksValue={xTicksValue}
             />
           )}

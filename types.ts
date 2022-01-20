@@ -193,7 +193,6 @@ export interface ContinuousAxisProps {
     | d3.ScaleLinear<number, number, never>
     | d3.ScaleTime<number, number, never>;
   type: 'top' | 'right' | 'bottom' | 'left';
-  label: string | undefined;
   height: number;
   width: number;
   margin: Margin;
@@ -246,10 +245,10 @@ export interface TooltipProps {
 }
 
 export interface CircleProps {
-  cx: number;
-  cy: number;
-  r?: number;
-  color: string;
+  cx: number
+  cy: number
+  r?: string
+  color: string
 }
 
 export interface RectangleProps {

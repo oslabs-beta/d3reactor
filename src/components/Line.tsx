@@ -6,7 +6,7 @@ export const Line = React.memo(
     return (
       <path
         className="line"
-        data-test-id="line"
+        data-testid="d3reactor-line"
         fill={fill}
         stroke={stroke}
         d={d}
