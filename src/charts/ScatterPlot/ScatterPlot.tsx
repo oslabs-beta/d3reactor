@@ -16,7 +16,7 @@ import {
   xAccessorFunc,
   yAccessorFunc,
   ColorScale,
-  Data
+  Data,
 } from '../../../types';
 import {
   getXAxisCoordinates,
@@ -42,8 +42,8 @@ export default function ScatterPlot({
   xAxisLabel,
   yAxisLabel,
   legend,
-  legendLabel = "",
-  colorScheme = d3.quantize(d3.interpolateHcl("#9dc8e2", "#07316b"), 8),
+  legendLabel = '',
+  colorScheme = d3.quantize(d3.interpolateHcl('#9dc8e2', '#07316b'), 8),
 }: ScatterPlotProps<string | number>): JSX.Element {
   const [tooltip, setTooltip] = useState<false | any>(false);
   const chart = 'ScatterPlot';
@@ -99,7 +99,7 @@ export default function ScatterPlot({
     let groups: d3.InternMap<any, any[]>;
     const groupAccessor = (d: Data) => d[groupBy ?? ''];
     groups = d3.group(data, groupAccessor);
-    return groupBy ? Array.from(groups).map((group) => group[0]) : [yKey]
+    return groupBy ? Array.from(groups).map((group) => group[0]) : [yKey];
   }, [groupBy, yKey]);
 
   const xAccessor: xAccessorFunc = useMemo(() => {

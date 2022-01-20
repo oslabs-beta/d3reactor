@@ -57,12 +57,12 @@ export default function PieChart({
   }
 
   outerRadius = useMemo(() => {
-    const tempRad = outerRadius ? 
-      checkRadiusDimension(cHeight, cWidth, outerRadius, margin, legend)
+    const tempRad = outerRadius
+      ? checkRadiusDimension(cHeight, cWidth, outerRadius, margin, legend)
       : calculateOuterRadius(cHeight, cWidth, margin);
-      return tempRad > 20 ? tempRad : 20;
-    }, [cHeight, cWidth, outerRadius, margin, legend])
-    
+    return tempRad > 20 ? tempRad : 20;
+  }, [cHeight, cWidth, outerRadius, margin, legend]);
+
   if (ratio) {
     innerRadius = ratio * outerRadius;
   } else if (innerRadius) {
@@ -82,7 +82,7 @@ export default function PieChart({
     let groups: d3.InternMap<any, any[]>;
     const groupAccessor = (d: Data) => d[label ?? ''];
     groups = d3.group(data, groupAccessor);
-    return Array.from(groups).map((group) => group[0])
+    return Array.from(groups).map((group) => group[0]);
   }, [label]);
 
   const colorScale: ColorScale = d3.scaleOrdinal(colorScheme);

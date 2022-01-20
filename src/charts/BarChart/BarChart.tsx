@@ -88,17 +88,19 @@ export default function BarChart({
     let groups: d3.InternMap<any, any[]>;
     const groupAccessor = (d: Data) => d[groupBy ?? ''];
     groups = d3.group(data, groupAccessor);
-    return groupBy ? Array.from(groups).map((group) => group[0]) : [yKey]
+    return groupBy ? Array.from(groups).map((group) => group[0]) : [yKey];
   }, [groupBy, yKey]);
 
   const transData = useMemo(() => {
-    return groupBy ? transformSkinnyToWide(data, keys, groupBy, xKey, yKey) : data
-  }, [data, keys, groupBy, xKey, yKey])
+    return groupBy
+      ? transformSkinnyToWide(data, keys, groupBy, xKey, yKey)
+      : data;
+  }, [data, keys, groupBy, xKey, yKey]);
 
   const stack = d3.stack().keys(keys).order(d3.stackOrderAscending);
   const layers = useMemo(() => {
     return stack(transData as Iterable<{ [key: string]: number }>);
-  }, [transData])
+  }, [transData]);
 
   const xAccessor: (d: Data) => string = useMemo(() => {
     return (d) => d[xKey];

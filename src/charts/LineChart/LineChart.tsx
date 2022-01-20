@@ -41,8 +41,8 @@ export default function LineChart({
   xAxisLabel,
   yAxisLabel,
   legend,
-  legendLabel = "",
-  colorScheme = d3.quantize(d3.interpolateHcl("#9dc8e2", "#07316b"), 8),
+  legendLabel = '',
+  colorScheme = d3.quantize(d3.interpolateHcl('#9dc8e2', '#07316b'), 8),
 }: LineChartProps<string | number>): JSX.Element {
   const [tooltip, setTooltip] = useState<false | any>(false);
   const chart = 'LineChart';
@@ -119,7 +119,7 @@ export default function LineChart({
       if (el[yKey] !== null) return el;
     });
   }, [data]);
-  
+
   // generate unique keys to group by
   let keys: Iterable<string> = [];
   const groupAccessor: GroupAccessorFunc = (d) => {
