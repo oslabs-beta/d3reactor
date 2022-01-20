@@ -16,6 +16,7 @@ function Axi({
   xGrid,
   yGrid,
   xTicksValue,
+  chartType,
 }: ContinuousAxisProps): JSX.Element {
   let axis: d3.Axis<d3.NumberValue>;
 
@@ -132,17 +133,15 @@ function Axi({
   return (
     <g>
       <g transform={`translate(${x}, ${y})`}>{grid}</g>
-      <line
-        stroke="#77848d"
-        strokeWidth={1.9}
-        x1={x1}
-        y1={y1}
-        x2={x2}
-        y2={y2}
-      />
+      {(type === 'top' ||
+        type === 'bottom' ||
+        chartType === 'scatter-plot') && (
+        <line className="axis-baseline" x1={x1} y1={y1} x2={x2} y2={y2} />
+      )}
       {(type === 'top' || type === 'bottom') &&
         horizontalTicks.map((tick, i) => (
           <text
+            className="tick-text"
             key={i}
             style={getTickStyle(type, tick)}
             transform={getTickTranslation(type, tick)}
@@ -153,6 +152,7 @@ function Axi({
       {(type === 'right' || type === 'left') &&
         verticalTicks.map((tick, i) => (
           <text
+            className="tick-text"
             key={i}
             style={getTickStyle(type, tick)}
             transform={getTickTranslation(type, tick)}

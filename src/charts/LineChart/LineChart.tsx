@@ -1,13 +1,13 @@
 /** App.js */
 import React, { useState, useMemo } from 'react';
 import { useResponsive } from '../../hooks/useResponsive';
+/*eslint import/namespace: ['error', { allowComputed: true }]*/
 import * as d3 from 'd3';
 import { Axis } from '../../components/ContinuousAxis';
 import { Line } from '../../components/Line';
 import { VoronoiWrapper } from '../../components/VoronoiWrapper';
 import {
   LineChartProps,
-  ColorScale,
   xAccessorFunc,
   yAccessorFunc,
   GroupAccessorFunc,
@@ -41,8 +41,8 @@ export default function LineChart({
   xAxisLabel,
   yAxisLabel,
   legend,
-  legendLabel = "",
-  colorScheme = d3.quantize(d3.interpolateHcl("#9dc8e2", "#07316b"), 8),
+  legendLabel = '',
+  colorScheme = 'schemePurples',
 }: LineChartProps<string | number>): JSX.Element {
   const [tooltip, setTooltip] = useState<false | any>(false);
   const chart = 'LineChart';
@@ -119,9 +119,9 @@ export default function LineChart({
       if (el[yKey] !== null) return el;
     });
   }, [data]);
-  
+
   // generate unique keys to group by
-  let keys: Iterable<string> = [];
+  let keys: string[] = [];
   const groupAccessor: GroupAccessorFunc = (d) => {
     return d[groupBy ?? ''];
   };
@@ -150,9 +150,15 @@ export default function LineChart({
     );
   }, [data, xScale, yScale, xAccessor, yAccessor, cHeight, cWidth, margin]);
 
-  // console.log("TOOLTIP ", tooltip)
-  const colorScale: ColorScale = d3.scaleOrdinal(colorScheme);
-  colorScale.domain(keys);
+  const discreteColors =
+    Array.from(keys).length < 4 ? 3 : Math.min(Array.from(keys).length, 9);
+  const computedScheme = d3[`${colorScheme}`][discreteColors];
+  const colorScale = d3.scaleOrdinal(Array.from(computedScheme).reverse());
+  colorScale.domain(computedScheme);
+
+  console.log('Keys ', keys);
+  console.log('Computed schema ', computedScheme);
+  console.log('COLOR SCALE ', colorScale(keys[0]));
   return (
     <div ref={anchor} style={{ width: width, height: height }}>
       {tooltip && (
@@ -225,7 +231,6 @@ export default function LineChart({
                   key={i}
                   fill="none"
                   stroke={colorScale(lineGroup[0])}
-                  strokeWidth="1px"
                   d={line(lineGroup[1])}
                 />
               );
@@ -283,7 +288,6 @@ export default function LineChart({
                   key={i}
                   fill="none"
                   stroke={colorScale(lineGroup[0])}
-                  strokeWidth="1px"
                   d={line(lineGroup[1])}
                 />
               );
@@ -291,7 +295,7 @@ export default function LineChart({
           ) : (
             <Line
               fill="none"
-              stroke={colorScale(yKey)}
+              stroke={colorScale(keys[0])}
               strokeWidth="1px"
               d={line(cleanData)}
             />
