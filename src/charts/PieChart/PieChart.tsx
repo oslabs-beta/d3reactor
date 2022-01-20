@@ -57,12 +57,11 @@ export default function PieChart({
     ratio = innerRadius / outerRadius;
   }
 
-  outerRadius = useMemo(() => {
-    const tempRad = outerRadius
-      ? checkRadiusDimension(cHeight, cWidth, outerRadius, margin, legend)
-      : calculateOuterRadius(cHeight, cWidth, margin);
-    return tempRad > 20 ? tempRad : 20;
-  }, [cHeight, cWidth, outerRadius, margin, legend]);
+  outerRadius = outerRadius
+  ? checkRadiusDimension(cHeight, cWidth, outerRadius, margin, legend)
+  : calculateOuterRadius(cHeight, cWidth, margin);
+
+  if (outerRadius < 20) outerRadius = 20;
 
   if (ratio) {
     innerRadius = ratio * outerRadius;
