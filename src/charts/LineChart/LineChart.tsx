@@ -1,13 +1,13 @@
 /** App.js */
 import React, { useState, useMemo } from 'react';
 import { useResponsive } from '../../hooks/useResponsive';
+/*eslint import/namespace: ['error', { allowComputed: true }]*/
 import * as d3 from 'd3';
 import { Axis } from '../../components/ContinuousAxis';
 import { Line } from '../../components/Line';
 import { VoronoiWrapper } from '../../components/VoronoiWrapper';
 import {
   LineChartProps,
-  ColorScale,
   xAccessorFunc,
   yAccessorFunc,
   GroupAccessorFunc,
@@ -42,7 +42,7 @@ export default function LineChart({
   yAxisLabel,
   legend,
   legendLabel = '',
-  colorScheme = d3.quantize(d3.interpolateHcl('#003f5c', '#ffa600'), 10),
+  colorScheme = 'schemePurples',
 }: LineChartProps<string | number>): JSX.Element {
   const [tooltip, setTooltip] = useState<false | any>(false);
   const chart = 'LineChart';
@@ -147,7 +147,10 @@ export default function LineChart({
     );
   }, [data, xScale, yScale, xAccessor, yAccessor, cHeight, cWidth, margin]);
 
-  const colorScale: ColorScale = d3.scaleOrdinal(colorScheme);
+  const discreteColors =
+    Array.from(keys).length < 4 ? 3 : Math.min(Array.from(keys).length, 9);
+  const computedScheme = d3[`${colorScheme}`][discreteColors];
+  const colorScale = d3.scaleOrdinal(computedScheme);
   colorScale.domain(keys);
 
   console.log('COLOR SCALE ', colorScale(keys[0]));
