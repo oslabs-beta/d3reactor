@@ -16,7 +16,7 @@ import sales from '../data/sales.json';
 const Test = React.memo((): JSX.Element => {
   return (
     <div style={{ width: '100%', height: '100%' }}>
-      <BarChart
+      {/* <BarChart
         height="100%"
         width="100%"
         data={portfolio.slice(5, 10)}
@@ -71,11 +71,11 @@ const Test = React.memo((): JSX.Element => {
         xAxisLabel="Date"
         yAxisLabel="Value"
         legend="bottom"
-      />
+      /> */}
 
       <LineChart
-        height="500px"
-        width="600px"
+        height="100%"
+        width="100%"
         data={unemployment}
         xKey="date"
         xDataType="date"

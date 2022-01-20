@@ -9,7 +9,6 @@ function Axi({
   y,
   scale,
   type,
-  label,
   width,
   height,
   margin,
@@ -17,6 +16,10 @@ function Axi({
   yGrid,
   xTicksValue,
 }: ContinuousAxisProps): JSX.Element {
+  console.log(
+    scale.toString()
+  )
+  
   let axis: d3.Axis<d3.NumberValue>;
 
   let x1 = 0,
@@ -133,6 +136,7 @@ function Axi({
     <g>
       <g transform={`translate(${x}, ${y})`}>{grid}</g>
       <line
+        data-testid='d3reactor-continuous'
         stroke="#77848d"
         strokeWidth={1.9}
         x1={x1}

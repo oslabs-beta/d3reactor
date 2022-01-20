@@ -11,11 +11,11 @@ const webpackprodconfiguration: webpack.Configuration =  {
     filename: 'index.js',
     clean: true,
     library: {
-      name: 'd3reacts',
+      name: 'd3reactor',
       type: 'umd',
     },
     globalObject: 'this'
-  }, 
+  },
   mode: 'production',
   externals: [
     {
