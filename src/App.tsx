@@ -45,7 +45,7 @@ function App() {
         yGrid={true}
         xAxisLabel="Date"
         yAxisLabel="Value"
-      /> */}
+      />
       <LineChart
         height="100%"
         width="100%"
@@ -58,8 +58,8 @@ function App() {
         yGrid={true}
         xAxisLabel="Date"
         yAxisLabel="Value"
-      />
-      {/* <ScatterPlot
+      /> */}
+      <ScatterPlot
         height="100%"
         width="100%"
         data={penguins}
@@ -72,7 +72,7 @@ function App() {
         yGrid={true}
         yAxis="right"
         yAxisLabel="Body Mass"
-      /> */}
+      />
     </div>
   );
 }

@@ -1,5 +1,7 @@
 /** App.js */
 import React, { useState, useMemo } from 'react';
+
+/*eslint import/namespace: ['error', { allowComputed: true }]*/
 import * as d3 from 'd3';
 import { useResponsive } from '../../hooks/useResponsive';
 import { Axis } from '../../components/ContinuousAxis';
@@ -42,7 +44,7 @@ export default function ScatterPlot({
   yAxisLabel,
   legend,
   legendLabel = '',
-  colorScheme = d3.quantize(d3.interpolateHcl('#003f5c', '#ffa600'), 10),
+  colorScheme = 'schemePurples',
 }: ScatterPlotProps<string | number>): JSX.Element {
   const [tooltip, setTooltip] = useState<false | any>(false);
   const chart = 'ScatterPlot';
@@ -128,9 +130,11 @@ export default function ScatterPlot({
     );
   }, [data, xScale, yScale, xAccessor, yAccessor, cHeight, cWidth, margin]);
 
-  const colorScale: ColorScale = d3.scaleOrdinal(colorScheme);
+  const discreteColors =
+    Array.from(keys).length < 4 ? 3 : Math.min(Array.from(keys).length, 9);
+  const computedScheme = d3[`${colorScheme}`][discreteColors];
+  const colorScale = d3.scaleOrdinal(computedScheme);
   colorScale.domain(keys);
-  console.log('KEYS ', keys);
 
   return (
     <div ref={anchor} style={{ width: width, height: height }}>
