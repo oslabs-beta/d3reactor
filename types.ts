@@ -88,9 +88,24 @@ export interface AreaChartProps<T> {
   yGrid?: boolean;
   xAxisLabel?: string;
   yAxisLabel?: string;
-  colorScheme?: string[] | readonly string[];
   legend?: LegendPos;
   legendLabel?: string;
+  colorScheme?:
+    | 'schemeRdYlGn'
+    | 'schemeRdYlBu'
+    | 'schemeRdGy'
+    | 'schemeRdBu'
+    | 'schemePuOr'
+    | 'schemePiYG'
+    | 'schemePRGn'
+    | 'schemeBrBG'
+    | 'schemeReds'
+    | 'schemePurples'
+    | 'schemeOranges'
+    | 'schemeGreys'
+    | 'schemeGreens'
+    | 'schemeBlues'
+    | 'schemeSpectral';
 }
 
 export interface PieChartProps {
