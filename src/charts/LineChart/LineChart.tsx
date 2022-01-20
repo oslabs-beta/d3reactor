@@ -91,9 +91,9 @@ export default function LineChart({
 
   const translate = `translate(${margin.left}, ${margin.top})`;
 
+  // if no xKey datatype is passed in, determine if it's Date
   let xType: 'number' | 'date' = inferXDataType(data[0], xKey);
   if (xDataType !== undefined) xType = xDataType;
-  // if no xKey datatype is passed in, determine if it's Date
 
   const xAccessor: xAccessorFunc = useMemo(() => {
     return xType === 'number' ? (d) => d[xKey] : (d) => new Date(d[xKey]);
@@ -114,9 +114,12 @@ export default function LineChart({
   const xTicksValue = [xMin, ...xScale.ticks(), xMax];
 
   // remove data entries with null values (which breaks line generator)
-  data = data.filter((el) => {
-    if (el[yKey] !== null) return el;
-  });
+  const cleanData = useMemo(() => {
+    return data.filter((el) => {
+      if (el[yKey] !== null) return el;
+    });
+  }, [data]);
+
   // generate unique keys to group by
   let keys: string[] = [];
   const groupAccessor: GroupAccessorFunc = (d) => {
@@ -233,11 +236,16 @@ export default function LineChart({
               );
             })
           ) : (
-            <Line stroke={colorScale(keys[3])} d={line(data)} />
+            <Line
+              fill="none"
+              stroke={colorScale(yKey)}
+              strokeWidth="1px"
+              d={line(cleanData)}
+            />
           )}
           {voronoi && (
             <VoronoiWrapper
-              data={data}
+              data={cleanData}
               voronoi={voronoi}
               xScale={xScale}
               yScale={yScale}
@@ -289,12 +297,12 @@ export default function LineChart({
               fill="none"
               stroke={colorScale(keys[0])}
               strokeWidth="1px"
-              d={line(data)}
+              d={line(cleanData)}
             />
           )}
           {voronoi && (
             <VoronoiWrapper
-              data={data}
+              data={cleanData}
               voronoi={voronoi}
               xScale={xScale}
               yScale={yScale}

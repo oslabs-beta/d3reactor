@@ -18,6 +18,7 @@ import {
   xAccessorFunc,
   yAccessorFunc,
   ColorScale,
+  Data,
 } from '../../../types';
 import {
   getXAxisCoordinates,
@@ -96,11 +97,12 @@ export default function ScatterPlot({
   let xType: 'number' | 'date' = inferXDataType(data[0], xKey);
   if (xDataType !== undefined) xType = xDataType;
 
-  let keys: string[] = [],
-    groups: d3.InternMap<any, any[]>;
-  const groupAccessor = (d: any) => d[groupBy ?? ''];
-  groups = d3.group(data, groupAccessor);
-  keys = groupBy ? Array.from(groups).map((group) => group[0]) : [yKey];
+  const keys = useMemo(() => {
+    let groups: d3.InternMap<any, any[]>;
+    const groupAccessor = (d: Data) => d[groupBy ?? ''];
+    groups = d3.group(data, groupAccessor);
+    return groupBy ? Array.from(groups).map((group) => group[0]) : [yKey];
+  }, [groupBy, yKey]);
 
   const xAccessor: xAccessorFunc = useMemo(() => {
     return xType === 'number' ? (d) => d[xKey] : (d) => new Date(d[xKey]);

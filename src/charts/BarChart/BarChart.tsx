@@ -37,8 +37,6 @@ export default function BarChart({
 }: BarChartProps<string | number>): JSX.Element {
   const [tooltip, setTooltip] = useState<false | any>(false);
 
-  const chart = 'BarChart';
-
   const { anchor, cHeight, cWidth } = useResponsive();
 
   // width & height of legend, so we know how much to squeeze chart by
@@ -87,17 +85,24 @@ export default function BarChart({
   const translate = `translate(${margin.left}, ${margin.top})`;
 
   // When the yKey key has been assigned to the groupBy variable we know the user didn't specify grouping
-  let keys: string[] = [];
-  const groupAccessor = (d: Data) => d[groupBy ?? ''];
-  const groups: d3.InternMap<any, any[]> = d3.group(data, groupAccessor);
-  console.log('GROUPS ', groups);
-  keys = groupBy ? Array.from(groups).map((group) => group[0]) : [yKey];
-  console.log('KEYS ', keys);
-  if (groupBy) {
-    data = transformSkinnyToWide(data, keys, groupBy, xKey, yKey);
-  }
+  const keys: string[] = useMemo(() => {
+    let groups: d3.InternMap<any, any[]>;
+    const groupAccessor = (d: Data) => d[groupBy ?? ''];
+    // eslint-disable-next-line prefer-const
+    groups = d3.group(data, groupAccessor);
+    return groupBy ? Array.from(groups).map((group) => group[0]) : [yKey];
+  }, [groupBy, yKey]);
+
+  const transData = useMemo(() => {
+    return groupBy
+      ? transformSkinnyToWide(data, keys, groupBy, xKey, yKey)
+      : data;
+  }, [data, keys, groupBy, xKey, yKey]);
+
   const stack = d3.stack().keys(keys).order(d3.stackOrderAscending);
-  const layers = stack(data as Iterable<{ [key: string]: number }>);
+  const layers = useMemo(() => {
+    return stack(transData as Iterable<{ [key: string]: number }>);
+  }, [transData]);
 
   const xAccessor: (d: Data) => string = useMemo(() => {
     return (d) => d[xKey];
@@ -115,18 +120,17 @@ export default function BarChart({
       .paddingOuter(0.1)
       .domain(data.map(xAccessor))
       .range([0, rangeMax > 40 ? rangeMax : 40]);
-  }, [data, xAccessor, cWidth, margin]);
+  }, [transData, xAccessor, cWidth, margin]);
 
   const yScale = useMemo(() => {
     return yScaleDef(
-      groupBy ? layers : data,
+      groupBy ? layers : transData,
       yAccessor,
       margin,
       cHeight,
-      chart,
       groupBy
     );
-  }, [data, yAccessor, margin, cHeight, chart, groupBy]);
+  }, [transData, yAccessor, margin, cHeight, groupBy]);
 
   const discreteColors =
     Array.from(keys).length < 4 ? 3 : Math.min(Array.from(keys).length, 9);
@@ -164,7 +168,7 @@ export default function BarChart({
               scale={xScale}
               type={xAxis}
               label={xAxisLabel}
-              data={data}
+              data={transData}
               layers={layers}
               xAccessor={xAccessor}
               setTickMargin={setTickMargin}

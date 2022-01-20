@@ -6,26 +6,30 @@ export function yScaleDef(
   yAccessor: yAccessorFunc,
   margin: Margin,
   height: number,
-  chart?: string,
   groupBy?: string
 ) {
-  let yMin = 0;
+  let yMin: number;
   let yMax: number;
-  if (chart === 'AreaChart' || (chart === 'BarChart' && groupBy)) {
-    yMax =
-      d3.max(data, (layer: any) => {
-        return d3.max(layer, (sequence: [number, number, any]) => sequence[1]);
-      }) ?? 0;
-  } else if (chart === 'BarChart' && !groupBy) {
-    yMax = d3.max(data, yAccessor) ?? 0;
+
+  if (groupBy) {
+    yMax = d3.max(data, (layer: any) => { // scan each layer's data points for the highest value
+      return d3.max(layer, (sequence: [number, number, any]) => sequence[1]);
+    }) as number;
+    yMin = d3.min(data, (layer: any) => { // scan each layer's data points for the lowest value
+      return d3.min(layer, (sequence: [number, number, any]) => sequence[0]);
+    }) as number;
   } else {
-    yMax = d3.max(data, yAccessor) ?? 0;
-    yMin = d3.min(data, yAccessor) ?? 0;
+    yMax = d3.max(data, yAccessor) as number;
+    yMin = d3.min(data, yAccessor) as number;
   }
+
+  console.log('yMin', yMin);
+  console.log('yMax', yMax);
+
   const rangeMax = height - margin.top - margin.bottom;
   const yScale = d3
     .scaleLinear()
-    .domain([yMin ?? 0, yMax ?? 0])
+    .domain([yMin, yMax])
     .range([rangeMax > 40 ? rangeMax : 40, 0])
     .nice();
   return yScale;
