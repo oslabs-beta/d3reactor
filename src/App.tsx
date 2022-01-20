@@ -14,13 +14,7 @@ import fruit from './data/fruit.json';
 function App() {
   return (
     <div className="app">
-      {/* <PieChart
-        data={fruit}
-        label="label"
-        value="value"
-        outerRadius={240}
-        colorScheme="schemePurples"
-      />
+      <PieChart data={fruit} label="label" value="value" outerRadius={240} />
       <BarChart
         height="100%"
         width="100%"
@@ -32,7 +26,6 @@ function App() {
         yGrid={true}
         xAxisLabel="Date"
         yAxisLabel="Value"
-        colorScheme="schemeBlues"
       />
       <AreaChart
         height="100%"
@@ -58,7 +51,7 @@ function App() {
         yGrid={true}
         xAxisLabel="Date"
         yAxisLabel="Value"
-      /> */}
+      />
       <ScatterPlot
         height="100%"
         width="100%"

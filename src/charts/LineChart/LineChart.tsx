@@ -150,9 +150,11 @@ export default function LineChart({
   const discreteColors =
     Array.from(keys).length < 4 ? 3 : Math.min(Array.from(keys).length, 9);
   const computedScheme = d3[`${colorScheme}`][discreteColors];
-  const colorScale = d3.scaleOrdinal(computedScheme);
-  colorScale.domain(keys);
+  const colorScale = d3.scaleOrdinal(Array.from(computedScheme).reverse());
+  colorScale.domain(computedScheme);
 
+  console.log('Keys ', keys);
+  console.log('Computed schema ', computedScheme);
   console.log('COLOR SCALE ', colorScale(keys[0]));
   return (
     <div ref={anchor} style={{ width: width, height: height }}>
@@ -226,13 +228,12 @@ export default function LineChart({
                   key={i}
                   fill="none"
                   stroke={colorScale(lineGroup[0])}
-                  strokeWidth="1px"
                   d={line(lineGroup[1])}
                 />
               );
             })
           ) : (
-            <Line stroke={colorScale(keys[0])} d={line(data)} />
+            <Line stroke={colorScale(keys[3])} d={line(data)} />
           )}
           {voronoi && (
             <VoronoiWrapper
@@ -279,7 +280,6 @@ export default function LineChart({
                   key={i}
                   fill="none"
                   stroke={colorScale(lineGroup[0])}
-                  strokeWidth="1px"
                   d={line(lineGroup[1])}
                 />
               );

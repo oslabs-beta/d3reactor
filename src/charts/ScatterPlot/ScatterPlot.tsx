@@ -130,10 +130,11 @@ export default function ScatterPlot({
     );
   }, [data, xScale, yScale, xAccessor, yAccessor, cHeight, cWidth, margin]);
 
+  // discreteColors must be between 3 and 9, so here we create a range.
   const discreteColors =
     Array.from(keys).length < 4 ? 3 : Math.min(Array.from(keys).length, 9);
   const computedScheme = d3[`${colorScheme}`][discreteColors];
-  const colorScale = d3.scaleOrdinal(computedScheme);
+  const colorScale = d3.scaleOrdinal(Array.from(computedScheme).reverse());
   colorScale.domain(keys);
 
   return (
@@ -208,7 +209,7 @@ export default function ScatterPlot({
                 cx={xScale(xAccessor(element))}
                 cy={yScale(yAccessor(element))}
                 r={5}
-                color={colorScale(keys[0])}
+                color={colorScale(keys[1])}
               />
             ) : (
               <Circle

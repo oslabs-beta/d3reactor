@@ -113,12 +113,12 @@ export function getMarginsWithLegend(
 
   function addVerticalMargin1() {
     switch (xAxis) {
-      case "top":
-        top += 20
-        break
-      case "bottom":
-        bottom += 20
-        break
+      case 'top':
+        top += 20;
+        break;
+      case 'bottom':
+        bottom += 20;
+        break;
       case undefined:
         bottom += 20;
         break;
@@ -367,7 +367,7 @@ export function transformSkinnyToWide(
         } else {
           return val;
         }
-      }, null)
+      }, null);
     }
     outputArr.push(rowObj);
   }

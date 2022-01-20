@@ -14,8 +14,7 @@ circle {
 }
 
 .bar,
-.area,
-.line {
+.area {
   fill-opacity: 0.7;
 }
 
