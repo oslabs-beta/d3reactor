@@ -1,5 +1,5 @@
 describe('Line Chart', () => {
-  it('should show line chart', () => {
+  it('should display line chart', () => {
     const width = 600;
     const height = 500;
     cy.visit('localhost:8080');

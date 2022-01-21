@@ -1,5 +1,5 @@
 describe('Bar Chart', () => {
-  it('should show bar chart', () => {
+  it('should display bar chart', () => {
     const width = 1000;
     const height = 900;
     cy.visit('localhost:8080');

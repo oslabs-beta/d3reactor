@@ -1,5 +1,5 @@
 describe('Pie Chart', () => {
-  it('should show pie chart', () => {
+  it('should display pie chart', () => {
     cy.visit('localhost:8080');
     cy.get('[data-testid = pie-chart]')
       .should('be.visible')
