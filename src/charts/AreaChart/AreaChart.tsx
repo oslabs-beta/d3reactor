@@ -138,7 +138,7 @@ export default function AreaChart({
   const yAccessor: yAccessorFunc = useMemo(() => {
     return (d) => d[yKey];
   }, [yKey]);
-
+ 
   const yScale = useMemo(() => {
     return yScaleDef(
       groupBy ? layers : transData,
