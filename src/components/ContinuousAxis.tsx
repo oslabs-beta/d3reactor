@@ -137,11 +137,7 @@ function Axi({
         chartType === 'scatter-plot') && (
         <line
           className="axis-baseline"
-<<<<<<< HEAD
-          data-testid="d3reactor-continuous"
-=======
           data-testid={dataTestId}
->>>>>>> dev
           x1={x1}
           y1={y1}
           x2={x2}
