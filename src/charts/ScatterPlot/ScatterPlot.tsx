@@ -114,7 +114,7 @@ export default function ScatterPlot({
     return xScaleDef(data, xType, xAccessor, margin, cWidth, chart);
   }, [data, cWidth, margin]);
 
-  const { yScale } = useMemo(() => {
+  const yScale = useMemo(() => {
     return yScaleDef(data, yAccessor, margin, cHeight);
   }, [data, yAccessor, margin, cHeight]);
 

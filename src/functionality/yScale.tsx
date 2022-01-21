@@ -34,5 +34,5 @@ export function yScaleDef(
     .domain([yMin, yMax])
     .range([rangeMax > 40 ? rangeMax : 40, 0])
     .nice();
-  return { yScale, yMin };
+  return yScale;
 }

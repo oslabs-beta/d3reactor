@@ -17,7 +17,6 @@ function Axi({
   xTicksValue,
   chartType,
 }: ContinuousAxisProps): JSX.Element {
-  console.log(scale.toString());
 
   let axis: d3.Axis<d3.NumberValue>;
 
