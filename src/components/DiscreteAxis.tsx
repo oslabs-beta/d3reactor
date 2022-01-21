@@ -3,6 +3,7 @@ import * as d3 from 'd3';
 import { DiscreteAxisProps, Data } from '../../types';
 export const DiscreteAxis = React.memo(
   ({
+    dataTestId = 'discrete-axis',
     x,
     y,
     scale,
@@ -101,7 +102,14 @@ export const DiscreteAxis = React.memo(
     // const verticalTicks = scale.ticks(numberOfVerticalTicks)
     return (
       <g>
-        <line className="axis-baseline" x1={x1} y1={y1} x2={x2} y2={y2} />
+        <line
+          className="axis-baseline"
+          data-testid={dataTestId}
+          x1={x1}
+          y1={y1}
+          x2={x2}
+          y2={y2}
+        />
         {ticks.map((tick: any, i: number) => (
           <text
             className="tick-text"

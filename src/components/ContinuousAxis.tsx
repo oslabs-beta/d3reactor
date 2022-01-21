@@ -1,10 +1,10 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import * as d3 from 'd3';
 import { ContinuousAxisProps } from '../../types';
-import { getAxisLabelCoordinates } from '../utils';
 import { gridGenerator } from '../functionality/grid';
 
 function Axi({
+  dataTestId = 'd3reactor-continuous',
   x,
   y,
   scale,
@@ -17,10 +17,8 @@ function Axi({
   xTicksValue,
   chartType,
 }: ContinuousAxisProps): JSX.Element {
-  console.log(
-    scale.toString()
-  )
-  
+  console.log(scale.toString());
+
   let axis: d3.Axis<d3.NumberValue>;
 
   let x1 = 0,
@@ -139,7 +137,14 @@ function Axi({
       {(type === 'top' ||
         type === 'bottom' ||
         chartType === 'scatter-plot') && (
-        <line className="axis-baseline" data-testid='d3reactor-continuous' x1={x1} y1={y1} x2={x2} y2={y2} />
+        <line
+          className="axis-baseline"
+          data-testid={dataTestId}
+          x1={x1}
+          y1={y1}
+          x2={x2}
+          y2={y2}
+        />
       )}
       {(type === 'top' || type === 'bottom') &&
         horizontalTicks.map((tick, i) => (

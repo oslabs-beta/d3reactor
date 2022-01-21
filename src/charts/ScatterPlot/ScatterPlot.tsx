@@ -17,7 +17,6 @@ import {
   ScatterPlotProps,
   xAccessorFunc,
   yAccessorFunc,
-  ColorScale,
   Data,
 } from '../../../types';
 import {
@@ -208,7 +207,7 @@ export default function ScatterPlot({
                 key={i}
                 cx={xScale(xAccessor(element))}
                 cy={yScale(yAccessor(element))}
-                r='5'
+                r="5"
                 color={colorScale(keys[1])}
               />
             ) : (
@@ -216,7 +215,7 @@ export default function ScatterPlot({
                 key={i}
                 cx={xScale(xAccessor(element))}
                 cy={yScale(yAccessor(element))}
-                r='5'
+                r="5"
                 color={colorScale(element[groupBy])}
               />
             )

@@ -170,7 +170,7 @@ export default function LineChart({
           yKey={yKey}
         />
       )}
-      <svg width={cWidth} height={cHeight} data-test-id="line-chart">
+      <svg width={cWidth} height={cHeight} data-testid="line-chart">
         <g transform={translate}>
           {yAxis && (
             <Axis

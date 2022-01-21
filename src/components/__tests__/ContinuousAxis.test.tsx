@@ -54,7 +54,7 @@ import unemployment from '../../data/unemployment.json'
 
 describe('Continuous Axis test', () => {
 
-  test('it should render Line', () => {
+  test('it should render axis', () => {
     // setup(initialProps);
     // expect(screen.getByTestId('d3reactor-continuous')).toBeVisible()
   })

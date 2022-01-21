@@ -1,11 +1,10 @@
 /** App.js */
-import React, { useState, useMemo, useCallback } from 'react';
+import React, { useState, useMemo } from 'react';
 /*eslint import/namespace: ['error', { allowComputed: true }]*/
 import * as d3 from 'd3';
 import {
   Data,
   AreaChartProps,
-  ColorScale,
   xAccessorFunc,
   yAccessorFunc,
 } from '../../../types';
