@@ -1,14 +1,7 @@
 import React from 'react';
 import * as d3 from 'd3';
 
-import {
-  ArcProps,
-  Data,
-  Margin,
-  ScaleFunc,
-  xAccessorFunc,
-  yAccessorFunc,
-} from '../../types';
+import { ArcProps } from '../../types';
 
 export const Arc = React.memo(
   ({

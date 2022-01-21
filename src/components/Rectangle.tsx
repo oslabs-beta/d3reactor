@@ -37,6 +37,7 @@ export const Rectangle = React.memo(
 
     return (
       <rect
+        className="bar"
         data-testid={dataTestId}
         x={x}
         y={y}

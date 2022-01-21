@@ -42,6 +42,7 @@ export function Label({
   return (
     <text
       data-testid={dataTestId}
+      className="axis-label"
       transform={`translate(${axisLabelX}, ${axisLabelY}) rotate(${rotate})`}
       textAnchor="middle"
     >

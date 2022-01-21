@@ -1,13 +1,13 @@
 /** App.js */
 import React, { useState, useMemo } from 'react';
 import { useResponsive } from '../../hooks/useResponsive';
+/*eslint import/namespace: ['error', { allowComputed: true }]*/
 import * as d3 from 'd3';
 import { Axis } from '../../components/ContinuousAxis';
 import { Line } from '../../components/Line';
 import { VoronoiWrapper } from '../../components/VoronoiWrapper';
 import {
   LineChartProps,
-  ColorScale,
   xAccessorFunc,
   yAccessorFunc,
   GroupAccessorFunc,
@@ -41,8 +41,8 @@ export default function LineChart({
   xAxisLabel,
   yAxisLabel,
   legend,
-  legendLabel = "",
-  colorScheme = d3.quantize(d3.interpolateHcl("#9dc8e2", "#07316b"), 8),
+  legendLabel = '',
+  colorScheme = 'schemePurples',
 }: LineChartProps<string | number>): JSX.Element {
   const [tooltip, setTooltip] = useState<false | any>(false);
   const chart = 'LineChart';
@@ -91,9 +91,9 @@ export default function LineChart({
 
   const translate = `translate(${margin.left}, ${margin.top})`;
 
+  // if no xKey datatype is passed in, determine if it's Date
   let xType: 'number' | 'date' = inferXDataType(data[0], xKey);
   if (xDataType !== undefined) xType = xDataType;
-  // if no xKey datatype is passed in, determine if it's Date
 
   const xAccessor: xAccessorFunc = useMemo(() => {
     return xType === 'number' ? (d) => d[xKey] : (d) => new Date(d[xKey]);
@@ -114,11 +114,14 @@ export default function LineChart({
   const xTicksValue = [xMin, ...xScale.ticks(), xMax];
 
   // remove data entries with null values (which breaks line generator)
-  data = data.filter((el) => {
-    if (el[yKey] !== null) return el;
-  })
+  const cleanData = useMemo(() => {
+    return data.filter((el) => {
+      if (el[yKey] !== null) return el;
+    });
+  }, [data]);
+
   // generate unique keys to group by
-  let keys: Iterable<string> = [];
+  let keys: string[] = [];
   const groupAccessor: GroupAccessorFunc = (d) => {
     return d[groupBy ?? ''];
   };
@@ -147,9 +150,15 @@ export default function LineChart({
     );
   }, [data, xScale, yScale, xAccessor, yAccessor, cHeight, cWidth, margin]);
 
-  // console.log("TOOLTIP ", tooltip)
-  const colorScale: ColorScale = d3.scaleOrdinal(colorScheme);
-  colorScale.domain(keys);
+  const discreteColors =
+    Array.from(keys).length < 4 ? 3 : Math.min(Array.from(keys).length, 9);
+  const computedScheme = d3[`${colorScheme}`][discreteColors];
+  const colorScale = d3.scaleOrdinal(Array.from(computedScheme).reverse());
+  colorScale.domain(computedScheme);
+
+  console.log('Keys ', keys);
+  console.log('Computed schema ', computedScheme);
+  console.log('COLOR SCALE ', colorScale(keys[0]));
   return (
     <div ref={anchor} style={{ width: width, height: height }}>
       {tooltip && (
@@ -173,7 +182,6 @@ export default function LineChart({
               scale={yScale}
               type={yAxis}
               yGrid={yGrid}
-              label={yAxisLabel}
             />
           )}
           {yAxisLabel && (
@@ -199,7 +207,6 @@ export default function LineChart({
               scale={xScale}
               type={xAxis}
               xGrid={xGrid}
-              label={xAxisLabel}
               xTicksValue={xTicksValue}
             />
           )}
@@ -222,7 +229,6 @@ export default function LineChart({
                   key={i}
                   fill="none"
                   stroke={colorScale(lineGroup[0])}
-                  strokeWidth="1px"
                   d={line(lineGroup[1])}
                 />
               );
@@ -230,14 +236,14 @@ export default function LineChart({
           ) : (
             <Line
               fill="none"
-              stroke={colorScale(yKey)}
+              stroke={colorScale(keys[0])}
               strokeWidth="1px"
-              d={line(data)}
+              d={line(cleanData)}
             />
           )}
           {voronoi && (
             <VoronoiWrapper
-              data={data}
+              data={cleanData}
               voronoi={voronoi}
               xScale={xScale}
               yScale={yScale}
@@ -246,64 +252,7 @@ export default function LineChart({
               setTooltip={setTooltip}
             />
           )}
-
-          {xAxis && (
-            <Axis
-              x={xAxisX}
-              y={xAxisY}
-              height={cHeight}
-              width={cWidth}
-              margin={margin}
-              scale={xScale}
-              type={xAxis}
-              xGrid={xGrid}
-              label={xAxisLabel}
-              xTicksValue={xTicksValue}
-            />
-          )}
-          {xAxisLabel && (
-            <Label
-              x={xAxisX}
-              y={xAxisY}
-              height={cHeight}
-              width={cWidth}
-              margin={margin}
-              type={xAxis ? xAxis : 'bottom'}
-              axis={xAxis ? true : false}
-              label={xAxisLabel}
-            />
-          )}
-          {groupBy ? (
-            d3.map(lineGroups, (lineGroup: [string, []], i) => {
-              return (
-                <Line
-                  key={i}
-                  fill="none"
-                  stroke={colorScale(lineGroup[0])}
-                  strokeWidth="1px"
-                  d={line(lineGroup[1])}
-                />
-              );
-            })
-          ) : (
-            <Line
-              fill="none"
-              stroke={colorScale(yKey)}
-              strokeWidth="1px"
-              d={line(data)}
-            />
-          )}
-          {voronoi && (
-            <VoronoiWrapper
-              data={data}
-              voronoi={voronoi}
-              xScale={xScale}
-              yScale={yScale}
-              xAccessor={xAccessor}
-              yAccessor={yAccessor}
-              setTooltip={setTooltip}
-            />
-          )}
+        
 
           {
             // If legend prop is truthy, render legend component:

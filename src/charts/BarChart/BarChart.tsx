@@ -1,5 +1,6 @@
 /** App.js */
-import React, { useState, useMemo, useCallback } from 'react';
+import React, { useState, useMemo } from 'react';
+/*eslint import/namespace: ['error', { allowComputed: true }]*/
 import * as d3 from 'd3';
 import { useResponsive } from '../../hooks/useResponsive';
 import { Axis } from '../../components/ContinuousAxis';
@@ -8,7 +9,7 @@ import { Rectangle } from '../../components/Rectangle';
 import TooltipDiv from '../../components/TooltipDiv';
 import { ColorLegend } from '../../components/ColorLegend';
 import { transformSkinnyToWide } from '../../utils';
-import { BarChartProps, Data, ColorScale, yAccessorFunc } from '../../../types';
+import { BarChartProps, Data, yAccessorFunc } from '../../../types';
 import {
   getXAxisCoordinates,
   getYAxisCoordinates,
@@ -32,11 +33,9 @@ export default function BarChart({
   yAxisLabel,
   legend,
   legendLabel = '',
-  colorScheme = d3.quantize(d3.interpolateHcl('#9dc8e2', '#07316b'), 8),
+  colorScheme = 'schemePurples',
 }: BarChartProps<string | number>): JSX.Element {
   const [tooltip, setTooltip] = useState<false | any>(false);
-
-  const chart = 'BarChart';
 
   const { anchor, cHeight, cWidth } = useResponsive();
 
@@ -86,16 +85,24 @@ export default function BarChart({
   const translate = `translate(${margin.left}, ${margin.top})`;
 
   // When the yKey key has been assigned to the groupBy variable we know the user didn't specify grouping
-  let keys: string[] = [],
-    groups: d3.InternMap<any, any[]>;
-  const groupAccessor = (d: Data) => d[groupBy ?? ''];
-  groups = d3.group(data, groupAccessor);
-  keys = groupBy ? Array.from(groups).map((group) => group[0]) : [yKey];
-  if (groupBy) {
-    data = transformSkinnyToWide(data, keys, groupBy, xKey, yKey);
-  }
+  const keys: string[] = useMemo(() => {
+    let groups: d3.InternMap<any, any[]>;
+    const groupAccessor = (d: Data) => d[groupBy ?? ''];
+    // eslint-disable-next-line prefer-const
+    groups = d3.group(data, groupAccessor);
+    return groupBy ? Array.from(groups).map((group) => group[0]) : [yKey];
+  }, [groupBy, yKey]);
+
+  const transData = useMemo(() => {
+    return groupBy
+      ? transformSkinnyToWide(data, keys, groupBy, xKey, yKey)
+      : data;
+  }, [data, keys, groupBy, xKey, yKey]);
+
   const stack = d3.stack().keys(keys).order(d3.stackOrderAscending);
-  const layers = stack(data as Iterable<{ [key: string]: number }>);
+  const layers = useMemo(() => {
+    return stack(transData as Iterable<{ [key: string]: number }>);
+  }, [transData]);
 
   const xAccessor: (d: Data) => string = useMemo(() => {
     return (d) => d[xKey];
@@ -113,20 +120,22 @@ export default function BarChart({
       .paddingOuter(0.1)
       .domain(data.map(xAccessor))
       .range([0, rangeMax > 40 ? rangeMax : 40]);
-  }, [data, xAccessor, cWidth, margin]);
+  }, [transData, xAccessor, cWidth, margin]);
 
   const yScale = useMemo(() => {
     return yScaleDef(
-      groupBy ? layers : data,
+      groupBy ? layers : transData,
       yAccessor,
       margin,
       cHeight,
-      chart,
       groupBy
     );
-  }, [data, yAccessor, margin, cHeight, chart, groupBy]);
+  }, [transData, yAccessor, margin, cHeight, groupBy]);
 
-  const colorScale: ColorScale = d3.scaleOrdinal(colorScheme);
+  const discreteColors =
+    Array.from(keys).length < 4 ? 3 : Math.min(Array.from(keys).length, 9);
+  const computedScheme = d3[`${colorScheme}`][discreteColors];
+  const colorScale = d3.scaleOrdinal(Array.from(computedScheme).reverse());
   colorScale.domain(keys);
 
   const getSequenceData = (sequence: any) => {
@@ -160,7 +169,7 @@ export default function BarChart({
               scale={xScale}
               type={xAxis}
               label={xAxisLabel}
-              data={data}
+              data={transData}
               layers={layers}
               xAccessor={xAccessor}
               setTickMargin={setTickMargin}
@@ -190,7 +199,6 @@ export default function BarChart({
               scale={yScale}
               type={yAxis}
               yGrid={yGrid}
-              label={yAxisLabel}
             />
           )}
           {xAxisLabel && (
@@ -223,7 +231,7 @@ export default function BarChart({
                           ? yScale(sequence[0]) - yScale(sequence[1])
                           : 0
                       }
-                      fill={colorScale(layer.key)}
+                      fill={colorScale(layer.key[i])}
                       setTooltip={setTooltip}
                     />
                   ))}
@@ -233,7 +241,7 @@ export default function BarChart({
                 <Rectangle
                   data={d}
                   dataTestId={`rectangle-${i}`}
-                  key={i + 'R'}
+                  key={i}
                   x={xScale(xAccessor(d))}
                   y={yScale(yAccessor(d))}
                   width={xScale.bandwidth()}

@@ -1,7 +1,12 @@
 /** @type {import('ts-jest/dist/types').InitialOptionsTsJest} */
-module.exports = {
+import type {Config} from '@jest/types';
+
+const config: Config.InitialOptions = {
   roots: ['./src'],
   preset: 'ts-jest',
   testEnvironment: 'jsdom',
-  moduleFileExtensions: ['js', 'ts', 'tsx']
+  moduleFileExtensions: ['js', 'ts', 'tsx'],
+  verbose: true,
 };
+
+export default config;

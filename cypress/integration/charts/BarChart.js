@@ -19,7 +19,6 @@ describe('Bar Chart', () => {
       .should('be.visible')
       .should('contain', 'Date');
     cy.get('[data-testid = bar-chart-x-axis]').should('be.visible');
-    cy.get('[data-testid = bar-chart-y-axis]').should('be.visible');
     cy.get('[data-testid = bar-chart-y-axis-label]')
       .should('be.visible')
       .should('contain', 'Value');

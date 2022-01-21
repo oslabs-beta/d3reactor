@@ -1,6 +1,9 @@
 describe('Line Chart', () => {
   it('should show line chart', () => {
+    const width = 600;
+    const height = 500;
     cy.visit('localhost:8080');
+    cy.viewport(width, height);
     cy.get('[data-testid = line-chart]')
       .should('be.visible')
       .and((chart) => {
