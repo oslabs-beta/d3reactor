@@ -106,7 +106,7 @@ export default function PieChart({
     return `translate(${x}, ${y})`;
   };
   // Position of the legend
-  let xPosition = outerRadius + margin.left;
+  let xPosition = outerRadius + margin.left - EXTRA_LEGEND_MARGIN;
   let yPosition = EXTRA_LEGEND_MARGIN;
   // Offset position of the pie
   let translateX = 0;
@@ -128,12 +128,12 @@ export default function PieChart({
       break;
     case 'top-left':
       xPosition = -outerRadius - margin.left + EXTRA_LEGEND_MARGIN;
-      yPosition = -outerRadius + margin.top + EXTRA_LEGEND_MARGIN;
+      yPosition = -outerRadius + margin.left + EXTRA_LEGEND_MARGIN;
       translateX = xOffset;
       break;
     case 'bottom-left':
       xPosition = -outerRadius - margin.left + EXTRA_LEGEND_MARGIN;
-      yPosition = outerRadius - margin.bottom - EXTRA_LEGEND_MARGIN;
+      yPosition = outerRadius - margin.left - EXTRA_LEGEND_MARGIN;
       translateX = xOffset;
       break;
     case 'left-top':
@@ -152,11 +152,11 @@ export default function PieChart({
       translateY = yOffset;
       break;
     case 'top-right':
-      yPosition = -outerRadius + margin.top + EXTRA_LEGEND_MARGIN;
+      yPosition = -outerRadius + margin.right + EXTRA_LEGEND_MARGIN;
       translateX = -xOffset;
       break;
     case 'bottom-right':
-      yPosition = outerRadius - margin.bottom - EXTRA_LEGEND_MARGIN;
+      yPosition = outerRadius - margin.right - EXTRA_LEGEND_MARGIN;
       translateX = -xOffset;
       break;
     case 'right-bottom':
