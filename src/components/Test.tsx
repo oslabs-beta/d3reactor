@@ -9,8 +9,6 @@ import unemployment from '../data/unemployment.json';
 import penguins from '../data/penguins.json';
 import portfolio from '../data/portfolio.json';
 import fruit from '../data/fruit.json';
-import skinny_fruit from '../data/skinny_fruit.json';
-import sales from '../data/sales.json';
 
 // eslint-disable-next-line react/display-name
 const Test = React.memo((): JSX.Element => {
@@ -36,8 +34,9 @@ const Test = React.memo((): JSX.Element => {
         value="value"
         legend="top-right"
         outerRadius={240}
-        legendLabel="l"
+        legendLabel="fruit"
         pieLabel={true}
+        colorScheme="schemeRdYlGn"
       />
       <AreaChart
         data={penguins}
@@ -72,16 +71,15 @@ const Test = React.memo((): JSX.Element => {
         yAxisLabel="Value"
         legend="bottom"
       />
-
       <LineChart
-        height="500px"
-        width="600px"
+        height="100%"
+        width="100%"
         data={unemployment}
         xKey="date"
         xDataType="date"
         yKey="unemployment"
         groupBy="division"
-        data-test-id="line-chart"
+        data-testid="line-chart"
         // xAxis="bottom"
         // yAxis="left"
         // xGrid={true}

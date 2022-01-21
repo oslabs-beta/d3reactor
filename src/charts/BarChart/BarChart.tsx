@@ -1,5 +1,6 @@
 /** App.js */
-import React, { useState, useMemo, useCallback } from 'react';
+import React, { useState, useMemo } from 'react';
+/*eslint import/namespace: ['error', { allowComputed: true }]*/
 import * as d3 from 'd3';
 import { useResponsive } from '../../hooks/useResponsive';
 import { Axis } from '../../components/ContinuousAxis';
@@ -8,7 +9,7 @@ import { Rectangle } from '../../components/Rectangle';
 import TooltipDiv from '../../components/TooltipDiv';
 import { ColorLegend } from '../../components/ColorLegend';
 import { transformSkinnyToWide } from '../../utils';
-import { BarChartProps, Data, ColorScale, yAccessorFunc } from '../../../types';
+import { BarChartProps, Data, yAccessorFunc } from '../../../types';
 import {
   getXAxisCoordinates,
   getYAxisCoordinates,
@@ -32,7 +33,7 @@ export default function BarChart({
   yAxisLabel,
   legend,
   legendLabel = '',
-  colorScheme = d3.quantize(d3.interpolateHcl('#9dc8e2', '#07316b'), 8),
+  colorScheme = 'schemePurples',
 }: BarChartProps<string | number>): JSX.Element {
   const [tooltip, setTooltip] = useState<false | any>(false);
 
@@ -84,21 +85,24 @@ export default function BarChart({
   const translate = `translate(${margin.left}, ${margin.top})`;
 
   // When the yKey key has been assigned to the groupBy variable we know the user didn't specify grouping
-  const keys = useMemo(() => {
+  const keys: string[] = useMemo(() => {
     let groups: d3.InternMap<any, any[]>;
     const groupAccessor = (d: Data) => d[groupBy ?? ''];
+    // eslint-disable-next-line prefer-const
     groups = d3.group(data, groupAccessor);
-    return groupBy ? Array.from(groups).map((group) => group[0]) : [yKey]
+    return groupBy ? Array.from(groups).map((group) => group[0]) : [yKey];
   }, [groupBy, yKey]);
 
   const transData = useMemo(() => {
-    return groupBy ? transformSkinnyToWide(data, keys, groupBy, xKey, yKey) : data
-  }, [data, keys, groupBy, xKey, yKey])
+    return groupBy
+      ? transformSkinnyToWide(data, keys, groupBy, xKey, yKey)
+      : data;
+  }, [data, keys, groupBy, xKey, yKey]);
 
   const stack = d3.stack().keys(keys).order(d3.stackOrderAscending);
   const layers = useMemo(() => {
     return stack(transData as Iterable<{ [key: string]: number }>);
-  }, [transData])
+  }, [transData]);
 
   const xAccessor: (d: Data) => string = useMemo(() => {
     return (d) => d[xKey];
@@ -128,7 +132,10 @@ export default function BarChart({
     );
   }, [transData, yAccessor, margin, cHeight, groupBy]);
 
-  const colorScale: ColorScale = d3.scaleOrdinal(colorScheme);
+  const discreteColors =
+    Array.from(keys).length < 4 ? 3 : Math.min(Array.from(keys).length, 9);
+  const computedScheme = d3[`${colorScheme}`][discreteColors];
+  const colorScale = d3.scaleOrdinal(Array.from(computedScheme).reverse());
   colorScale.domain(keys);
 
   const getSequenceData = (sequence: Data) => {
@@ -149,10 +156,11 @@ export default function BarChart({
           yKey={yKey}
         />
       )}
-      <svg width={cWidth} height={cHeight} data-test-id="bar-chart">
+      <svg width={cWidth} height={cHeight} data-testid="bar-chart">
         <g transform={translate}>
           {xAxis && (
             <DiscreteAxis
+              dataTestId="bar-chart-x-axis"
               x={xAxisX}
               y={xAxisY}
               height={cHeight}
@@ -169,6 +177,7 @@ export default function BarChart({
           )}
           {yAxisLabel && (
             <Label
+              dataTestId="bar-chart-y-axis-label"
               x={yAxisX}
               y={yAxisY}
               height={cHeight}
@@ -181,6 +190,7 @@ export default function BarChart({
           )}
           {yAxis && (
             <Axis
+              dataTestId="bar-chart-y-axis"
               x={yAxisX}
               y={yAxisY}
               height={cHeight}
@@ -189,11 +199,11 @@ export default function BarChart({
               scale={yScale}
               type={yAxis}
               yGrid={yGrid}
-              label={yAxisLabel}
             />
           )}
           {xAxisLabel && (
             <Label
+              dataTestId="bar-chart-x-axis-label"
               x={xAxisX}
               y={xAxisY}
               height={cHeight}
@@ -205,48 +215,45 @@ export default function BarChart({
               tickMargin={tickMargin}
             />
           )}
-          {groupBy ?
-            layers.map((layer: Data, i: number) => (
-              <g key={i}>
-                {layer.map((sequence: Data, j: number) => (
-                  <Rectangle
-                    data={getSequenceData(sequence)}
-                    dataTestId={`rectangle-${j}`}
-                    key={j}
-                    x={xScale(xAccessor(sequence.data))}
-                    y={yScale(sequence[1])}
-                    width={xScale.bandwidth()}
-                    height={
-                      yScale(sequence[0]) - yScale(sequence[1]) > 0
-                        ? yScale(sequence[0]) - yScale(sequence[1])
-                        : 0
-                    }
-                    fill={colorScale(layer.key)}
-                    setTooltip={setTooltip}
-                  />
-                ))}
-              </g>
-            ))
-          : data.map((d: Data, i: number) => {
-            console.log('xAxisY - yScale(yAccessor(d)', xAxisY - yScale(yAccessor(d)))
-          return (
-              <Rectangle
-                data={d}
-                dataTestId={`rectangle-${i}`}
-                key={i + 'R'}
-                x={xScale(xAccessor(d))}
-                y={yScale(yAccessor(d))  - Math.abs(yMin)}
-                width={xScale.bandwidth()}
-                height={
-                  xAxisY - yScale(yAccessor(d)) - Math.abs(yMin) > 0 ?
-                    xAxisY - yScale(yAccessor(d)) - Math.abs(yMin)
-                    : 0
-                }
-                fill={colorScale(yKey)}
-                setTooltip={setTooltip}
-              />
-              )})
-          }
+          {groupBy
+            ? layers.map((layer: any, i: number) => (
+                <g key={i}>
+                  {layer.map((sequence: any, j: number) => (
+                    <Rectangle
+                      data={getSequenceData(sequence)}
+                      dataTestId={`rectangle-${j}`}
+                      key={j}
+                      x={xScale(xAccessor(sequence.data))}
+                      y={yScale(sequence[1])}
+                      width={xScale.bandwidth()}
+                      height={
+                        yScale(sequence[0]) - yScale(sequence[1]) > 0
+                          ? yScale(sequence[0]) - yScale(sequence[1])
+                          : 0
+                      }
+                      fill={colorScale(layer.key[i])}
+                      setTooltip={setTooltip}
+                    />
+                  ))}
+                </g>
+              ))
+            : data.map((d: any, i: number) => (
+                <Rectangle
+                  data={d}
+                  dataTestId={`rectangle-${i}`}
+                  key={i}
+                  x={xScale(xAccessor(d))}
+                  y={yScale(yAccessor(d))}
+                  width={xScale.bandwidth()}
+                  height={
+                    xAxisY - yScale(yAccessor(d)) > 0
+                      ? xAxisY - yScale(yAccessor(d))
+                      : 0
+                  }
+                  fill={colorScale(yKey)}
+                  setTooltip={setTooltip}
+                />
+              ))}
 
           {
             // If legend prop is truthy, render legend component:

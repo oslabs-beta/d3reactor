@@ -1,22 +1,24 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import * as d3 from 'd3';
 import { ContinuousAxisProps } from '../../types';
-import { getAxisLabelCoordinates } from '../utils';
 import { gridGenerator } from '../functionality/grid';
 
 function Axi({
+  dataTestId = 'd3reactor-continuous',
   x,
   y,
   scale,
   type,
-  label,
   width,
   height,
   margin,
   xGrid,
   yGrid,
   xTicksValue,
+  chartType,
 }: ContinuousAxisProps): JSX.Element {
+  console.log(scale.toString());
+
   let axis: d3.Axis<d3.NumberValue>;
 
   let x1 = 0,
@@ -132,17 +134,22 @@ function Axi({
   return (
     <g>
       <g transform={`translate(${x}, ${y})`}>{grid}</g>
-      <line
-        stroke="#77848d"
-        strokeWidth={1.9}
-        x1={x1}
-        y1={y1}
-        x2={x2}
-        y2={y2}
-      />
+      {(type === 'top' ||
+        type === 'bottom' ||
+        chartType === 'scatter-plot') && (
+        <line
+          className="axis-baseline"
+          data-testid={dataTestId}
+          x1={x1}
+          y1={y1}
+          x2={x2}
+          y2={y2}
+        />
+      )}
       {(type === 'top' || type === 'bottom') &&
         horizontalTicks.map((tick, i) => (
           <text
+            className="tick-text"
             key={i}
             style={getTickStyle(type, tick)}
             transform={getTickTranslation(type, tick)}
@@ -153,6 +160,7 @@ function Axi({
       {(type === 'right' || type === 'left') &&
         verticalTicks.map((tick, i) => (
           <text
+            className="tick-text"
             key={i}
             style={getTickStyle(type, tick)}
             transform={getTickTranslation(type, tick)}

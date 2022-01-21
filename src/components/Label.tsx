@@ -3,6 +3,7 @@ import { getAxisLabelCoordinates } from '../utils';
 import { Margin } from '../../types';
 
 export function Label({
+  dataTestId = 'label',
   x,
   y,
   height,
@@ -13,6 +14,7 @@ export function Label({
   label,
   tickMargin,
 }: {
+  dataTestId?: string;
   x: number;
   y: number;
   height: number;
@@ -39,6 +41,8 @@ export function Label({
   );
   return (
     <text
+      data-testid={dataTestId}
+      className="axis-label"
       transform={`translate(${axisLabelX}, ${axisLabelY}) rotate(${rotate})`}
       textAnchor="middle"
     >

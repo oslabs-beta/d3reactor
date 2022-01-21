@@ -88,7 +88,7 @@ const TooltipDiv = ({
   const yTooltipText = `${yKey}: ${data.tooltipData[yKey as string]}`;
 
   return (
-    <div style={tooltipWrapperStyle} data-test-id={`tooltip-${chartType}`}>
+    <div style={tooltipWrapperStyle} data-testid={`tooltip-${chartType}`}>
       <div style={contentStyle}>
         {xTooltipText}
         <br />

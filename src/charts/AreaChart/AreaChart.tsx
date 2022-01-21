@@ -1,10 +1,10 @@
 /** App.js */
-import React, { useState, useMemo, useCallback } from 'react';
+import React, { useState, useMemo } from 'react';
+/*eslint import/namespace: ['error', { allowComputed: true }]*/
 import * as d3 from 'd3';
 import {
   Data,
   AreaChartProps,
-  ColorScale,
   xAccessorFunc,
   yAccessorFunc,
 } from '../../../types';
@@ -43,7 +43,7 @@ export default function AreaChart({
   yAxisLabel,
   legend,
   legendLabel = '',
-  colorScheme = d3.quantize(d3.interpolateHcl('#9dc8e2', '#07316b'), 8),
+  colorScheme = 'schemePurples',
 }: AreaChartProps<string | number>): JSX.Element {
   const position = useMousePosition();
   const [tooltip, setTooltip] = useState<false | any>(false);
@@ -101,12 +101,14 @@ export default function AreaChart({
     let groups: d3.InternMap<any, any[]>;
     const groupAccessor = (d: Data) => d[groupBy ?? ''];
     groups = d3.group(data, groupAccessor);
-    return groupBy ? Array.from(groups).map((group) => group[0]) : [yKey]
+    return groupBy ? Array.from(groups).map((group) => group[0]) : [yKey];
   }, [groupBy, yKey]);
 
   const transData = useMemo(() => {
-    return groupBy ? transformSkinnyToWide(data, keys, groupBy, xKey, yKey) : data
-  }, [data, keys, groupBy, xKey, yKey])
+    return groupBy
+      ? transformSkinnyToWide(data, keys, groupBy, xKey, yKey)
+      : data;
+  }, [data, keys, groupBy, xKey, yKey]);
 
   // generate stack: an array of Series representing the x and associated y0 & y1 values for each area
   const stack = d3.stack().keys(keys);
@@ -116,33 +118,35 @@ export default function AreaChart({
       series.sort((a, b) => b.data[xKey] - a.data[xKey]);
     }
     return layersTemp;
-  }, [transData, keys]); 
+  }, [transData, keys]);
 
   const xAccessor: xAccessorFunc = useMemo(() => {
     return xDataType === 'number' ? (d) => d[xKey] : (d) => new Date(d[xKey]);
   }, [xKey]);
 
-  const { xScale, xMin, xMax } = useMemo(() => { 
+  const { xScale, xMin, xMax } = useMemo(() => {
     return xScaleDef(
-      transData, 
-      xDataType as 'number' | 'date', 
-      xAccessor, 
-      margin, 
-      cWidth, 
-      chart);
+      transData,
+      xDataType as 'number' | 'date',
+      xAccessor,
+      margin,
+      cWidth,
+      chart
+    );
   }, [transData, xDataType, xAccessor, margin, cWidth, chart]);
-  
+
   const yAccessor: yAccessorFunc = useMemo(() => {
     return (d) => d[yKey];
   }, [yKey]);
  
   const { yScale } = useMemo(() => {
     return yScaleDef(
-      groupBy ? layers : transData, 
-      yAccessor, 
-      margin, 
-      cHeight, 
-      groupBy)
+      groupBy ? layers : transData,
+      yAccessor,
+      margin,
+      cHeight,
+      groupBy
+    );
   }, [layers, transData, yAccessor, margin, cHeight, groupBy]);
 
   const xTicksValue = [xMin, ...xScale.ticks(), xMax];
@@ -153,7 +157,10 @@ export default function AreaChart({
     .y0((layer) => yScale(layer[0]))
     .y1((layer) => yScale(layer[1]));
 
-  const colorScale: ColorScale = d3.scaleOrdinal(colorScheme);
+  const discreteColors =
+    Array.from(keys).length < 4 ? 3 : Math.min(Array.from(keys).length, 9);
+  const computedScheme = d3[`${colorScheme}`][discreteColors];
+  const colorScale = d3.scaleOrdinal(Array.from(computedScheme).reverse());
   colorScale.domain(keys);
 
   return (
@@ -179,7 +186,6 @@ export default function AreaChart({
               scale={yScale}
               type={yAxis}
               yGrid={yGrid}
-              label={yAxisLabel}
             />
           )}
           {yAxisLabel && (
@@ -204,7 +210,6 @@ export default function AreaChart({
               scale={xScale}
               xGrid={xGrid}
               type={xAxis}
-              label={xAxisLabel}
               xTicksValue={xTicksValue}
             />
           )}
@@ -222,6 +227,7 @@ export default function AreaChart({
           )}
           {layers.map((layer, i) => (
             <path
+              className="area"
               key={i}
               d={areaGenerator(layer)}
               fill={colorScale(layer.key)}

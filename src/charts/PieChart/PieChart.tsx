@@ -1,5 +1,6 @@
 /** App.js */
 import React, { useState, useMemo } from 'react';
+/*eslint import/namespace: ['error', { allowComputed: true }]*/
 import * as d3 from 'd3';
 import { useResponsive } from '../../hooks/useResponsive';
 import { PieChartProps, Data } from '../../../types';
@@ -14,7 +15,6 @@ import {
 } from '../../utils';
 
 export default function PieChart({
-  colorScheme = d3.quantize(d3.interpolateHcl('#9dc8e2', '#07316b'), 8),
   data,
   innerRadius,
   label,
@@ -22,6 +22,7 @@ export default function PieChart({
   legendLabel,
   outerRadius,
   pieLabel,
+  colorScheme = 'schemePurples',
   value,
 }: PieChartProps): JSX.Element {
   const [tooltip, setTooltip] = useState<false | any>(false);
@@ -56,13 +57,12 @@ export default function PieChart({
     ratio = innerRadius / outerRadius;
   }
 
-  outerRadius = useMemo(() => {
-    const tempRad = outerRadius ? 
-      checkRadiusDimension(cHeight, cWidth, outerRadius, margin, legend)
-      : calculateOuterRadius(cHeight, cWidth, margin);
-      return tempRad > 20 ? tempRad : 20;
-    }, [cHeight, cWidth, outerRadius, margin, legend])
-    
+  outerRadius = outerRadius
+  ? checkRadiusDimension(cHeight, cWidth, outerRadius, margin, legend)
+  : calculateOuterRadius(cHeight, cWidth, margin);
+
+  if (outerRadius < 20) outerRadius = 20;
+
   if (ratio) {
     innerRadius = ratio * outerRadius;
   } else if (innerRadius) {
@@ -76,16 +76,18 @@ export default function PieChart({
     innerRadius = checkedRadiusDimension > 0 ? checkedRadiusDimension : 0;
   } else innerRadius = 0;
 
-  type ColorScale = d3.ScaleOrdinal<string, string, never>;
+  // type ColorScale = d3.ScaleOrdinal<string, string, never>;
 
   const keys = useMemo(() => {
     let groups: d3.InternMap<any, any[]>;
     const groupAccessor = (d: Data) => d[label ?? ''];
     groups = d3.group(data, groupAccessor);
-    return Array.from(groups).map((group) => group[0])
+    return Array.from(groups).map((group) => group[0]);
   }, [label]);
 
-  const colorScale: ColorScale = d3.scaleOrdinal(colorScheme);
+  const discreteColors = Math.min(keys.length, 9);
+  const computedScheme = d3[`${colorScheme}`][discreteColors];
+  const colorScale = d3.scaleOrdinal(computedScheme);
   colorScale.domain(keys);
 
   const arcGenerator: any = d3
@@ -186,11 +188,12 @@ export default function PieChart({
         />
       )}
       <svg width={'100%'} height={'100%'}>
-        <g transform={translate} data-test-id="pie-chart">
+        <g transform={translate} data-testid="pie-chart">
           {pie.map((d: any, i: number) => (
             <g key={'g' + i}>
               <Arc
                 data={{ [label]: d.data[label], [value]: d.data[value] }}
+                dataTestId={`pie-chart-arc-${i}`}
                 key={d.label}
                 fill={colorScale(keys[i])}
                 stroke="#ffffff"
@@ -201,6 +204,7 @@ export default function PieChart({
               />
               {pieLabel && (
                 <text
+                  data-testid={`pie-chart-arc-text-${i}`}
                   style={{ pointerEvents: 'none' }}
                   transform={textTranform(d)}
                   textAnchor={'middle'}
@@ -219,6 +223,7 @@ export default function PieChart({
                 legendLabel={legendLabel}
                 circleRadius={5 /* Radius of each color swab in legend */}
                 colorScale={colorScale}
+                dataTestId="pie-chart-legend"
                 setLegendOffset={setLegendOffset}
                 legendPosition={legend}
                 legendWidth={xOffset}

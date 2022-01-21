@@ -1,6 +1,6 @@
-import React from 'react';
 import '@testing-library/jest-dom';
-import { cleanup, render, screen, waitFor } from '@testing-library/react';
+import React from 'react';
+import { render, screen } from '@testing-library/react';
 import { Line } from '../Line';
 import { LineProps } from '../../../types';
 
@@ -13,16 +13,15 @@ const LineProps: LineProps = {
   strokeWidth: '1px',
   d: mockedData,
 };
+const svg = document.createElement('svg')
+
 const setup = () => {
-  return render(<Line {...LineProps} />);
+  return render(<svg><Line {...LineProps} /></svg>);
 };
 
 describe('Line test', () => {
-  afterEach(() => {
-    cleanup();
-  });
   test('it should render Line', () => {
-    setup();
-    waitFor(() => expect(screen.findByTestId('line')).toBeInTheDocument());
+   setup()
+    expect(screen.getByTestId('d3reactor-line')).toBeInTheDocument();
   });
 });
