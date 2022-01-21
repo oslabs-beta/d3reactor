@@ -118,7 +118,7 @@ export default function BarChart({
       .range([0, rangeMax > 40 ? rangeMax : 40]);
   }, [transData, xAccessor, cWidth, margin]);
 
-  const yScale = useMemo(() => {
+  const { yScale, yMin } = useMemo(() => {
     return yScaleDef(
       groupBy ? layers : transData,
       yAccessor,
@@ -131,7 +131,7 @@ export default function BarChart({
   const colorScale: ColorScale = d3.scaleOrdinal(colorScheme);
   colorScale.domain(keys);
 
-  const getSequenceData = (sequence: any) => {
+  const getSequenceData = (sequence: Data) => {
     const xKeyValue = { [xKey]: sequence.data[xKey] };
     const yKeyValue = { [yKey]: sequence[1] };
     return { ...xKeyValue, ...yKeyValue };
@@ -205,45 +205,48 @@ export default function BarChart({
               tickMargin={tickMargin}
             />
           )}
-          {groupBy
-            ? layers.map((layer: any, i: number) => (
-                <g key={i}>
-                  {layer.map((sequence: any, j: number) => (
-                    <Rectangle
-                      data={getSequenceData(sequence)}
-                      dataTestId={`rectangle-${j}`}
-                      key={j}
-                      x={xScale(xAccessor(sequence.data))}
-                      y={yScale(sequence[1])}
-                      width={xScale.bandwidth()}
-                      height={
-                        yScale(sequence[0]) - yScale(sequence[1]) > 0
-                          ? yScale(sequence[0]) - yScale(sequence[1])
-                          : 0
-                      }
-                      fill={colorScale(layer.key)}
-                      setTooltip={setTooltip}
-                    />
-                  ))}
-                </g>
-              ))
-            : data.map((d: any, i: number) => (
-                <Rectangle
-                  data={d}
-                  dataTestId={`rectangle-${i}`}
-                  key={i + 'R'}
-                  x={xScale(xAccessor(d))}
-                  y={yScale(yAccessor(d))}
-                  width={xScale.bandwidth()}
-                  height={
-                    xAxisY - yScale(yAccessor(d)) > 0
-                      ? xAxisY - yScale(yAccessor(d))
-                      : 0
-                  }
-                  fill={colorScale(yKey)}
-                  setTooltip={setTooltip}
-                />
-              ))}
+          {groupBy ?
+            layers.map((layer: Data, i: number) => (
+              <g key={i}>
+                {layer.map((sequence: Data, j: number) => (
+                  <Rectangle
+                    data={getSequenceData(sequence)}
+                    dataTestId={`rectangle-${j}`}
+                    key={j}
+                    x={xScale(xAccessor(sequence.data))}
+                    y={yScale(sequence[1])}
+                    width={xScale.bandwidth()}
+                    height={
+                      yScale(sequence[0]) - yScale(sequence[1]) > 0
+                        ? yScale(sequence[0]) - yScale(sequence[1])
+                        : 0
+                    }
+                    fill={colorScale(layer.key)}
+                    setTooltip={setTooltip}
+                  />
+                ))}
+              </g>
+            ))
+          : data.map((d: Data, i: number) => {
+            console.log('xAxisY - yScale(yAccessor(d)', xAxisY - yScale(yAccessor(d)))
+          return (
+              <Rectangle
+                data={d}
+                dataTestId={`rectangle-${i}`}
+                key={i + 'R'}
+                x={xScale(xAccessor(d))}
+                y={yScale(yAccessor(d))  - Math.abs(yMin)}
+                width={xScale.bandwidth()}
+                height={
+                  xAxisY - yScale(yAccessor(d)) - Math.abs(yMin) > 0 ?
+                    xAxisY - yScale(yAccessor(d)) - Math.abs(yMin)
+                    : 0
+                }
+                fill={colorScale(yKey)}
+                setTooltip={setTooltip}
+              />
+              )})
+          }
 
           {
             // If legend prop is truthy, render legend component:
