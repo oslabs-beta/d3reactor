@@ -110,6 +110,7 @@ export interface Margin {
 }
 
 export interface ContinuousAxisProps {
+  dataTestId?: string
   x: number
   y: number
   xGrid?: boolean
@@ -126,6 +127,7 @@ export interface ContinuousAxisProps {
 }
 
 export interface DiscreteAxisProps {
+  dataTestId?: string
   x: number
   y: number
   xGrid?: boolean
@@ -186,6 +188,7 @@ export interface LineProps {
 
 export interface ArcProps {
   data: {}
+  dataTestId?: string
   key: string
   fill: string
   stroke: string

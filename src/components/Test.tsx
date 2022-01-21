@@ -36,7 +36,7 @@ const Test = React.memo((): JSX.Element => {
         value="value"
         legend="top-right"
         outerRadius={240}
-        legendLabel="l"
+        legendLabel="fruit"
         pieLabel={true}
       />
       <AreaChart
@@ -81,7 +81,7 @@ const Test = React.memo((): JSX.Element => {
         xDataType="date"
         yKey="unemployment"
         groupBy="division"
-        data-test-id="line-chart"
+        data-testid="line-chart"
         // xAxis="bottom"
         // yAxis="left"
         // xGrid={true}

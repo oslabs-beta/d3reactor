@@ -3,6 +3,7 @@ import * as d3 from 'd3';
 import { DiscreteAxisProps, Data } from '../../types';
 export const DiscreteAxis = React.memo(
   ({
+    dataTestId = 'discrete-axis',
     x,
     y,
     scale,
@@ -103,6 +104,7 @@ export const DiscreteAxis = React.memo(
     return (
       <g>
         <line
+          data-testid={dataTestId}
           stroke="#77848D"
           strokeWidth={1.9}
           x1={x1}

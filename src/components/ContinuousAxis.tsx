@@ -5,6 +5,7 @@ import { getAxisLabelCoordinates } from '../utils';
 import { gridGenerator } from '../functionality/grid';
 
 function Axi({
+  dataTestId = 'axis',
   x,
   y,
   scale,
@@ -133,6 +134,7 @@ function Axi({
     <g>
       <g transform={`translate(${x}, ${y})`}>{grid}</g>
       <line
+        data-testid={dataTestId}
         stroke="#77848d"
         strokeWidth={1.9}
         x1={x1}

@@ -13,6 +13,7 @@ import {
 export const Arc = React.memo(
   ({
     data,
+    dataTestId = 'arc',
     key,
     fill = 'none',
     stroke,
@@ -45,6 +46,7 @@ export const Arc = React.memo(
     return (
       <path
         className="arc"
+        data-testid={dataTestId}
         fill={fill}
         stroke={stroke}
         strokeWidth={strokeWidth}

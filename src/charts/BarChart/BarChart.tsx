@@ -147,10 +147,11 @@ export default function BarChart({
           yKey={yKey}
         />
       )}
-      <svg width={cWidth} height={cHeight} data-test-id="bar-chart">
+      <svg width={cWidth} height={cHeight} data-testid="bar-chart">
         <g transform={translate}>
           {xAxis && (
             <DiscreteAxis
+              dataTestId="bar-chart-x-axis"
               x={xAxisX}
               y={xAxisY}
               height={cHeight}
@@ -167,6 +168,7 @@ export default function BarChart({
           )}
           {yAxisLabel && (
             <Label
+              dataTestId="bar-chart-y-axis-label"
               x={yAxisX}
               y={yAxisY}
               height={cHeight}
@@ -179,6 +181,7 @@ export default function BarChart({
           )}
           {yAxis && (
             <Axis
+              dataTestId="bar-chart-y-axis"
               x={yAxisX}
               y={yAxisY}
               height={cHeight}
@@ -192,6 +195,7 @@ export default function BarChart({
           )}
           {xAxisLabel && (
             <Label
+              dataTestId="bar-chart-x-axis-label"
               x={xAxisX}
               y={xAxisY}
               height={cHeight}

@@ -1,6 +1,6 @@
-import React from 'react';
 import '@testing-library/jest-dom';
-import { cleanup, render, screen, waitFor } from '@testing-library/react';
+import React from 'react';
+import { render, screen } from '@testing-library/react';
 import { Line } from '../Line';
 import { LineProps } from '../../../types';
 
@@ -18,11 +18,8 @@ const setup = () => {
 };
 
 describe('Line test', () => {
-  afterEach(() => {
-    cleanup();
-  });
   test('it should render Line', () => {
     setup();
-    waitFor(() => expect(screen.findByTestId('line')).toBeInTheDocument());
+    expect(screen.getByTestId('line')).toBeInTheDocument();
   });
 });

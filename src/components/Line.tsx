@@ -11,7 +11,7 @@ export const Line = React.memo(
     return (
       <path
         className="line"
-        data-test-id="line"
+        data-testid="line"
         fill={fill}
         stroke={stroke}
         strokeWidth={strokeWidth}
