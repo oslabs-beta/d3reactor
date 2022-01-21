@@ -1,93 +1,83 @@
 import React from 'react';
 import './App.css';
-import Test from './components/Test';
-
 import BarChart from './charts/BarChart/BarChart';
-import LineChart from './charts/LineChart/LineChart';
 import AreaChart from './charts/AreaChart/AreaChart';
+import LineChart from './charts/LineChart/LineChart';
 import ScatterPlot from './charts/ScatterPlot/ScatterPlot';
 import PieChart from './charts/PieChart/PieChart';
 
 import unemployment from './data/unemployment.json';
-import penguins from './data/penguins.json';
 import portfolio from './data/portfolio.json';
+import penguins from './data/penguins.json';
 import fruit from './data/fruit.json';
-import skinny_fruit from './data/skinny_fruit.json';
-import sales from './data/sales.json';
 
 function App() {
   return (
     <div className="app">
-      {/* <PieChart
+      <PieChart
         data={fruit}
         label="label"
         value="value"
         legend="top-right"
         outerRadius={240}
-        legendLabel="l"
+        legendLabel="fruit"
         pieLabel={true}
-      />
-      <AreaChart
-        data={skinny_fruit}
-        xKey="date"
-        yKey="value"
-        groupBy='fruit'
-        xAxis='bottom'
-        xAxisLabel='OOPSOOPSOOPSOOPSOOPSOOPSOOPSOOPSOOPSOOPSOOPSOOPSOOPSOOPSOOPSOOPSOOPSOOPSOOPSOOPS!'
-        width={'80%'}
-        height={'80%'}
-        legend='bottom'
-      />
-      <AreaChart
-        data={portfolio}
-        xKey="date"
-        yKey="value"
-        xAxis='bottom'
+        colorScheme="schemeRdYlGn"
       />
       <BarChart
-        data={skinny_fruit}
+        height="100%"
+        width="100%"
+        data={portfolio.slice(5, 13)}
         xKey="date"
         yKey="value"
-        groupBy='fruit'
-        xAxis='bottom'
-        // xAxisLabel='OOPSOOPSOOPSOOPSOOPSOOPSOOPSOOPSOOPSOOPSOOPSOOPSOOPSOOPSOOPSOOPSOOPSOOPSOOPSOOPS!'
-        width={'80%'}
-        height={'80%'}
-        legend='bottom'
-      /> */}
-      <BarChart
-        data={portfolio}
-        xKey="date"
-        yKey="value"
-      />
-      {/* <ScatterPlot
-        data={skinny_fruit}
-        xKey="date"
-        yKey="value"
-        groupBy='fruit'
-      />
-      <ScatterPlot
-        data={portfolio}
-        xKey="date"
-        yKey="value"
-      />
-      <LineChart
-        data={skinny_fruit}
-        xKey="date"
-        yKey="value"
-        groupBy='fruit'
-      />
-      <LineChart
-        data={portfolio}
-        xKey="date"
-        yKey="value"
-        xGrid={true}
-        yGrid={true}
         xAxis="bottom"
         yAxis="right"
-      /> */}
-      
-      {/* <Test /> */}
+        yGrid={true}
+        xAxisLabel="Date"
+        yAxisLabel="Value"
+        legend={'bottom'}
+      />
+      <AreaChart
+        height="100%"
+        width="100%"
+        data={portfolio.slice(30, 60)}
+        xKey="date"
+        yKey="value"
+        xAxis="bottom"
+        yAxis="right"
+        yGrid={true}
+        xAxisLabel="Date"
+        yAxisLabel="Value"
+      />
+      <LineChart
+        height="100%"
+        width="100%"
+        data={portfolio}
+        xKey="date"
+        xDataType="date"
+        yKey="value"
+        xAxis="bottom"
+        yAxis="left"
+        yGrid={true}
+        xAxisLabel="Date"
+        yAxisLabel="Value"
+        legend={'right'}
+        legendLabel="Markets"
+      />
+      <ScatterPlot
+        height="100%"
+        width="100%"
+        data={penguins}
+        xKey="flipper_length_mm"
+        xDataType="number"
+        xGrid={true}
+        xAxis="bottom"
+        xAxisLabel="Flipper Length"
+        yKey="body_mass_g"
+        yGrid={true}
+        yAxis="right"
+        yAxisLabel="Body Mass"
+      />
     </div>
   );
 }
