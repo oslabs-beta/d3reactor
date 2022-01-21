@@ -111,7 +111,6 @@ export default function PieChart({
   // Offset position of the pie
   let translateX = 0;
   let translateY = 0;
-  console.log(margin);
   switch (legend) {
     case 'top':
       xPosition = -xOffset / 2 + EXTRA_LEGEND_MARGIN;
