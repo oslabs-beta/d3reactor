@@ -25,7 +25,7 @@ function App() {
       <BarChart
         height="100%"
         width="100%"
-        data={portfolio.slice(30, 38)}
+        data={portfolio.slice(5, 13)}
         xKey="date"
         yKey="value"
         xAxis="bottom"
@@ -33,6 +33,7 @@ function App() {
         yGrid={true}
         xAxisLabel="Date"
         yAxisLabel="Value"
+        legend={'bottom'}
       />
       <AreaChart
         height="100%"
@@ -58,6 +59,8 @@ function App() {
         yGrid={true}
         xAxisLabel="Date"
         yAxisLabel="Value"
+        legend={'right'}
+        legendLabel="Markets"
       />
       <ScatterPlot
         height="100%"
