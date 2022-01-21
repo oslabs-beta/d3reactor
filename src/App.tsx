@@ -6,7 +6,6 @@ import LineChart from './charts/LineChart/LineChart';
 import ScatterPlot from './charts/ScatterPlot/ScatterPlot';
 import PieChart from './charts/PieChart/PieChart';
 
-import unemployment from './data/unemployment.json';
 import portfolio from './data/portfolio.json';
 import penguins from './data/penguins.json';
 import fruit from './data/fruit.json';
@@ -14,7 +13,15 @@ import fruit from './data/fruit.json';
 function App() {
   return (
     <div className="app">
-      <PieChart data={fruit} label="label" value="value" outerRadius={240} />
+      <PieChart
+        data={fruit}
+        label="label"
+        value="value"
+        legend="top-right"
+        outerRadius={240}
+        legendLabel="fruit"
+        pieLabel={true}
+      />
       <BarChart
         height="100%"
         width="100%"

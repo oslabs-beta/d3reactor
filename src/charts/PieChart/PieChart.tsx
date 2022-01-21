@@ -58,8 +58,8 @@ export default function PieChart({
   }
 
   outerRadius = outerRadius
-  ? checkRadiusDimension(cHeight, cWidth, outerRadius, margin, legend)
-  : calculateOuterRadius(cHeight, cWidth, margin);
+    ? checkRadiusDimension(cHeight, cWidth, outerRadius, margin, legend)
+    : calculateOuterRadius(cHeight, cWidth, margin);
 
   if (outerRadius < 20) outerRadius = 20;
 
@@ -79,9 +79,8 @@ export default function PieChart({
   // type ColorScale = d3.ScaleOrdinal<string, string, never>;
 
   const keys = useMemo(() => {
-    let groups: d3.InternMap<any, any[]>;
     const groupAccessor = (d: Data) => d[label ?? ''];
-    groups = d3.group(data, groupAccessor);
+    const groups: d3.InternMap<any, any[]> = d3.group(data, groupAccessor);
     return Array.from(groups).map((group) => group[0]);
   }, [label]);
 
@@ -112,6 +111,7 @@ export default function PieChart({
   // Offset position of the pie
   let translateX = 0;
   let translateY = 0;
+  console.log(margin);
   switch (legend) {
     case 'top':
       xPosition = -xOffset / 2 + EXTRA_LEGEND_MARGIN;
@@ -170,7 +170,8 @@ export default function PieChart({
       translateX = -xOffset;
       break;
   }
-
+  console.log('outer raduys', outerRadius);
+  console.log('yposition', yPosition);
   const translate = `translate(${(cWidth + translateX) / 2}, ${
     (cHeight + translateY) / 2
   })`;

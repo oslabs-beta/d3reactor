@@ -17,10 +17,6 @@ function Axi({
   xTicksValue,
   chartType,
 }: ContinuousAxisProps): JSX.Element {
-  console.log(
-    scale.toString()
-  )
-  
   let axis: d3.Axis<d3.NumberValue>;
 
   let x1 = 0,
@@ -139,7 +135,14 @@ function Axi({
       {(type === 'top' ||
         type === 'bottom' ||
         chartType === 'scatter-plot') && (
-        <line className="axis-baseline" data-testid='d3reactor-continuous' x1={x1} y1={y1} x2={x2} y2={y2} />
+        <line
+          className="axis-baseline"
+          data-testid="d3reactor-continuous"
+          x1={x1}
+          y1={y1}
+          x2={x2}
+          y2={y2}
+        />
       )}
       {(type === 'top' || type === 'bottom') &&
         horizontalTicks.map((tick, i) => (
