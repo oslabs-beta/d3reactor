@@ -23,6 +23,7 @@ const TooltipDiv = ({
     position: 'absolute',
     pointerEvents: 'none',
     fontFamily: 'Tahoma, Geneva, Verdana, sans-serif',
+    fontSize: '12px',
     color: '#737373',
   };
 
@@ -32,7 +33,7 @@ const TooltipDiv = ({
     padding: '0.6em 1em',
     borderRadius: '4px',
     maxWidth: '280px',
-    transform: `translate(-50%, calc(-100% - ${triangleSize + 4}px)`,
+    transform: `translate(-50%, calc(-100% - ${triangleSize}px)`,
     background: backgroundColor,
     textAlign: 'left',
     lineHeight: '1.4em',
@@ -74,18 +75,6 @@ const TooltipDiv = ({
     pointerEvents: 'none',
   };
 
-  const circleStyle: React.CSSProperties | undefined = {
-    // width: '4px',
-    // height: '4px',
-    // borderRadius: '50%',
-    // border: '1px solid #0184c7',
-    // position: 'absolute',
-    // transform: 'translate(-50%, -50%)',
-    // backgroundColor: '#f0f9ff',
-    // boxShadow: shadowElevationHigh,
-    pointerEvents: 'none',
-  };
-
   let xValString = data.tooltipData[xKey as string];
   if (data.tooltipData[xKey as string] instanceof Date) {
     // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
@@ -104,15 +93,12 @@ const TooltipDiv = ({
   return (
     <div style={tooltipWrapperStyle} data-testid={`tooltip-${chartType}`}>
       <div style={contentStyle}>
-        {xTooltipText}
+        {xKey} <strong>{xValString}</strong>
         <br />
-        {yTooltipText}
+        {yKey} <strong>{yValString}</strong>
       </div>
       <div style={triangleStyle}></div>
       <div style={triangleBorderStyle}></div>
-      {chartType !== 'scatter-plot' && chartType !== 'pie-chart' && (
-        <div style={circleStyle}></div>
-      )}
     </div>
   );
 };
