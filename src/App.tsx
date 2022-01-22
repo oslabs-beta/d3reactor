@@ -1,5 +1,4 @@
 import React from 'react';
-import './App.css';
 import BarChart from './charts/BarChart/BarChart';
 import AreaChart from './charts/AreaChart/AreaChart';
 import LineChart from './charts/LineChart/LineChart';
@@ -13,7 +12,7 @@ import fruit from './data/fruit.json';
 
 function App() {
   return (
-    <div className="app">
+    <div className="app" style={{ height: '100vh', width: '100vw' }}>
       <PieChart
         data={fruit}
         label="label"

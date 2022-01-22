@@ -3,6 +3,8 @@ import * as d3 from 'd3';
 import { ContinuousAxisProps } from '../../types';
 import { gridGenerator } from '../functionality/grid';
 
+import './Components.css';
+
 function Axi({
   dataTestId = 'd3reactor-continuous',
   x,
@@ -17,7 +19,6 @@ function Axi({
   xTicksValue,
   chartType,
 }: ContinuousAxisProps): JSX.Element {
-
   let axis: d3.Axis<d3.NumberValue>;
 
   let x1 = 0,

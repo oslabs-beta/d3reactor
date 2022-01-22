@@ -25,6 +25,7 @@ import { xScaleDef } from '../../functionality/xScale';
 import { d3Voronoi } from '../../functionality/voronoi';
 import { Label } from '../../components/Label';
 import TooltipDiv from '../../components/TooltipDiv';
+import './LineChart.css';
 
 export default function LineChart({
   data,
@@ -252,7 +253,6 @@ export default function LineChart({
               setTooltip={setTooltip}
             />
           )}
-        
 
           {
             // If legend prop is truthy, render legend component:

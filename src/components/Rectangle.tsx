@@ -1,6 +1,9 @@
 import React from 'react';
 import { RectangleProps } from '../../types';
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+import '../charts/BarChart/BarChart.css';
+
 export const Rectangle = React.memo(
   ({
     data,

@@ -24,6 +24,7 @@ import {
   transformSkinnyToWide,
   EXTRA_LEGEND_MARGIN,
 } from '../../utils';
+import './AreaChart.css';
 
 import { useMousePosition } from '../../hooks/useMousePosition';
 
@@ -138,7 +139,7 @@ export default function AreaChart({
   const yAccessor: yAccessorFunc = useMemo(() => {
     return (d) => d[yKey];
   }, [yKey]);
- 
+
   const yScale = useMemo(() => {
     return yScaleDef(
       groupBy ? layers : transData,

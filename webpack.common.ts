@@ -1,7 +1,7 @@
 import path from 'path';
 import webpack from 'webpack';
 
-const webpackconfiguration: webpack.Configuration =  {
+const webpackconfiguration: webpack.Configuration = {
   module: {
     rules: [
       {
@@ -19,6 +19,6 @@ const webpackconfiguration: webpack.Configuration =  {
   resolve: {
     extensions: ['.tsx', '.ts', '.js'],
   },
-}
+};
 
 export default webpackconfiguration;
