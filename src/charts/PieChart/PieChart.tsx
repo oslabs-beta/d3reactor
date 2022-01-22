@@ -188,11 +188,12 @@ export default function PieChart({
         />
       )}
       <svg width={'100%'} height={'100%'}>
-        <g transform={translate} data-test-id="pie-chart">
+        <g transform={translate} data-testid="pie-chart">
           {pie.map((d: any, i: number) => (
             <g key={'g' + i}>
               <Arc
                 data={{ [label]: d.data[label], [value]: d.data[value] }}
+                data-TestId={`pie-chart-arc-${i}`}
                 key={d.label}
                 fill={colorScale(keys[i])}
                 stroke="#ffffff"
@@ -203,6 +204,7 @@ export default function PieChart({
               />
               {pieLabel && (
                 <text
+                  data-testid={`pie-chart-arc-text-${i}`}
                   style={{ pointerEvents: 'none' }}
                   transform={textTranform(d)}
                   textAnchor={'middle'}
@@ -221,6 +223,7 @@ export default function PieChart({
                 legendLabel={legendLabel}
                 circleRadius={5 /* Radius of each color swab in legend */}
                 colorScale={colorScale}
+                dataTestId="pie-chart-legend"
                 setLegendOffset={setLegendOffset}
                 legendPosition={legend}
                 legendWidth={xOffset}

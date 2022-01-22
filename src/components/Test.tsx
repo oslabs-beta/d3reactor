@@ -9,14 +9,12 @@ import unemployment from '../data/unemployment.json';
 import penguins from '../data/penguins.json';
 import portfolio from '../data/portfolio.json';
 import fruit from '../data/fruit.json';
-import skinny_fruit from '../data/skinny_fruit.json';
-import sales from '../data/sales.json';
 
 // eslint-disable-next-line react/display-name
 const Test = React.memo((): JSX.Element => {
   return (
     <div style={{ width: '100%', height: '100%' }}>
-      {/* <BarChart
+      <BarChart
         height="100%"
         width="100%"
         data={portfolio.slice(5, 10)}
@@ -36,7 +34,7 @@ const Test = React.memo((): JSX.Element => {
         value="value"
         legend="top-right"
         outerRadius={240}
-        legendLabel="l"
+        legendLabel="fruit"
         pieLabel={true}
         colorScheme="schemeRdYlGn"
       />
@@ -72,8 +70,7 @@ const Test = React.memo((): JSX.Element => {
         xAxisLabel="Date"
         yAxisLabel="Value"
         legend="bottom"
-      /> */}
-
+      />
       <LineChart
         height="100%"
         width="100%"
@@ -82,7 +79,7 @@ const Test = React.memo((): JSX.Element => {
         xDataType="date"
         yKey="unemployment"
         groupBy="division"
-        data-test-id="line-chart"
+        data-testid="line-chart"
         // xAxis="bottom"
         // yAxis="left"
         // xGrid={true}

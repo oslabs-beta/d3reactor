@@ -72,6 +72,7 @@ export interface BarChartProps<T> {
 
 export interface LineChartProps<T> {
   data: Data[];
+  dataTestId?: string;
   height?: T;
   width?: T;
   xKey: string;
@@ -185,10 +186,11 @@ export interface Margin {
 }
 
 export interface ContinuousAxisProps {
-  x: number;
-  y: number;
-  xGrid?: boolean;
-  yGrid?: boolean;
+  dataTestId?: string
+  x: number
+  y: number
+  xGrid?: boolean
+  yGrid?: boolean
   scale:
     | d3.ScaleLinear<number, number, never>
     | d3.ScaleTime<number, number, never>;
@@ -206,6 +208,7 @@ export interface ContinuousAxisProps {
 }
 
 export interface DiscreteAxisProps {
+  dataTestId?:string;
   x: number;
   y: number;
   xGrid?: boolean;
@@ -272,6 +275,7 @@ export interface LineProps {
 
 export interface ArcProps {
   data: {};
+  dataTestId?: string;
   key: string;
   fill: string;
   stroke: string;

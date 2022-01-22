@@ -14,11 +14,20 @@ import fruit from './data/fruit.json';
 function App() {
   return (
     <div className="app">
-      {/* <PieChart data={fruit} label="label" value="value" outerRadius={240} /> */}
-      {/* <BarChart
+      <PieChart
+        data={fruit}
+        label="label"
+        value="value"
+        legend="top-right"
+        outerRadius={240}
+        legendLabel="fruit"
+        pieLabel={true}
+        colorScheme="schemeRdYlGn"
+      />
+      <BarChart
         height="100%"
         width="100%"
-        data={portfolio.slice(30, 38)}
+        data={portfolio.slice(5, 13)}
         xKey="date"
         yKey="value"
         xAxis="bottom"
@@ -26,6 +35,7 @@ function App() {
         yGrid={true}
         xAxisLabel="Date"
         yAxisLabel="Value"
+        legend={'bottom'}
       />
       <AreaChart
         height="100%"
@@ -39,7 +49,7 @@ function App() {
         xAxisLabel="Date"
         yAxisLabel="Value"
       />
-      */}
+    
       <LineChart
         height={500}
         width={500}
@@ -53,10 +63,12 @@ function App() {
         xGrid={true}
         xAxisLabel="Date"
         yAxisLabel="Value"
-      /> 
-      {/* <ScatterPlot
-        height={500}
-        width={500}
+        legend={'right'}
+        legendLabel="Markets"
+      />
+      <ScatterPlot
+        height="100%"
+        width="100%"
         data={penguins}
         xKey="flipper_length_mm"
         xDataType="number"
@@ -67,7 +79,7 @@ function App() {
         yGrid={true}
         yAxis="right"
         yAxisLabel="Body Mass"
-      /> */}
+      /> 
     </div>
   );
 }

@@ -1,5 +1,5 @@
 /** App.js */
-import React, { useState, useMemo, useCallback } from 'react';
+import React, { useState, useMemo } from 'react';
 /*eslint import/namespace: ['error', { allowComputed: true }]*/
 import * as d3 from 'd3';
 import { useResponsive } from '../../hooks/useResponsive';
@@ -9,7 +9,7 @@ import { Rectangle } from '../../components/Rectangle';
 import TooltipDiv from '../../components/TooltipDiv';
 import { ColorLegend } from '../../components/ColorLegend';
 import { transformSkinnyToWide } from '../../utils';
-import { BarChartProps, Data, ColorScale, yAccessorFunc } from '../../../types';
+import { BarChartProps, Data, yAccessorFunc } from '../../../types';
 import {
   getXAxisCoordinates,
   getYAxisCoordinates,
@@ -138,7 +138,7 @@ export default function BarChart({
   const colorScale = d3.scaleOrdinal(Array.from(computedScheme).reverse());
   colorScale.domain(keys);
 
-  const getSequenceData = (sequence: any) => {
+  const getSequenceData = (sequence: Data) => {
     const xKeyValue = { [xKey]: sequence.data[xKey] };
     const yKeyValue = { [yKey]: sequence[1] };
     return { ...xKeyValue, ...yKeyValue };
@@ -156,10 +156,11 @@ export default function BarChart({
           yKey={yKey}
         />
       )}
-      <svg width={cWidth} height={cHeight} data-test-id="bar-chart">
+      <svg width={cWidth} height={cHeight} data-testid="bar-chart">
         <g transform={translate}>
           {xAxis && (
             <DiscreteAxis
+              dataTestId="bar-chart-x-axis"
               x={xAxisX}
               y={xAxisY}
               height={cHeight}
@@ -176,6 +177,7 @@ export default function BarChart({
           )}
           {yAxisLabel && (
             <Label
+              dataTestId="bar-chart-y-axis-label"
               x={yAxisX}
               y={yAxisY}
               height={cHeight}
@@ -188,6 +190,7 @@ export default function BarChart({
           )}
           {yAxis && (
             <Axis
+              dataTestId="bar-chart-y-axis"
               x={yAxisX}
               y={yAxisY}
               height={cHeight}
@@ -200,6 +203,7 @@ export default function BarChart({
           )}
           {xAxisLabel && (
             <Label
+              dataTestId="bar-chart-x-axis-label"
               x={xAxisX}
               y={xAxisY}
               height={cHeight}
@@ -212,9 +216,9 @@ export default function BarChart({
             />
           )}
           {groupBy
-            ? layers.map((layer: any, i: number) => (
+            ? layers.map((layer: Data, i: number) => ( // MULTI CHART
                 <g key={i}>
-                  {layer.map((sequence: any, j: number) => (
+                  {layer.map((sequence: Data, j: number) => (
                     <Rectangle
                       data={getSequenceData(sequence)}
                       dataTestId={`rectangle-${j}`}
@@ -233,23 +237,28 @@ export default function BarChart({
                   ))}
                 </g>
               ))
-            : data.map((d: any, i: number) => (
+            : data.map((d: Data, i: number) => {
+              console.log(yScale(yAccessor(d)))
+              return ( // SINGLE CHART
                 <Rectangle
                   data={d}
                   dataTestId={`rectangle-${i}`}
                   key={i}
                   x={xScale(xAccessor(d))}
-                  y={yScale(yAccessor(d))}
+                  y={ // if value < 0 mark, start rect top at 0 mark
+                    yScale(0) - yScale(yAccessor(d)) > 0 ? 
+                      yScale(yAccessor(d))
+                    : yScale(0)
+                  }
                   width={xScale.bandwidth()}
-                  height={
-                    xAxisY - yScale(yAccessor(d)) > 0
-                      ? xAxisY - yScale(yAccessor(d))
-                      : 0
+                  height={ // draw rect from 0 mark to +value
+                    Math.abs(yScale(0) - yScale(yAccessor(d))) 
                   }
                   fill={colorScale(yKey)}
                   setTooltip={setTooltip}
                 />
-              ))}
+              )
+              })}
 
           {
             // If legend prop is truthy, render legend component:

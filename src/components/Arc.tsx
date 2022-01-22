@@ -1,18 +1,12 @@
 import React from 'react';
 import * as d3 from 'd3';
 
-import {
-  ArcProps,
-  Data,
-  Margin,
-  ScaleFunc,
-  xAccessorFunc,
-  yAccessorFunc,
-} from '../../types';
+import { ArcProps } from '../../types';
 
 export const Arc = React.memo(
   ({
     data,
+    dataTestId = 'arc',
     key,
     fill = 'none',
     stroke,
@@ -45,6 +39,7 @@ export const Arc = React.memo(
     return (
       <path
         className="arc"
+        data-testid={dataTestId}
         fill={fill}
         stroke={stroke}
         strokeWidth={strokeWidth}
