@@ -2,7 +2,6 @@ import React from 'react';
 import * as d3 from 'd3';
 import { ContinuousAxisProps } from '../../types';
 import { gridGenerator } from '../functionality/grid';
-
 import './Components.css';
 
 function Axi({

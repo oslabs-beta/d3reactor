@@ -196,11 +196,11 @@ describe('Continuous Axis test', () => {
     setup(initialProps);
     expect(screen.getByText('10/1/2019')).toHaveAttribute(
       'transform',
-      'translate(120.72072072072073, 418)'
+      'translate(120.46332046332047, 418)'
     );
     expect(screen.getByText('1/1/2020')).toHaveAttribute(
       'transform',
-      'translate(262.8700128700129, 418)'
+      'translate(262.5482625482625, 418)'
     );
     cleanup();
     const updatedXScale = d3
@@ -216,7 +216,7 @@ describe('Continuous Axis test', () => {
     });
     expect(screen.getByText('2/1/2020')).toHaveAttribute(
       'transform',
-      'translate(699.1795366795367, 918)'
+      'translate(698.4555984555984, 918)'
     );
     cleanup();
     const topProps: ContinuousAxisProps = {
@@ -233,11 +233,11 @@ describe('Continuous Axis test', () => {
     setup(topProps);
     expect(screen.getByText('10/1/2019')).toHaveAttribute(
       'transform',
-      'translate(120.72072072072073, -8)'
+      'translate(120.46332046332047, -8)'
     );
     expect(screen.getByText('1/1/2020')).toHaveAttribute(
       'transform',
-      'translate(262.8700128700129, -8)'
+      'translate(262.5482625482625, -8)'
     );
     cleanup();
     const topPropsResized: ContinuousAxisProps = {
@@ -257,7 +257,7 @@ describe('Continuous Axis test', () => {
     setup(topPropsResized);
     expect(screen.getByText('2/1/2020')).toHaveAttribute(
       'transform',
-      'translate(699.1795366795367, -8)'
+      'translate(698.4555984555984, -8)'
     );
     cleanup();
     setup(leftProps);
