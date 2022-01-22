@@ -14,7 +14,7 @@ describe('Bar Chart', () => {
     cy.get('[data-testid = rectangle-1]').trigger('mouseover');
     cy.get('[data-testid = tooltip-bar-chart]')
       .should('be.visible')
-      .should('contain', 'date: 2019-07-23');
+      .should('contain', 'date 2019-07-23');
     cy.get('[data-testid = bar-chart-x-axis-label]')
       .should('be.visible')
       .should('contain', 'Date');
