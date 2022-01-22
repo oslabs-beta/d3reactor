@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
 import { getAxisLabelCoordinates } from '../utils';
 import { Margin } from '../../types';
+import './Components.css';
 
 export function Label({
   dataTestId = 'label',
