@@ -111,7 +111,7 @@ export default function PieChart({
   // Offset position of the pie
   let translateX = 0;
   let translateY = 0;
-  console.log(xOffset);
+
   switch (legend) {
     case 'top':
       xPosition = -xOffset / 2 + EXTRA_LEGEND_MARGIN;
@@ -170,8 +170,7 @@ export default function PieChart({
       translateX = -xOffset;
       break;
   }
-  // console.log('outer raduys', outerRadius);
-  // console.log('yposition', yPosition);
+
   const translate = `translate(${(cWidth + translateX) / 2}, ${
     (cHeight + translateY) / 2
   })`;
