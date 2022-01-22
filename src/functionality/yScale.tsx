@@ -25,9 +25,6 @@ export function yScaleDef(
     yMin = Math.min(0, d3.min(data, yAccessor) as number);
   }
 
-  console.log('yMin', yMin);
-  console.log('yMax', yMax);
-
   const rangeMax = height - margin.top - margin.bottom;
   const yScale = d3
     .scaleLinear()
