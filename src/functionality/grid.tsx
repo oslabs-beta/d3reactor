@@ -14,6 +14,7 @@ export function gridGenerator(
   width: number,
   margin: Margin
 ): JSX.Element[] {
+
   let grid: JSX.Element[] = [];
   switch (true) {
     case type === 'bottom' && xGrid:
@@ -23,6 +24,7 @@ export function gridGenerator(
           return (
             <line
               key={i}
+              data-testid='d3reactor-gridline'
               x1={scale(tick)}
               x2={scale(tick)}
               y1={0}
@@ -40,6 +42,7 @@ export function gridGenerator(
           return (
             <line
               key={i}
+              data-testid='d3reactor-gridline'
               x1={scale(tick)}
               x2={scale(tick)}
               y1={0}
@@ -56,6 +59,7 @@ export function gridGenerator(
           const x2 = width - margin.right - margin.left;
           return (
             <line
+              data-testid='d3reactor-gridline'
               className="grid-line"
               key={i}
               x1={0}
@@ -74,6 +78,7 @@ export function gridGenerator(
           const x2 = -width + margin.right + margin.left;
           return (
             <line
+              data-testid='d3reactor-gridline'
               className="grid-line"
               key={i}
               x1={0}

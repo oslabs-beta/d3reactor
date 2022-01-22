@@ -14,8 +14,8 @@ import fruit from './data/fruit.json';
 function App() {
   return (
     <div className="app">
-      <PieChart data={fruit} label="label" value="value" outerRadius={240} />
-      <BarChart
+      {/* <PieChart data={fruit} label="label" value="value" outerRadius={240} /> */}
+      {/* <BarChart
         height="100%"
         width="100%"
         data={portfolio.slice(30, 38)}
@@ -39,22 +39,24 @@ function App() {
         xAxisLabel="Date"
         yAxisLabel="Value"
       />
+      */}
       <LineChart
-        height="100%"
-        width="100%"
+        height={500}
+        width={500}
         data={portfolio}
         xKey="date"
         xDataType="date"
         yKey="value"
-        xAxis="bottom"
+        xAxis={false}
         yAxis="left"
         yGrid={true}
+        xGrid={true}
         xAxisLabel="Date"
         yAxisLabel="Value"
-      />
-      <ScatterPlot
-        height="100%"
-        width="100%"
+      /> 
+      {/* <ScatterPlot
+        height={500}
+        width={500}
         data={penguins}
         xKey="flipper_length_mm"
         xDataType="number"
@@ -65,7 +67,7 @@ function App() {
         yGrid={true}
         yAxis="right"
         yAxisLabel="Body Mass"
-      />
+      /> */}
     </div>
   );
 }

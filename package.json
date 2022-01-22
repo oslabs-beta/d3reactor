@@ -10,6 +10,9 @@
   "sideEffects": [
     "*.css"
   ],
+  "jest": {
+    "transformIgnorePatterns": ["/node_modules/(?!d3|d3-array|internmap|delaunator|robust-predicates)"]
+  },   
   "scripts": {
     "build": "webpack --config webpack.prod.ts",
     "dev": "webpack-dev-server --config webpack.dev.ts --open",
