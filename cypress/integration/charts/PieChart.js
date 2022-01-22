@@ -12,7 +12,7 @@ describe('Pie Chart', () => {
     cy.get('[data-testid = pie-chart-arc-text-2]')
       .should('be.visible')
       .should('contain', '30');
-    cy.get('[data-testid = pie-chart-arc-2]').trigger('mouseover');
+    // cy.get('[data-testid = pie-chart-arc-2]').trigger('mouseover');
     //TODO: investigate why the tooltip is not visible
     // cy.get('[data-testid = tooltip-pie-chart]').should('be.visible');
   });
