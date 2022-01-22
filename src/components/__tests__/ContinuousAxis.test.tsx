@@ -39,16 +39,16 @@ const initialProps: ContinuousAxisProps = {
   xGrid: undefined,
   yGrid: undefined,
   xTicksValue: [
-    new Date("2019-07-15T00:00:00.000Z").toUTCString(),
-    new Date("2019-08-01T04:00:00.000Z").toUTCString(),
-    new Date("2019-09-01T04:00:00.000Z").toUTCString(),
-    new Date("2019-10-01T04:00:00.000Z").toUTCString(),
-    new Date("2019-11-01T04:00:00.000Z").toUTCString(),
-    new Date("2019-12-01T05:00:00.000Z").toUTCString(),
-    new Date("2020-01-01T05:00:00.000Z").toUTCString(),
-    new Date("2020-02-01T05:00:00.000Z").toUTCString(),
-    new Date("2020-03-01T05:00:00.000Z").toUTCString(),
-    new Date("2020-03-30T00:00:00.000Z").toUTCString(),
+    new Date("2019-07-15T00:00:00.000Z"),
+    new Date("2019-08-01T04:00:00.000Z"),
+    new Date("2019-09-01T04:00:00.000Z"),
+    new Date("2019-10-01T04:00:00.000Z"),
+    new Date("2019-11-01T04:00:00.000Z"),
+    new Date("2019-12-01T05:00:00.000Z"),
+    new Date("2020-01-01T05:00:00.000Z"),
+    new Date("2020-02-01T05:00:00.000Z"),
+    new Date("2020-03-01T05:00:00.000Z"),
+    new Date("2020-03-30T00:00:00.000Z"),
 ]
 };
 
