@@ -157,9 +157,6 @@ export default function LineChart({
   const colorScale = d3.scaleOrdinal(Array.from(computedScheme).reverse());
   colorScale.domain(computedScheme);
 
-  console.log('Keys ', keys);
-  console.log('Computed schema ', computedScheme);
-  console.log('COLOR SCALE ', colorScale(keys[0]));
   return (
     <div ref={anchor} style={{ width: width, height: height }}>
       {tooltip && (

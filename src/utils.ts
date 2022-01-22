@@ -269,7 +269,7 @@ export function checkRadiusDimension(
       break;
     case 'right':
     case 'top-right':
-    case 'top-right':
+    case 'bottom-right':
       legendMargin = margin.right;
       break;
   }
@@ -293,7 +293,7 @@ export function calculateOuterRadius(
     (height - margin.top - margin.bottom) / 2,
     (width - margin.left - margin.right) / 2
   );
-  return Math.min(radius, 20);
+  return Math.max(radius, 20);
 }
 
 interface CountryDataProps {
