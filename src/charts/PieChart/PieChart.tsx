@@ -193,7 +193,7 @@ export default function PieChart({
             <g key={'g' + i}>
               <Arc
                 data={{ [label]: d.data[label], [value]: d.data[value] }}
-                data-TestId={`pie-chart-arc-${i}`}
+                dataTestId={`pie-chart-arc-${i}`}
                 key={d.label}
                 fill={colorScale(keys[i])}
                 stroke="#ffffff"
