@@ -1,11 +1,7 @@
 describe('Pie Chart', () => {
   it('should display pie chart', () => {
     cy.visit('localhost:8080');
-    cy.get('[data-testid = pie-chart]')
-      .should('be.visible')
-      .and((chart) => {
-        expect(chart.height()).to.be.greaterThan(480);
-      });
+    cy.get('[data-testid = pie-chart]').should('be.visible');
     cy.get('[data-testid = pie-chart-legend]')
       .should('be.visible')
       .should('contain', 'fruit');
