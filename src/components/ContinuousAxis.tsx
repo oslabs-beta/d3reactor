@@ -3,6 +3,8 @@ import * as d3 from 'd3';
 import { ContinuousAxisProps } from '../../types';
 import { gridGenerator } from '../functionality/grid';
 
+import './Components.css';
+
 function Axi({
   dataTestId = 'd3reactor-continuous',
   x,
@@ -17,7 +19,6 @@ function Axi({
   xTicksValue,
   chartType,
 }: ContinuousAxisProps): JSX.Element {
-  
   let x1 = 0,
     y1 = 0,
     x2 = 0,
@@ -148,7 +149,7 @@ function Axi({
       {(type === 'top' || type === 'bottom') &&
         horizontalTicks.map((tick, i) => (
           <text
-            data-testid='d3reactor-ticktext'
+            data-testid="d3reactor-ticktext"
             className="tick-text"
             key={tick.toString()}
             style={getTickStyle(type, tick)}
@@ -160,7 +161,7 @@ function Axi({
       {(type === 'right' || type === 'left') &&
         verticalTicks.map((tick, i) => (
           <text
-            data-testid='d3reactor-ticktext'
+            data-testid="d3reactor-ticktext"
             className="tick-text"
             key={tick.toString()}
             style={getTickStyle(type, tick)}
