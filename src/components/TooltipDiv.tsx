@@ -11,6 +11,11 @@ const TooltipDiv = ({
   xKey,
   yKey,
 }: TooltipProps): JSX.Element => {
+  const backgroundColor = '#fff';
+  const boarderColor = '#ddd';
+  const triangleSize = 12;
+  const shadowElevationHigh = `0 0 10px 0 rgba(80, 80, 80, 0.2)`;
+
   const tooltipWrapperStyle: React.CSSProperties | undefined = {
     left: x,
     top: y,
@@ -20,11 +25,6 @@ const TooltipDiv = ({
     fontFamily: 'Tahoma, Geneva, Verdana, sans-serif',
     color: '#737373',
   };
-
-  const backgroundColor = '#fff';
-  const boarderColor = '#ddd';
-  const triangleSize = 12;
-  const shadowElevationHigh = `0 0 10px 0 rgba(80, 80, 80, 0.2)`;
 
   const contentStyle: React.CSSProperties | undefined = {
     position: 'absolute',
@@ -69,20 +69,20 @@ const TooltipDiv = ({
       triangleSize / 2
     }px)) rotate(45deg)`,
     transformOrigin: 'center center',
-    boxShadow: '1px 1px 14px 0px rgba(0,0,0,0.2)',
+    boxShadow: shadowElevationHigh,
     zIndex: '8',
     pointerEvents: 'none',
   };
 
   const circleStyle: React.CSSProperties | undefined = {
-    width: '4px',
-    height: '4px',
-    borderRadius: '50%',
-    border: '1px solid #0184c7',
-    position: 'absolute',
-    transform: 'translate(-50%, -50%)',
-    backgroundColor: '#f0f9ff',
-    boxShadow: '1px 1px 2px 1px rgba(0,0,0,0.15)',
+    // width: '4px',
+    // height: '4px',
+    // borderRadius: '50%',
+    // border: '1px solid #0184c7',
+    // position: 'absolute',
+    // transform: 'translate(-50%, -50%)',
+    // backgroundColor: '#f0f9ff',
+    // boxShadow: shadowElevationHigh,
     pointerEvents: 'none',
   };
 
@@ -97,9 +97,6 @@ const TooltipDiv = ({
     // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
     yValString = `${Math.round(yValString * 100) / 100}`;
   }
-
-  console.log('xKey ', xValString);
-  console.log('yKey ', data.tooltipData[yKey as string]);
 
   const xTooltipText = `${xKey}: ${xValString}`;
   const yTooltipText = `${yKey}: ${yValString}`;
