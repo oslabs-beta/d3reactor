@@ -22,7 +22,7 @@ export function yScaleDef(
     }) as number;
   } else {
     yMax = d3.max(data, yAccessor) as number;
-    yMin = d3.min(data, yAccessor) as number;
+    yMin = Math.min(0, d3.min(data, yAccessor) as number);
   }
 
   const rangeMax = height - margin.top - margin.bottom;
