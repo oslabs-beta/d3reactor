@@ -49,18 +49,16 @@ function App() {
         xAxisLabel="Date"
         yAxisLabel="Value"
       />
-    
       <LineChart
-        height={500}
-        width={500}
+        height={"100%"}
+        width={"100%"}
         data={portfolio}
         xKey="date"
         xDataType="date"
         yKey="value"
-        xAxis={false}
+        xAxis="bottom"
         yAxis="left"
         yGrid={true}
-        xGrid={true}
         xAxisLabel="Date"
         yAxisLabel="Value"
         legend={'right'}
