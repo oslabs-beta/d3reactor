@@ -17,11 +17,13 @@ const TooltipDiv = ({
     transform: 'translate(-50%, -50%)',
     position: 'absolute',
     pointerEvents: 'none',
+    fontFamily: 'Tahoma, Geneva, Verdana, sans-serif',
+    color: '#737373',
   };
 
   const backgroundColor = '#fff';
   const boarderColor = '#ddd';
-  const pointerSize = 12;
+  const triangleSize = 12;
   const shadowElevationHigh = `0 0 10px 0 rgba(80, 80, 80, 0.2)`;
 
   const contentStyle: React.CSSProperties | undefined = {
@@ -29,28 +31,28 @@ const TooltipDiv = ({
     margin: '4px 4px',
     padding: '0.6em 1em',
     borderRadius: '4px',
-    maxWidth: '380px',
-    transform: `translate(-50%, calc(-100% - ${pointerSize + 4}px)`,
+    maxWidth: '280px',
+    transform: `translate(-50%, calc(-100% - ${triangleSize + 4}px)`,
     background: backgroundColor,
-    textAlign: 'center',
+    textAlign: 'left',
     lineHeight: '1.4em',
-    fontSize: '0.9em',
-    color: '#1e2023',
+    fontSize: '1em',
     border: `1px solid ${boarderColor}`,
     zIndex: '9',
     transition: 'all 0.1s ease-out',
     boxShadow: shadowElevationHigh,
     pointerEvents: 'none',
+    whiteSpace: 'nowrap',
   };
 
   const triangleStyle: React.CSSProperties | undefined = {
     content: '',
     position: 'absolute',
-    width: `${pointerSize}px`,
-    height: `${pointerSize}px`,
+    width: `${triangleSize}px`,
+    height: `${triangleSize}px`,
     background: backgroundColor,
     transform: `translate(-50%, calc(-102% - ${
-      pointerSize / 2
+      triangleSize / 2
     }px)) rotate(45deg)`,
     transformOrigin: 'center center',
     zIndex: '10',
@@ -60,11 +62,11 @@ const TooltipDiv = ({
   const triangleBorderStyle: React.CSSProperties | undefined = {
     content: '',
     position: 'absolute',
-    width: `${pointerSize}px`,
-    height: `${pointerSize}px`,
+    width: `${triangleSize}px`,
+    height: `${triangleSize}px`,
     background: boarderColor,
     transform: `translate(-50%, calc(-100% - ${
-      pointerSize / 2
+      triangleSize / 2
     }px)) rotate(45deg)`,
     transformOrigin: 'center center',
     boxShadow: '1px 1px 14px 0px rgba(0,0,0,0.2)',
@@ -84,8 +86,23 @@ const TooltipDiv = ({
     pointerEvents: 'none',
   };
 
-  const xTooltipText = `${xKey}: ${data.tooltipData[xKey as string]}`;
-  const yTooltipText = `${yKey}: ${data.tooltipData[yKey as string]}`;
+  let xValString = data.tooltipData[xKey as string];
+  if (data.tooltipData[xKey as string] instanceof Date) {
+    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+    xValString = `${xValString.getFullYear()}.${xValString.getMonth()}.${xValString.getDay()}`;
+  }
+
+  let yValString = data.tooltipData[yKey as string];
+  if (!isNaN(data.tooltipData[yKey as string])) {
+    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+    yValString = `${Math.round(yValString * 100) / 100}`;
+  }
+
+  console.log('xKey ', xValString);
+  console.log('yKey ', data.tooltipData[yKey as string]);
+
+  const xTooltipText = `${xKey}: ${xValString}`;
+  const yTooltipText = `${yKey}: ${yValString}`;
 
   return (
     <div style={tooltipWrapperStyle} data-testid={`tooltip-${chartType}`}>
