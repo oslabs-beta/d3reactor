@@ -150,7 +150,7 @@ function Axi({
           <text
             data-testid="d3reactor-ticktext"
             className="tick-text"
-            key={tick.toString()}
+            key={JSON.stringify(tick)}
             style={getTickStyle(type, tick)}
             transform={getTickTranslation(type, tick)}
           >
@@ -162,7 +162,7 @@ function Axi({
           <text
             data-testid="d3reactor-ticktext"
             className="tick-text"
-            key={tick.toString()}
+            key={JSON.stringify(tick)}
             style={getTickStyle(type, tick)}
             transform={getTickTranslation(type, tick)}
           >

@@ -171,8 +171,6 @@ export const ColorLegend = ({
     fontSize: '12px',
     color: '#737373',
   };
-
-  console.log('Rect width ', rectWidth + 10);
   return (
     <g
       data-testid={dataTestId}
