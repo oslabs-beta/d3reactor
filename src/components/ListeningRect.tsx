@@ -104,8 +104,8 @@ export default function ListeningRect({
       setTooltip(cellCenter);
     }
   }
-  const rectWidth = width - margin.right - margin.left
-  const rectHeight = height - margin.bottom - margin.top
+  const rectWidth = width - margin.right - margin.left;
+  const rectHeight = height - margin.bottom - margin.top;
   return (
     <rect
       width={rectWidth >= 0 ? rectWidth : 0}

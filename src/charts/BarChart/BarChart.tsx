@@ -243,7 +243,6 @@ export default function BarChart({
                 )
               )
             : data.map((d: Data, i: number) => {
-                console.log(yScale(yAccessor(d)));
                 return (
                   // SINGLE CHART
                   <Rectangle

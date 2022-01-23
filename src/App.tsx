@@ -47,8 +47,8 @@ function App() {
         yAxisLabel="Value"
       />
       <LineChart
-        height={"100%"}
-        width={"100%"}
+        height={'100%'}
+        width={'100%'}
         data={portfolio}
         xKey="date"
         xDataType="date"
@@ -74,7 +74,7 @@ function App() {
         yGrid={true}
         yAxis="right"
         yAxisLabel="Body Mass"
-      /> 
+      />
     </div>
   );
 }
