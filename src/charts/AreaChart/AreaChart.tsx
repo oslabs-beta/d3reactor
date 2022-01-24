@@ -14,7 +14,7 @@ import { useResponsive } from '../../hooks/useResponsive';
 import { xScaleDef } from '../../functionality/xScale';
 import { yScaleDef } from '../../functionality/yScale';
 import ListeningRect from '../../components/ListeningRect';
-import TooltipDiv from '../../components/TooltipDiv';
+import Tooltip from '../../components/Tooltip';
 import { ColorLegend } from '../../components/ColorLegend';
 import {
   getXAxisCoordinates,
@@ -167,7 +167,7 @@ export default function AreaChart({
   return (
     <div ref={anchor} style={{ width: width, height: height }}>
       {tooltip && (
-        <TooltipDiv
+        <Tooltip
           data={tooltip}
           x={margin.left + tooltip.cx}
           y={margin.top + tooltip.cy}

@@ -6,7 +6,7 @@ import { useResponsive } from '../../hooks/useResponsive';
 import { Axis } from '../../components/ContinuousAxis';
 import { DiscreteAxis } from '../../components/DiscreteAxis';
 import { Rectangle } from '../../components/Rectangle';
-import TooltipDiv from '../../components/TooltipDiv';
+import Tooltip from '../../components/Tooltip';
 import { ColorLegend } from '../../components/ColorLegend';
 import { transformSkinnyToWide } from '../../utils';
 import { BarChartProps, Data, yAccessorFunc } from '../../../types';
@@ -147,7 +147,7 @@ export default function BarChart({
   return (
     <div ref={anchor} style={{ width: width, height: height }}>
       {tooltip && (
-        <TooltipDiv
+        <Tooltip
           chartType="bar-chart"
           data={tooltip}
           x={tooltip.cx + xScale.bandwidth() / 2 + margin.left}

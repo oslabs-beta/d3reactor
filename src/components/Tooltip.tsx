@@ -1,7 +1,7 @@
 import React from 'react';
 import { TooltipProps } from '../../types';
 
-const TooltipDiv = ({
+const Tooltip = ({
   chartType,
   data,
   xAccessor,
@@ -32,7 +32,7 @@ const TooltipDiv = ({
     margin: '4px 4px',
     padding: '0.6em 1em',
     borderRadius: '4px',
-    maxWidth: '280px',
+    width: '280px',
     transform: `translate(-50%, calc(-100% - ${triangleSize}px)`,
     background: backgroundColor,
     textAlign: 'left',
@@ -43,7 +43,8 @@ const TooltipDiv = ({
     transition: 'all 0.1s ease-out',
     boxShadow: shadowElevationHigh,
     pointerEvents: 'none',
-    whiteSpace: 'nowrap',
+    whiteSpace: 'normal',
+    wordBreak: 'break-word',
   };
 
   const triangleStyle: React.CSSProperties | undefined = {
@@ -103,4 +104,4 @@ const TooltipDiv = ({
   );
 };
 
-export default TooltipDiv;
+export default Tooltip;

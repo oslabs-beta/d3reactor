@@ -8,11 +8,12 @@ import PieChart from './charts/PieChart/PieChart';
 import portfolio from './data/portfolio.json';
 import penguins from './data/penguins.json';
 import fruit from './data/fruit.json';
+import skinny_fruit from './data/skinny_fruit.json';
 
 function App() {
   return (
     <div className="app" style={{ height: '100vh', width: '100vw' }}>
-      <PieChart
+      {/* <PieChart
         data={fruit}
         label="label"
         value="value"
@@ -20,13 +21,14 @@ function App() {
         outerRadius={240}
         legendLabel="fruit"
         pieLabel={true}
-      />
+      /> */}
       <BarChart
         height="100%"
         width="100%"
-        data={portfolio.slice(5, 13)}
+        data={skinny_fruit}
         xKey="date"
         yKey="value"
+        groupBy="fruit"
         xAxis="bottom"
         yAxis="right"
         yGrid={true}
@@ -34,7 +36,7 @@ function App() {
         yAxisLabel="Value"
         legend={'bottom'}
       />
-      <AreaChart
+      {/*<AreaChart
         height="100%"
         width="100%"
         data={portfolio.slice(30, 60)}
@@ -71,10 +73,13 @@ function App() {
         xAxis="bottom"
         xAxisLabel="Flipper Length"
         yKey="body_mass_g"
+        groupBy="species"
         yGrid={true}
         yAxis="right"
         yAxisLabel="Body Mass"
-      />
+        legendLabel="Species"
+        legend="right"
+      /> */}
     </div>
   );
 }

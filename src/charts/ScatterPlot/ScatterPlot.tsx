@@ -12,7 +12,7 @@ import { d3Voronoi } from '../../functionality/voronoi';
 import { xScaleDef } from '../../functionality/xScale';
 import { yScaleDef } from '../../functionality/yScale';
 import { VoronoiWrapper } from '../../components/VoronoiWrapper';
-import TooltipDiv from '../../components/TooltipDiv';
+import Tooltip from '../../components/Tooltip';
 import {
   ScatterPlotProps,
   xAccessorFunc,
@@ -142,7 +142,7 @@ export default function ScatterPlot({
   return (
     <div ref={anchor} style={{ width: width, height: height }}>
       {tooltip && (
-        <TooltipDiv
+        <Tooltip
           chartType="scatter-plot"
           data={tooltip}
           x={margin.left + tooltip.cx}

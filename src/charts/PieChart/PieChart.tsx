@@ -6,7 +6,7 @@ import { useResponsive } from '../../hooks/useResponsive';
 import { PieChartProps, Data } from '../../../types';
 import { ColorLegend } from '../../components/ColorLegend';
 import { Arc } from '../../components/Arc';
-import TooltipDiv from '../../components/TooltipDiv';
+import Tooltip from '../../components/Tooltip';
 import {
   checkRadiusDimension,
   calculateOuterRadius,
@@ -178,7 +178,7 @@ export default function PieChart({
   return (
     <div ref={anchor} style={{ width: '100%', height: '100%' }}>
       {tooltip && (
-        <TooltipDiv
+        <Tooltip
           chartType="pie-chart"
           data={tooltip}
           x={tooltip.cx}

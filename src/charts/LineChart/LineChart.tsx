@@ -24,7 +24,7 @@ import { yScaleDef } from '../../functionality/yScale';
 import { xScaleDef } from '../../functionality/xScale';
 import { d3Voronoi } from '../../functionality/voronoi';
 import { Label } from '../../components/Label';
-import TooltipDiv from '../../components/TooltipDiv';
+import Tooltip from '../../components/Tooltip';
 import './LineChart.css';
 
 export default function LineChart({
@@ -160,7 +160,7 @@ export default function LineChart({
   return (
     <div ref={anchor} style={{ width: width, height: height }}>
       {tooltip && (
-        <TooltipDiv
+        <Tooltip
           data={tooltip}
           x={margin.left + tooltip.cx}
           y={margin.top + tooltip.cy}
