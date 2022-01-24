@@ -2,7 +2,7 @@ import React from 'react';
 import BarChart from './charts/BarChart/BarChart';
 import AreaChart from './charts/AreaChart/AreaChart';
 import LineChart from './charts/LineChart/LineChart';
-// import ScatterPlot from './charts/ScatterPlot/ScatterPlot';
+import ScatterPlot from './charts/ScatterPlot/ScatterPlot';
 import PieChart from './charts/PieChart/PieChart';
 
 import portfolio from './data/portfolio.json';
@@ -40,17 +40,15 @@ function App() {
       <AreaChart
         height="100%"
         width="100%"
-        data={skinny_fruit}
+        data={portfolio.slice(30, 60)}
         xKey="date"
         yKey="value"
-        groupBy="fruit"
         xAxis="bottom"
         yAxis="right"
         yGrid={true}
         xAxisLabel="Date"
         yAxisLabel="Value"
-        legend={'bottom'}
-        legendLabel="Fruit"
+        legend="right"
       />
       <LineChart
         height={'100%'}
@@ -67,7 +65,7 @@ function App() {
         legend={'right'}
         legendLabel="Markets"
       />
-      {/* <ScatterPlot
+      <ScatterPlot
         height="100%"
         width="100%"
         data={penguins}
@@ -83,7 +81,7 @@ function App() {
         yAxisLabel="Body Mass"
         legendLabel="Species"
         legend="right"
-      /> */}
+      />
     </div>
   );
 }
