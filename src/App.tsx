@@ -1,6 +1,6 @@
 import React from 'react';
 import BarChart from './charts/BarChart/BarChart';
-// import AreaChart from './charts/AreaChart/AreaChart';
+import AreaChart from './charts/AreaChart/AreaChart';
 import LineChart from './charts/LineChart/LineChart';
 // import ScatterPlot from './charts/ScatterPlot/ScatterPlot';
 import PieChart from './charts/PieChart/PieChart';
@@ -37,17 +37,20 @@ function App() {
         legend={'bottom'}
         legendLabel="Fruit"
       />
-      {/* <AreaChart
+      <AreaChart
         height="100%"
         width="100%"
-        data={portfolio.slice(30, 60)}
+        data={skinny_fruit}
         xKey="date"
         yKey="value"
+        groupBy="fruit"
         xAxis="bottom"
         yAxis="right"
         yGrid={true}
         xAxisLabel="Date"
         yAxisLabel="Value"
+        legend={'bottom'}
+        legendLabel="Fruit"
       />
       <LineChart
         height={'100%'}

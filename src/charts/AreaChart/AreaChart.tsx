@@ -164,6 +164,13 @@ export default function AreaChart({
   const colorScale = d3.scaleOrdinal(Array.from(computedScheme).reverse());
   colorScale.domain(keys);
 
+  let labelArray = [];
+  if (typeof groupBy === 'string' && groupBy.length !== 0) {
+    labelArray = layers.map((layer: { key: any }) => layer.key);
+  } else {
+    labelArray = [yKey];
+  }
+
   return (
     <div ref={anchor} style={{ width: width, height: height }}>
       {tooltip && (
@@ -239,7 +246,7 @@ export default function AreaChart({
             legend && (
               <ColorLegend
                 legendLabel={legendLabel}
-                labels={['string']}
+                labels={labelArray}
                 circleRadius={5 /* Radius of each color swab in legend */}
                 colorScale={colorScale}
                 setLegendOffset={setLegendOffset}

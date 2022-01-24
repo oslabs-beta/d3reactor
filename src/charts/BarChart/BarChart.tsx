@@ -144,7 +144,6 @@ export default function BarChart({
     return { ...xKeyValue, ...yKeyValue };
   };
 
-  console.log('Bar chart layers ', layers);
   let labelArray = [];
   if (typeof groupBy === 'string' && groupBy.length !== 0) {
     labelArray = layers.map((layer: { key: any }) => layer.key);
