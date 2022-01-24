@@ -144,6 +144,14 @@ export default function BarChart({
     return { ...xKeyValue, ...yKeyValue };
   };
 
+  console.log('Bar chart layers ', layers);
+  let labelArray = [];
+  if (typeof groupBy === 'string' && groupBy.length !== 0) {
+    labelArray = layers.map((layer: { key: any }) => layer.key);
+  } else {
+    labelArray = [yKey];
+  }
+
   return (
     <div ref={anchor} style={{ width: width, height: height }}>
       {tooltip && (
@@ -272,7 +280,7 @@ export default function BarChart({
             legend && (
               <ColorLegend
                 legendLabel={legendLabel}
-                labels={['string']}
+                labels={labelArray}
                 circleRadius={5 /* Radius of each color swab in legend */}
                 colorScale={colorScale}
                 dataTestId="bar-chart-legend"

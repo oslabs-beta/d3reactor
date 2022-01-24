@@ -1,5 +1,5 @@
 import React from 'react';
-// import BarChart from './charts/BarChart/BarChart';
+import BarChart from './charts/BarChart/BarChart';
 // import AreaChart from './charts/AreaChart/AreaChart';
 import LineChart from './charts/LineChart/LineChart';
 // import ScatterPlot from './charts/ScatterPlot/ScatterPlot';
@@ -22,7 +22,7 @@ function App() {
         legendLabel="fruit"
         pieLabel={true}
       />
-      {/* <BarChart
+      <BarChart
         height="100%"
         width="100%"
         data={skinny_fruit}
@@ -35,8 +35,9 @@ function App() {
         xAxisLabel="Date"
         yAxisLabel="Value"
         legend={'bottom'}
+        legendLabel="Fruit"
       />
-      <AreaChart
+      {/* <AreaChart
         height="100%"
         width="100%"
         data={portfolio.slice(30, 60)}
@@ -47,7 +48,7 @@ function App() {
         yGrid={true}
         xAxisLabel="Date"
         yAxisLabel="Value"
-      /> */}
+      />
       <LineChart
         height={'100%'}
         width={'100%'}
