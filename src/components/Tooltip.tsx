@@ -81,11 +81,9 @@ const Tooltip = ({
   // };
 
   let xValString = data.tooltipData[xKey as string];
-  console.log('This is not a date... ', xValString);
   if (data.tooltipData[xKey as string] instanceof Date) {
     // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
     xValString = `${xValString.getFullYear()}.${xValString.getMonth()}.${xValString.getDay()}`;
-    console.log('IS INSTANCE OF DATE');
   }
 
   let yValString = data.tooltipData[yKey as string];
@@ -93,8 +91,6 @@ const Tooltip = ({
     // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
     yValString = `${Math.round(yValString * 100) / 100}`;
   }
-
-  console.log('Tooltip data ', data);
 
   return (
     <div style={tooltipWrapperStyle} data-testid={`tooltip-${chartType}`}>

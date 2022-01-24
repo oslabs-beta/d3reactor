@@ -80,16 +80,13 @@ export default function LineChart({
   }, [data]);
 
   const lineGroups: any = d3.group(data, (d) => d[groupBy ?? '']);
-  console.log('LINE GROUPS ', lineGroups);
 
   let keys: string[] = [];
-  if (groupBy !== null) {
+  if (groupBy !== undefined) {
     keys = Array.from(lineGroups).map((group: any) => group[0]);
   } else {
     keys = [yKey];
   }
-
-  console.log('Line group keys ', keys);
 
   const line: any = d3
     .line()
