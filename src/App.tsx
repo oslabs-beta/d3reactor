@@ -8,11 +8,12 @@ import PieChart from './charts/PieChart/PieChart';
 import portfolio from './data/portfolio.json';
 import penguins from './data/penguins.json';
 import fruit from './data/fruit.json';
+import unemployment from './data/unemployment.json';
 
 function App() {
   return (
     <div className="app" style={{ height: '100vh', width: '100vw' }}>
-      <PieChart
+      {/* <PieChart
         data={fruit}
         label="label"
         value="value"
@@ -45,23 +46,24 @@ function App() {
         yGrid={true}
         xAxisLabel="Date"
         yAxisLabel="Value"
-      />
+      /> */}
       <LineChart
         height={'100%'}
         width={'100%'}
-        data={portfolio}
+        data={unemployment}
         xKey="date"
         xDataType="date"
-        yKey="value"
+        yKey="unemployment"
+        groupBy="division"
         xAxis="bottom"
         yAxis="left"
         yGrid={true}
         xAxisLabel="Date"
-        yAxisLabel="Value"
+        yAxisLabel="Unemployment"
         legend={'right'}
-        legendLabel="Markets"
+        legendLabel="Division"
       />
-      <ScatterPlot
+      {/* <ScatterPlot
         height="100%"
         width="100%"
         data={penguins}
@@ -74,7 +76,7 @@ function App() {
         yGrid={true}
         yAxis="right"
         yAxisLabel="Body Mass"
-      />
+      /> */}
     </div>
   );
 }
