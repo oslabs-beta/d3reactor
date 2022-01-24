@@ -8,7 +8,6 @@ import PieChart from './charts/PieChart/PieChart';
 import portfolio from './data/portfolio.json';
 import penguins from './data/penguins.json';
 import fruit from './data/fruit.json';
-import skinny_fruit from './data/skinny_fruit.json';
 
 function App() {
   return (
@@ -25,17 +24,15 @@ function App() {
       <BarChart
         height="100%"
         width="100%"
-        data={skinny_fruit}
+        data={portfolio.slice(5, 13)}
         xKey="date"
         yKey="value"
-        groupBy="fruit"
         xAxis="bottom"
         yAxis="right"
         yGrid={true}
         xAxisLabel="Date"
         yAxisLabel="Value"
         legend={'bottom'}
-        legendLabel="Fruit"
       />
       <AreaChart
         height="100%"
@@ -48,7 +45,6 @@ function App() {
         yGrid={true}
         xAxisLabel="Date"
         yAxisLabel="Value"
-        legend="right"
       />
       <LineChart
         height={'100%'}
@@ -75,12 +71,9 @@ function App() {
         xAxis="bottom"
         xAxisLabel="Flipper Length"
         yKey="body_mass_g"
-        groupBy="species"
         yGrid={true}
         yAxis="right"
         yAxisLabel="Body Mass"
-        legendLabel="Species"
-        legend="right"
       />
     </div>
   );
