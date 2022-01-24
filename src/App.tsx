@@ -1,8 +1,8 @@
 import React from 'react';
-import BarChart from './charts/BarChart/BarChart';
-import AreaChart from './charts/AreaChart/AreaChart';
+// import BarChart from './charts/BarChart/BarChart';
+// import AreaChart from './charts/AreaChart/AreaChart';
 import LineChart from './charts/LineChart/LineChart';
-import ScatterPlot from './charts/ScatterPlot/ScatterPlot';
+// import ScatterPlot from './charts/ScatterPlot/ScatterPlot';
 import PieChart from './charts/PieChart/PieChart';
 
 import portfolio from './data/portfolio.json';
@@ -13,7 +13,7 @@ import skinny_fruit from './data/skinny_fruit.json';
 function App() {
   return (
     <div className="app" style={{ height: '100vh', width: '100vw' }}>
-      {/* <PieChart
+      <PieChart
         data={fruit}
         label="label"
         value="value"
@@ -21,8 +21,8 @@ function App() {
         outerRadius={240}
         legendLabel="fruit"
         pieLabel={true}
-      /> */}
-      <BarChart
+      />
+      {/* <BarChart
         height="100%"
         width="100%"
         data={skinny_fruit}
@@ -36,7 +36,7 @@ function App() {
         yAxisLabel="Value"
         legend={'bottom'}
       />
-      {/*<AreaChart
+      <AreaChart
         height="100%"
         width="100%"
         data={portfolio.slice(30, 60)}
@@ -47,7 +47,7 @@ function App() {
         yGrid={true}
         xAxisLabel="Date"
         yAxisLabel="Value"
-      />
+      /> */}
       <LineChart
         height={'100%'}
         width={'100%'}
@@ -63,7 +63,7 @@ function App() {
         legend={'right'}
         legendLabel="Markets"
       />
-      <ScatterPlot
+      {/* <ScatterPlot
         height="100%"
         width="100%"
         data={penguins}

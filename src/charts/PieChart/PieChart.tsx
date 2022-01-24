@@ -221,6 +221,7 @@ export default function PieChart({
             legend && (
               <ColorLegend
                 legendLabel={legendLabel}
+                labels={keys}
                 circleRadius={5 /* Radius of each color swab in legend */}
                 colorScale={colorScale}
                 dataTestId="pie-chart-legend"

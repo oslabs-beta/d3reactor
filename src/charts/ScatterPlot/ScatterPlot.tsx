@@ -238,6 +238,7 @@ export default function ScatterPlot({
             legend && (
               <ColorLegend
                 legendLabel={legendLabel}
+                labels={['string']}
                 circleRadius={5 /* Radius of each color swab in legend */}
                 colorScale={colorScale}
                 setLegendOffset={setLegendOffset}

@@ -186,11 +186,11 @@ export interface Margin {
 }
 
 export interface ContinuousAxisProps {
-  dataTestId?: string
-  x: number
-  y: number
-  xGrid?: boolean
-  yGrid?: boolean
+  dataTestId?: string;
+  x: number;
+  y: number;
+  xGrid?: boolean;
+  yGrid?: boolean;
   scale:
     | d3.ScaleLinear<number, number, never>
     | d3.ScaleTime<number, number, never>;
@@ -208,7 +208,7 @@ export interface ContinuousAxisProps {
 }
 
 export interface DiscreteAxisProps {
-  dataTestId?:string;
+  dataTestId?: string;
   x: number;
   y: number;
   xGrid?: boolean;
@@ -248,10 +248,10 @@ export interface TooltipProps {
 }
 
 export interface CircleProps {
-  cx: number
-  cy: number
-  r?: string
-  color: string
+  cx: number;
+  cy: number;
+  r?: string;
+  color: string;
 }
 
 export interface RectangleProps {
@@ -305,6 +305,7 @@ export interface ColorLegendProps {
   circleRadius: number;
   tickTextOffset?: number;
   legendLabel?: string;
+  labels: string[];
   legendPosition: LegendPos;
   legendWidth: number;
   legendHeight: number;

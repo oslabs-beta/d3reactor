@@ -126,6 +126,8 @@ export default function LineChart({
   const groupAccessor: GroupAccessorFunc = (d) => {
     return d[groupBy ?? ''];
   };
+
+  console.log('LINE KEYS ', keys);
   const lineGroups: any = d3.group(data, (d) => groupAccessor(d));
   keys = groupBy
     ? Array.from(lineGroups).map((group: any) => group[0])
@@ -256,6 +258,7 @@ export default function LineChart({
             legend && (
               <ColorLegend
                 legendLabel={legendLabel}
+                labels={groupBy ? lineGroups : [yKey]}
                 circleRadius={5 /* Radius of each color swab in legend */}
                 colorScale={colorScale}
                 setLegendOffset={setLegendOffset}
