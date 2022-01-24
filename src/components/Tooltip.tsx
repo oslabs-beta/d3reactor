@@ -32,7 +32,7 @@ const Tooltip = ({
     margin: '4px 4px',
     padding: '0.6em 1em',
     borderRadius: '4px',
-    width: '280px',
+    minWidth: '220px',
     transform: `translate(-50%, calc(-100% - ${triangleSize}px)`,
     background: backgroundColor,
     textAlign: 'left',
@@ -44,7 +44,7 @@ const Tooltip = ({
     boxShadow: shadowElevationHigh,
     pointerEvents: 'none',
     whiteSpace: 'normal',
-    wordBreak: 'break-word',
+    wordBreak: 'break-all',
   };
 
   const triangleStyle: React.CSSProperties | undefined = {
