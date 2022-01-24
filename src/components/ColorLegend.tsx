@@ -5,6 +5,7 @@ import './Components.css';
 export const ColorLegend = ({
   colorScale,
   circleRadius = 10,
+  labels,
   dataTestId = 'color-legend',
   tickSpacing = circleRadius * 2 + 6,
   tickTextOffset = circleRadius * 1.2 + 3,
@@ -117,7 +118,7 @@ export const ColorLegend = ({
   }
 
   const rectHeight =
-    tickSpacing * (domain.length + labelHeightOffset) + EXTRA_LEGEND_MARGIN * 2;
+    tickSpacing * (labels.length + labelHeightOffset) + EXTRA_LEGEND_MARGIN * 2;
   // trying to make the legend no taller than the chart:
   // const rectHeight = Math.min(tickSpacing*(domain.length + labelHeightOffset) + EXTRA_LEGEND_MARGIN*2, cHeight);
 
@@ -126,8 +127,10 @@ export const ColorLegend = ({
     fontSize: '12px',
   };
 
+  console.log('Labels prop ', labels);
   // iterate thru category names, create color swab & text for each
-  const legend = domain.map((domainValue: string, i: number) => {
+  const legend = labels.map((domainValue: string, i: number) => {
+    console.log('Label inside the legend component ', domainValue);
     if (domainValue.length > longestWord) longestWord = domainValue.length;
     return (
       <g
@@ -172,7 +175,6 @@ export const ColorLegend = ({
     color: '#737373',
   };
 
-  console.log('Rect width ', rectWidth + 10);
   return (
     <g
       data-testid={dataTestId}

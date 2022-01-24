@@ -1,7 +1,7 @@
 import React from 'react';
 import { TooltipProps } from '../../types';
 
-const TooltipDiv = ({
+const Tooltip = ({
   chartType,
   data,
   xAccessor,
@@ -32,7 +32,7 @@ const TooltipDiv = ({
     margin: '4px 4px',
     padding: '0.6em 1em',
     borderRadius: '4px',
-    maxWidth: '280px',
+    minWidth: '220px',
     transform: `translate(-50%, calc(-100% - ${triangleSize}px)`,
     background: backgroundColor,
     textAlign: 'left',
@@ -43,7 +43,8 @@ const TooltipDiv = ({
     transition: 'all 0.1s ease-out',
     boxShadow: shadowElevationHigh,
     pointerEvents: 'none',
-    whiteSpace: 'nowrap',
+    whiteSpace: 'normal',
+    wordBreak: 'break-all',
   };
 
   const triangleStyle: React.CSSProperties | undefined = {
@@ -75,10 +76,16 @@ const TooltipDiv = ({
     pointerEvents: 'none',
   };
 
+  // const isDate = function(date: Date | string | number) {
+  //   return new Date(date) !== 'Invalid Date' && !isNaN(new Date(date));
+  // };
+
   let xValString = data.tooltipData[xKey as string];
+  console.log('This is not a date... ', xValString);
   if (data.tooltipData[xKey as string] instanceof Date) {
     // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
     xValString = `${xValString.getFullYear()}.${xValString.getMonth()}.${xValString.getDay()}`;
+    console.log('IS INSTANCE OF DATE');
   }
 
   let yValString = data.tooltipData[yKey as string];
@@ -87,8 +94,7 @@ const TooltipDiv = ({
     yValString = `${Math.round(yValString * 100) / 100}`;
   }
 
-  const xTooltipText = `${xKey}: ${xValString}`;
-  const yTooltipText = `${yKey}: ${yValString}`;
+  console.log('Tooltip data ', data);
 
   return (
     <div style={tooltipWrapperStyle} data-testid={`tooltip-${chartType}`}>
@@ -103,4 +109,4 @@ const TooltipDiv = ({
   );
 };
 
-export default TooltipDiv;
+export default Tooltip;

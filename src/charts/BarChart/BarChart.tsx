@@ -6,7 +6,7 @@ import { useResponsive } from '../../hooks/useResponsive';
 import { Axis } from '../../components/ContinuousAxis';
 import { DiscreteAxis } from '../../components/DiscreteAxis';
 import { Rectangle } from '../../components/Rectangle';
-import TooltipDiv from '../../components/TooltipDiv';
+import Tooltip from '../../components/Tooltip';
 import { ColorLegend } from '../../components/ColorLegend';
 import { transformSkinnyToWide } from '../../utils';
 import { BarChartProps, Data, yAccessorFunc } from '../../../types';
@@ -144,10 +144,17 @@ export default function BarChart({
     return { ...xKeyValue, ...yKeyValue };
   };
 
+  let labelArray = [];
+  if (typeof groupBy === 'string' && groupBy.length !== 0) {
+    labelArray = layers.map((layer: { key: any }) => layer.key);
+  } else {
+    labelArray = [yKey];
+  }
+
   return (
     <div ref={anchor} style={{ width: width, height: height }}>
       {tooltip && (
-        <TooltipDiv
+        <Tooltip
           chartType="bar-chart"
           data={tooltip}
           x={tooltip.cx + xScale.bandwidth() / 2 + margin.left}
@@ -272,6 +279,7 @@ export default function BarChart({
             legend && (
               <ColorLegend
                 legendLabel={legendLabel}
+                labels={labelArray}
                 circleRadius={5 /* Radius of each color swab in legend */}
                 colorScale={colorScale}
                 dataTestId="bar-chart-legend"
