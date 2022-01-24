@@ -127,10 +127,8 @@ export const ColorLegend = ({
     fontSize: '12px',
   };
 
-  console.log('Labels prop ', labels);
   // iterate thru category names, create color swab & text for each
   const legend = labels.map((domainValue: string, i: number) => {
-    console.log('Label inside the legend component ', domainValue);
     if (domainValue.length > longestWord) longestWord = domainValue.length;
     return (
       <g
