@@ -1,6 +1,6 @@
 {
   "name": "@oslabs-beta/d3reactor",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "placeholder",
   "main": "./dist/index.js",
   "types": "./dist/src/index.d.ts",
