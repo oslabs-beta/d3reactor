@@ -197,7 +197,7 @@ export default function ScatterPlot({
         <g className="spbody" transform={translate}>
           {yAxis && (
             <Axis
-              chartType="scatter-plot"
+              chartType={chartType}
               x={yAxisX}
               y={yAxisY}
               yGrid={yGrid}

@@ -25,6 +25,7 @@ export interface ScatterPlotProps<T> {
     | 'line-chart'
     | 'area-chart'
     | 'bar-chart'
+    | 'pie-chart'
     | undefined;
   colorScheme?:
     | 'schemeRdYlGn'
@@ -63,6 +64,7 @@ export interface BarChartProps<T> {
     | 'line-chart'
     | 'area-chart'
     | 'bar-chart'
+    | 'pie-chart'
     | undefined;
   colorScheme?:
     | 'schemeRdYlGn'
@@ -104,6 +106,7 @@ export interface LineChartProps<T> {
     | 'line-chart'
     | 'area-chart'
     | 'bar-chart'
+    | 'pie-chart'
     | undefined;
   colorScheme?:
     | 'schemeRdYlGn'
@@ -144,6 +147,7 @@ export interface AreaChartProps<T> {
     | 'line-chart'
     | 'area-chart'
     | 'bar-chart'
+    | 'pie-chart'
     | undefined;
   colorScheme?:
     | 'schemeRdYlGn'
@@ -177,6 +181,7 @@ export interface PieChartProps {
     | 'line-chart'
     | 'area-chart'
     | 'bar-chart'
+    | 'pie-chart'
     | undefined;
   colorScheme?:
     | 'schemeRdYlGn'

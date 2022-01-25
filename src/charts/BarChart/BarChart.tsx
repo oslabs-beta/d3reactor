@@ -33,6 +33,7 @@ export default function BarChart({
   yAxisLabel,
   legend,
   legendLabel = '',
+  chartType = 'bar-chart'
   colorScheme = 'schemePurples',
 }: BarChartProps<string | number>): JSX.Element {
   const [tooltip, setTooltip] = useState<false | any>(false);
@@ -155,7 +156,7 @@ export default function BarChart({
     <div ref={anchor} style={{ width: width, height: height }}>
       {tooltip && (
         <Tooltip
-          chartType="bar-chart"
+          chartType={chartType}
           data={tooltip}
           x={tooltip.cx + xScale.bandwidth() / 2 + margin.left}
           y={tooltip.cy + margin.top}

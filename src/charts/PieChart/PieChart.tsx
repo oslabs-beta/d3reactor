@@ -22,6 +22,7 @@ export default function PieChart({
   legendLabel,
   outerRadius,
   pieLabel,
+  chartType = 'pie-chart',
   colorScheme = 'schemePurples',
   value,
 }: PieChartProps): JSX.Element {
@@ -179,7 +180,7 @@ export default function PieChart({
     <div ref={anchor} style={{ width: '100%', height: '100%' }}>
       {tooltip && (
         <Tooltip
-          chartType="pie-chart"
+          chartType={chartType}
           data={tooltip}
           x={tooltip.cx}
           y={tooltip.cy}
