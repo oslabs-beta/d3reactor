@@ -7,7 +7,12 @@ export function xScaleDef(
   xAccessor: xAccessorFunc,
   margin: Margin,
   width: number,
-  chart: 'scatter-plot' | 'line-chart' | 'area-chart' | 'bar-chart'
+  chart:
+    | 'scatter-plot'
+    | 'line-chart'
+    | 'area-chart'
+    | 'bar-chart'
+    | 'pie-chart'
 ) {
   let xScale: ScaleFunc;
   const [xMin, xMax] = d3.extent(data, xAccessor);

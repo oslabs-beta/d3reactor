@@ -20,11 +20,11 @@ function App() {
         outerRadius={240}
         legendLabel="fruit"
         pieLabel={true}
-      />
+      />*/}
       <BarChart
         height="100%"
         width="100%"
-        data={portfolio.slice(5, 13)}
+        data={portfolio.slice(-20, -1)}
         xKey="date"
         yKey="value"
         xAxis="bottom"
@@ -34,7 +34,7 @@ function App() {
         yAxisLabel="Value"
         legend={'bottom'}
       />
-      <AreaChart
+      {/*<AreaChart
         height="100%"
         width="100%"
         data={portfolio.slice(30, 60)}
@@ -60,7 +60,7 @@ function App() {
         yAxisLabel="Value"
         legend={'right'}
         legendLabel="Markets"
-      /> */}
+      />
       <ScatterPlot
         height="100%"
         width="100%"
@@ -74,7 +74,7 @@ function App() {
         yGrid={true}
         yAxis="right"
         yAxisLabel="Body Mass"
-      />
+      />*/}
     </div>
   );
 }

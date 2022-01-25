@@ -33,9 +33,52 @@ export default function BarChart({
   yAxisLabel,
   legend,
   legendLabel = '',
-  chartType = 'bar-chart'
+  chartType = 'bar-chart',
   colorScheme = 'schemePurples',
 }: BarChartProps<string | number>): JSX.Element {
+  /**********
+  Step in creating any chart:
+    1. Process data
+    2. Determine chart dimensions
+    3. Create scales
+    4. Define styles
+    5. Set up supportive elements
+    6. Set up interactions
+  ***********/
+
+  // ********************
+  // STEP 1. Process data
+  // Look at the data structure and declare how to access the values we'll need.
+  // ********************
+
+  // When the yKey key has been assigned to the groupBy variable we know the user didn't specify grouping
+  const keys: string[] = useMemo(() => {
+    let groups: d3.InternMap<any, any[]>;
+    const groupAccessor = (d: Data) => d[groupBy ?? ''];
+    // eslint-disable-next-line prefer-const
+    groups = d3.group(data, groupAccessor);
+    return groupBy ? Array.from(groups).map((group) => group[0]) : [yKey];
+  }, [groupBy, yKey]);
+
+  const transData = useMemo(() => {
+    return groupBy
+      ? transformSkinnyToWide(data, keys, groupBy, xKey, yKey)
+      : data;
+  }, [data, keys, groupBy, xKey, yKey]);
+
+  const stack = d3.stack().keys(keys).order(d3.stackOrderAscending);
+  const layers = useMemo(() => {
+    return stack(transData as Iterable<{ [key: string]: number }>);
+  }, [transData]);
+
+  const xAccessor: (d: Data) => string = useMemo(() => {
+    return (d) => d[xKey];
+  }, []);
+
+  const yAccessor: yAccessorFunc = useMemo(() => {
+    return (d) => d[yKey];
+  }, []);
+
   const [tooltip, setTooltip] = useState<false | any>(false);
 
   const { anchor, cHeight, cWidth } = useResponsive();
@@ -84,34 +127,6 @@ export default function BarChart({
   );
 
   const translate = `translate(${margin.left}, ${margin.top})`;
-
-  // When the yKey key has been assigned to the groupBy variable we know the user didn't specify grouping
-  const keys: string[] = useMemo(() => {
-    let groups: d3.InternMap<any, any[]>;
-    const groupAccessor = (d: Data) => d[groupBy ?? ''];
-    // eslint-disable-next-line prefer-const
-    groups = d3.group(data, groupAccessor);
-    return groupBy ? Array.from(groups).map((group) => group[0]) : [yKey];
-  }, [groupBy, yKey]);
-
-  const transData = useMemo(() => {
-    return groupBy
-      ? transformSkinnyToWide(data, keys, groupBy, xKey, yKey)
-      : data;
-  }, [data, keys, groupBy, xKey, yKey]);
-
-  const stack = d3.stack().keys(keys).order(d3.stackOrderAscending);
-  const layers = useMemo(() => {
-    return stack(transData as Iterable<{ [key: string]: number }>);
-  }, [transData]);
-
-  const xAccessor: (d: Data) => string = useMemo(() => {
-    return (d) => d[xKey];
-  }, []);
-
-  const yAccessor: yAccessorFunc = useMemo(() => {
-    return (d) => d[yKey];
-  }, []);
 
   const rangeMax = cWidth - margin.right - margin.left;
   const xScale = useMemo(() => {
