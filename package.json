@@ -22,7 +22,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/oslabs-beta/d3reacts.git"
+    "url": "git+https://github.com/oslabs-beta/d3reactor.git"
   },
   "author": "Robert Crocker robert@vizsimply.com, Dmytro Iershov idmytro@yahoo.com, Ece Ozalp eceiozalp@gmail.com, Travis Lockett TravisLockett1@gmail.com, Eric Mulhern eric.mulhern@gmail.com",
   "license": "ISC",
