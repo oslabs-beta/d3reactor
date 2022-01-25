@@ -21,7 +21,7 @@ function App() {
         legendLabel="fruit"
         pieLabel={true}
       />
-      {/*<BarChart
+      <BarChart
         height="100%"
         width="100%"
         data={portfolio.slice(-20, -1)}
@@ -74,7 +74,7 @@ function App() {
         yGrid={true}
         yAxis="right"
         yAxisLabel="Body Mass"
-      />*/}
+      />
     </div>
   );
 }
