@@ -22,10 +22,35 @@ export default function PieChart({
   legendLabel,
   outerRadius,
   pieLabel,
+  chartType = 'pie-chart',
   colorScheme = 'schemePurples',
   value,
 }: PieChartProps): JSX.Element {
-  const [tooltip, setTooltip] = useState<false | any>(false);
+  /**********
+  Step in creating any chart:
+    1. Process data
+    2. Determine chart dimensions
+    3. Create scales
+    4. Define styles
+    5. Set up supportive elements
+    6. Set up interactions
+  ***********/
+
+  // ********************
+  // STEP 1. Process data
+  // Look at the data structure and declare how to access the values we'll need.
+  // ********************
+
+  const keys = useMemo(() => {
+    const groupAccessor = (d: Data) => d[label ?? ''];
+    const groups: d3.InternMap<any, any[]> = d3.group(data, groupAccessor);
+    return Array.from(groups).map((group) => group[0]);
+  }, [label]);
+
+  // ********************
+  // STEP 2. Determine chart dimensions
+  // Declare the physical (i.e. pixels) chart parameters
+  // ********************
 
   const { anchor, cHeight, cWidth } = useResponsive();
 
@@ -48,7 +73,14 @@ export default function PieChart({
       ),
     [legend, xOffset, yOffset, cWidth, cHeight]
   );
+
+  // ********************
+  // STEP 3. Create scales
+  // Create scales for every data-to-pysical attribute in our chart
+  // ********************
+
   let ratio: number | undefined;
+
   if (
     typeof outerRadius === 'number' &&
     typeof innerRadius === 'number' &&
@@ -76,19 +108,6 @@ export default function PieChart({
     innerRadius = checkedRadiusDimension > 0 ? checkedRadiusDimension : 0;
   } else innerRadius = 0;
 
-  // type ColorScale = d3.ScaleOrdinal<string, string, never>;
-
-  const keys = useMemo(() => {
-    const groupAccessor = (d: Data) => d[label ?? ''];
-    const groups: d3.InternMap<any, any[]> = d3.group(data, groupAccessor);
-    return Array.from(groups).map((group) => group[0]);
-  }, [label]);
-
-  const discreteColors = Math.min(keys.length, 9);
-  const computedScheme = d3[`${colorScheme}`][discreteColors];
-  const colorScale = d3.scaleOrdinal(computedScheme);
-  colorScale.domain(keys);
-
   const arcGenerator: any = d3
     .arc()
     .innerRadius(innerRadius)
@@ -101,10 +120,26 @@ export default function PieChart({
 
   const pie: any = pieGenerator(data);
 
+  // ********************
+  // STEP 4. Define styles
+  // Define how the data will drive your design
+  // ********************
+
+  const discreteColors = Math.min(keys.length, 9);
+  const computedScheme = d3[`${colorScheme}`][discreteColors];
+  const colorScale = d3.scaleOrdinal(computedScheme);
+  colorScale.domain(keys);
+
+  // ********************
+  // STEP 5. Set up supportive elements
+  // Render your axes, labels, legends, annotations, etc.
+  // ********************
+
   const textTranform = (d: any) => {
     const [x, y] = arcGenerator.centroid(d);
     return `translate(${x}, ${y})`;
   };
+
   // Position of the legend
   let xPosition = outerRadius + EXTRA_LEGEND_MARGIN;
   let yPosition = EXTRA_LEGEND_MARGIN;
@@ -175,11 +210,18 @@ export default function PieChart({
     (cHeight + translateY) / 2
   })`;
 
+  // ********************
+  // STEP 6. Set up interactions
+  // Initialize event listeners and create interaction behavior
+  // ********************
+
+  const [tooltip, setTooltip] = useState<false | any>(false);
+
   return (
     <div ref={anchor} style={{ width: '100%', height: '100%' }}>
       {tooltip && (
         <Tooltip
-          chartType="pie-chart"
+          chartType={chartType}
           data={tooltip}
           x={tooltip.cx}
           y={tooltip.cy}

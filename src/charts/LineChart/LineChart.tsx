@@ -44,6 +44,7 @@ export default function LineChart({
   yAxisLabel,
   legend,
   legendLabel = '',
+  chartType = 'line-chart',
   colorScheme = 'schemePurples',
 }: LineChartProps<string | number>): JSX.Element {
   /**********
@@ -87,14 +88,6 @@ export default function LineChart({
   } else {
     keys = [yKey];
   }
-
-  const line: any = d3
-    .line()
-    .curve(d3.curveLinear)
-    .x((d) => xScale(xAccessor(d)))
-    .y((d: any) => {
-      return d[yKey] ? yScale(yAccessor(d)) : yScale(0);
-    });
 
   // ********************
   // STEP 2. Determine chart dimensions
@@ -148,8 +141,16 @@ export default function LineChart({
   }, [data, yAccessor, margin, cHeight]);
 
   const { xScale, xMin, xMax } = useMemo(() => {
-    return xScaleDef(data, xType, xAccessor, margin, cWidth, 'LineChart');
+    return xScaleDef(data, xType, xAccessor, margin, cWidth, chartType);
   }, [data, cWidth, margin]);
+
+  const line: any = d3
+    .line()
+    .curve(d3.curveLinear)
+    .x((d) => xScale(xAccessor(d)))
+    .y((d: any) => {
+      return d[yKey] ? yScale(yAccessor(d)) : yScale(0);
+    });
 
   // ********************
   // STEP 4. Define styles
