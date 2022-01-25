@@ -44,6 +44,7 @@ export default function AreaChart({
   yAxisLabel,
   legend,
   legendLabel = '',
+  chartType = 'area-chart',
   colorScheme = 'schemePurples',
 }: AreaChartProps<string | number>): JSX.Element {
   const position = useMousePosition();
@@ -132,7 +133,7 @@ export default function AreaChart({
       xAccessor,
       margin,
       cWidth,
-      chart
+      chartType
     );
   }, [transData, xDataType, xAccessor, margin, cWidth, chart]);
 

@@ -20,6 +20,12 @@ export interface ScatterPlotProps<T> {
   yAxisLabel?: string;
   legend?: LegendPos;
   legendLabel?: string;
+  chartType?:
+    | 'scatter-plot'
+    | 'line-chart'
+    | 'area-chart'
+    | 'bar-chart'
+    | undefined;
   colorScheme?:
     | 'schemeRdYlGn'
     | 'schemeRdYlBu'
@@ -52,6 +58,12 @@ export interface BarChartProps<T> {
   yAxisLabel?: string;
   legend?: LegendPos;
   legendLabel?: string;
+  chartType?:
+    | 'scatter-plot'
+    | 'line-chart'
+    | 'area-chart'
+    | 'bar-chart'
+    | undefined;
   colorScheme?:
     | 'schemeRdYlGn'
     | 'schemeRdYlBu'
@@ -87,6 +99,12 @@ export interface LineChartProps<T> {
   yAxisLabel?: string;
   legend?: LegendPos;
   legendLabel?: string;
+  chartType?:
+    | 'scatter-plot'
+    | 'line-chart'
+    | 'area-chart'
+    | 'bar-chart'
+    | undefined;
   colorScheme?:
     | 'schemeRdYlGn'
     | 'schemeRdYlBu'
@@ -121,6 +139,12 @@ export interface AreaChartProps<T> {
   yAxisLabel?: string;
   legend?: LegendPos;
   legendLabel?: string;
+  chartType?:
+    | 'scatter-plot'
+    | 'line-chart'
+    | 'area-chart'
+    | 'bar-chart'
+    | undefined;
   colorScheme?:
     | 'schemeRdYlGn'
     | 'schemeRdYlBu'
@@ -148,6 +172,12 @@ export interface PieChartProps {
   outerRadius?: number | string | undefined;
   pieLabel?: boolean;
   value: string;
+  chartType?:
+    | 'scatter-plot'
+    | 'line-chart'
+    | 'area-chart'
+    | 'bar-chart'
+    | undefined;
   colorScheme?:
     | 'schemeRdYlGn'
     | 'schemeRdYlBu'

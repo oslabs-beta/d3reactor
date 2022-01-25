@@ -44,6 +44,7 @@ export default function LineChart({
   yAxisLabel,
   legend,
   legendLabel = '',
+  chartType = 'line-chart',
   colorScheme = 'schemePurples',
 }: LineChartProps<string | number>): JSX.Element {
   /**********
@@ -148,7 +149,7 @@ export default function LineChart({
   }, [data, yAccessor, margin, cHeight]);
 
   const { xScale, xMin, xMax } = useMemo(() => {
-    return xScaleDef(data, xType, xAccessor, margin, cWidth, 'LineChart');
+    return xScaleDef(data, xType, xAccessor, margin, cWidth, chartType);
   }, [data, cWidth, margin]);
 
   // ********************

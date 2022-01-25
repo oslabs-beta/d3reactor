@@ -12,7 +12,7 @@ import fruit from './data/fruit.json';
 function App() {
   return (
     <div className="app" style={{ height: '100vh', width: '100vw' }}>
-      <PieChart
+      {/* <PieChart
         data={fruit}
         label="label"
         value="value"
@@ -60,7 +60,7 @@ function App() {
         yAxisLabel="Value"
         legend={'right'}
         legendLabel="Markets"
-      />
+      /> */}
       <ScatterPlot
         height="100%"
         width="100%"
