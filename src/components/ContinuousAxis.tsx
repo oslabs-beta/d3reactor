@@ -2,6 +2,7 @@ import React from 'react';
 import * as d3 from 'd3';
 import { ContinuousAxisProps } from '../../types';
 import { gridGenerator } from '../functionality/grid';
+import './Components.css';
 
 function Axi({
   dataTestId = 'd3reactor-continuous',
@@ -17,9 +18,6 @@ function Axi({
   xTicksValue,
   chartType,
 }: ContinuousAxisProps): JSX.Element {
-
-  let axis: d3.Axis<d3.NumberValue>;
-
   let x1 = 0,
     y1 = 0,
     x2 = 0,
@@ -123,6 +121,7 @@ function Axi({
   const verticalTicks = scale.ticks(numberOfVerticalTicks);
 
   const formatTick = d3.timeFormat('%x');
+
   const getFormattedTick = (individualTick: number | Date) => {
     if (typeof individualTick === 'number') {
       return individualTick;
@@ -130,6 +129,7 @@ function Axi({
       return formatTick(individualTick);
     }
   };
+
   return (
     <g>
       <g transform={`translate(${x}, ${y})`}>{grid}</g>
@@ -148,8 +148,9 @@ function Axi({
       {(type === 'top' || type === 'bottom') &&
         horizontalTicks.map((tick, i) => (
           <text
+            data-testid="d3reactor-ticktext"
             className="tick-text"
-            key={i}
+            key={tick.toString()}
             style={getTickStyle(type, tick)}
             transform={getTickTranslation(type, tick)}
           >
@@ -159,8 +160,9 @@ function Axi({
       {(type === 'right' || type === 'left') &&
         verticalTicks.map((tick, i) => (
           <text
+            data-testid="d3reactor-ticktext"
             className="tick-text"
-            key={i}
+            key={tick.toString()}
             style={getTickStyle(type, tick)}
             transform={getTickTranslation(type, tick)}
           >

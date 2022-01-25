@@ -12,7 +12,7 @@ import { d3Voronoi } from '../../functionality/voronoi';
 import { xScaleDef } from '../../functionality/xScale';
 import { yScaleDef } from '../../functionality/yScale';
 import { VoronoiWrapper } from '../../components/VoronoiWrapper';
-import TooltipDiv from '../../components/TooltipDiv';
+import Tooltip from '../../components/Tooltip';
 import {
   ScatterPlotProps,
   xAccessorFunc,
@@ -27,6 +27,7 @@ import {
   EXTRA_LEGEND_MARGIN,
 } from '../../utils';
 import { Label } from '../../components/Label';
+import './ScatterPlot.css';
 
 export default function ScatterPlot({
   data,
@@ -141,7 +142,7 @@ export default function ScatterPlot({
   return (
     <div ref={anchor} style={{ width: width, height: height }}>
       {tooltip && (
-        <TooltipDiv
+        <Tooltip
           chartType="scatter-plot"
           data={tooltip}
           x={margin.left + tooltip.cx}
@@ -237,6 +238,7 @@ export default function ScatterPlot({
             legend && (
               <ColorLegend
                 legendLabel={legendLabel}
+                labels={keys}
                 circleRadius={5 /* Radius of each color swab in legend */}
                 colorScale={colorScale}
                 setLegendOffset={setLegendOffset}

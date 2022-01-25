@@ -6,7 +6,7 @@ import { useResponsive } from '../../hooks/useResponsive';
 import { PieChartProps, Data } from '../../../types';
 import { ColorLegend } from '../../components/ColorLegend';
 import { Arc } from '../../components/Arc';
-import TooltipDiv from '../../components/TooltipDiv';
+import Tooltip from '../../components/Tooltip';
 import {
   checkRadiusDimension,
   calculateOuterRadius,
@@ -58,8 +58,8 @@ export default function PieChart({
   }
 
   outerRadius = outerRadius
-  ? checkRadiusDimension(cHeight, cWidth, outerRadius, margin, legend)
-  : calculateOuterRadius(cHeight, cWidth, margin);
+    ? checkRadiusDimension(cHeight, cWidth, outerRadius, margin, legend)
+    : calculateOuterRadius(cHeight, cWidth, margin);
 
   if (outerRadius < 20) outerRadius = 20;
 
@@ -79,9 +79,8 @@ export default function PieChart({
   // type ColorScale = d3.ScaleOrdinal<string, string, never>;
 
   const keys = useMemo(() => {
-    let groups: d3.InternMap<any, any[]>;
     const groupAccessor = (d: Data) => d[label ?? ''];
-    groups = d3.group(data, groupAccessor);
+    const groups: d3.InternMap<any, any[]> = d3.group(data, groupAccessor);
     return Array.from(groups).map((group) => group[0]);
   }, [label]);
 
@@ -107,11 +106,12 @@ export default function PieChart({
     return `translate(${x}, ${y})`;
   };
   // Position of the legend
-  let xPosition = outerRadius + margin.left;
+  let xPosition = outerRadius + EXTRA_LEGEND_MARGIN;
   let yPosition = EXTRA_LEGEND_MARGIN;
   // Offset position of the pie
   let translateX = 0;
   let translateY = 0;
+
   switch (legend) {
     case 'top':
       xPosition = -xOffset / 2 + EXTRA_LEGEND_MARGIN;
@@ -120,7 +120,7 @@ export default function PieChart({
       break;
     case 'bottom':
       xPosition = -xOffset / 2 + EXTRA_LEGEND_MARGIN;
-      yPosition = outerRadius + margin.bottom / 2 + EXTRA_LEGEND_MARGIN;
+      yPosition = outerRadius + margin.bottom / 2 - EXTRA_LEGEND_MARGIN;
       translateY = -yOffset;
       break;
     case 'left':
@@ -129,40 +129,40 @@ export default function PieChart({
       break;
     case 'top-left':
       xPosition = -outerRadius - margin.left + EXTRA_LEGEND_MARGIN;
-      yPosition = -outerRadius + margin.top + EXTRA_LEGEND_MARGIN;
+      yPosition = -outerRadius + margin.left / 2 + EXTRA_LEGEND_MARGIN;
       translateX = xOffset;
       break;
     case 'bottom-left':
       xPosition = -outerRadius - margin.left + EXTRA_LEGEND_MARGIN;
-      yPosition = outerRadius - margin.bottom - EXTRA_LEGEND_MARGIN;
+      yPosition = outerRadius - margin.left / 2 - EXTRA_LEGEND_MARGIN;
       translateX = xOffset;
       break;
     case 'left-top':
-      xPosition = -outerRadius - xOffset + EXTRA_LEGEND_MARGIN;
+      xPosition = -outerRadius - margin.left + EXTRA_LEGEND_MARGIN;
       yPosition = -outerRadius - margin.top / 2 + EXTRA_LEGEND_MARGIN;
       translateY = yOffset;
       break;
     case 'left-bottom':
-      xPosition = -outerRadius - xOffset + EXTRA_LEGEND_MARGIN;
-      yPosition = outerRadius + margin.bottom / 2 + EXTRA_LEGEND_MARGIN;
+      xPosition = -outerRadius - margin.left + EXTRA_LEGEND_MARGIN;
+      yPosition = outerRadius + margin.bottom / 2 - EXTRA_LEGEND_MARGIN;
       translateY = -yOffset;
       break;
     case 'right-top':
-      xPosition = outerRadius - EXTRA_LEGEND_MARGIN;
+      xPosition = outerRadius - margin.top / 2 - EXTRA_LEGEND_MARGIN;
       yPosition = -outerRadius - margin.top / 2 + EXTRA_LEGEND_MARGIN;
       translateY = yOffset;
       break;
     case 'top-right':
-      yPosition = -outerRadius + margin.top + EXTRA_LEGEND_MARGIN;
+      yPosition = -outerRadius + margin.right + EXTRA_LEGEND_MARGIN;
       translateX = -xOffset;
       break;
     case 'bottom-right':
-      yPosition = outerRadius - margin.bottom - EXTRA_LEGEND_MARGIN;
+      yPosition = outerRadius - margin.right + EXTRA_LEGEND_MARGIN;
       translateX = -xOffset;
       break;
     case 'right-bottom':
-      xPosition = outerRadius - EXTRA_LEGEND_MARGIN;
-      yPosition = outerRadius + margin.bottom / 2 + EXTRA_LEGEND_MARGIN;
+      xPosition = outerRadius - margin.bottom / 2 - EXTRA_LEGEND_MARGIN;
+      yPosition = outerRadius + margin.bottom / 2 - EXTRA_LEGEND_MARGIN;
       translateY = -yOffset;
       break;
     case 'right':
@@ -178,7 +178,7 @@ export default function PieChart({
   return (
     <div ref={anchor} style={{ width: '100%', height: '100%' }}>
       {tooltip && (
-        <TooltipDiv
+        <Tooltip
           chartType="pie-chart"
           data={tooltip}
           x={tooltip.cx}
@@ -221,6 +221,7 @@ export default function PieChart({
             legend && (
               <ColorLegend
                 legendLabel={legendLabel}
+                labels={keys}
                 circleRadius={5 /* Radius of each color swab in legend */}
                 colorScale={colorScale}
                 dataTestId="pie-chart-legend"

@@ -6,7 +6,7 @@ import { useResponsive } from '../../hooks/useResponsive';
 import { Axis } from '../../components/ContinuousAxis';
 import { DiscreteAxis } from '../../components/DiscreteAxis';
 import { Rectangle } from '../../components/Rectangle';
-import TooltipDiv from '../../components/TooltipDiv';
+import Tooltip from '../../components/Tooltip';
 import { ColorLegend } from '../../components/ColorLegend';
 import { transformSkinnyToWide } from '../../utils';
 import { BarChartProps, Data, yAccessorFunc } from '../../../types';
@@ -144,10 +144,17 @@ export default function BarChart({
     return { ...xKeyValue, ...yKeyValue };
   };
 
+  let labelArray = [];
+  if (typeof groupBy === 'string' && groupBy.length !== 0) {
+    labelArray = layers.map((layer: { key: any }) => layer.key);
+  } else {
+    labelArray = [yKey];
+  }
+
   return (
     <div ref={anchor} style={{ width: width, height: height }}>
       {tooltip && (
-        <TooltipDiv
+        <Tooltip
           chartType="bar-chart"
           data={tooltip}
           x={tooltip.cx + xScale.bandwidth() / 2 + margin.left}
@@ -216,48 +223,55 @@ export default function BarChart({
             />
           )}
           {groupBy
-            ? layers.map((layer: Data, i: number) => ( // MULTI CHART
-                <g key={i}>
-                  {layer.map((sequence: Data, j: number) => (
-                    <Rectangle
-                      data={getSequenceData(sequence)}
-                      dataTestId={`rectangle-${j}`}
-                      key={j}
-                      x={xScale(xAccessor(sequence.data))}
-                      y={yScale(sequence[1])}
-                      width={xScale.bandwidth()}
-                      height={
-                        yScale(sequence[0]) - yScale(sequence[1]) > 0
-                          ? yScale(sequence[0]) - yScale(sequence[1])
-                          : 0
-                      }
-                      fill={colorScale(layer.key[i])}
-                      setTooltip={setTooltip}
-                    />
-                  ))}
-                </g>
-              ))
-            : data.map((d: Data, i: number) => {
-              console.log(yScale(yAccessor(d)))
-              return ( // SINGLE CHART
-                <Rectangle
-                  data={d}
-                  dataTestId={`rectangle-${i}`}
-                  key={i}
-                  x={xScale(xAccessor(d))}
-                  y={ // if value < 0 mark, start rect top at 0 mark
-                    yScale(0) - yScale(yAccessor(d)) > 0 ? 
-                      yScale(yAccessor(d))
-                    : yScale(0)
-                  }
-                  width={xScale.bandwidth()}
-                  height={ // draw rect from 0 mark to +value
-                    Math.abs(yScale(0) - yScale(yAccessor(d))) 
-                  }
-                  fill={colorScale(yKey)}
-                  setTooltip={setTooltip}
-                />
+            ? layers.map(
+                (
+                  layer: Data,
+                  i: number // MULTI CHART
+                ) => (
+                  <g key={i}>
+                    {layer.map((sequence: Data, j: number) => (
+                      <Rectangle
+                        data={getSequenceData(sequence)}
+                        dataTestId={`rectangle-${j}`}
+                        key={j}
+                        x={xScale(xAccessor(sequence.data))}
+                        y={yScale(sequence[1])}
+                        width={xScale.bandwidth()}
+                        height={
+                          yScale(sequence[0]) - yScale(sequence[1]) > 0
+                            ? yScale(sequence[0]) - yScale(sequence[1])
+                            : 0
+                        }
+                        fill={colorScale(layer.key[i])}
+                        setTooltip={setTooltip}
+                      />
+                    ))}
+                  </g>
+                )
               )
+            : data.map((d: Data, i: number) => {
+                return (
+                  // SINGLE CHART
+                  <Rectangle
+                    data={d}
+                    dataTestId={`rectangle-${i}`}
+                    key={i}
+                    x={xScale(xAccessor(d))}
+                    y={
+                      // if value < 0 mark, start rect top at 0 mark
+                      yScale(0) - yScale(yAccessor(d)) > 0
+                        ? yScale(yAccessor(d))
+                        : yScale(0)
+                    }
+                    width={xScale.bandwidth()}
+                    height={
+                      // draw rect from 0 mark to +value
+                      Math.abs(yScale(0) - yScale(yAccessor(d)))
+                    }
+                    fill={colorScale(yKey)}
+                    setTooltip={setTooltip}
+                  />
+                );
               })}
 
           {
@@ -265,6 +279,7 @@ export default function BarChart({
             legend && (
               <ColorLegend
                 legendLabel={legendLabel}
+                labels={labelArray}
                 circleRadius={5 /* Radius of each color swab in legend */}
                 colorScale={colorScale}
                 dataTestId="bar-chart-legend"

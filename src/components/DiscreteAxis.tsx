@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import * as d3 from 'd3';
 import { DiscreteAxisProps, Data } from '../../types';
+import './Components.css';
+
 export const DiscreteAxis = React.memo(
   ({
     dataTestId = 'discrete-axis',

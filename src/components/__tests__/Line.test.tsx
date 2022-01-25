@@ -13,15 +13,19 @@ const LineProps: LineProps = {
   strokeWidth: '1px',
   d: mockedData,
 };
-const svg = document.createElement('svg')
+const svg = document.createElement('svg');
 
 const setup = () => {
-  return render(<svg><Line {...LineProps} /></svg>);
+  return render(
+    <svg>
+      <Line {...LineProps} />
+    </svg>
+  );
 };
 
 describe('Line test', () => {
   test('it should render Line', () => {
-   setup()
+    setup();
     expect(screen.getByTestId('d3reactor-line')).toBeInTheDocument();
   });
 });

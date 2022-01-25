@@ -1,7 +1,7 @@
 import React from 'react';
 import { TooltipProps } from '../../types';
 
-const TooltipDiv = ({
+const Tooltip = ({
   chartType,
   data,
   xAccessor,
@@ -11,46 +11,50 @@ const TooltipDiv = ({
   xKey,
   yKey,
 }: TooltipProps): JSX.Element => {
+  const backgroundColor = '#fff';
+  const boarderColor = '#ddd';
+  const triangleSize = 12;
+  const shadowElevationHigh = `0 0 10px 0 rgba(80, 80, 80, 0.2)`;
+
   const tooltipWrapperStyle: React.CSSProperties | undefined = {
     left: x,
     top: y,
     transform: 'translate(-50%, -50%)',
     position: 'absolute',
     pointerEvents: 'none',
+    fontFamily: 'Tahoma, Geneva, Verdana, sans-serif',
+    fontSize: '12px',
+    color: '#737373',
   };
-
-  const backgroundColor = '#fff';
-  const boarderColor = '#ddd';
-  const pointerSize = 12;
-  const shadowElevationHigh = `0 0 10px 0 rgba(80, 80, 80, 0.2)`;
 
   const contentStyle: React.CSSProperties | undefined = {
     position: 'absolute',
     margin: '4px 4px',
     padding: '0.6em 1em',
     borderRadius: '4px',
-    maxWidth: '380px',
-    transform: `translate(-50%, calc(-100% - ${pointerSize + 4}px)`,
+    minWidth: '220px',
+    transform: `translate(-50%, calc(-100% - ${triangleSize}px)`,
     background: backgroundColor,
-    textAlign: 'center',
+    textAlign: 'left',
     lineHeight: '1.4em',
-    fontSize: '0.9em',
-    color: '#1e2023',
+    fontSize: '1em',
     border: `1px solid ${boarderColor}`,
     zIndex: '9',
     transition: 'all 0.1s ease-out',
     boxShadow: shadowElevationHigh,
     pointerEvents: 'none',
+    whiteSpace: 'normal',
+    wordBreak: 'break-all',
   };
 
   const triangleStyle: React.CSSProperties | undefined = {
     content: '',
     position: 'absolute',
-    width: `${pointerSize}px`,
-    height: `${pointerSize}px`,
+    width: `${triangleSize}px`,
+    height: `${triangleSize}px`,
     background: backgroundColor,
     transform: `translate(-50%, calc(-102% - ${
-      pointerSize / 2
+      triangleSize / 2
     }px)) rotate(45deg)`,
     transformOrigin: 'center center',
     zIndex: '10',
@@ -60,47 +64,45 @@ const TooltipDiv = ({
   const triangleBorderStyle: React.CSSProperties | undefined = {
     content: '',
     position: 'absolute',
-    width: `${pointerSize}px`,
-    height: `${pointerSize}px`,
+    width: `${triangleSize}px`,
+    height: `${triangleSize}px`,
     background: boarderColor,
     transform: `translate(-50%, calc(-100% - ${
-      pointerSize / 2
+      triangleSize / 2
     }px)) rotate(45deg)`,
     transformOrigin: 'center center',
-    boxShadow: '1px 1px 14px 0px rgba(0,0,0,0.2)',
+    boxShadow: shadowElevationHigh,
     zIndex: '8',
     pointerEvents: 'none',
   };
 
-  const circleStyle: React.CSSProperties | undefined = {
-    width: '4px',
-    height: '4px',
-    borderRadius: '50%',
-    border: '1px solid #0184c7',
-    position: 'absolute',
-    transform: 'translate(-50%, -50%)',
-    backgroundColor: '#f0f9ff',
-    boxShadow: '1px 1px 2px 1px rgba(0,0,0,0.15)',
-    pointerEvents: 'none',
-  };
+  // const isDate = function(date: Date | string | number) {
+  //   return new Date(date) !== 'Invalid Date' && !isNaN(new Date(date));
+  // };
 
-  const xTooltipText = `${xKey}: ${data.tooltipData[xKey as string]}`;
-  const yTooltipText = `${yKey}: ${data.tooltipData[yKey as string]}`;
+  let xValString = data.tooltipData[xKey as string];
+  if (data.tooltipData[xKey as string] instanceof Date) {
+    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+    xValString = `${xValString.getFullYear()}.${xValString.getMonth()}.${xValString.getDay()}`;
+  }
+
+  let yValString = data.tooltipData[yKey as string];
+  if (!isNaN(data.tooltipData[yKey as string])) {
+    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+    yValString = `${Math.round(yValString * 100) / 100}`;
+  }
 
   return (
     <div style={tooltipWrapperStyle} data-testid={`tooltip-${chartType}`}>
       <div style={contentStyle}>
-        {xTooltipText}
+        {xKey} <strong>{xValString}</strong>
         <br />
-        {yTooltipText}
+        {yKey} <strong>{yValString}</strong>
       </div>
       <div style={triangleStyle}></div>
       <div style={triangleBorderStyle}></div>
-      {chartType !== 'scatter-plot' && chartType !== 'pie-chart' && (
-        <div style={circleStyle}></div>
-      )}
     </div>
   );
 };
 
-export default TooltipDiv;
+export default Tooltip;

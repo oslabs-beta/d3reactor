@@ -14,7 +14,7 @@ import { useResponsive } from '../../hooks/useResponsive';
 import { xScaleDef } from '../../functionality/xScale';
 import { yScaleDef } from '../../functionality/yScale';
 import ListeningRect from '../../components/ListeningRect';
-import TooltipDiv from '../../components/TooltipDiv';
+import Tooltip from '../../components/Tooltip';
 import { ColorLegend } from '../../components/ColorLegend';
 import {
   getXAxisCoordinates,
@@ -24,6 +24,7 @@ import {
   transformSkinnyToWide,
   EXTRA_LEGEND_MARGIN,
 } from '../../utils';
+import './AreaChart.css';
 
 import { useMousePosition } from '../../hooks/useMousePosition';
 
@@ -138,7 +139,7 @@ export default function AreaChart({
   const yAccessor: yAccessorFunc = useMemo(() => {
     return (d) => d[yKey];
   }, [yKey]);
- 
+
   const yScale = useMemo(() => {
     return yScaleDef(
       groupBy ? layers : transData,
@@ -163,10 +164,17 @@ export default function AreaChart({
   const colorScale = d3.scaleOrdinal(Array.from(computedScheme).reverse());
   colorScale.domain(keys);
 
+  let labelArray = [];
+  if (typeof groupBy === 'string' && groupBy.length !== 0) {
+    labelArray = layers.map((layer: { key: any }) => layer.key);
+  } else {
+    labelArray = [yKey];
+  }
+
   return (
     <div ref={anchor} style={{ width: width, height: height }}>
       {tooltip && (
-        <TooltipDiv
+        <Tooltip
           data={tooltip}
           x={margin.left + tooltip.cx}
           y={margin.top + tooltip.cy}
@@ -238,6 +246,7 @@ export default function AreaChart({
             legend && (
               <ColorLegend
                 legendLabel={legendLabel}
+                labels={labelArray}
                 circleRadius={5 /* Radius of each color swab in legend */}
                 colorScale={colorScale}
                 setLegendOffset={setLegendOffset}
