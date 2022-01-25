@@ -31,5 +31,5 @@ jobs:
       - name: NPM Publish to github package repo
         uses: JS-DevTools/npm-publish@v1
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.ACCESS_TOKEN }}
           registry: https://npm.pkg.github.com/
