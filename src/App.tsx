@@ -24,7 +24,7 @@ function App() {
       <BarChart
         height="100%"
         width="100%"
-        data={portfolio.slice(-20, -1)}
+        data={portfolio.slice(5, 13)}
         xKey="date"
         yKey="value"
         xAxis="bottom"
