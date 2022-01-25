@@ -5,8 +5,7 @@ name: DEV CI
 # Controls when the workflow will run
 on:
   push:
-    branches:
-      - dev
+    branches: [ dev ]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -31,5 +30,5 @@ jobs:
       - name: NPM Publish to github package repo
         uses: JS-DevTools/npm-publish@v1
         with:
-          token: ${{ secrets.ACCESS_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           registry: https://npm.pkg.github.com/
