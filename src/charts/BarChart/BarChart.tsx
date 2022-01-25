@@ -51,6 +51,14 @@ export default function BarChart({
   // Look at the data structure and declare how to access the values we'll need.
   // ********************
 
+  const xAccessor: (d: Data) => string = useMemo(() => {
+    return (d) => d[xKey];
+  }, []);
+
+  const yAccessor: yAccessorFunc = useMemo(() => {
+    return (d) => d[yKey];
+  }, []);
+
   // When the yKey key has been assigned to the groupBy variable we know the user didn't specify grouping
   const keys: string[] = useMemo(() => {
     let groups: d3.InternMap<any, any[]>;
@@ -67,27 +75,38 @@ export default function BarChart({
   }, [data, keys, groupBy, xKey, yKey]);
 
   const stack = d3.stack().keys(keys).order(d3.stackOrderAscending);
+
   const layers = useMemo(() => {
     return stack(transData as Iterable<{ [key: string]: number }>);
   }, [transData]);
 
-  const xAccessor: (d: Data) => string = useMemo(() => {
-    return (d) => d[xKey];
-  }, []);
+  const getSequenceData = (sequence: Data) => {
+    const xKeyValue = { [xKey]: sequence.data[xKey] };
+    const yKeyValue = { [yKey]: sequence[1] };
+    return { ...xKeyValue, ...yKeyValue };
+  };
 
-  const yAccessor: yAccessorFunc = useMemo(() => {
-    return (d) => d[yKey];
-  }, []);
+  let labelArray = [];
+  if (typeof groupBy === 'string' && groupBy.length !== 0) {
+    labelArray = layers.map((layer: { key: any }) => layer.key);
+  } else {
+    labelArray = [yKey];
+  }
 
-  const [tooltip, setTooltip] = useState<false | any>(false);
+  // ********************
+  // STEP 2. Determine chart dimensions
+  // Declare the physical (i.e. pixels) chart parameters
+  // ********************
 
   const { anchor, cHeight, cWidth } = useResponsive();
 
   // width & height of legend, so we know how much to squeeze chart by
   const [legendOffset, setLegendOffset] = useState<[number, number]>([0, 0]);
+
+  const [xOffset, yOffset] = legendOffset;
+
   const [tickMargin, setTickMargin] = useState(0);
-  const xOffset = legendOffset[0];
-  const yOffset = legendOffset[1];
+
   const margin = useMemo(
     () =>
       getMarginsWithLegend(
@@ -116,19 +135,15 @@ export default function BarChart({
     ]
   );
 
-  const { xAxisX, xAxisY } = useMemo(
-    () => getXAxisCoordinates(xAxis, cHeight, margin),
-    [cHeight, xAxis, margin]
-  );
-
-  const { yAxisX, yAxisY } = useMemo(
-    () => getYAxisCoordinates(yAxis, cWidth, margin),
-    [cWidth, yAxis, margin]
-  );
-
   const translate = `translate(${margin.left}, ${margin.top})`;
 
+  // ********************
+  // STEP 3. Create scales
+  // Create scales for every data-to-pysical attribute in our chart
+  // ********************
+
   const rangeMax = cWidth - margin.right - margin.left;
+
   const xScale = useMemo(() => {
     return d3
       .scaleBand()
@@ -148,24 +163,38 @@ export default function BarChart({
     );
   }, [transData, yAccessor, margin, cHeight, groupBy]);
 
+  // ********************
+  // STEP 4. Define styles
+  // Define how the data will drive your design
+  // ********************
+
   const discreteColors =
     Array.from(keys).length < 4 ? 3 : Math.min(Array.from(keys).length, 9);
   const computedScheme = d3[`${colorScheme}`][discreteColors];
   const colorScale = d3.scaleOrdinal(Array.from(computedScheme).reverse());
   colorScale.domain(keys);
 
-  const getSequenceData = (sequence: Data) => {
-    const xKeyValue = { [xKey]: sequence.data[xKey] };
-    const yKeyValue = { [yKey]: sequence[1] };
-    return { ...xKeyValue, ...yKeyValue };
-  };
+  // ********************
+  // STEP 5. Set up supportive elements
+  // Render your axes, labels, legends, annotations, etc.
+  // ********************
 
-  let labelArray = [];
-  if (typeof groupBy === 'string' && groupBy.length !== 0) {
-    labelArray = layers.map((layer: { key: any }) => layer.key);
-  } else {
-    labelArray = [yKey];
-  }
+  const { xAxisX, xAxisY } = useMemo(
+    () => getXAxisCoordinates(xAxis, cHeight, margin),
+    [cHeight, xAxis, margin]
+  );
+
+  const { yAxisX, yAxisY } = useMemo(
+    () => getYAxisCoordinates(yAxis, cWidth, margin),
+    [cWidth, yAxis, margin]
+  );
+
+  // ********************
+  // STEP 6. Set up interactions
+  // Initialize event listeners and create interaction behavior
+  // ********************
+
+  const [tooltip, setTooltip] = useState<false | any>(false);
 
   return (
     <div ref={anchor} style={{ width: width, height: height }}>

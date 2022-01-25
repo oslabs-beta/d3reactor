@@ -89,14 +89,6 @@ export default function LineChart({
     keys = [yKey];
   }
 
-  const line: any = d3
-    .line()
-    .curve(d3.curveLinear)
-    .x((d) => xScale(xAccessor(d)))
-    .y((d: any) => {
-      return d[yKey] ? yScale(yAccessor(d)) : yScale(0);
-    });
-
   // ********************
   // STEP 2. Determine chart dimensions
   // Declare the physical (i.e. pixels) chart parameters
@@ -151,6 +143,14 @@ export default function LineChart({
   const { xScale, xMin, xMax } = useMemo(() => {
     return xScaleDef(data, xType, xAccessor, margin, cWidth, chartType);
   }, [data, cWidth, margin]);
+
+  const line: any = d3
+    .line()
+    .curve(d3.curveLinear)
+    .x((d) => xScale(xAccessor(d)))
+    .y((d: any) => {
+      return d[yKey] ? yScale(yAccessor(d)) : yScale(0);
+    });
 
   // ********************
   // STEP 4. Define styles

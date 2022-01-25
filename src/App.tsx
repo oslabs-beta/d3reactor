@@ -12,7 +12,7 @@ import fruit from './data/fruit.json';
 function App() {
   return (
     <div className="app" style={{ height: '100vh', width: '100vw' }}>
-      {/* <PieChart
+      <PieChart
         data={fruit}
         label="label"
         value="value"
@@ -20,8 +20,8 @@ function App() {
         outerRadius={240}
         legendLabel="fruit"
         pieLabel={true}
-      />*/}
-      <BarChart
+      />
+      {/*<BarChart
         height="100%"
         width="100%"
         data={portfolio.slice(-20, -1)}
@@ -34,7 +34,7 @@ function App() {
         yAxisLabel="Value"
         legend={'bottom'}
       />
-      {/*<AreaChart
+      <AreaChart
         height="100%"
         width="100%"
         data={portfolio.slice(30, 60)}
