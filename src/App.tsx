@@ -9,9 +9,17 @@ import portfolio from '../data/portfolio.json';
 import penguins from '../data/penguins.json';
 import fruit from '../data/fruit.json';
 
+import styled from 'styled-components';
+
+export const Container = styled.div`
+  height: 100vh;
+  width: 100vw;
+  background-color: #ffffff;
+`;
+
 function App() {
   return (
-    <div className="app" style={{ height: '100vh', width: '100vw' }}>
+    <Container className="app">
       <PieChart
         data={fruit}
         label="label"
@@ -75,7 +83,7 @@ function App() {
         yAxis="right"
         yAxisLabel="Body Mass"
       />
-    </div>
+    </Container>
   );
 }
 
