@@ -26,14 +26,6 @@ export const DiscreteAxis = React.memo(
     setTickMargin,
   }: DiscreteAxisProps): JSX.Element => {
 
-    console.log( 'props', dataTestId,
-    x,
-    y,
-    type,
-    width,
-    margin,
-    data)
-   
     const fontSize = 7;
     let x1 = 0,
       y1 = 0,

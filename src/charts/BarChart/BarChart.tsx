@@ -144,8 +144,6 @@ export default function BarChart({
 
   const rangeMax = cWidth - margin.right - margin.left;
 
-  console.log('rangemax', rangeMax)
-
   const xScale = useMemo(() => {
     return d3
       .scaleBand()
