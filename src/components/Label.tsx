@@ -1,7 +1,8 @@
 import React, { useMemo } from 'react';
 import { getAxisLabelCoordinates } from '../utils';
 import { Margin } from '../../types';
-import './Components.css';
+
+import styled from 'styled-components';
 
 export function Label({
   dataTestId = 'label',
@@ -26,6 +27,10 @@ export function Label({
   label: string;
   tickMargin?: number;
 }): JSX.Element {
+  const AxisLabel = styled.text`
+    font-size: 22px;
+  `;
+
   const { axisLabelX, axisLabelY, rotate } = useMemo(
     () =>
       getAxisLabelCoordinates(
@@ -41,13 +46,12 @@ export function Label({
     [x, y, width, height, margin, type, axis, tickMargin]
   );
   return (
-    <text
+    <AxisLabel
       data-testid={dataTestId}
-      className="axis-label"
       transform={`translate(${axisLabelX}, ${axisLabelY}) rotate(${rotate})`}
       textAnchor="middle"
     >
       {label}
-    </text>
+    </AxisLabel>
   );
 }

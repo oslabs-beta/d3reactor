@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import * as d3 from 'd3';
 
 import { useMousePosition } from '../hooks/useMousePosition';
@@ -42,12 +42,12 @@ export default function ListeningRect({
   yAccessor: yAccessorFunc;
   setTooltip?: React.Dispatch<any>;
 }) {
-  const position = useMousePosition();
+  const anchor = useRef(null);
   const cellCenter = { cx: 0, cy: 0, tooltipData: {} };
 
   function onMouseMove(e: any) {
     const mousePosition = d3.pointer(e);
-    const hoveredX = xScale.invert(mousePosition[0]) as Date;
+    const hoveredX = xScale.invert(mousePosition[0]);
     const hoveredY = yScale.invert(mousePosition[1]);
 
     // ****************************************
@@ -67,7 +67,9 @@ export default function ListeningRect({
     if (typeof closestXIndex === 'number') {
       const closestDataPoint = data[closestXIndex];
       closestXValue = xAccessor(closestDataPoint);
-      cellCenter.cx = e.pageX - e.nativeEvent.offsetX + xScale(closestXValue);
+
+      cellCenter.cx =
+        e.nativeEvent.pageX - e.nativeEvent.layerX + xScale(closestXValue);
     }
 
     // ****************************************
@@ -92,7 +94,8 @@ export default function ListeningRect({
       const closestKey = layers[closestYIndex].key;
       if (typeof closestXIndex === 'number') {
         closestYValue = layers[closestYIndex][closestXIndex][1];
-        cellCenter.cy = e.pageY - e.nativeEvent.offsetY + yScale(closestYValue);
+        cellCenter.cy = e.pageY - e.nativeEvent.layerY + yScale(closestYValue);
+
         cellCenter.tooltipData = {
           [xKey]: closestXValue,
           [yKey]: closestYValue,
@@ -108,6 +111,7 @@ export default function ListeningRect({
   const rectHeight = height - margin.bottom - margin.top;
   return (
     <rect
+      ref={anchor}
       width={rectWidth >= 0 ? rectWidth : 0}
       height={rectHeight >= 0 ? rectHeight : 0}
       fill="transparent"

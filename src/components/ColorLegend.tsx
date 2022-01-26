@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 import { ColorLegendProps } from '../../types';
-import './Components.css';
 
 export const ColorLegend = ({
   colorScale,
   circleRadius = 10,
+  labels,
   dataTestId = 'color-legend',
   tickSpacing = circleRadius * 2 + 6,
   tickTextOffset = circleRadius * 1.2 + 3,
@@ -117,7 +117,7 @@ export const ColorLegend = ({
   }
 
   const rectHeight =
-    tickSpacing * (domain.length + labelHeightOffset) + EXTRA_LEGEND_MARGIN * 2;
+    tickSpacing * (labels.length + labelHeightOffset) + EXTRA_LEGEND_MARGIN * 2;
   // trying to make the legend no taller than the chart:
   // const rectHeight = Math.min(tickSpacing*(domain.length + labelHeightOffset) + EXTRA_LEGEND_MARGIN*2, cHeight);
 
@@ -127,7 +127,7 @@ export const ColorLegend = ({
   };
 
   // iterate thru category names, create color swab & text for each
-  const legend = domain.map((domainValue: string, i: number) => {
+  const legend = labels.map((domainValue: string, i: number) => {
     if (domainValue.length > longestWord) longestWord = domainValue.length;
     return (
       <g

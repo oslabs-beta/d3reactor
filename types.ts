@@ -20,6 +20,13 @@ export interface ScatterPlotProps<T> {
   yAxisLabel?: string;
   legend?: LegendPos;
   legendLabel?: string;
+  chartType?:
+    | 'scatter-plot'
+    | 'line-chart'
+    | 'area-chart'
+    | 'bar-chart'
+    | 'pie-chart'
+    | undefined;
   colorScheme?:
     | 'schemeRdYlGn'
     | 'schemeRdYlBu'
@@ -52,6 +59,13 @@ export interface BarChartProps<T> {
   yAxisLabel?: string;
   legend?: LegendPos;
   legendLabel?: string;
+  chartType?:
+    | 'scatter-plot'
+    | 'line-chart'
+    | 'area-chart'
+    | 'bar-chart'
+    | 'pie-chart'
+    | undefined;
   colorScheme?:
     | 'schemeRdYlGn'
     | 'schemeRdYlBu'
@@ -87,6 +101,13 @@ export interface LineChartProps<T> {
   yAxisLabel?: string;
   legend?: LegendPos;
   legendLabel?: string;
+  chartType?:
+    | 'scatter-plot'
+    | 'line-chart'
+    | 'area-chart'
+    | 'bar-chart'
+    | 'pie-chart'
+    | undefined;
   colorScheme?:
     | 'schemeRdYlGn'
     | 'schemeRdYlBu'
@@ -121,6 +142,13 @@ export interface AreaChartProps<T> {
   yAxisLabel?: string;
   legend?: LegendPos;
   legendLabel?: string;
+  chartType?:
+    | 'scatter-plot'
+    | 'line-chart'
+    | 'area-chart'
+    | 'bar-chart'
+    | 'pie-chart'
+    | undefined;
   colorScheme?:
     | 'schemeRdYlGn'
     | 'schemeRdYlBu'
@@ -148,6 +176,13 @@ export interface PieChartProps {
   outerRadius?: number | string | undefined;
   pieLabel?: boolean;
   value: string;
+  chartType?:
+    | 'scatter-plot'
+    | 'line-chart'
+    | 'area-chart'
+    | 'bar-chart'
+    | 'pie-chart'
+    | undefined;
   colorScheme?:
     | 'schemeRdYlGn'
     | 'schemeRdYlBu'
@@ -186,11 +221,11 @@ export interface Margin {
 }
 
 export interface ContinuousAxisProps {
-  dataTestId?: string
-  x: number
-  y: number
-  xGrid?: boolean
-  yGrid?: boolean
+  dataTestId?: string;
+  x: number;
+  y: number;
+  xGrid?: boolean;
+  yGrid?: boolean;
   scale:
     | d3.ScaleLinear<number, number, never>
     | d3.ScaleTime<number, number, never>;
@@ -208,7 +243,7 @@ export interface ContinuousAxisProps {
 }
 
 export interface DiscreteAxisProps {
-  dataTestId?:string;
+  dataTestId?: string;
   x: number;
   y: number;
   xGrid?: boolean;
@@ -248,10 +283,10 @@ export interface TooltipProps {
 }
 
 export interface CircleProps {
-  cx: number
-  cy: number
-  r?: string
-  color: string
+  cx: number;
+  cy: number;
+  r?: string;
+  color: string;
 }
 
 export interface RectangleProps {
@@ -305,6 +340,7 @@ export interface ColorLegendProps {
   circleRadius: number;
   tickTextOffset?: number;
   legendLabel?: string;
+  labels: string[];
   legendPosition: LegendPos;
   legendWidth: number;
   legendHeight: number;

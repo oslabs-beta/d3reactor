@@ -4,7 +4,7 @@ import '@testing-library/jest-dom';
 import { render, screen, cleanup } from '@testing-library/react';
 import { Axis } from '../ContinuousAxis';
 import { ContinuousAxisProps } from '../../../types';
-import portfolio from '../../data/portfolio.json';
+import portfolio from '../../../data/portfolio.json';
 
 const setup = (props: ContinuousAxisProps) => {
   return render(

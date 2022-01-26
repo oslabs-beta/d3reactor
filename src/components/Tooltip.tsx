@@ -1,7 +1,7 @@
 import React from 'react';
 import { TooltipProps } from '../../types';
 
-const TooltipDiv = ({
+const Tooltip = ({
   chartType,
   data,
   xAccessor,
@@ -11,6 +11,10 @@ const TooltipDiv = ({
   xKey,
   yKey,
 }: TooltipProps): JSX.Element => {
+  // ********************
+  // TOOLTIP STYLES
+  // ********************
+
   const backgroundColor = '#fff';
   const boarderColor = '#ddd';
   const triangleSize = 12;
@@ -32,7 +36,7 @@ const TooltipDiv = ({
     margin: '4px 4px',
     padding: '0.6em 1em',
     borderRadius: '4px',
-    maxWidth: '280px',
+    minWidth: '220px',
     transform: `translate(-50%, calc(-100% - ${triangleSize}px)`,
     background: backgroundColor,
     textAlign: 'left',
@@ -43,7 +47,8 @@ const TooltipDiv = ({
     transition: 'all 0.1s ease-out',
     boxShadow: shadowElevationHigh,
     pointerEvents: 'none',
-    whiteSpace: 'nowrap',
+    whiteSpace: 'normal',
+    wordBreak: 'break-all',
   };
 
   const triangleStyle: React.CSSProperties | undefined = {
@@ -87,9 +92,6 @@ const TooltipDiv = ({
     yValString = `${Math.round(yValString * 100) / 100}`;
   }
 
-  const xTooltipText = `${xKey}: ${xValString}`;
-  const yTooltipText = `${yKey}: ${yValString}`;
-
   return (
     <div style={tooltipWrapperStyle} data-testid={`tooltip-${chartType}`}>
       <div style={contentStyle}>
@@ -103,4 +105,4 @@ const TooltipDiv = ({
   );
 };
 
-export default TooltipDiv;
+export default Tooltip;

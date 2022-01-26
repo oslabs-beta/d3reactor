@@ -1,6 +1,6 @@
 {
   "name": "@oslabs-beta/d3reactor",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "placeholder",
   "main": "./dist/index.js",
   "types": "./dist/src/index.d.ts",
@@ -13,16 +13,16 @@
   "scripts": {
     "build": "webpack --config webpack.prod.ts",
     "dev": "webpack-dev-server --config webpack.dev.ts --open",
-    "format": "prettier --write \"src/**/*.{ts,tsx}\"",
-    "lint": "eslint \"src/**/*.{js,jsx,ts,tsx}\" --quiet",
-    "release": "npm run build && npm pack",
-    "test": "jest --config jest.config.ts",
     "cypress:open": "cypress open",
-    "cypress:run": "cypress run"
+    "cypress:run": "cypress run",
+    "test": "jest --config jest.config.ts",
+    "test-cypress": "webpack-dev-server --config webpack.cypress.ts --open",
+    "format": "prettier --write \"src/**/*.{ts,tsx}\"",
+    "lint": "eslint \"src/**/*.{js,jsx,ts,tsx}\" --quiet"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/oslabs-beta/d3reacts.git"
+    "url": "git+https://github.com/oslabs-beta/d3reactor.git"
   },
   "author": "Robert Crocker robert@vizsimply.com, Dmytro Iershov idmytro@yahoo.com, Ece Ozalp eceiozalp@gmail.com, Travis Lockett TravisLockett1@gmail.com, Eric Mulhern eric.mulhern@gmail.com",
   "license": "ISC",
@@ -32,7 +32,9 @@
   "homepage": "https://github.com/oslabs-beta/d3reacts#readme",
   "dependencies": {
     "@types/d3": "^7.1.0",
-    "d3": "^7.1.1"
+    "@types/styled-components": "5.1.21",
+    "d3": "^7.1.1",
+    "styled-components": "5.3.3"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.16.1",

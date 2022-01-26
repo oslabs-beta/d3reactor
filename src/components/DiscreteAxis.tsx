@@ -1,7 +1,16 @@
 import React, { useEffect } from 'react';
 import * as d3 from 'd3';
 import { DiscreteAxisProps, Data } from '../../types';
-import './Components.css';
+
+import styled from 'styled-components';
+const TickText = styled.text`
+font-size: 12px;
+`;
+
+const AxisBaseline = styled.line`
+stroke: #999999;
+stroke-width: 2;
+`;
 
 export const DiscreteAxis = React.memo(
   ({
@@ -19,6 +28,7 @@ export const DiscreteAxis = React.memo(
     xAccessor,
     setTickMargin,
   }: DiscreteAxisProps): JSX.Element => {
+   
     const fontSize = 8;
     let x1 = 0,
       y1 = 0,
@@ -103,11 +113,8 @@ export const DiscreteAxis = React.memo(
     // const horizontalTicks = scale.ticks(width/120)
     // const verticalTicks = scale.ticks(numberOfVerticalTicks)
     return (
-      <g> 
-        {type === 'bottom' &&
-        <>
-        <line
-          className="axis-baseline"
+      <g>
+        <AxisBaseline
           data-testid={dataTestId}
           x1={x1}
           y1={y1}
@@ -115,19 +122,15 @@ export const DiscreteAxis = React.memo(
           y2={y2}
         />
         {ticks.map((tick: any, i: number) => (
-          <text
-            data-testid='d3reactor-ticktext'
-            className="tick-text"
+          <TickText
             key={i}
             style={getTickStyle(type, tick)}
             transform={getTickTranslation(type, tick, i)}
           >
             {check ? tick.slice(0, 10) : tick}
-          </text>
+          </TickText>
         ))}
-        </>
-         }
+         
       </g>
     );
-  }
-);
+        })
