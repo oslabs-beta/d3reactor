@@ -9,9 +9,10 @@ import portfolio from '../data/portfolio.json';
 import penguins from '../data/penguins.json';
 import fruit from '../data/fruit.json';
 
+import GlobalStyle from './styles/globals';
 import styled from 'styled-components';
 
-export const Container = styled.div`
+const Container = styled.div`
   height: 100vh;
   width: 100vw;
   background-color: #ffffff;
@@ -20,6 +21,7 @@ export const Container = styled.div`
 function App() {
   return (
     <Container className="app">
+      <GlobalStyle />
       <PieChart
         data={fruit}
         label="label"

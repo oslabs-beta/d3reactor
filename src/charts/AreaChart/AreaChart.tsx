@@ -24,7 +24,7 @@ import {
   transformSkinnyToWide,
   EXTRA_LEGEND_MARGIN,
 } from '../../utils';
-import './AreaChart.css';
+import styled from 'styled-components';
 
 import { useMousePosition } from '../../hooks/useMousePosition';
 
@@ -176,6 +176,9 @@ export default function AreaChart({
   // STEP 4. Define styles
   // Define how the data will drive your design
   // ********************
+  const Area = styled.path`
+    fill-opacity: 0.7;
+  `;
 
   const discreteColors =
     Array.from(keys).length < 4 ? 3 : Math.min(Array.from(keys).length, 9);
@@ -276,8 +279,7 @@ export default function AreaChart({
             />
           )}
           {layers.map((layer, i) => (
-            <path
-              className="area"
+            <Area
               key={i}
               d={areaGenerator(layer)}
               fill={colorScale(layer.key)}
