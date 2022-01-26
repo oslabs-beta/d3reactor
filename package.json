@@ -13,12 +13,12 @@
   "scripts": {
     "build": "webpack --config webpack.prod.ts",
     "dev": "webpack-dev-server --config webpack.dev.ts --open",
-    "format": "prettier --write \"src/**/*.{ts,tsx}\"",
-    "lint": "eslint \"src/**/*.{js,jsx,ts,tsx}\" --quiet",
-    "release": "npm run build && npm pack",
-    "test": "jest --config jest.config.ts",
     "cypress:open": "cypress open",
-    "cypress:run": "cypress run"
+    "cypress:run": "cypress run",
+    "test": "jest --config jest.config.ts",
+    "test-cypress": "webpack-dev-server --config webpack.cypress.ts --open",
+    "format": "prettier --write \"src/**/*.{ts,tsx}\"",
+    "lint": "eslint \"src/**/*.{js,jsx,ts,tsx}\" --quiet"
   },
   "repository": {
     "type": "git",

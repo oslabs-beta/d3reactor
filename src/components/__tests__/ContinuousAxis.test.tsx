@@ -4,7 +4,7 @@ import '@testing-library/jest-dom';
 import { render, screen, cleanup } from '@testing-library/react';
 import { Axis } from '../ContinuousAxis';
 import { ContinuousAxisProps } from '../../../types';
-import portfolio from '../../data/portfolio.json';
+import portfolio from '../../../data/portfolio.json';
 
 //add tests for axis on the right side
 //add vertical axis tests for scatterplot
