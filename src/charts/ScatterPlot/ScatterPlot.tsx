@@ -27,7 +27,6 @@ import {
   EXTRA_LEGEND_MARGIN,
 } from '../../utils';
 import { Label } from '../../components/Label';
-import './ScatterPlot.css';
 
 export default function ScatterPlot({
   data,

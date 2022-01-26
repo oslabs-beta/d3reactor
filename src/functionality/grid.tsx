@@ -2,6 +2,8 @@ import React from 'react';
 import * as d3 from 'd3';
 import { Margin } from '../../types';
 
+import styled from 'styled-components';
+
 export function gridGenerator(
   type: 'top' | 'bottom' | 'left' | 'right',
   xGrid: boolean | undefined,
@@ -14,6 +16,9 @@ export function gridGenerator(
   width: number,
   margin: Margin
 ): JSX.Element[] {
+  const Grid = styled.line`
+    stroke: #e1e1e1;
+  `;
   let grid: JSX.Element[] = [];
   switch (true) {
     case type === 'bottom' && xGrid:
@@ -57,9 +62,8 @@ export function gridGenerator(
         (tick: any, i: number) => {
           const x2 = width - margin.right - margin.left;
           return (
-            <line
+            <Grid
               data-testid="d3reactor-gridline"
-              className="grid-line"
               key={i}
               x1={0}
               x2={x2 > 40 ? x2 : 40}
@@ -76,9 +80,8 @@ export function gridGenerator(
         (tick: any, i: number) => {
           const x2 = -width + margin.right + margin.left;
           return (
-            <line
+            <Grid
               data-testid="d3reactor-gridline"
-              className="grid-line"
               key={i}
               x1={0}
               x2={x2 < -40 ? x2 : -40}

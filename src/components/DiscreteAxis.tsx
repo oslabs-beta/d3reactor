@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 import * as d3 from 'd3';
 import { DiscreteAxisProps, Data } from '../../types';
-import './Components.css';
+
+import styled from 'styled-components';
 
 export const DiscreteAxis = React.memo(
   ({
@@ -19,6 +20,14 @@ export const DiscreteAxis = React.memo(
     xAccessor,
     setTickMargin,
   }: DiscreteAxisProps): JSX.Element => {
+    const TickText = styled.text`
+      font-size: 12px;
+    `;
+
+    const AxisBaseline = styled.line`
+      stroke: #999999;
+      stroke-width: 2;
+    `;
     const fontSize = 11;
     let x1 = 0,
       y1 = 0,
@@ -104,8 +113,7 @@ export const DiscreteAxis = React.memo(
     // const verticalTicks = scale.ticks(numberOfVerticalTicks)
     return (
       <g>
-        <line
-          className="axis-baseline"
+        <AxisBaseline
           data-testid={dataTestId}
           x1={x1}
           y1={y1}
@@ -113,14 +121,13 @@ export const DiscreteAxis = React.memo(
           y2={y2}
         />
         {ticks.map((tick: any, i: number) => (
-          <text
-            className="tick-text"
+          <TickText
             key={i}
             style={getTickStyle(type, tick)}
             transform={getTickTranslation(type, tick, i)}
           >
             {check ? tick.slice(0, 10) : tick}
-          </text>
+          </TickText>
         ))}
       </g>
     );

@@ -9,9 +9,13 @@ import portfolio from '../data/portfolio.json';
 import penguins from '../data/penguins.json';
 import fruit from '../data/fruit.json';
 
+import GlobalStyle from './styles/globals';
+import { Container } from './styles/componentStyles';
+
 function App() {
   return (
-    <div className="app" style={{ height: '100vh', width: '100vw' }}>
+    <Container className="app">
+      <GlobalStyle />
       <PieChart
         data={fruit}
         label="label"
@@ -75,7 +79,7 @@ function App() {
         yAxis="right"
         yAxisLabel="Body Mass"
       />
-    </div>
+    </Container>
   );
 }
 

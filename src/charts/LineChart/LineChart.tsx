@@ -26,7 +26,6 @@ import { xScaleDef } from '../../functionality/xScale';
 import { d3Voronoi } from '../../functionality/voronoi';
 import { Label } from '../../components/Label';
 import Tooltip from '../../components/Tooltip';
-import './LineChart.css';
 
 export default function LineChart({
   data,
