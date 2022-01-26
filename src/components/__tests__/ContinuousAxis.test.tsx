@@ -22,7 +22,6 @@ const xScaleTime = d3
   .domain([xMin ?? 0, xMax ?? 0])
   .range([0, 400]);
 
-
 const yScale = d3
   .scaleLinear()
   .domain([-6.652160159084837, 3.742471419804005])
@@ -76,26 +75,25 @@ const leftProps: ContinuousAxisProps = {
     right: 20,
     top: 20,
     bottom: 80,
-  }
+  },
 };
 
 const rightProps: ContinuousAxisProps = {
-  ...initialProps, 
+  ...initialProps,
   type: 'right',
   x: 400,
   y: 0,
   scale: yScale,
   margin: {
-    "left": 20,
-    "right": 80,
-    "top": 20,
-    "bottom": 80
-},
-xTicksValue: undefined
-}
+    left: 20,
+    right: 80,
+    top: 20,
+    bottom: 80,
+  },
+  xTicksValue: undefined,
+};
 
 describe('Continuous Axis test', () => {
-
   test('it should render a line for bottom axis', () => {
     setup(initialProps);
     expect(screen.getByTestId('d3reactor-continuous')).toBeVisible();
@@ -111,7 +109,7 @@ describe('Continuous Axis test', () => {
     expect(
       screen.queryByTestId('d3reactor-continuous')
     ).not.toBeInTheDocument();
-    })
+  });
 
   test('it should not render a line for right axis if not ScatterPlot', () => {
     setup(rightProps);
@@ -121,11 +119,7 @@ describe('Continuous Axis test', () => {
   });
 
   test('it should render a line for left axis in ScatterPlot', () => {
-    const yScale = d3
-    .scaleLinear()
-    .domain([0, 4675])
-    .range([600, 0])
-    .nice();
+    const yScale = d3.scaleLinear().domain([0, 4675]).range([600, 0]).nice();
     const leftProps: ContinuousAxisProps = {
       x: 0,
       y: 0,
@@ -135,20 +129,14 @@ describe('Continuous Axis test', () => {
       height: 700,
       margin: { left: 80, right: 20, top: 20, bottom: 80 },
       yGrid: true,
-      chartType: "scatter-plot"
+      chartType: 'scatter-plot',
     };
     setup(leftProps);
-    expect(
-      screen.queryByTestId('d3reactor-continuous')
-    ).toBeInTheDocument();
+    expect(screen.queryByTestId('d3reactor-continuous')).toBeInTheDocument();
   });
 
   test('it should render a line for right axis in ScatterPlot', () => {
-    const yScale = d3
-    .scaleLinear()
-    .domain([0, 4675])
-    .range([600, 0])
-    .nice();
+    const yScale = d3.scaleLinear().domain([0, 4675]).range([600, 0]).nice();
     const leftProps: ContinuousAxisProps = {
       x: 512,
       y: 0,
@@ -158,19 +146,14 @@ describe('Continuous Axis test', () => {
       height: 700,
       margin: { left: 20, right: 168, top: 20, bottom: 80 },
       yGrid: true,
-      chartType: "scatter-plot"
+      chartType: 'scatter-plot',
     };
     setup(leftProps);
-    expect(
-      screen.queryByTestId('d3reactor-continuous')
-    ).toBeInTheDocument();  });
+    expect(screen.queryByTestId('d3reactor-continuous')).toBeInTheDocument();
+  });
 
   test('it should compute axis line coordinates for left axis in ScatterPlot', () => {
-    const yScale = d3
-    .scaleLinear()
-    .domain([0, 4675])
-    .range([600, 0])
-    .nice();
+    const yScale = d3.scaleLinear().domain([0, 4675]).range([600, 0]).nice();
     const leftProps: ContinuousAxisProps = {
       x: 0,
       y: 0,
@@ -180,7 +163,7 @@ describe('Continuous Axis test', () => {
       height: 700,
       margin: { left: 80, right: 20, top: 20, bottom: 80 },
       yGrid: true,
-      chartType: "scatter-plot"
+      chartType: 'scatter-plot',
     };
     setup(leftProps);
     expect(screen.getByTestId('d3reactor-continuous')).toHaveAttribute(
@@ -199,14 +182,10 @@ describe('Continuous Axis test', () => {
       'y2',
       '600'
     );
-  })
+  });
 
   test('it should compute axis line coordinates for right axis in ScatterPlot', () => {
-    const yScale = d3
-    .scaleLinear()
-    .domain([0, 4675])
-    .range([600, 0])
-    .nice();
+    const yScale = d3.scaleLinear().domain([0, 4675]).range([600, 0]).nice();
     const leftProps: ContinuousAxisProps = {
       x: 512,
       y: 0,
@@ -216,9 +195,9 @@ describe('Continuous Axis test', () => {
       height: 700,
       margin: { left: 20, right: 168, top: 20, bottom: 80 },
       yGrid: true,
-      chartType: "scatter-plot"
+      chartType: 'scatter-plot',
     };
-    setup(leftProps); 
+    setup(leftProps);
     expect(screen.getByTestId('d3reactor-continuous')).toHaveAttribute(
       'x1',
       '512'
@@ -234,8 +213,8 @@ describe('Continuous Axis test', () => {
     expect(screen.getByTestId('d3reactor-continuous')).toHaveAttribute(
       'y2',
       '600'
-    ); 
-   })
+    );
+  });
 
   test('it should compute axis line coordinates for bottom axis', () => {
     setup(initialProps);
@@ -255,8 +234,7 @@ describe('Continuous Axis test', () => {
       'y2',
       '400'
     );
-
-  })
+  });
   test('it should compute axis line coordinates for top axis', () => {
     setup(topProps);
     expect(screen.getByTestId('d3reactor-continuous')).toHaveAttribute(
@@ -313,7 +291,7 @@ describe('Continuous Axis test', () => {
     setup(leftPropsResized);
     expect(screen.queryAllByTestId('d3reactor-ticktext')).toHaveLength(12);
     expect(screen.queryByText('1')).toBeInTheDocument();
-  })
+  });
 
   test('it should filter tick text elements number based on height for right axis', () => {
     setup(rightProps);
@@ -321,16 +299,16 @@ describe('Continuous Axis test', () => {
     expect(screen.queryByText('1')).not.toBeInTheDocument();
     cleanup();
     const yScaleUpdated = d3
-    .scaleLinear()
-    .domain([-6.652160159084837, 3.742471419804005])
-    .range([900, 0])
-    .nice();
+      .scaleLinear()
+      .domain([-6.652160159084837, 3.742471419804005])
+      .range([900, 0])
+      .nice();
     const rightPropsResized = {
       ...leftProps,
       width: 1000,
       height: 1000,
       scale: yScaleUpdated,
-    }
+    };
     setup(rightPropsResized);
     expect(screen.queryAllByTestId('d3reactor-ticktext')).toHaveLength(12);
     expect(screen.queryByText('1')).toBeInTheDocument();
@@ -376,9 +354,9 @@ describe('Continuous Axis test', () => {
     );
     cleanup();
     const updatedXScaleTime = d3
-    .scaleTime()
-    .domain([xMin ?? 0, xMax ?? 0])
-    .range([0, 900]);
+      .scaleTime()
+      .domain([xMin ?? 0, xMax ?? 0])
+      .range([0, 900]);
     const topPropsResized: ContinuousAxisProps = {
       ...initialProps,
       type: 'top',
@@ -398,7 +376,7 @@ describe('Continuous Axis test', () => {
       'transform',
       'translate(698.4555984555984, -8)'
     );
-    })
+  });
 
   test('it should compute tick text position for left axis', () => {
     setup(leftProps);
@@ -410,8 +388,8 @@ describe('Continuous Axis test', () => {
       'transform',
       'translate(-12, 145.45454545454547)'
     );
-  })
-  
+  });
+
   test('it should compute tick text position for right axis', () => {
     setup(rightProps);
     expect(screen.getByText('-6')).toHaveAttribute(
@@ -421,7 +399,7 @@ describe('Continuous Axis test', () => {
     expect(screen.getByText('0')).toHaveAttribute(
       'transform',
       'translate(412, 145.45454545454547)'
-    )
+    );
   });
 
   test('it should not display gridlines for bottom axis by default', () => {

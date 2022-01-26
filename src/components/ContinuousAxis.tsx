@@ -6,12 +6,12 @@ import { gridGenerator } from '../functionality/grid';
 import styled from 'styled-components';
 
 const TickText = styled.text`
-font-size: 12px;
+  font-size: 12px;
 `;
 
 const AxisBaseline = styled.line`
-stroke: #999999;
-stroke-width: 2;
+  stroke: #999999;
+  stroke-width: 2;
 `;
 
 function Axi({
@@ -28,8 +28,6 @@ function Axi({
   xTicksValue,
   chartType,
 }: ContinuousAxisProps): JSX.Element {
- 
-
   let x1 = 0,
     y1 = 0,
     x2 = 0,

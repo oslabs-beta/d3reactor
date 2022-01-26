@@ -27,7 +27,7 @@ import {
 import styled from 'styled-components';
 
 const Area = styled.path`
-fill-opacity: 0.7;
+  fill-opacity: 0.7;
 `;
 
 export default function AreaChart({

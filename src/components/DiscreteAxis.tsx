@@ -1,15 +1,15 @@
 import React, { useEffect } from 'react';
 import * as d3 from 'd3';
-import { DiscreteAxisProps, Data } from '../../types'
+import { DiscreteAxisProps, Data } from '../../types';
 
 import styled from 'styled-components';
 const TickText = styled.text`
-font-size: 12px;
+  font-size: 12px;
 `;
 
 const AxisBaseline = styled.line`
-stroke: #999999;
-stroke-width: 2;
+  stroke: #999999;
+  stroke-width: 2;
 `;
 
 export const DiscreteAxis = React.memo(
@@ -25,7 +25,6 @@ export const DiscreteAxis = React.memo(
     xAccessor,
     setTickMargin,
   }: DiscreteAxisProps): JSX.Element => {
-
     const fontSize = 7;
     let x1 = 0,
       y1 = 0,
@@ -56,8 +55,7 @@ export const DiscreteAxis = React.memo(
     const getFormattedTick = (individualTick: string) => {
       if (individualTick.length > 10 && !isNaN(Date.parse(individualTick))) {
         return formatTick(new Date(individualTick));
-      }
-       else {
+      } else {
         return individualTick;
       }
     };
@@ -69,7 +67,9 @@ export const DiscreteAxis = React.memo(
 
     useEffect(() => {
       check
-        ? setTickMargin(longestTick.length < 10 ? longestTick.length * fontSize/2 : 40)
+        ? setTickMargin(
+            longestTick.length < 10 ? (longestTick.length * fontSize) / 2 : 40
+          )
         : setTickMargin(0);
     }, [check]);
 
@@ -121,34 +121,35 @@ export const DiscreteAxis = React.memo(
           x2={x2}
           y2={y2}
         />
-        {!check && 
-        <>
-        {ticks.map((tick: any, i: number) => (
-          <TickText
-            data-testid='d3reactor-ticktext'
-            key={JSON.stringify(tick)}
-            style={getTickStyle(type, tick)}
-            transform={getTickTranslation(type, tick, i)}
-          >
-           {tick}
-          </TickText>
-        ))}
-        </>
-  }
-   {check && 
-        <>
-        {ticks.map((tick: any, i: number) => (
-          <TickText
-            data-testid='d3reactor-ticktext'
-            key={JSON.stringify(tick.slice(0,10))}
-            style={getTickStyle(type, tick.slice(0,10))}
-            transform={getTickTranslation(type, tick.slice(0,10), i)}
-          >
-           {tick.slice(0,10)}
-          </TickText>
-        ))}
-        </>
-  }
+        {!check && (
+          <>
+            {ticks.map((tick: any, i: number) => (
+              <TickText
+                data-testid="d3reactor-ticktext"
+                key={JSON.stringify(tick)}
+                style={getTickStyle(type, tick)}
+                transform={getTickTranslation(type, tick, i)}
+              >
+                {tick}
+              </TickText>
+            ))}
+          </>
+        )}
+        {check && (
+          <>
+            {ticks.map((tick: any, i: number) => (
+              <TickText
+                data-testid="d3reactor-ticktext"
+                key={JSON.stringify(tick.slice(0, 10))}
+                style={getTickStyle(type, tick.slice(0, 10))}
+                transform={getTickTranslation(type, tick.slice(0, 10), i)}
+              >
+                {tick.slice(0, 10)}
+              </TickText>
+            ))}
+          </>
+        )}
       </g>
     );
-        })
+  }
+);

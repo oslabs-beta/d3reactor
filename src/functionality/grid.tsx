@@ -4,7 +4,7 @@ import { Margin } from '../../types';
 
 import styled from 'styled-components';
 const Grid = styled.line`
-stroke: #e1e1e1;
+  stroke: #e1e1e1;
 `;
 
 export function gridGenerator(
@@ -19,7 +19,6 @@ export function gridGenerator(
   width: number,
   margin: Margin
 ): JSX.Element[] {
- 
   let grid: JSX.Element[] = [];
   switch (true) {
     case type === 'bottom' && xGrid:
