@@ -32,7 +32,9 @@
   "homepage": "https://github.com/oslabs-beta/d3reacts#readme",
   "dependencies": {
     "@types/d3": "^7.1.0",
-    "d3": "^7.1.1"
+    "@types/styled-components": "5.1.21",
+    "d3": "^7.1.1",
+    "styled-components": "5.3.3"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.16.1",
