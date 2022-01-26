@@ -2,6 +2,9 @@ import React from 'react';
 import { RectangleProps } from '../../types';
 
 import styled from 'styled-components';
+const Bar = styled.rect`
+fill-opacity: 0.7;
+`;
 
 export const Rectangle = React.memo(
   ({
@@ -37,9 +40,6 @@ export const Rectangle = React.memo(
       }
     };
 
-    const Bar = styled.rect`
-      fill-opacity: 0.7;
-    `;
 
     return (
       <Bar

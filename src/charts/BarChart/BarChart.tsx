@@ -144,6 +144,8 @@ export default function BarChart({
 
   const rangeMax = cWidth - margin.right - margin.left;
 
+  console.log('rangemax', rangeMax)
+
   const xScale = useMemo(() => {
     return d3
       .scaleBand()
@@ -215,14 +217,11 @@ export default function BarChart({
               dataTestId="bar-chart-x-axis"
               x={xAxisX}
               y={xAxisY}
-              height={cHeight}
               width={cWidth}
               margin={margin}
               scale={xScale}
               type={xAxis}
-              label={xAxisLabel}
               data={transData}
-              layers={layers}
               xAccessor={xAccessor}
               setTickMargin={setTickMargin}
             />

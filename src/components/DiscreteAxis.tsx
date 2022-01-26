@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import * as d3 from 'd3';
-import { DiscreteAxisProps, Data } from '../../types';
+import { DiscreteAxisProps, Data } from '../../types'
 
 import styled from 'styled-components';
 const TickText = styled.text`
@@ -19,17 +19,22 @@ export const DiscreteAxis = React.memo(
     y,
     scale,
     type,
-    label,
     width,
-    height,
     margin,
     data,
-    layers,
     xAccessor,
     setTickMargin,
   }: DiscreteAxisProps): JSX.Element => {
+
+    console.log( 'props', dataTestId,
+    x,
+    y,
+    type,
+    width,
+    margin,
+    data)
    
-    const fontSize = 8;
+    const fontSize = 7;
     let x1 = 0,
       y1 = 0,
       x2 = 0,
@@ -54,23 +59,28 @@ export const DiscreteAxis = React.memo(
         y2 = 0;
         break;
     }
+
     const formatTick = d3.timeFormat('%x');
     const getFormattedTick = (individualTick: string) => {
       if (individualTick.length > 10 && !isNaN(Date.parse(individualTick))) {
         return formatTick(new Date(individualTick));
-      } else {
+      }
+       else {
         return individualTick;
       }
     };
+
     const ticksOriginal = data.map((d) => xAccessor(d));
     const ticks = data.map((d) => getFormattedTick(xAccessor(d)));
-    const check = ticks.some((tick) => tick.length * 9 > scale.bandwidth());
+    const check = ticks.some((tick) => tick.length * 8 > scale.bandwidth());
     const longestTick = ticks.reduce((a, b) => (a.length > b.length ? a : b));
+
     useEffect(() => {
       check
-        ? setTickMargin((longestTick.length * fontSize) / 2)
+        ? setTickMargin(longestTick.length < 10 ? longestTick.length * fontSize/2 : 40)
         : setTickMargin(0);
     }, [check]);
+
     const getTickTranslation = (
       axisType: string,
       individualTick: string,
@@ -110,8 +120,6 @@ export const DiscreteAxis = React.memo(
           return { textAnchor: 'middle', dominantBaseline: 'auto' };
       }
     };
-    // const horizontalTicks = scale.ticks(width/120)
-    // const verticalTicks = scale.ticks(numberOfVerticalTicks)
     return (
       <g>
         <AxisBaseline
@@ -121,16 +129,34 @@ export const DiscreteAxis = React.memo(
           x2={x2}
           y2={y2}
         />
+        {!check && 
+        <>
         {ticks.map((tick: any, i: number) => (
           <TickText
-            key={i}
+            data-testid='d3reactor-ticktext'
+            key={JSON.stringify(tick)}
             style={getTickStyle(type, tick)}
             transform={getTickTranslation(type, tick, i)}
           >
-            {check ? tick.slice(0, 10) : tick}
+           {tick}
           </TickText>
         ))}
-         
+        </>
+  }
+   {check && 
+        <>
+        {ticks.map((tick: any, i: number) => (
+          <TickText
+            data-testid='d3reactor-ticktext'
+            key={JSON.stringify(tick.slice(0,10))}
+            style={getTickStyle(type, tick.slice(0,10))}
+            transform={getTickTranslation(type, tick.slice(0,10), i)}
+          >
+           {tick.slice(0,10)}
+          </TickText>
+        ))}
+        </>
+  }
       </g>
     );
         })

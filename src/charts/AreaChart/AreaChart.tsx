@@ -26,7 +26,9 @@ import {
 } from '../../utils';
 import styled from 'styled-components';
 
-import { useMousePosition } from '../../hooks/useMousePosition';
+const Area = styled.path`
+fill-opacity: 0.7;
+`;
 
 export default function AreaChart({
   data,
@@ -176,9 +178,6 @@ export default function AreaChart({
   // STEP 4. Define styles
   // Define how the data will drive your design
   // ********************
-  const Area = styled.path`
-    fill-opacity: 0.7;
-  `;
 
   const discreteColors =
     Array.from(keys).length < 4 ? 3 : Math.min(Array.from(keys).length, 9);

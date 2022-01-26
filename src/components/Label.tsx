@@ -3,6 +3,9 @@ import { getAxisLabelCoordinates } from '../utils';
 import { Margin } from '../../types';
 
 import styled from 'styled-components';
+const AxisLabel = styled.text`
+font-size: 22px;
+`;
 
 export function Label({
   dataTestId = 'label',
@@ -27,9 +30,7 @@ export function Label({
   label: string;
   tickMargin?: number;
 }): JSX.Element {
-  const AxisLabel = styled.text`
-    font-size: 22px;
-  `;
+
 
   const { axisLabelX, axisLabelY, rotate } = useMemo(
     () =>
