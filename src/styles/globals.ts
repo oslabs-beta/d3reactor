@@ -9,9 +9,6 @@ const GlobalStyle = createGlobalStyle`
       font-family: Tahoma, Geneva, Verdana, sans-serif;
       color: #737373;
   }
-  #root{
-      margin:0 auto;
-  }
 `;
 
 export default GlobalStyle;

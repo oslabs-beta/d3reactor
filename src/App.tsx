@@ -10,13 +10,7 @@ import penguins from '../data/penguins.json';
 import fruit from '../data/fruit.json';
 
 import GlobalStyle from './styles/globals';
-import styled from 'styled-components';
-
-const Container = styled.div`
-  height: 100vh;
-  width: 100vw;
-  background-color: #ffffff;
-`;
+import { Container } from './styles/componentStyles';
 
 function App() {
   return (
