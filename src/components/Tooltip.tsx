@@ -11,6 +11,10 @@ const Tooltip = ({
   xKey,
   yKey,
 }: TooltipProps): JSX.Element => {
+  // ********************
+  // TOOLTIP STYLES
+  // ********************
+
   const backgroundColor = '#fff';
   const boarderColor = '#ddd';
   const triangleSize = 12;
@@ -75,10 +79,6 @@ const Tooltip = ({
     zIndex: '8',
     pointerEvents: 'none',
   };
-
-  // const isDate = function(date: Date | string | number) {
-  //   return new Date(date) !== 'Invalid Date' && !isNaN(new Date(date));
-  // };
 
   let xValString = data.tooltipData[xKey as string];
   if (data.tooltipData[xKey as string] instanceof Date) {
