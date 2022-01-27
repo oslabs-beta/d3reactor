@@ -42,9 +42,9 @@ const Tooltip = ({
     moveTooltip = { ...moveTooltip, horizontal: 'left' };
   }
 
-  console.log('Tooltip distance from top ', distanceFromTop);
-  console.log('Tooltip distance from right ', distanceFromRight);
-  console.log('Tooltip distance from left ', distanceFromLeft);
+  // console.log('Tooltip distance from top ', distanceFromTop);
+  // console.log('Tooltip distance from right ', distanceFromRight);
+  // console.log('Tooltip distance from left ', distanceFromLeft);
 
   let contentYTranslation = '';
   let triangeYTranslation = '';

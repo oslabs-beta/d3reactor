@@ -36,36 +36,17 @@ export const Rectangle = React.memo(
       // of the bar width to the cursor position to calculate the distance from
       // right hand side of the page. When the cursor enters the bar from the
       // right side of the bar we need to substract half of the bar width.
-      const cursorXPosition =
-        e.pageX -
-        e.nativeEvent.layerX +
-        e.nativeEvent.layerX -
-        margin.marginLeft;
+      const offsetFromLeft = e.pageX - e.nativeEvent.layerX
+      const cursorXPosition = offsetFromLeft + e.nativeEvent.layerX - margin.marginLeft;
       const rectMidPoint = (x ?? 0) + width / 2;
+
       if (setTooltip) {
-        if (cursorXPosition <= rectMidPoint) {
-          tooltipState.distanceFromRight =
-            clientWidth -
-            (e.pageX -
-              e.nativeEvent.layerX +
-              margin.marginLeft +
-              (x ?? 0) +
-              width / 2);
-        } else {
-          tooltipState.distanceFromRight =
-            clientWidth -
-            (e.pageX -
-              e.nativeEvent.layerX +
-              margin.marginLeft +
-              (x ?? 0) -
-              width / 2);
-        }
 
         tooltipState = {
           cursorX: e.pageX - e.nativeEvent.layerX + (x ?? 0),
           cursorY: e.pageY - e.nativeEvent.layerY + (y ?? 0),
           distanceFromTop: e.clientY,
-          distanceFromRight: tooltipState.distanceFromRight,
+          distanceFromRight: clientWidth - (offsetFromLeft + margin.marginLeft + rectMidPoint),
           distanceFromLeft: e.pageX,
           data,
         };
