@@ -5,6 +5,15 @@ import { gridGenerator } from '../functionality/grid';
 
 import styled from 'styled-components';
 
+const TickText = styled.text`
+  font-size: 12px;
+`;
+
+const AxisBaseline = styled.line`
+  stroke: #999999;
+  stroke-width: 2;
+`;
+
 function Axi({
   dataTestId = 'd3reactor-continuous',
   x,
@@ -19,15 +28,6 @@ function Axi({
   xTicksValue,
   chartType,
 }: ContinuousAxisProps): JSX.Element {
-  const TickText = styled.text`
-    font-size: 12px;
-  `;
-
-  const AxisBaseline = styled.line`
-    stroke: #999999;
-    stroke-width: 2;
-  `;
-
   let x1 = 0,
     y1 = 0,
     x2 = 0,
@@ -158,7 +158,7 @@ function Axi({
         horizontalTicks.map((tick, i) => (
           <TickText
             data-testid="d3reactor-ticktext"
-            key={tick.toString()}
+            key={JSON.stringify(tick)}
             style={getTickStyle(type, tick)}
             transform={getTickTranslation(type, tick)}
           >
@@ -169,7 +169,7 @@ function Axi({
         verticalTicks.map((tick, i) => (
           <TickText
             data-testid="d3reactor-ticktext"
-            key={tick.toString()}
+            key={JSON.stringify(tick)}
             style={getTickStyle(type, tick)}
             transform={getTickTranslation(type, tick)}
           >

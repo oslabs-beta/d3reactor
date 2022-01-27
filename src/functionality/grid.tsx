@@ -3,6 +3,9 @@ import * as d3 from 'd3';
 import { Margin } from '../../types';
 
 import styled from 'styled-components';
+const Grid = styled.line`
+  stroke: #e1e1e1;
+`;
 
 export function gridGenerator(
   type: 'top' | 'bottom' | 'left' | 'right',
@@ -16,9 +19,6 @@ export function gridGenerator(
   width: number,
   margin: Margin
 ): JSX.Element[] {
-  const Grid = styled.line`
-    stroke: #e1e1e1;
-  `;
   let grid: JSX.Element[] = [];
   switch (true) {
     case type === 'bottom' && xGrid:

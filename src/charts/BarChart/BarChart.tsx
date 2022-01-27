@@ -215,14 +215,11 @@ export default function BarChart({
               dataTestId="bar-chart-x-axis"
               x={xAxisX}
               y={xAxisY}
-              height={cHeight}
               width={cWidth}
               margin={margin}
               scale={xScale}
               type={xAxis}
-              label={xAxisLabel}
               data={transData}
-              layers={layers}
               xAccessor={xAccessor}
               setTickMargin={setTickMargin}
             />

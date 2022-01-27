@@ -250,12 +250,9 @@ export interface DiscreteAxisProps {
   yGrid?: boolean;
   scale: d3.ScaleBand<string>;
   type: 'top' | 'right' | 'bottom' | 'left';
-  label: string | undefined;
-  height: number;
   width: number;
   margin: Margin;
   data: Data[];
-  layers: any;
   xAccessor: (d: Data) => string;
   setTickMargin: React.Dispatch<any>;
   chartType?:
