@@ -14,6 +14,7 @@
     "resolveJsonModule": true,
     "isolatedModules": false,
     "declaration": true,
+    "declarationDir": "dist/types",
     "noEmit": false,
     "noEmitOnError": true,
     "jsx": "react",

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /** App.js */
 import React, { useState, useMemo } from 'react';
 /*eslint import/namespace: ['error', { allowComputed: true }]*/
@@ -13,6 +14,13 @@ import {
   getMarginsWithLegend,
   EXTRA_LEGEND_MARGIN,
 } from '../../utils';
+=======
+import React, { useState, useEffect, useRef, useLayoutEffect } from "react"
+import PieChartBody from "./PieChartBody"
+import { PieChartProps } from "../../../types"
+import { checkRadiusDimension, calculateOuterRadius } from "../../utils"
+import * as d3 from "d3";
+>>>>>>> main
 
 export default function PieChart({
   data,
