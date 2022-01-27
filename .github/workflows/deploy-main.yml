@@ -40,6 +40,6 @@ jobs:
           # access level for scoped packages -- by 1.0.0 we may unscope from @oslabs-beta
           access: restricted
           # just see if it works -- don't actually publish
-          dry-run: true
+          dry-run: false
           # only run if published version number differs from the one in package.json
           check-version: true 
