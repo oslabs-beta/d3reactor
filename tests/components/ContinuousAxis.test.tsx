@@ -2,9 +2,9 @@ import React from 'react';
 import * as d3 from 'd3';
 import '@testing-library/jest-dom';
 import { render, screen, cleanup } from '@testing-library/react';
-import { Axis } from '../ContinuousAxis';
-import { ContinuousAxisProps } from '../../../types';
-import portfolio from '../../../data/portfolio.json';
+import { Axis } from '../../src/components/ContinuousAxis';
+import { ContinuousAxisProps } from '../../types';
+import portfolio from '../../data/portfolio.json';
 
 const setup = (props: ContinuousAxisProps) => {
   return render(

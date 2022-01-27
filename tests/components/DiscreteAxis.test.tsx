@@ -2,8 +2,8 @@ import React from 'react';
 import * as d3 from 'd3';
 import '@testing-library/jest-dom';
 import { render, screen, cleanup } from '@testing-library/react';
-import { DiscreteAxis } from '../DiscreteAxis';
-import { DiscreteAxisProps } from '../../../types';
+import { DiscreteAxis } from '../../src/components/DiscreteAxis';
+import { DiscreteAxisProps } from '../../types';
 
 // tests for top axis tick text position and transformation not written
 // functionality must be implemented in component first
