@@ -1,11 +1,7 @@
 {
   "compilerOptions": {
     "target": "es6",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "es6"
-    ],
+    "lib": ["dom", "dom.iterable", "es6"],
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -16,13 +12,13 @@
     "module": "commonjs",
     "moduleResolution": "node",
     "resolveJsonModule": true,
-    "isolatedModules": true,
+    "isolatedModules": false,
     "declaration": true,
     "declarationDir": "dist/types",
     "noEmit": false,
     "noEmitOnError": true,
     "jsx": "react",
-    "outDir": "./dist/",
+    "outDir": "./dist/"
   },
-  "include": ["src", "types.ts"]
+  "include": ["src", "types.ts", "tests/Test.tsx","tests"],
 }

@@ -1,0 +1,82 @@
+[
+  {
+    "date": "Thu Feb 01 2018 00:00:00 GMT-0500 (Eastern Standard Time)",
+    "fruit": "apples",
+    "value": 10
+  },
+  {
+    "date": "Thu Mar 01 2018 00:00:00 GMT-0500 (Eastern Standard Time)",
+    "fruit": "apples",
+    "value": 19
+  },
+  {
+    "date": "Thu Mar 08 2018 00:00:00 GMT-0500 (Eastern Standard Time)",
+    "fruit": "apples",
+    "value": 38
+  },
+  {
+    "date": "Sun Apr 01 2018 00:00:00 GMT-0400 (Eastern Daylight Time)",
+    "fruit": "apples",
+    "value": 20
+  },
+  {
+    "date": "Thu Feb 01 2018 00:00:00 GMT-0500 (Eastern Standard Time)",
+    "fruit": "oranges",
+    "value": 13
+  },
+  {
+    "date": "Thu Mar 01 2018 00:00:00 GMT-0500 (Eastern Standard Time)",
+    "fruit": "oranges",
+    "value": null
+  },
+  {
+    "date": "Thu Mar 08 2018 00:00:00 GMT-0500 (Eastern Standard Time)",
+    "fruit": "oranges",
+    "value": 4
+  },
+  {
+    "date": "Sun Apr 01 2018 00:00:00 GMT-0400 (Eastern Daylight Time)",
+    "fruit": "oranges",
+    "value": 10
+  },
+  {
+    "date": "Thu Feb 01 2018 00:00:00 GMT-0500 (Eastern Standard Time)",
+    "fruit": "bananas",
+    "value": 20
+  },
+  {
+    "date": "Thu Mar 01 2018 00:00:00 GMT-0500 (Eastern Standard Time)",
+    "fruit": "bananas",
+    "value":15
+  },
+  {
+    "date": "Thu Mar 08 2018 00:00:00 GMT-0500 (Eastern Standard Time)",
+    "fruit": "bananas",
+    "value": 6
+  },
+  {
+    "date": "Sun Apr 01 2018 00:00:00 GMT-0400 (Eastern Daylight Time)",
+    "fruit": "bananas",
+    "value": 25
+  },
+  {
+    "date": "Thu Feb 01 2018 00:00:00 GMT-0500 (Eastern Standard Time)",
+    "fruit": "apricots",
+    "value": 22
+  },
+  {
+    "date": "Thu Mar 01 2018 00:00:00 GMT-0500 (Eastern Standard Time)",
+    "fruit": "apricots",
+    "value":3
+  },
+  {
+    "date": "Thu Mar 08 2018 00:00:00 GMT-0500 (Eastern Standard Time)",
+    "fruit": "apricots",
+    "value": 3
+  },
+  {
+    "date": "Sun Apr 01 2018 00:00:00 GMT-0400 (Eastern Daylight Time)",
+    "fruit": "apricots",
+    "value": 40
+  }
+]

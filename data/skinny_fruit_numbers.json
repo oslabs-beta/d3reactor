@@ -1,0 +1,66 @@
+[
+  {
+    "date": 1,
+    "fruit": "apples",
+    "value": 10
+  },
+  {
+    "date": 2,
+    "fruit": "apples",
+    "value": 15
+  },
+  {
+    "date": 3,
+    "fruit": "apples",
+    "value": 38
+  },
+
+  {
+    "date": 1,
+    "fruit": "oranges",
+    "value": 15
+  },
+  {
+    "date": 2,
+    "fruit": "oranges",
+    "value": null
+  },
+  {
+    "date": 3,
+    "fruit": "oranges",
+    "value": 18
+  },
+
+  {
+    "date": 1,
+    "fruit": "bananas",
+    "value": 20
+  },
+  {
+    "date": 2,
+    "fruit": "bananas",
+    "value":15
+  },
+  {
+    "date": 3,
+    "fruit": "bananas",
+    "value": 6
+  },
+
+  {
+    "date": 1,
+    "fruit": "apricots",
+    "value": 22
+  },
+  {
+    "date": 2,
+    "fruit": "apricots",
+    "value":3
+  },
+  {
+    "date": 3,
+    "fruit": "apricots",
+    "value": 3
+  }
+
+]
