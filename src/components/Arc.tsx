@@ -31,8 +31,8 @@ export const Arc = React.memo(
           cursorX: e.pageX,
           cursorY: e.pageY,
           distanceFromTop: e.clientY,
-          distanceFromRight: width - e.clientX,
-          distanceFromLeft: e.clientX,
+          distanceFromRight: width - e.pageX,
+          distanceFromLeft: e.pageX,
           data,
         };
         setTooltip(tooltipState);

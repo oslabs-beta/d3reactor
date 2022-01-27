@@ -20,9 +20,7 @@ function App() {
         data={fruit}
         label="label"
         value="value"
-        legend="top-right"
         outerRadius={240}
-        legendLabel="fruit"
         pieLabel={true}
       />
       <BarChart

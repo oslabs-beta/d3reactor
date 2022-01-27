@@ -217,7 +217,7 @@ export default function PieChart({
 
   const [tooltip, setTooltip] = useState<false | any>(false);
 
-  console.log('TOOLTIP DATA ', tooltip);
+  console.table('TOOLTIP DATA ', tooltip);
 
   return (
     <div ref={anchor} style={{ width: '100%', height: '100%' }}>

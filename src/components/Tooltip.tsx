@@ -1,5 +1,4 @@
 import React from 'react';
-import useWindowDimensions from '../hooks/useWindowDimensions';
 import { TooltipProps } from '../../types';
 
 const Tooltip = ({
@@ -7,11 +6,12 @@ const Tooltip = ({
   data,
   cursorX,
   cursorY,
+  distanceFromTop,
+  distanceFromRight,
+  distanceFromLeft,
   xKey,
   yKey,
 }: TooltipProps): JSX.Element => {
-  const { height, width } = useWindowDimensions();
-
   // ********************
   // TOOLTIP STYLES
   // ********************
@@ -31,13 +31,13 @@ const Tooltip = ({
     vertical: 'none',
     horizontal: 'none',
   };
-  if (cursorY < 60) {
+  if (distanceFromTop < 60) {
     moveTooltip = { ...moveTooltip, vertical: 'down' };
   }
 
-  if (cursorX < 70) {
+  if (distanceFromLeft < 70) {
     moveTooltip = { ...moveTooltip, horizontal: 'right' };
-  } else if (width - cursorX < 70) {
+  } else if (distanceFromRight < 70) {
     moveTooltip = { ...moveTooltip, horizontal: 'left' };
   }
 
