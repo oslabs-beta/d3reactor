@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/restrict-plus-operands */
 /** App.js */
 import React, { useState, useMemo } from 'react';
 /*eslint import/namespace: ['error', { allowComputed: true }]*/
@@ -202,8 +203,11 @@ export default function BarChart({
         <Tooltip
           chartType={chartType}
           data={tooltip}
-          x={tooltip.cx + xScale.bandwidth() / 2 + margin.left}
-          y={tooltip.cy + margin.top}
+          cursorX={tooltip.cursorX + xScale.bandwidth() / 2 + margin.left}
+          cursorY={tooltip.cursorY + margin.top}
+          distanceFromTop={tooltip.distanceFromTop}
+          distanceFromRight={tooltip.distanceFromRight}
+          distanceFromLeft={tooltip.distanceFromLeft}
           xKey={xKey}
           yKey={yKey}
         />

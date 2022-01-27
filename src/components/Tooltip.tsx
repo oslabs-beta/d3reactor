@@ -5,8 +5,8 @@ import { TooltipProps } from '../../types';
 const Tooltip = ({
   chartType,
   data,
-  x,
-  y,
+  cursorX,
+  cursorY,
   xKey,
   yKey,
 }: TooltipProps): JSX.Element => {
@@ -31,13 +31,13 @@ const Tooltip = ({
     vertical: 'none',
     horizontal: 'none',
   };
-  if (y < 60) {
+  if (cursorY < 60) {
     moveTooltip = { ...moveTooltip, vertical: 'down' };
   }
 
-  if (x < 70) {
+  if (cursorX < 70) {
     moveTooltip = { ...moveTooltip, horizontal: 'right' };
-  } else if (width - x < 70) {
+  } else if (width - cursorX < 70) {
     moveTooltip = { ...moveTooltip, horizontal: 'left' };
   }
 
@@ -81,8 +81,8 @@ const Tooltip = ({
   triangleBorderTranslation = `translate(${triangeBorderXTranslation}, ${triangeBorderYTranslation}) rotate(45deg)`;
 
   const tooltipWrapperStyle: React.CSSProperties | undefined = {
-    left: x,
-    top: y,
+    left: cursorX,
+    top: cursorY,
     transform: 'translate(-50%, -50%)',
     position: 'absolute',
     pointerEvents: 'none',
@@ -138,14 +138,14 @@ const Tooltip = ({
     pointerEvents: 'none',
   };
 
-  let xValString = data.tooltipData[xKey as string];
-  if (data.tooltipData[xKey as string] instanceof Date) {
+  let xValString = data[xKey as string];
+  if (data[xKey as string] instanceof Date) {
     // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
     xValString = `${xValString.getFullYear()}.${xValString.getMonth()}.${xValString.getDay()}`;
   }
 
-  let yValString = data.tooltipData[yKey as string];
-  if (!isNaN(data.tooltipData[yKey as string])) {
+  let yValString = data[yKey as string];
+  if (!isNaN(data[yKey as string])) {
     // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
     yValString = `${Math.round(yValString * 100) / 100}`;
   }

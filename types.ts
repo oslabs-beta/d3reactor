@@ -273,8 +273,11 @@ export interface TooltipProps {
   data: any;
   xAccessor?: xAccessorFunc;
   yAccessor?: yAccessorFunc;
-  x: number;
-  y: number;
+  cursorX: number;
+  cursorY: number;
+  distanceFromTop: number;
+  distanceFromRight: number;
+  distanceFromLeft: number;
   xKey?: string;
   yKey?: string;
 }

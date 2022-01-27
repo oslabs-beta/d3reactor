@@ -224,9 +224,12 @@ export default function PieChart({
       {tooltip && (
         <Tooltip
           chartType={chartType}
-          data={tooltip}
-          x={tooltip.cx}
-          y={tooltip.cy}
+          data={tooltip.data}
+          cursorX={tooltip.cursorX}
+          cursorY={tooltip.cursorY}
+          distanceFromTop={tooltip.distanceFromTop}
+          distanceFromRight={tooltip.distanceFromRight}
+          distanceFromLeft={tooltip.distanceFromLeft}
           xKey={label}
           yKey={value}
         />
