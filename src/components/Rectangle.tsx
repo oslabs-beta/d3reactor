@@ -47,9 +47,10 @@ export const Rectangle = React.memo(
           cursorY: e.pageY - e.nativeEvent.layerY + (y ?? 0),
           distanceFromTop: e.clientY,
           distanceFromRight: clientWidth - (offsetFromLeft + margin.marginLeft + rectMidPoint),
-          distanceFromLeft: e.pageX,
+          distanceFromLeft: offsetFromLeft + margin.marginLeft + rectMidPoint,
           data,
         };
+        console.log('TOOLTIP STATE ', tooltipState.distanceFromLeft);
         setTooltip(tooltipState);
       }
     };

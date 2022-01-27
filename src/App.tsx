@@ -30,7 +30,7 @@ function App() {
         xKey="date"
         yKey="value"
         xAxis="bottom"
-        yAxis="left"
+        yAxis={false}
         yGrid={true}
         xAxisLabel="Date"
         legend={'bottom'}
