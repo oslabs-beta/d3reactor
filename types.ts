@@ -296,6 +296,7 @@ export interface RectangleProps {
   y: number;
   width: number;
   height: number;
+  margin: { marginTop: number; marginLeft: number };
   fill: string;
   setTooltip?: React.Dispatch<any>;
 }

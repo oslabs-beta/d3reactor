@@ -202,7 +202,7 @@ export default function BarChart({
       {tooltip && (
         <Tooltip
           chartType={chartType}
-          data={tooltip}
+          data={tooltip.data}
           cursorX={tooltip.cursorX + xScale.bandwidth() / 2 + margin.left}
           cursorY={tooltip.cursorY + margin.top}
           distanceFromTop={tooltip.distanceFromTop}
@@ -288,6 +288,10 @@ export default function BarChart({
                             ? yScale(sequence[0]) - yScale(sequence[1])
                             : 0
                         }
+                        margin={{
+                          marginTop: margin.top,
+                          marginLeft: margin.left,
+                        }}
                         fill={colorScale(layer.key[i])}
                         setTooltip={setTooltip}
                       />
@@ -314,6 +318,10 @@ export default function BarChart({
                       // draw rect from 0 mark to +value
                       Math.abs(yScale(0) - yScale(yAccessor(d)))
                     }
+                    margin={{
+                      marginTop: margin.top,
+                      marginLeft: margin.left,
+                    }}
                     fill={colorScale(yKey)}
                     setTooltip={setTooltip}
                   />

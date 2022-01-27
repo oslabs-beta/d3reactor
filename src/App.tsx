@@ -30,10 +30,9 @@ function App() {
         xKey="date"
         yKey="value"
         xAxis="bottom"
-        yAxis="right"
+        yAxis="left"
         yGrid={true}
         xAxisLabel="Date"
-        yAxisLabel="Value"
         legend={'bottom'}
       />
       <AreaChart
