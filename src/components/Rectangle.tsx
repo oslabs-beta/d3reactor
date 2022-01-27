@@ -1,8 +1,10 @@
 import React from 'react';
 import { RectangleProps } from '../../types';
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-import '../charts/BarChart/BarChart.css';
+import styled from 'styled-components';
+const Bar = styled.rect`
+  fill-opacity: 0.7;
+`;
 
 export const Rectangle = React.memo(
   ({
@@ -39,8 +41,7 @@ export const Rectangle = React.memo(
     };
 
     return (
-      <rect
-        className="bar"
+      <Bar
         data-testid={dataTestId}
         x={x}
         y={y}

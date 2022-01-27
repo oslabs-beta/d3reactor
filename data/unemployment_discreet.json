@@ -1,0 +1,27 @@
+[
+  {
+    "division": "Bethesda-Rockville-Frederick, MD Met Div",
+    "date": "2000-01-01T00:00:00.000Z",
+    "unemployment": 2.6
+  },
+  {
+    "division": "Boston-Cambridge-Quincy, MA NECTA Div",
+    "date": "2003-01-01T00:00:00.000Z",
+    "unemployment": 5.3
+  },
+  {
+    "division": "Brockton-Bridgewater-Easton, MA NECTA Div",
+    "date": "2005-10-01T00:00:00.000Z",
+    "unemployment": 5.4
+  },
+  {
+    "division": "Camden, NJ Met Div",
+    "date": "2008-01-01T00:00:00.000Z",
+    "unemployment": 4.7
+  },
+  {
+    "division": "Chicago-Joliet-Naperville, IL Met Div",
+    "date": "2005-11-01T00:00:00.000Z",
+    "unemployment": 5.5
+  }
+]

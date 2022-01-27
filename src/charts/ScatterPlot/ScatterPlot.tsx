@@ -27,7 +27,6 @@ import {
   EXTRA_LEGEND_MARGIN,
 } from '../../utils';
 import { Label } from '../../components/Label';
-import './ScatterPlot.css';
 
 export default function ScatterPlot({
   data,
@@ -45,11 +44,45 @@ export default function ScatterPlot({
   yAxisLabel,
   legend,
   legendLabel = '',
+  chartType = 'scatter-plot',
   colorScheme = 'schemePurples',
 }: ScatterPlotProps<string | number>): JSX.Element {
-  const [tooltip, setTooltip] = useState<false | any>(false);
-  const chart = 'ScatterPlot';
+  /**********
+  Step in creating any chart:
+    1. Process data
+    2. Determine chart dimensions
+    3. Create scales
+    4. Define styles
+    5. Set up supportive elements
+    6. Set up interactions
+  ***********/
 
+  // ********************
+  // STEP 1. Process data
+  // Look at the data structure and declare how to access the values we'll need.
+  // ********************
+  let xType: 'number' | 'date' = inferXDataType(data[0], xKey);
+  if (xDataType !== undefined) xType = xDataType;
+
+  const keys = useMemo(() => {
+    let groups: d3.InternMap<any, any[]>;
+    const groupAccessor = (d: Data) => d[groupBy ?? ''];
+    groups = d3.group(data, groupAccessor);
+    return groupBy ? Array.from(groups).map((group) => group[0]) : [yKey];
+  }, [groupBy, yKey]);
+
+  const xAccessor: xAccessorFunc = useMemo(() => {
+    return xType === 'number' ? (d) => d[xKey] : (d) => new Date(d[xKey]);
+  }, []);
+
+  const yAccessor: yAccessorFunc = useMemo(() => {
+    return (d) => d[yKey];
+  }, []);
+
+  // ********************
+  // STEP 2. Determine chart dimensions
+  // Declare the physical (i.e. pixels) chart parameters
+  // ********************
   const { anchor, cHeight, cWidth } = useResponsive();
 
   // width & height of legend, so we know how much to squeeze chart by
@@ -82,6 +115,41 @@ export default function ScatterPlot({
     ]
   );
 
+  const translate = `translate(${margin.left}, ${margin.top})`;
+
+  // ********************
+  // STEP 3. Create scales
+  // Create scales for every data-to-pysical attribute in our chart
+  // ********************
+
+  const { xScale } = useMemo(() => {
+    return xScaleDef(data, xType, xAccessor, margin, cWidth, chartType);
+  }, [data, cWidth, margin]);
+
+  const xAccessorScaled = (d: any) => xScale(xAccessor(d));
+
+  const yScale = useMemo(() => {
+    return yScaleDef(data, yAccessor, margin, cHeight);
+  }, [data, yAccessor, margin, cHeight]);
+
+  const yAccessorScaled = (d: any) => yScale(yAccessor(d));
+  // ********************
+  // STEP 4. Define styles
+  // Define how the data will drive your design
+  // ********************
+
+  // discreteColors must be between 3 and 9, so here we create a range.
+  const discreteColors =
+    Array.from(keys).length < 4 ? 3 : Math.min(Array.from(keys).length, 9);
+  const computedScheme = d3[`${colorScheme}`][discreteColors];
+  const colorScale = d3.scaleOrdinal(Array.from(computedScheme).reverse());
+  colorScale.domain(keys);
+
+  // ********************
+  // STEP 5. Set up supportive elements
+  // Render your axes, labels, legends, annotations, etc.
+  // ********************
+
   const { xAxisX, xAxisY } = useMemo(
     () => getXAxisCoordinates(xAxis, cHeight, margin),
     [cHeight, xAxis, margin]
@@ -92,32 +160,12 @@ export default function ScatterPlot({
     [cWidth, yAxis, margin]
   );
 
-  const translate = `translate(${margin.left}, ${margin.top})`;
+  // ********************
+  // STEP 6. Set up interactions
+  // Initialize event listeners and create interaction behavior
+  // ********************
 
-  let xType: 'number' | 'date' = inferXDataType(data[0], xKey);
-  if (xDataType !== undefined) xType = xDataType;
-
-  const keys = useMemo(() => {
-    let groups: d3.InternMap<any, any[]>;
-    const groupAccessor = (d: Data) => d[groupBy ?? ''];
-    groups = d3.group(data, groupAccessor);
-    return groupBy ? Array.from(groups).map((group) => group[0]) : [yKey];
-  }, [groupBy, yKey]);
-
-  const xAccessor: xAccessorFunc = useMemo(() => {
-    return xType === 'number' ? (d) => d[xKey] : (d) => new Date(d[xKey]);
-  }, []);
-  const yAccessor: yAccessorFunc = useMemo(() => {
-    return (d) => d[yKey];
-  }, []);
-
-  const { xScale } = useMemo(() => {
-    return xScaleDef(data, xType, xAccessor, margin, cWidth, chart);
-  }, [data, cWidth, margin]);
-
-  const yScale = useMemo(() => {
-    return yScaleDef(data, yAccessor, margin, cHeight);
-  }, [data, yAccessor, margin, cHeight]);
+  const [tooltip, setTooltip] = useState<false | any>(false);
 
   const voronoi = useMemo(() => {
     return d3Voronoi(
@@ -131,13 +179,6 @@ export default function ScatterPlot({
       margin
     );
   }, [data, xScale, yScale, xAccessor, yAccessor, cHeight, cWidth, margin]);
-
-  // discreteColors must be between 3 and 9, so here we create a range.
-  const discreteColors =
-    Array.from(keys).length < 4 ? 3 : Math.min(Array.from(keys).length, 9);
-  const computedScheme = d3[`${colorScheme}`][discreteColors];
-  const colorScale = d3.scaleOrdinal(Array.from(computedScheme).reverse());
-  colorScale.domain(keys);
 
   return (
     <div ref={anchor} style={{ width: width, height: height }}>
@@ -155,7 +196,7 @@ export default function ScatterPlot({
         <g className="spbody" transform={translate}>
           {yAxis && (
             <Axis
-              chartType="scatter-plot"
+              chartType={chartType}
               x={yAxisX}
               y={yAxisY}
               yGrid={yGrid}
@@ -206,16 +247,16 @@ export default function ScatterPlot({
             !groupBy ? (
               <Circle
                 key={i}
-                cx={xScale(xAccessor(element))}
-                cy={yScale(yAccessor(element))}
+                cx={xAccessorScaled(element)}
+                cy={yAccessorScaled(element)}
                 r="5"
                 color={colorScale(keys[1])}
               />
             ) : (
               <Circle
                 key={i}
-                cx={xScale(xAccessor(element))}
-                cy={yScale(yAccessor(element))}
+                cx={xAccessorScaled(element)}
+                cy={yAccessorScaled(element)}
                 r="5"
                 color={colorScale(element[groupBy])}
               />
