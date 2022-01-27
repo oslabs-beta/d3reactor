@@ -123,9 +123,6 @@ const unemploymentLongText = [
 ];
 
 const mockSetState = jest.fn();
-// jest.mock('react', () => ({
-//   useState: (initial: any) => [initial, mockSetState]
-// }));
 
 const xAccessor = (d: any) => d.date;
 

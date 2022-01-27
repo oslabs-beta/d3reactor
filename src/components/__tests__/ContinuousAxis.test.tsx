@@ -424,7 +424,7 @@ describe('Continuous Axis test', () => {
 
   test('it should display gridlines for bottom axis when enabled', () => {
     setup({ ...initialProps, xGrid: true });
-    let elements = screen.queryAllByTestId('d3reactor-gridline');
+    const elements = screen.queryAllByTestId('d3reactor-gridline');
     expect(elements).toHaveLength(10);
     expect(elements[0]).toHaveAttribute('x1', '0');
     expect(elements[0]).toHaveAttribute('x2', '0');
@@ -441,7 +441,7 @@ describe('Continuous Axis test', () => {
       ...topProps,
       xGrid: true,
     });
-    let elements = screen.queryAllByTestId('d3reactor-gridline');
+    const elements = screen.queryAllByTestId('d3reactor-gridline');
     expect(elements).toHaveLength(10);
     expect(elements[0]).toHaveAttribute('x1', '0');
     expect(elements[0]).toHaveAttribute('x2', '0');
@@ -455,7 +455,7 @@ describe('Continuous Axis test', () => {
 
   test('it should display gridlines for left axis when enabled', () => {
     setup({ ...leftProps, yGrid: true });
-    let elements = screen.queryAllByTestId('d3reactor-gridline');
+    const elements = screen.queryAllByTestId('d3reactor-gridline');
     expect(elements).toHaveLength(12);
     expect(elements[0]).toHaveAttribute('x1', '0');
     expect(elements[0]).toHaveAttribute('x2', '400');
@@ -469,7 +469,7 @@ describe('Continuous Axis test', () => {
 
   test('it should display gridlines for right axis when enabled', () => {
     setup({ ...rightProps, yGrid: true });
-    let elements = screen.queryAllByTestId('d3reactor-gridline');
+    const elements = screen.queryAllByTestId('d3reactor-gridline');
     expect(elements).toHaveLength(12);
     expect(elements[0]).toHaveAttribute('x1', '0');
     expect(elements[0]).toHaveAttribute('x2', '-400');
