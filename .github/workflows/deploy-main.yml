@@ -24,6 +24,10 @@ jobs:
       - name: Install
         run: npm install
 
+      # Strip scope from package.json name
+      - name: Unscope
+        run: sed -i"" -e "s/@oslabs-beta\\/d3reactor/d3reactor/" package.json
+
       # Build package
       - name: Build
         run: npm run build
