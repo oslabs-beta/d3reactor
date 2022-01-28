@@ -1,9 +1,11 @@
+/* eslint-disable @typescript-eslint/restrict-plus-operands */
 /** App.js */
 import React, { useState, useMemo } from 'react';
+/*eslint import/namespace: ['error', { allowComputed: true }]*/
 import * as d3 from 'd3';
 import {
+  Data,
   AreaChartProps,
-  ColorScale,
   xAccessorFunc,
   yAccessorFunc,
 } from '../../../types';
@@ -13,7 +15,7 @@ import { useResponsive } from '../../hooks/useResponsive';
 import { xScaleDef } from '../../functionality/xScale';
 import { yScaleDef } from '../../functionality/yScale';
 import ListeningRect from '../../components/ListeningRect';
-import TooltipDiv from '../../components/TooltipDiv';
+import Tooltip from '../../components/Tooltip';
 import { ColorLegend } from '../../components/ColorLegend';
 import {
   getXAxisCoordinates,
@@ -23,8 +25,11 @@ import {
   transformSkinnyToWide,
   EXTRA_LEGEND_MARGIN,
 } from '../../utils';
+import styled from 'styled-components';
 
-import { useMousePosition } from '../../hooks/useMousePosition';
+const Area = styled.path`
+  fill-opacity: 0.7;
+`;
 
 export default function AreaChart({
   data,
@@ -42,17 +47,73 @@ export default function AreaChart({
   yAxisLabel,
   legend,
   legendLabel = '',
-  colorScheme = d3.quantize(d3.interpolateHcl('#9dc8e2', '#07316b'), 8),
+  chartType = 'area-chart',
+  colorScheme = 'schemePurples',
 }: AreaChartProps<string | number>): JSX.Element {
-  const position = useMousePosition();
-  const [tooltip, setTooltip] = useState<false | any>(false);
-  const chart = 'AreaChart';
+  /**********
+  Step in creating any chart:
+    1. Process data
+    2. Determine chart dimensions
+    3. Create scales
+    4. Define styles
+    5. Set up supportive elements
+    6. Set up interactions
+  ***********/
+
+  // ********************
+  // STEP 1. Process data
+  // Look at the data structure and declare how to access the values we'll need.
+  // ********************
+
+  const xAccessor: xAccessorFunc = useMemo(() => {
+    return xDataType === 'number' ? (d) => d[xKey] : (d) => new Date(d[xKey]);
+  }, [xKey]);
+
+  const yAccessor: yAccessorFunc = useMemo(() => {
+    return (d) => d[yKey];
+  }, [yKey]);
+
+  // if no xKey datatype is passed in, determine if it's Date
+  if (!xDataType) {
+    xDataType = inferXDataType(data[0], xKey);
+  }
+
+  // generate arr of keys. these are used to render discrete areas to be displayed
+  const keys = useMemo(() => {
+    let groups: d3.InternMap<any, any[]>;
+    const groupAccessor = (d: Data) => d[groupBy ?? ''];
+    groups = d3.group(data, groupAccessor);
+    return groupBy ? Array.from(groups).map((group) => group[0]) : [yKey];
+  }, [groupBy, yKey]);
+
+  const transData = useMemo(() => {
+    return groupBy
+      ? transformSkinnyToWide(data, keys, groupBy, xKey, yKey)
+      : data;
+  }, [data, keys, groupBy, xKey, yKey]);
+
+  // generate stack: an array of Series representing the x and associated y0 & y1 values for each area
+  const stack = d3.stack().keys(keys);
+  const layers = useMemo(() => {
+    const layersTemp = stack(transData as Iterable<{ [key: string]: number }>);
+    for (const series of layersTemp) {
+      series.sort((a, b) => b.data[xKey] - a.data[xKey]);
+    }
+    return layersTemp;
+  }, [transData, keys]);
+
+  // ********************
+  // STEP 2. Determine chart dimensions
+  // Declare the physical (i.e. pixels) chart parameters
+  // ********************
+
   const { anchor, cHeight, cWidth } = useResponsive();
 
   // width & height of legend, so we know how much to squeeze chart by
   const [legendOffset, setLegendOffset] = useState<[number, number]>([0, 0]);
-  const xOffset = legendOffset[0];
-  const yOffset = legendOffset[1];
+
+  const [xOffset, yOffset] = legendOffset;
+
   const margin = useMemo(
     () =>
       getMarginsWithLegend(
@@ -79,6 +140,57 @@ export default function AreaChart({
     ]
   );
 
+  // offset group to match position of axes
+  const translate = `translate(${margin.left}, ${margin.top})`;
+
+  // ********************
+  // STEP 3. Create scales
+  // Create scales for every data-to-pysical attribute in our chart
+  // ********************
+
+  const { xScale, xMin, xMax } = useMemo(() => {
+    return xScaleDef(
+      transData,
+      xDataType as 'number' | 'date',
+      xAccessor,
+      margin,
+      cWidth,
+      chartType
+    );
+  }, [transData, xDataType, xAccessor, margin, cWidth, chartType]);
+
+  const yScale = useMemo(() => {
+    return yScaleDef(
+      groupBy ? layers : transData,
+      yAccessor,
+      margin,
+      cHeight,
+      groupBy
+    );
+  }, [layers, transData, yAccessor, margin, cHeight, groupBy]);
+
+  const areaGenerator: any = d3
+    .area()
+    .x((layer: any) => xScale(xAccessor(layer.data)))
+    .y0((layer) => yScale(layer[0]))
+    .y1((layer) => yScale(layer[1]));
+
+  // ********************
+  // STEP 4. Define styles
+  // Define how the data will drive your design
+  // ********************
+
+  const discreteColors =
+    Array.from(keys).length < 4 ? 3 : Math.min(Array.from(keys).length, 9);
+  const computedScheme = d3[`${colorScheme}`][discreteColors];
+  const colorScale = d3.scaleOrdinal(Array.from(computedScheme).reverse());
+  colorScale.domain(keys);
+
+  // ********************
+  // STEP 5. Set up supportive elements
+  // Render your axes, labels, legends, annotations, etc.
+  // ********************
+
   const { xAxisX, xAxisY } = useMemo(
     () => getXAxisCoordinates(xAxis, cHeight, margin),
     [cHeight, xAxis, margin]
@@ -87,72 +199,33 @@ export default function AreaChart({
     () => getYAxisCoordinates(yAxis, cWidth, margin),
     [cWidth, yAxis, margin]
   );
-  // offset group to match position of axes
-  const translate = `translate(${margin.left}, ${margin.top})`;
-
-  // type KeyType = { key: string; dataType?: "number" | "date" | undefined; }
-
-  // if no xKey datatype is passed in, determine if it's Date
-  if (!xDataType) {
-    xDataType = inferXDataType(data[0], xKey);
-  }
-
-  // generate arr of keys. these are used to render discrete areas to be displayed
-  const keys: string[] = [];
-  if (groupBy) {
-    for (const entry of data) {
-      const property = String(entry[groupBy ?? '']);
-      if (property && !keys.includes(property)) {
-        keys.push(property);
-      }
-    }
-    data = transformSkinnyToWide(data, keys, groupBy, xKey, yKey);
-  } else {
-    keys.push(yKey);
-  }
-
-  // generate stack: an array of Series representing the x and associated y0 & y1 values for each area
-  const stack = d3.stack().keys(keys);
-  const layers = useMemo(() => {
-    const layersTemp = stack(data as Iterable<{ [key: string]: number }>);
-    for (const series of layersTemp) {
-      series.sort((a, b) => b.data[xKey] - a.data[xKey]);
-    }
-    return layersTemp;
-  }, [data, keys]);
-
-  const xAccessor: xAccessorFunc =
-    xDataType === 'number' ? (d) => d[xKey] : (d) => new Date(d[xKey]);
-  const yAccessor: yAccessorFunc = (d) => d[yKey];
-
-  const { xScale, xMin, xMax } = xScaleDef(
-    data,
-    xDataType,
-    xAccessor,
-    margin,
-    cWidth,
-    chart
-  );
-  const yScale = yScaleDef(layers, yAccessor, margin, cHeight, chart);
 
   const xTicksValue = [xMin, ...xScale.ticks(), xMax];
 
-  const areaGenerator: any = d3
-    .area()
-    .x((layer: any) => xScale(xAccessor(layer.data)))
-    .y0((layer) => yScale(layer[0]))
-    .y1((layer) => yScale(layer[1]));
+  let labelArray = [];
+  if (typeof groupBy === 'string' && groupBy.length !== 0) {
+    labelArray = layers.map((layer: { key: any }) => layer.key);
+  } else {
+    labelArray = [yKey];
+  }
 
-  const colorScale: ColorScale = d3.scaleOrdinal(colorScheme);
-  colorScale.domain(keys);
+  // ********************
+  // STEP 6. Set up interactions
+  // Initialize event listeners and create interaction behavior
+  // ********************
+
+  const [tooltip, setTooltip] = useState<false | any>(false);
 
   return (
     <div ref={anchor} style={{ width: width, height: height }}>
       {tooltip && (
-        <TooltipDiv
-          data={tooltip}
-          x={margin.left + tooltip.cx}
-          y={margin.top + tooltip.cy}
+        <Tooltip
+          data={tooltip.data}
+          cursorX={margin.left + tooltip.cursorX}
+          cursorY={margin.top + tooltip.cursorY}
+          distanceFromTop={tooltip.distanceFromTop}
+          distanceFromRight={tooltip.distanceFromRight}
+          distanceFromLeft={tooltip.distanceFromLeft}
           xKey={xKey}
           yKey={yKey}
         />
@@ -169,7 +242,6 @@ export default function AreaChart({
               scale={yScale}
               type={yAxis}
               yGrid={yGrid}
-              label={yAxisLabel}
             />
           )}
           {yAxisLabel && (
@@ -194,7 +266,6 @@ export default function AreaChart({
               scale={xScale}
               xGrid={xGrid}
               type={xAxis}
-              label={xAxisLabel}
               xTicksValue={xTicksValue}
             />
           )}
@@ -211,7 +282,7 @@ export default function AreaChart({
             />
           )}
           {layers.map((layer, i) => (
-            <path
+            <Area
               key={i}
               d={areaGenerator(layer)}
               fill={colorScale(layer.key)}
@@ -222,6 +293,7 @@ export default function AreaChart({
             legend && (
               <ColorLegend
                 legendLabel={legendLabel}
+                labels={labelArray}
                 circleRadius={5 /* Radius of each color swab in legend */}
                 colorScale={colorScale}
                 setLegendOffset={setLegendOffset}
@@ -236,7 +308,7 @@ export default function AreaChart({
             )
           }
           <ListeningRect
-            data={data}
+            data={transData}
             layers={layers}
             width={cWidth}
             height={cHeight}

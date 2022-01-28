@@ -1,21 +1,19 @@
 import React from 'react';
-import BarChart from './charts/BarChart/BarChart';
-import AreaChart from './charts/AreaChart/AreaChart';
-import LineChart from './charts/LineChart/LineChart';
-import ScatterPlot from './charts/ScatterPlot/ScatterPlot';
-import PieChart from './charts/PieChart/PieChart';
+import BarChart from '../src/charts/BarChart/BarChart';
+import LineChart from '../src/charts/LineChart/LineChart';
+import AreaChart from '../src/charts/AreaChart/AreaChart';
+import ScatterPlot from '../src/charts/ScatterPlot/ScatterPlot';
+import PieChart from '../src/charts/PieChart/PieChart';
 
-import portfolio from '../data/portfolio.json';
+import unemployment from '../data/unemployment.json';
 import penguins from '../data/penguins.json';
+import portfolio from '../data/portfolio.json';
 import fruit from '../data/fruit.json';
 
-import GlobalStyle from './styles/globals';
-import { Container } from './styles/componentStyles';
-
-function App() {
+// eslint-disable-next-line react/display-name
+const Test = React.memo((): JSX.Element => {
   return (
-    <Container className="app">
-      <GlobalStyle />
+    <div className="app" style={{ height: '100vh', width: '100vw' }}>
       <PieChart
         data={fruit}
         label="label"
@@ -79,8 +77,8 @@ function App() {
         yAxis="right"
         yAxisLabel="Body Mass"
       />
-    </Container>
+    </div>
   );
-}
+});
 
-export default App;
+export default Test;

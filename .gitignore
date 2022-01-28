@@ -105,6 +105,5 @@ dist
 
 .DS_Store
 
-package-lock.json
-
-App.tsx
+# Cypress
+cypress/screenshots

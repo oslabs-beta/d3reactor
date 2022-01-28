@@ -1,16 +1,18 @@
+/* eslint-disable @typescript-eslint/restrict-plus-operands */
 /** App.js */
 import React, { useState, useMemo } from 'react';
 import { useResponsive } from '../../hooks/useResponsive';
+/*eslint import/namespace: ['error', { allowComputed: true }]*/
 import * as d3 from 'd3';
 import { Axis } from '../../components/ContinuousAxis';
 import { Line } from '../../components/Line';
 import { VoronoiWrapper } from '../../components/VoronoiWrapper';
 import {
   LineChartProps,
-  ColorScale,
   xAccessorFunc,
   yAccessorFunc,
   GroupAccessorFunc,
+  Data,
 } from '../../../types';
 import {
   getXAxisCoordinates,
@@ -24,7 +26,7 @@ import { yScaleDef } from '../../functionality/yScale';
 import { xScaleDef } from '../../functionality/xScale';
 import { d3Voronoi } from '../../functionality/voronoi';
 import { Label } from '../../components/Label';
-import TooltipDiv from '../../components/TooltipDiv';
+import Tooltip from '../../components/Tooltip';
 
 export default function LineChart({
   data,
@@ -41,18 +43,64 @@ export default function LineChart({
   xAxisLabel,
   yAxisLabel,
   legend,
-  legendLabel = "",
-  colorScheme = d3.quantize(d3.interpolateHcl("#9dc8e2", "#07316b"), 8),
+  legendLabel = '',
+  chartType = 'line-chart',
+  colorScheme = 'schemePurples',
 }: LineChartProps<string | number>): JSX.Element {
-  const [tooltip, setTooltip] = useState<false | any>(false);
-  const chart = 'LineChart';
+  /**********
+  Step in creating any chart:
+    1. Process data
+    2. Determine chart dimensions
+    3. Create scales
+    4. Define styles
+    5. Set up supportive elements
+    6. Set up interactions
+  ***********/
 
+  // ********************
+  // STEP 1. Process data
+  // Look at the data structure and declare how to access the values we'll need.
+  // ********************
+
+  // if no xKey datatype is passed in, determine if it's Date
+  let xType: 'number' | 'date' = inferXDataType(data[0], xKey);
+  if (xDataType !== undefined) xType = xDataType;
+
+  const xAccessor: xAccessorFunc = useMemo(() => {
+    return xType === 'number' ? (d) => d[xKey] : (d) => new Date(d[xKey]);
+  }, []);
+
+  const yAccessor: yAccessorFunc = useMemo(() => {
+    return (d) => d[yKey];
+  }, []);
+
+  // Null values must be removed from the dataset so as to not break our the
+  // Line generator function.
+  const cleanData = useMemo(() => {
+    return data.filter((el) => el[yKey] !== null);
+  }, [data]);
+
+  const lineGroups: any = d3.group(data, (d) => d[groupBy ?? '']);
+
+  let keys: string[] = [];
+  if (groupBy !== undefined) {
+    keys = Array.from(lineGroups).map((group: any) => group[0]);
+  } else {
+    keys = [yKey];
+  }
+
+  // ********************
+  // STEP 2. Determine chart dimensions
+  // Declare the physical (i.e. pixels) chart parameters
+  // ********************
+
+  // useResponsive is use to retrieve the height and width of the anchor element
   const { anchor, cHeight, cWidth } = useResponsive();
 
   // width & height of legend, so we know how much to squeeze chart by
   const [legendOffset, setLegendOffset] = useState<[number, number]>([0, 0]);
-  const xOffset = legendOffset[0];
-  const yOffset = legendOffset[1];
+  const [xOffset, yOffset] = legendOffset;
+
   const margin = useMemo(
     () =>
       getMarginsWithLegend(
@@ -79,6 +127,47 @@ export default function LineChart({
     ]
   );
 
+  // With the margins we can now determine where the g element inside of our
+  // SVG will be placed. So, we'll use margin to create our translation string
+  const translate = `translate(${margin.left}, ${margin.top})`;
+
+  // ********************
+  // STEP 3. Create scales
+  // Create scales for every data-to-pysical attribute in our chart
+  // ********************
+
+  const yScale = useMemo(() => {
+    return yScaleDef(data, yAccessor, margin, cHeight);
+  }, [data, yAccessor, margin, cHeight]);
+
+  const { xScale, xMin, xMax } = useMemo(() => {
+    return xScaleDef(data, xType, xAccessor, margin, cWidth, chartType);
+  }, [data, cWidth, margin]);
+
+  const line: any = d3
+    .line()
+    .curve(d3.curveLinear)
+    .x((d) => xScale(xAccessor(d)))
+    .y((d: any) => {
+      return d[yKey] ? yScale(yAccessor(d)) : yScale(0);
+    });
+
+  // ********************
+  // STEP 4. Define styles
+  // Define how the data will drive your design
+  // ********************
+
+  const discreteColors =
+    Array.from(keys).length < 4 ? 3 : Math.min(Array.from(keys).length, 9);
+  const computedScheme = d3[`${colorScheme}`][discreteColors];
+  const colorScale = d3.scaleOrdinal(Array.from(computedScheme).reverse());
+  colorScale.domain(computedScheme);
+
+  // ********************
+  // STEP 5. Set up supportive elements
+  // Render your axes, labels, legends, annotations, etc.
+  // ********************
+
   const { xAxisX, xAxisY } = useMemo(
     () => getXAxisCoordinates(xAxis, cHeight, margin),
     [cHeight, xAxis, margin]
@@ -89,50 +178,14 @@ export default function LineChart({
     [cWidth, yAxis, margin]
   );
 
-  const translate = `translate(${margin.left}, ${margin.top})`;
-
-  let xType: 'number' | 'date' = inferXDataType(data[0], xKey);
-  if (xDataType !== undefined) xType = xDataType;
-  // if no xKey datatype is passed in, determine if it's Date
-
-  const xAccessor: xAccessorFunc = useMemo(() => {
-    return xType === 'number' ? (d) => d[xKey] : (d) => new Date(d[xKey]);
-  }, []);
-
-  const yAccessor: yAccessorFunc = useMemo(() => {
-    return (d) => d[yKey];
-  }, []);
-
-  const yScale = useMemo(() => {
-    return yScaleDef(data, yAccessor, margin, cHeight);
-  }, [data, yAccessor, margin, cHeight]);
-
-  const { xScale, xMin, xMax } = useMemo(() => {
-    return xScaleDef(data, xType, xAccessor, margin, cWidth, chart);
-  }, [data, cWidth, margin]);
-
   const xTicksValue = [xMin, ...xScale.ticks(), xMax];
 
-  // remove data entries with null values (which breaks line generator)
-  data = data.filter((el) => {
-    if (el[yKey] !== null) return el;
-  })
-  // generate unique keys to group by
-  let keys: Iterable<string> = [];
-  const groupAccessor: GroupAccessorFunc = (d) => {
-    return d[groupBy ?? ''];
-  };
-  const lineGroups: any = d3.group(data, (d) => groupAccessor(d));
-  keys = groupBy
-    ? Array.from(lineGroups).map((group: any) => group[0])
-    : [yKey];
-  const line: any = d3
-    .line()
-    .curve(d3.curveLinear)
-    .x((d) => xScale(xAccessor(d)))
-    .y((d: any) => {
-      return d[yKey] ? yScale(yAccessor(d)) : yScale(0);
-    });
+  // ********************
+  // STEP 6. Set up interactions
+  // Initialize event listeners and create interaction behavior
+  // ********************
+
+  const [tooltip, setTooltip] = useState<false | any>(false);
 
   const voronoi = useMemo(() => {
     return d3Voronoi(
@@ -147,21 +200,21 @@ export default function LineChart({
     );
   }, [data, xScale, yScale, xAccessor, yAccessor, cHeight, cWidth, margin]);
 
-  // console.log("TOOLTIP ", tooltip)
-  const colorScale: ColorScale = d3.scaleOrdinal(colorScheme);
-  colorScale.domain(keys);
   return (
     <div ref={anchor} style={{ width: width, height: height }}>
       {tooltip && (
-        <TooltipDiv
-          data={tooltip}
-          x={margin.left + tooltip.cx}
-          y={margin.top + tooltip.cy}
+        <Tooltip
+          data={tooltip.data}
+          cursorX={margin.left + tooltip.cursorX}
+          cursorY={margin.top + tooltip.cursorY}
+          distanceFromTop={tooltip.distanceFromTop}
+          distanceFromRight={tooltip.distanceFromRight}
+          distanceFromLeft={tooltip.distanceFromLeft}
           xKey={xKey}
           yKey={yKey}
         />
       )}
-      <svg width={cWidth} height={cHeight} data-test-id="line-chart">
+      <svg width={cWidth} height={cHeight} data-testid="line-chart">
         <g transform={translate}>
           {yAxis && (
             <Axis
@@ -173,7 +226,6 @@ export default function LineChart({
               scale={yScale}
               type={yAxis}
               yGrid={yGrid}
-              label={yAxisLabel}
             />
           )}
           {yAxisLabel && (
@@ -199,7 +251,6 @@ export default function LineChart({
               scale={xScale}
               type={xAxis}
               xGrid={xGrid}
-              label={xAxisLabel}
               xTicksValue={xTicksValue}
             />
           )}
@@ -222,7 +273,6 @@ export default function LineChart({
                   key={i}
                   fill="none"
                   stroke={colorScale(lineGroup[0])}
-                  strokeWidth="1px"
                   d={line(lineGroup[1])}
                 />
               );
@@ -230,78 +280,21 @@ export default function LineChart({
           ) : (
             <Line
               fill="none"
-              stroke={colorScale(yKey)}
+              stroke={colorScale(keys[0])}
               strokeWidth="1px"
-              d={line(data)}
+              d={line(cleanData)}
             />
           )}
           {voronoi && (
             <VoronoiWrapper
-              data={data}
+              data={cleanData}
               voronoi={voronoi}
               xScale={xScale}
               yScale={yScale}
               xAccessor={xAccessor}
               yAccessor={yAccessor}
               setTooltip={setTooltip}
-            />
-          )}
-
-          {xAxis && (
-            <Axis
-              x={xAxisX}
-              y={xAxisY}
-              height={cHeight}
-              width={cWidth}
               margin={margin}
-              scale={xScale}
-              type={xAxis}
-              xGrid={xGrid}
-              label={xAxisLabel}
-              xTicksValue={xTicksValue}
-            />
-          )}
-          {xAxisLabel && (
-            <Label
-              x={xAxisX}
-              y={xAxisY}
-              height={cHeight}
-              width={cWidth}
-              margin={margin}
-              type={xAxis ? xAxis : 'bottom'}
-              axis={xAxis ? true : false}
-              label={xAxisLabel}
-            />
-          )}
-          {groupBy ? (
-            d3.map(lineGroups, (lineGroup: [string, []], i) => {
-              return (
-                <Line
-                  key={i}
-                  fill="none"
-                  stroke={colorScale(lineGroup[0])}
-                  strokeWidth="1px"
-                  d={line(lineGroup[1])}
-                />
-              );
-            })
-          ) : (
-            <Line
-              fill="none"
-              stroke={colorScale(yKey)}
-              strokeWidth="1px"
-              d={line(data)}
-            />
-          )}
-          {voronoi && (
-            <VoronoiWrapper
-              data={data}
-              voronoi={voronoi}
-              xScale={xScale}
-              yScale={yScale}
-              xAccessor={xAccessor}
-              yAccessor={yAccessor}
-              setTooltip={setTooltip}
             />
           )}
 
@@ -310,6 +303,7 @@ export default function LineChart({
             legend && (
               <ColorLegend
                 legendLabel={legendLabel}
+                labels={keys}
                 circleRadius={5 /* Radius of each color swab in legend */}
                 colorScale={colorScale}
                 setLegendOffset={setLegendOffset}

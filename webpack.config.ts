@@ -1,9 +1,9 @@
 import path from 'path';
 import webpack from 'webpack';
-import { merge } from 'webpack-merge';
-import webpackconfiguration from './webpack.common';
 
-const webpackprodconfiguration: webpack.Configuration =  {
+
+
+const webpackconfiguration: webpack.Configuration =  {
   entry: './src/index.tsx',
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -11,12 +11,14 @@ const webpackprodconfiguration: webpack.Configuration =  {
     filename: 'index.js',
     clean: true,
     library: {
-      name: 'd3reactor',
+      name: 'd3reacts',
       type: 'umd',
     },
     globalObject: 'this'
+  }, 
+  optimization: {
+    minimize: true
   },
-  mode: 'production',
   externals: [
     {
       react: {
@@ -33,6 +35,24 @@ const webpackprodconfiguration: webpack.Configuration =  {
       }
     }
   ],
+  mode: process.env.NODE_ENV === "production" ? "production" : "development",
+  module: {
+    rules: [
+      {
+        test: /\.tsx?$/,
+        loader: 'ts-loader',
+        exclude: /node_modules/,
+      },
+      {
+        test: /.(css)$/,
+        exclude: /node_modules/,
+        use: ['style-loader', 'css-loader'],
+      },
+    ],
+  },
+  resolve: {
+    extensions: ['.tsx', '.ts', '.js'],
+  },
 }
 
-export default merge(webpackconfiguration, webpackprodconfiguration);
+export default webpackconfiguration;

@@ -1,18 +1,13 @@
 import React from 'react';
 import * as d3 from 'd3';
 
-import {
-  ArcProps,
-  Data,
-  Margin,
-  ScaleFunc,
-  xAccessorFunc,
-  yAccessorFunc,
-} from '../../types';
+import { ArcProps } from '../../types';
+import useWindowDimensions from '../hooks/useWindowDimensions';
 
 export const Arc = React.memo(
   ({
     data,
+    dataTestId = 'arc',
     key,
     fill = 'none',
     stroke,
@@ -20,19 +15,27 @@ export const Arc = React.memo(
     d,
     setTooltip,
   }: ArcProps): JSX.Element => {
-    let cellCenter = {
-      cx: 0,
-      cy: 0,
-      tooltipData: data,
+    const { width } = useWindowDimensions();
+
+    let tooltipState = {
+      cursorX: 0,
+      cursorY: 0,
+      distanceFromTop: 0,
+      distanceFromRight: 0,
+      distanceFromLeft: 0,
+      data,
     };
     const onMouseMove = (e: any) => {
       if (setTooltip) {
-        cellCenter = {
-          cx: e.pageX,
-          cy: e.pageY,
-          tooltipData: data,
+        tooltipState = {
+          cursorX: e.pageX,
+          cursorY: e.pageY,
+          distanceFromTop: e.clientY,
+          distanceFromRight: width - e.pageX,
+          distanceFromLeft: e.pageX,
+          data,
         };
-        setTooltip(cellCenter);
+        setTooltip(tooltipState);
       }
     };
 
@@ -45,6 +48,7 @@ export const Arc = React.memo(
     return (
       <path
         className="arc"
+        data-testid={dataTestId}
         fill={fill}
         stroke={stroke}
         strokeWidth={strokeWidth}

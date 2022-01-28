@@ -1,11 +1,12 @@
 /** App.js */
 import React, { useState, useMemo } from 'react';
+/*eslint import/namespace: ['error', { allowComputed: true }]*/
 import * as d3 from 'd3';
 import { useResponsive } from '../../hooks/useResponsive';
-import { PieChartProps } from '../../../types';
+import { PieChartProps, Data } from '../../../types';
 import { ColorLegend } from '../../components/ColorLegend';
 import { Arc } from '../../components/Arc';
-import TooltipDiv from '../../components/TooltipDiv';
+import Tooltip from '../../components/Tooltip';
 import {
   checkRadiusDimension,
   calculateOuterRadius,
@@ -14,7 +15,6 @@ import {
 } from '../../utils';
 
 export default function PieChart({
-  colorScheme = d3.quantize(d3.interpolateHcl('#9dc8e2', '#07316b'), 8),
   data,
   innerRadius,
   label,
@@ -22,9 +22,35 @@ export default function PieChart({
   legendLabel,
   outerRadius,
   pieLabel,
+  chartType = 'pie-chart',
+  colorScheme = 'schemePurples',
   value,
 }: PieChartProps): JSX.Element {
-  const [tooltip, setTooltip] = useState<false | any>(false);
+  /**********
+  Step in creating any chart:
+    1. Process data
+    2. Determine chart dimensions
+    3. Create scales
+    4. Define styles
+    5. Set up supportive elements
+    6. Set up interactions
+  ***********/
+
+  // ********************
+  // STEP 1. Process data
+  // Look at the data structure and declare how to access the values we'll need.
+  // ********************
+
+  const keys = useMemo(() => {
+    const groupAccessor = (d: Data) => d[label ?? ''];
+    const groups: d3.InternMap<any, any[]> = d3.group(data, groupAccessor);
+    return Array.from(groups).map((group) => group[0]);
+  }, [label]);
+
+  // ********************
+  // STEP 2. Determine chart dimensions
+  // Declare the physical (i.e. pixels) chart parameters
+  // ********************
 
   const { anchor, cHeight, cWidth } = useResponsive();
 
@@ -47,7 +73,14 @@ export default function PieChart({
       ),
     [legend, xOffset, yOffset, cWidth, cHeight]
   );
+
+  // ********************
+  // STEP 3. Create scales
+  // Create scales for every data-to-pysical attribute in our chart
+  // ********************
+
   let ratio: number | undefined;
+
   if (
     typeof outerRadius === 'number' &&
     typeof innerRadius === 'number' &&
@@ -61,6 +94,7 @@ export default function PieChart({
     : calculateOuterRadius(cHeight, cWidth, margin);
 
   if (outerRadius < 20) outerRadius = 20;
+
   if (ratio) {
     innerRadius = ratio * outerRadius;
   } else if (innerRadius) {
@@ -74,19 +108,6 @@ export default function PieChart({
     innerRadius = checkedRadiusDimension > 0 ? checkedRadiusDimension : 0;
   } else innerRadius = 0;
 
-  type ColorScale = d3.ScaleOrdinal<string, string, never>;
-
-  const keys: string[] = [];
-  for (const entry of data) {
-    const property = entry[label];
-    if (property && !keys.includes(property)) {
-      keys.push(property);
-    }
-  }
-
-  const colorScale: ColorScale = d3.scaleOrdinal(colorScheme);
-  colorScale.domain(keys);
-
   const arcGenerator: any = d3
     .arc()
     .innerRadius(innerRadius)
@@ -99,16 +120,33 @@ export default function PieChart({
 
   const pie: any = pieGenerator(data);
 
+  // ********************
+  // STEP 4. Define styles
+  // Define how the data will drive your design
+  // ********************
+
+  const discreteColors = Math.min(keys.length, 9);
+  const computedScheme = d3[`${colorScheme}`][discreteColors];
+  const colorScale = d3.scaleOrdinal(computedScheme);
+  colorScale.domain(keys);
+
+  // ********************
+  // STEP 5. Set up supportive elements
+  // Render your axes, labels, legends, annotations, etc.
+  // ********************
+
   const textTranform = (d: any) => {
     const [x, y] = arcGenerator.centroid(d);
     return `translate(${x}, ${y})`;
   };
+
   // Position of the legend
-  let xPosition = outerRadius + margin.left;
+  let xPosition = outerRadius + EXTRA_LEGEND_MARGIN;
   let yPosition = EXTRA_LEGEND_MARGIN;
   // Offset position of the pie
   let translateX = 0;
   let translateY = 0;
+
   switch (legend) {
     case 'top':
       xPosition = -xOffset / 2 + EXTRA_LEGEND_MARGIN;
@@ -117,7 +155,7 @@ export default function PieChart({
       break;
     case 'bottom':
       xPosition = -xOffset / 2 + EXTRA_LEGEND_MARGIN;
-      yPosition = outerRadius + margin.bottom / 2 + EXTRA_LEGEND_MARGIN;
+      yPosition = outerRadius + margin.bottom / 2 - EXTRA_LEGEND_MARGIN;
       translateY = -yOffset;
       break;
     case 'left':
@@ -126,40 +164,40 @@ export default function PieChart({
       break;
     case 'top-left':
       xPosition = -outerRadius - margin.left + EXTRA_LEGEND_MARGIN;
-      yPosition = -outerRadius + margin.top + EXTRA_LEGEND_MARGIN;
+      yPosition = -outerRadius + margin.left / 2 + EXTRA_LEGEND_MARGIN;
       translateX = xOffset;
       break;
     case 'bottom-left':
       xPosition = -outerRadius - margin.left + EXTRA_LEGEND_MARGIN;
-      yPosition = outerRadius - margin.bottom - EXTRA_LEGEND_MARGIN;
+      yPosition = outerRadius - margin.left / 2 - EXTRA_LEGEND_MARGIN;
       translateX = xOffset;
       break;
     case 'left-top':
-      xPosition = -outerRadius - xOffset + EXTRA_LEGEND_MARGIN;
+      xPosition = -outerRadius - margin.left + EXTRA_LEGEND_MARGIN;
       yPosition = -outerRadius - margin.top / 2 + EXTRA_LEGEND_MARGIN;
       translateY = yOffset;
       break;
     case 'left-bottom':
-      xPosition = -outerRadius - xOffset + EXTRA_LEGEND_MARGIN;
-      yPosition = outerRadius + margin.bottom / 2 + EXTRA_LEGEND_MARGIN;
+      xPosition = -outerRadius - margin.left + EXTRA_LEGEND_MARGIN;
+      yPosition = outerRadius + margin.bottom / 2 - EXTRA_LEGEND_MARGIN;
       translateY = -yOffset;
       break;
     case 'right-top':
-      xPosition = outerRadius - EXTRA_LEGEND_MARGIN;
+      xPosition = outerRadius - margin.top / 2 - EXTRA_LEGEND_MARGIN;
       yPosition = -outerRadius - margin.top / 2 + EXTRA_LEGEND_MARGIN;
       translateY = yOffset;
       break;
     case 'top-right':
-      yPosition = -outerRadius + margin.top + EXTRA_LEGEND_MARGIN;
+      yPosition = -outerRadius + margin.right + EXTRA_LEGEND_MARGIN;
       translateX = -xOffset;
       break;
     case 'bottom-right':
-      yPosition = outerRadius - margin.bottom - EXTRA_LEGEND_MARGIN;
+      yPosition = outerRadius - margin.right + EXTRA_LEGEND_MARGIN;
       translateX = -xOffset;
       break;
     case 'right-bottom':
-      xPosition = outerRadius - EXTRA_LEGEND_MARGIN;
-      yPosition = outerRadius + margin.bottom / 2 + EXTRA_LEGEND_MARGIN;
+      xPosition = outerRadius - margin.bottom / 2 - EXTRA_LEGEND_MARGIN;
+      yPosition = outerRadius + margin.bottom / 2 - EXTRA_LEGEND_MARGIN;
       translateY = -yOffset;
       break;
     case 'right':
@@ -172,24 +210,35 @@ export default function PieChart({
     (cHeight + translateY) / 2
   })`;
 
+  // ********************
+  // STEP 6. Set up interactions
+  // Initialize event listeners and create interaction behavior
+  // ********************
+
+  const [tooltip, setTooltip] = useState<false | any>(false);
+
   return (
     <div ref={anchor} style={{ width: '100%', height: '100%' }}>
       {tooltip && (
-        <TooltipDiv
-          chartType="pie-chart"
-          data={tooltip}
-          x={tooltip.cx}
-          y={tooltip.cy}
+        <Tooltip
+          chartType={chartType}
+          data={tooltip.data}
+          cursorX={tooltip.cursorX}
+          cursorY={tooltip.cursorY}
+          distanceFromTop={tooltip.distanceFromTop}
+          distanceFromRight={tooltip.distanceFromRight}
+          distanceFromLeft={tooltip.distanceFromLeft}
           xKey={label}
           yKey={value}
         />
       )}
       <svg width={'100%'} height={'100%'}>
-        <g transform={translate} data-test-id="pie-chart">
+        <g transform={translate} data-testid="pie-chart">
           {pie.map((d: any, i: number) => (
             <g key={'g' + i}>
               <Arc
                 data={{ [label]: d.data[label], [value]: d.data[value] }}
+                dataTestId={`pie-chart-arc-${i}`}
                 key={d.label}
                 fill={colorScale(keys[i])}
                 stroke="#ffffff"
@@ -200,6 +249,7 @@ export default function PieChart({
               />
               {pieLabel && (
                 <text
+                  data-testid={`pie-chart-arc-text-${i}`}
                   style={{ pointerEvents: 'none' }}
                   transform={textTranform(d)}
                   textAnchor={'middle'}
@@ -216,8 +266,10 @@ export default function PieChart({
             legend && (
               <ColorLegend
                 legendLabel={legendLabel}
+                labels={keys}
                 circleRadius={5 /* Radius of each color swab in legend */}
                 colorScale={colorScale}
+                dataTestId="pie-chart-legend"
                 setLegendOffset={setLegendOffset}
                 legendPosition={legend}
                 legendWidth={xOffset}

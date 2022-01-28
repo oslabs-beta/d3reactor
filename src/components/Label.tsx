@@ -2,7 +2,13 @@ import React, { useMemo } from 'react';
 import { getAxisLabelCoordinates } from '../utils';
 import { Margin } from '../../types';
 
+import styled from 'styled-components';
+const AxisLabel = styled.text`
+  font-size: 22px;
+`;
+
 export function Label({
+  dataTestId = 'label',
   x,
   y,
   height,
@@ -13,6 +19,7 @@ export function Label({
   label,
   tickMargin,
 }: {
+  dataTestId?: string;
   x: number;
   y: number;
   height: number;
@@ -38,11 +45,12 @@ export function Label({
     [x, y, width, height, margin, type, axis, tickMargin]
   );
   return (
-    <text
+    <AxisLabel
+      data-testid={dataTestId}
       transform={`translate(${axisLabelX}, ${axisLabelY}) rotate(${rotate})`}
       textAnchor="middle"
     >
       {label}
-    </text>
+    </AxisLabel>
   );
 }

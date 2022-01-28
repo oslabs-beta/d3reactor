@@ -113,12 +113,12 @@ export function getMarginsWithLegend(
 
   function addVerticalMargin1() {
     switch (xAxis) {
-      case "top":
-        top += 20
-        break
-      case "bottom":
-        bottom += 20
-        break
+      case 'top':
+        top += 20;
+        break;
+      case 'bottom':
+        bottom += 20;
+        break;
       case undefined:
         bottom += 20;
         break;
@@ -269,7 +269,7 @@ export function checkRadiusDimension(
       break;
     case 'right':
     case 'top-right':
-    case 'top-right':
+    case 'bottom-right':
       legendMargin = margin.right;
       break;
   }
@@ -293,7 +293,7 @@ export function calculateOuterRadius(
     (height - margin.top - margin.bottom) / 2,
     (width - margin.left - margin.right) / 2
   );
-  return Math.min(radius, 20);
+  return Math.max(radius, 20);
 }
 
 interface CountryDataProps {
@@ -367,7 +367,7 @@ export function transformSkinnyToWide(
         } else {
           return val;
         }
-      }, null)
+      }, null);
     }
     outputArr.push(rowObj);
   }

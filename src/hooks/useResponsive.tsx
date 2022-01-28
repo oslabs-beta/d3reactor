@@ -10,6 +10,7 @@ export const useResponsive = () => {
   }
 
   const anchor = useRef(null as any);
+
   useEnvEffect(() => {
     window.addEventListener('resize', updateSize);
     updateSize();
