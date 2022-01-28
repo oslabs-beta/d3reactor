@@ -1,8 +1,8 @@
 import React from 'react';
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
-import { Circle } from '../Circle';
-import { CircleProps } from '../../../types';
+import { Circle } from '../../src/components/Circle';
+import { CircleProps } from '../../types';
 
 const circleProps: CircleProps = {
   cx: 10,
