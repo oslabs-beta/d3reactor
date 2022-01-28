@@ -7,11 +7,7 @@ import * as d3 from 'd3';
 import { Axis } from '../../components/ContinuousAxis';
 import { Line } from '../../components/Line';
 import { VoronoiWrapper } from '../../components/VoronoiWrapper';
-import {
-  LineChartProps,
-  xAccessorFunc,
-  yAccessorFunc,
-} from '../../../types';
+import { LineChartProps, xAccessorFunc, yAccessorFunc } from '../../../types';
 import {
   getXAxisCoordinates,
   getYAxisCoordinates,
@@ -135,7 +131,7 @@ export default function LineChart({
   // ********************
 
   const yScale = useMemo(() => {
-    return yScaleDef(data, yAccessor, margin, cHeight,"line-chart");
+    return yScaleDef(data, yAccessor, margin, cHeight, 'line-chart');
   }, [data, yAccessor, margin, cHeight]);
 
   const { xScale, xMin, xMax } = useMemo(() => {

@@ -87,9 +87,7 @@ function Axi({
     }
   };
 
-  const getTickStyle = (
-    axisType: string,
-  ): any => {
+  const getTickStyle = (axisType: string): any => {
     // TODO remove any
     switch (axisType) {
       case 'top':

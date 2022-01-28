@@ -21,13 +21,15 @@ export function yScaleDef(
       // scan each layer's data points for the lowest value
       return d3.min(layer, (sequence: [number, number, any]) => sequence[0]);
     }) as number;
-  } else if(!groupBy && (chartType === 'area-chart' || chartType === 'bar-chart')) {
+  } else if (
+    !groupBy &&
+    (chartType === 'area-chart' || chartType === 'bar-chart')
+  ) {
     yMax = d3.max(data, yAccessor) as number;
-    yMin = Math.min(0, d3.min(data, yAccessor) as number)
-  }
-  else {
+    yMin = Math.min(0, d3.min(data, yAccessor) as number);
+  } else {
     yMax = d3.max(data, yAccessor) as number;
-    yMin = d3.min(data, yAccessor) as number
+    yMin = d3.min(data, yAccessor) as number;
   }
   const rangeMax = height - margin.top - margin.bottom;
   const yScale = d3

@@ -164,8 +164,8 @@ export default function AreaChart({
       yAccessor,
       margin,
       cHeight,
-      "area-chart",
-      groupBy,
+      'area-chart',
+      groupBy
     );
   }, [layers, transData, yAccessor, margin, cHeight, groupBy]);
 

@@ -7,7 +7,6 @@ import PieChart from './charts/PieChart/PieChart';
 import GlobalStyle from './styles/globals';
 import { Container } from './styles/componentStyles';
 
-
 import skinny_fruit from '../data/skinny_fruit.json';
 
 //data taken from https://data.world/2918diy/coffee-chain
@@ -34,7 +33,7 @@ function App() {
         innerRadius={200}
         pieLabel={false}
         legend="right"
-        legendLabel='Annual Sales 2021'
+        legendLabel="Annual Sales 2021"
       />
       <ScatterPlot
         height="100%"
@@ -54,7 +53,7 @@ function App() {
         height={'100%'}
         width={'100%'}
         data={ny_unemployment}
-        groupBy='county'
+        groupBy="county"
         xKey="date"
         xDataType="date"
         yKey="unemployment rate"
@@ -72,7 +71,7 @@ function App() {
         data={historical_gdp}
         xKey="year"
         yKey="GDP"
-        groupBy='group'
+        groupBy="group"
         xAxis="bottom"
         yAxis="right"
         yGrid={true}
@@ -87,15 +86,14 @@ function App() {
         xKey="date"
         yKey="value"
         xAxis="bottom"
-        groupBy='fruit'
+        groupBy="fruit"
         yAxis="right"
         yGrid={true}
         xAxisLabel="Date"
         yAxisLabel="Value"
-        legend='bottom'
-        legendLabel='Fruits'
+        legend="bottom"
+        legendLabel="Fruits"
       />
-  
     </Container>
   );
 }
