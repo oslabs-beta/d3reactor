@@ -21,7 +21,6 @@
     "@typescript-eslint/no-unsafe-call": 0,
     "react/display-name": 0,
     "react-hooks/exhaustive-deps": "off",
-    "react-hooks/rules-of-hooks": "off"
   },
   "plugins": ["react", "import", "@typescript-eslint"],
   "parser": "@typescript-eslint/parser",
