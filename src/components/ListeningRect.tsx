@@ -123,8 +123,6 @@ export default function ListeningRect({
         tooltipState.cursorY =
           e.pageY - e.nativeEvent.layerY + yScale(closestYValue);
 
-        // console.log('TOOLTIP ', tooltipState);
-
         tooltipState.data = {
           [xKey]: closestXValue,
           [yKey]: closestYValue,
@@ -132,12 +130,15 @@ export default function ListeningRect({
       }
     }
 
+    console.log(
+      'DIST FROM LEFT ',
+      margin.left - margin.right - tooltipState.cursorX
+    );
     tooltipState.distanceFromTop =
       tooltipState.cursorY + margin.top - scrollPosition;
-    tooltipState.distanceFromRight = width - tooltipState.cursorX;
-    tooltipState.distanceFromLeft = tooltipState.cursorX;
-
-    console.log('DIST FROM TOP ', tooltipState.distanceFromTop);
+    tooltipState.distanceFromRight =
+      width - (margin.left + tooltipState.cursorX);
+    tooltipState.distanceFromLeft = margin.left + tooltipState.cursorX;
 
     if (setTooltip) {
       setTooltip(tooltipState);

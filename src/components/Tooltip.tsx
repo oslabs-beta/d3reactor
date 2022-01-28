@@ -42,21 +42,17 @@ const Tooltip = ({
     moveTooltip = { ...moveTooltip, horizontal: 'left' };
   }
 
-  // console.log('Tooltip distance from top ', distanceFromTop);
-  // console.log('Tooltip distance from right ', distanceFromRight);
-  // console.log('Tooltip distance from left ', distanceFromLeft);
-
   let contentYTranslation = '';
   let triangeYTranslation = '';
   let triangeBorderYTranslation = '';
   switch (moveTooltip.vertical) {
     case 'down':
-      contentYTranslation = `calc(10% + ${triangleSize}px)`;
-      triangeYTranslation = `calc(102% + ${triangleSize / 2}px)`;
-      triangeBorderYTranslation = `calc(100% + ${triangleSize / 2}px)`;
+      contentYTranslation = `calc(${triangleSize - 4}px)`;
+      triangeYTranslation = `calc(${triangleSize / 2 + 2}px)`;
+      triangeBorderYTranslation = `calc(${triangleSize / 2 + 0}px)`;
       break;
     case 'none':
-      contentYTranslation = `calc(-100% - ${triangleSize}px)`;
+      contentYTranslation = `calc(-102% - ${triangleSize}px)`;
       triangeYTranslation = `calc(-102% - ${triangleSize / 2}px)`;
       triangeBorderYTranslation = `calc(-100% - ${triangleSize / 2}px)`;
   }
