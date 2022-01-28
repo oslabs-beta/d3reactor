@@ -12,9 +12,9 @@ export const VoronoiWrapper = React.memo(
     xAccessor,
     yAccessor,
     setTooltip,
-    margin
+    margin,
   }: VoronoiBody): JSX.Element => {
-    const {width, height} = useWindowDimensions();
+    const { width, height } = useWindowDimensions();
     return (
       <g className="voronoi-wrapper">
         {data.map((element: Data, i: number) => (
