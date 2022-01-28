@@ -273,8 +273,11 @@ export interface TooltipProps {
   data: any;
   xAccessor?: xAccessorFunc;
   yAccessor?: yAccessorFunc;
-  x: number;
-  y: number;
+  cursorX: number;
+  cursorY: number;
+  distanceFromTop: number;
+  distanceFromRight: number;
+  distanceFromLeft: number;
   xKey?: string;
   yKey?: string;
 }
@@ -293,6 +296,7 @@ export interface RectangleProps {
   y: number;
   width: number;
   height: number;
+  margin: { marginTop: number; marginLeft: number };
   fill: string;
   setTooltip?: React.Dispatch<any>;
 }
@@ -318,12 +322,13 @@ export interface ArcProps {
   setTooltip?: React.Dispatch<any>;
 }
 
+// eslint-disable-next-line import/export
 export interface VoronoiProps {
   fill: string;
   stroke: string;
   opacity: number;
   d: string | undefined;
-  cellCenter?: { cx: number; cy: number; tooltipData: Data };
+  cellCenter: { cx: number; cy: number; tooltipData: Data };
   data?: any;
   setTooltip?: React.Dispatch<any>;
 }
@@ -383,6 +388,7 @@ export interface VoronoiProps {
   stroke: string;
   opacity: number;
   d: string | undefined;
+  margin: Margin;
 }
 export interface VoronoiBody {
   data: Data;
@@ -392,5 +398,6 @@ export interface VoronoiBody {
   xAccessor: xAccessorFunc;
   yAccessor: yAccessorFunc;
   setTooltip: React.Dispatch<any> | undefined;
+  margin: Margin;
 }
 export type GroupAccessorFunc = (d: any) => number | Date;

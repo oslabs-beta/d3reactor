@@ -1,5 +1,7 @@
-import React from 'react';
+/* eslint-disable @typescript-eslint/restrict-plus-operands */
+import React, { useState, useEffect } from 'react';
 import { VoronoiProps } from '../../types';
+import useWindowDimensions from '../hooks/useWindowDimensions';
 
 export const VoronoiCell = ({
   fill,
@@ -9,23 +11,58 @@ export const VoronoiCell = ({
   cellCenter,
   setTooltip,
   data,
+  margin,
 }: VoronoiProps): JSX.Element => {
+  const { width } = useWindowDimensions();
+  const [scrollPosition, setScrollPosition] = useState(0);
+
+  const handleScroll = () => {
+    const position = window.pageYOffset;
+    setScrollPosition(position);
+  };
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+  const tooltipState = {
+    cursorX: 0,
+    cursorY: 0,
+    distanceFromTop: 0,
+    distanceFromRight: 0,
+    distanceFromLeft: 0,
+    data,
+  };
+
   const onMouseMove = (e: any) => {
-    if (cellCenter) {
-      cellCenter.cy =
-        e.nativeEvent.pageY - e.nativeEvent.offsetY + cellCenter.cy;
-      cellCenter.cx =
-        e.nativeEvent.pageX - e.nativeEvent.offsetX + cellCenter.cx;
-    }
-    setTooltip ? setTooltip(cellCenter) : null;
+    const tooltipState = {
+      cursorX: e.nativeEvent.pageX - e.nativeEvent.layerX + cellCenter.cx,
+      cursorY: e.nativeEvent.pageY - e.nativeEvent.layerY + cellCenter.cy,
+      distanceFromTop: 0,
+      distanceFromRight: 0,
+      distanceFromLeft: 0,
+      data,
+    };
+
+    tooltipState.distanceFromTop =
+      tooltipState.cursorY + margin.top - scrollPosition;
+    tooltipState.distanceFromRight =
+      width - (margin.left + tooltipState.cursorX);
+    tooltipState.distanceFromLeft = margin.left + tooltipState.cursorX;
+
+    setTooltip ? setTooltip(tooltipState) : null;
   };
 
   const onMouseOut = (e: any) => {
-    if (cellCenter) {
-      cellCenter.cy =
-        cellCenter.cy - e.nativeEvent.pageY + e.nativeEvent.offsetY;
-      cellCenter.cx =
-        cellCenter.cx - e.nativeEvent.pageX + e.nativeEvent.offsetX;
+    if (tooltipState) {
+      tooltipState.cursorY =
+        tooltipState.cursorY - e.nativeEvent.pageY + e.nativeEvent.offsetY;
+      tooltipState.cursorX =
+        tooltipState.cursorX - e.nativeEvent.pageX + e.nativeEvent.offsetX;
     }
     setTooltip ? setTooltip(false) : null;
   };

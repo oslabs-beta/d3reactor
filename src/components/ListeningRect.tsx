@@ -1,7 +1,9 @@
-import React, { useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import * as d3 from 'd3';
 
-import { useMousePosition } from '../hooks/useMousePosition';
+import {} from '../../types';
+
+import useWindowDimensions from '../hooks/useWindowDimensions';
 
 import {
   Data,
@@ -24,7 +26,7 @@ export default function ListeningRect({
   xAccessor,
   setTooltip,
 }: {
-  data: Data[];
+  data: any;
   layers: d3.Series<
     {
       [key: string]: number;
@@ -42,8 +44,32 @@ export default function ListeningRect({
   yAccessor: yAccessorFunc;
   setTooltip?: React.Dispatch<any>;
 }) {
+  const clientWidth = useWindowDimensions().width;
   const anchor = useRef(null);
+
+  const [scrollPosition, setScrollPosition] = useState(0);
+
+  const handleScroll = () => {
+    const position = window.pageYOffset;
+    setScrollPosition(position);
+  };
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
   const cellCenter = { cx: 0, cy: 0, tooltipData: {} };
+  const tooltipState = {
+    cursorX: 0,
+    cursorY: 0,
+    distanceFromTop: 0,
+    distanceFromRight: 0,
+    distanceFromLeft: 0,
+    data,
+  };
 
   function onMouseMove(e: any) {
     const mousePosition = d3.pointer(e);
@@ -68,7 +94,7 @@ export default function ListeningRect({
       const closestDataPoint = data[closestXIndex];
       closestXValue = xAccessor(closestDataPoint);
 
-      cellCenter.cx =
+      tooltipState.cursorX =
         e.nativeEvent.pageX - e.nativeEvent.layerX + xScale(closestXValue);
     }
 
@@ -94,17 +120,28 @@ export default function ListeningRect({
       const closestKey = layers[closestYIndex].key;
       if (typeof closestXIndex === 'number') {
         closestYValue = layers[closestYIndex][closestXIndex][1];
-        cellCenter.cy = e.pageY - e.nativeEvent.layerY + yScale(closestYValue);
+        tooltipState.cursorY =
+          e.pageY - e.nativeEvent.layerY + yScale(closestYValue);
 
-        cellCenter.tooltipData = {
+        tooltipState.data = {
           [xKey]: closestXValue,
           [yKey]: closestYValue,
         };
       }
     }
 
+    console.log(
+      'DIST FROM LEFT ',
+      margin.left - margin.right - tooltipState.cursorX
+    );
+    tooltipState.distanceFromTop =
+      tooltipState.cursorY + margin.top - scrollPosition;
+    tooltipState.distanceFromRight =
+      width - (margin.left + tooltipState.cursorX);
+    tooltipState.distanceFromLeft = margin.left + tooltipState.cursorX;
+
     if (setTooltip) {
-      setTooltip(cellCenter);
+      setTooltip(tooltipState);
     }
   }
   const rectWidth = width - margin.right - margin.left;

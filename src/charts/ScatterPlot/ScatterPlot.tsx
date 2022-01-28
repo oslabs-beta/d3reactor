@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/restrict-plus-operands */
 /** App.js */
 import React, { useState, useMemo } from 'react';
 
@@ -185,9 +186,12 @@ export default function ScatterPlot({
       {tooltip && (
         <Tooltip
           chartType="scatter-plot"
-          data={tooltip}
-          x={margin.left + tooltip.cx}
-          y={margin.top + tooltip.cy}
+          data={tooltip.data}
+          cursorX={margin.left + tooltip.cursorX}
+          cursorY={margin.top + tooltip.cursorY}
+          distanceFromTop={tooltip.distanceFromTop}
+          distanceFromRight={tooltip.distanceFromRight}
+          distanceFromLeft={tooltip.distanceFromLeft}
           xKey={xKey}
           yKey={yKey}
         />
@@ -271,6 +275,7 @@ export default function ScatterPlot({
               xAccessor={xAccessor}
               yAccessor={yAccessor}
               setTooltip={setTooltip}
+              margin={margin}
             />
           )}
 
