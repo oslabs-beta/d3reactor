@@ -162,6 +162,7 @@ export default function BarChart({
       yAccessor,
       margin,
       cHeight,
+      "bar-chart",
       groupBy
     );
   }, [transData, yAccessor, margin, cHeight, groupBy]);

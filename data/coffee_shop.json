@@ -1,0 +1,38 @@
+[
+  {
+    "product": "Mint",
+    "sales": 8342
+  },
+  {
+    "product": "Caffe Latte",
+    "sales": 8665
+  },
+  {
+    "product": "Amaretto",
+    "sales": 6781
+  },
+  {
+    "product": "Darjeeling",
+    "sales": 17758
+  },
+  {
+    "product": "Decaf Espresso",
+    "sales": 18888
+  },
+  {
+    "product": "Regular Espresso",
+    "sales": 6744
+  },
+  {
+    "product": "Decaf Irish Cream",
+    "sales": 14831
+  },
+  {
+    "product": "Colombian",
+    "sales": 30761
+  },
+  {
+    "product": "Caffe Mocha",
+    "sales": 21716
+  }
+]
