@@ -50,8 +50,9 @@ export const VoronoiCell = ({
 
     tooltipState.distanceFromTop =
       tooltipState.cursorY + margin.top - scrollPosition;
-    tooltipState.distanceFromRight = width - tooltipState.cursorX;
-    tooltipState.distanceFromLeft = tooltipState.cursorX;
+    tooltipState.distanceFromRight =
+      width - (margin.left + tooltipState.cursorX);
+    tooltipState.distanceFromLeft = margin.left + tooltipState.cursorX;
 
     setTooltip ? setTooltip(tooltipState) : null;
   };
