@@ -147,12 +147,14 @@ const Tooltip = ({
 
   let yValString = data[yKey as string];
   if (!isNaN(data[yKey as string])) {
-    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
     yValString = `${Math.round(yValString * 100) / 100}`;
   }
 
   return (
-    <div style={tooltipWrapperStyle} data-testid={`tooltip-${chartType}`}>
+    <div
+      style={tooltipWrapperStyle}
+      data-testid={chartType ? `tooltip-${chartType}` : 'tooltip'}
+    >
       <div style={contentStyle}>
         <div>
           {xKey} <strong>{xValString}</strong>

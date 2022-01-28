@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/restrict-plus-operands */
 /** App.js */
 import React, { useState, useMemo } from 'react';
 /*eslint import/namespace: ['error', { allowComputed: true }]*/
@@ -8,6 +7,7 @@ import {
   AreaChartProps,
   xAccessorFunc,
   yAccessorFunc,
+  toolTipState,
 } from '../../../types';
 import { Axis } from '../../components/ContinuousAxis';
 import { Label } from '../../components/Label';
@@ -80,9 +80,8 @@ export default function AreaChart({
 
   // generate arr of keys. these are used to render discrete areas to be displayed
   const keys = useMemo(() => {
-    let groups: d3.InternMap<any, any[]>;
     const groupAccessor = (d: Data) => d[groupBy ?? ''];
-    groups = d3.group(data, groupAccessor);
+    const groups = d3.group(data, groupAccessor);
     return groupBy ? Array.from(groups).map((group) => group[0]) : [yKey];
   }, [groupBy, yKey]);
 
@@ -214,7 +213,7 @@ export default function AreaChart({
   // Initialize event listeners and create interaction behavior
   // ********************
 
-  const [tooltip, setTooltip] = useState<false | any>(false);
+  const [tooltip, setTooltip] = useState<false | toolTipState>(false);
 
   return (
     <div ref={anchor} style={{ width: width, height: height }}>

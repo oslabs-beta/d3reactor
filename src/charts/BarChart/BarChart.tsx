@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/restrict-plus-operands */
 /** App.js */
 import React, { useState, useMemo } from 'react';
 /*eslint import/namespace: ['error', { allowComputed: true }]*/
@@ -10,7 +9,12 @@ import { Rectangle } from '../../components/Rectangle';
 import Tooltip from '../../components/Tooltip';
 import { ColorLegend } from '../../components/ColorLegend';
 import { transformSkinnyToWide } from '../../utils';
-import { BarChartProps, Data, yAccessorFunc } from '../../../types';
+import {
+  BarChartProps,
+  Data,
+  toolTipState,
+  yAccessorFunc,
+} from '../../../types';
 import {
   getXAxisCoordinates,
   getYAxisCoordinates,
@@ -62,10 +66,8 @@ export default function BarChart({
 
   // When the yKey key has been assigned to the groupBy variable we know the user didn't specify grouping
   const keys: string[] = useMemo(() => {
-    let groups: d3.InternMap<any, any[]>;
     const groupAccessor = (d: Data) => d[groupBy ?? ''];
-    // eslint-disable-next-line prefer-const
-    groups = d3.group(data, groupAccessor);
+    const groups = d3.group(data, groupAccessor);
     return groupBy ? Array.from(groups).map((group) => group[0]) : [yKey];
   }, [groupBy, yKey]);
 
@@ -195,7 +197,7 @@ export default function BarChart({
   // Initialize event listeners and create interaction behavior
   // ********************
 
-  const [tooltip, setTooltip] = useState<false | any>(false);
+  const [tooltip, setTooltip] = useState<false | toolTipState>(false);
 
   return (
     <div ref={anchor} style={{ width: width, height: height }}>

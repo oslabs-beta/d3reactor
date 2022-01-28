@@ -1,14 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import * as d3 from 'd3';
-
-import {} from '../../types';
-
-import useWindowDimensions from '../hooks/useWindowDimensions';
-
 import {
-  Data,
   Margin,
   ScaleFunc,
+  toolTipState,
   xAccessorFunc,
   yAccessorFunc,
 } from '../../types';
@@ -44,7 +39,6 @@ export default function ListeningRect({
   yAccessor: yAccessorFunc;
   setTooltip?: React.Dispatch<any>;
 }) {
-  const clientWidth = useWindowDimensions().width;
   const anchor = useRef(null);
 
   const [scrollPosition, setScrollPosition] = useState(0);
@@ -61,8 +55,7 @@ export default function ListeningRect({
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
-  const cellCenter = { cx: 0, cy: 0, tooltipData: {} };
-  const tooltipState = {
+  const tooltipState: toolTipState = {
     cursorX: 0,
     cursorY: 0,
     distanceFromTop: 0,
@@ -117,7 +110,6 @@ export default function ListeningRect({
     });
 
     if (typeof closestYIndex === 'number') {
-      const closestKey = layers[closestYIndex].key;
       if (typeof closestXIndex === 'number') {
         closestYValue = layers[closestYIndex][closestXIndex][1];
         tooltipState.cursorY =

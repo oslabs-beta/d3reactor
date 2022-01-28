@@ -4,6 +4,15 @@ export interface Data {
   [key: string]: any;
 }
 
+export interface toolTipState {
+  cursorX: number,
+  cursorY: number,
+  distanceFromTop: number,
+  distanceFromRight: number,
+  distanceFromLeft: number,
+  data: any,
+}
+
 export interface ScatterPlotProps<T> {
   data: Data[];
   height?: T;
@@ -310,7 +319,7 @@ export interface LineProps {
 }
 
 export interface ArcProps {
-  data: {};
+  data: Record<string,unknown>;
   dataTestId?: string;
   key: string;
   fill: string;
@@ -331,6 +340,7 @@ export interface VoronoiProps {
   cellCenter: { cx: number; cy: number; tooltipData: Data };
   data?: any;
   setTooltip?: React.Dispatch<any>;
+  margin: Margin;
 }
 
 export type ColorScale = d3.ScaleOrdinal<string, string, never>;
@@ -383,13 +393,6 @@ export type yAccessorFunc = (d: any, i?: number) => number;
 
 export type Domain = number | Date | undefined;
 
-export interface VoronoiProps {
-  fill: string;
-  stroke: string;
-  opacity: number;
-  d: string | undefined;
-  margin: Margin;
-}
 export interface VoronoiBody {
   data: Data;
   voronoi: d3.Voronoi<string>;
