@@ -8,7 +8,6 @@ import PieChart from './charts/PieChart/PieChart';
 import portfolio from '../data/portfolio.json';
 import penguins from '../data/penguins.json';
 import fruit from '../data/fruit.json';
-import skinny_fruit from '../data/skinny_fruit.json';
 
 import GlobalStyle from './styles/globals';
 import { Container } from './styles/componentStyles';
@@ -29,12 +28,11 @@ function App() {
       <BarChart
         height="100%"
         width="100%"
-        data={skinny_fruit}
-        groupBy="fruit"
+        data={portfolio.slice(5, 13)}
         xKey="date"
         yKey="value"
         xAxis="bottom"
-        yAxis="left"
+        yAxis="right"
         yGrid={true}
         xAxisLabel="Date"
         yAxisLabel="Value"
@@ -47,7 +45,7 @@ function App() {
         xKey="date"
         yKey="value"
         xAxis="bottom"
-        yAxis="left"
+        yAxis="right"
         yGrid={true}
         xAxisLabel="Date"
         yAxisLabel="Value"
@@ -60,10 +58,12 @@ function App() {
         xDataType="date"
         yKey="value"
         xAxis="bottom"
-        yAxis="right"
+        yAxis="left"
         yGrid={true}
         xAxisLabel="Date"
         yAxisLabel="Value"
+        legend={'right'}
+        legendLabel="Markets"
       />
       <ScatterPlot
         height="100%"
@@ -76,7 +76,7 @@ function App() {
         xAxisLabel="Flipper Length"
         yKey="body_mass_g"
         yGrid={true}
-        yAxis="left"
+        yAxis="right"
         yAxisLabel="Body Mass"
       />
     </Container>
