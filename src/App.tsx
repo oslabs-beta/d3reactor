@@ -20,7 +20,9 @@ function App() {
         data={fruit}
         label="label"
         value="value"
+        legend="top-right"
         outerRadius={240}
+        legendLabel="fruit"
         pieLabel={true}
       />
       <BarChart
@@ -30,9 +32,10 @@ function App() {
         xKey="date"
         yKey="value"
         xAxis="bottom"
-        yAxis={false}
+        yAxis="right"
         yGrid={true}
         xAxisLabel="Date"
+        yAxisLabel="Value"
         legend={'bottom'}
       />
       <AreaChart
@@ -55,9 +58,12 @@ function App() {
         xDataType="date"
         yKey="value"
         xAxis="bottom"
-        yAxis={false}
+        yAxis="left"
         yGrid={true}
         xAxisLabel="Date"
+        yAxisLabel="Value"
+        legend={'right'}
+        legendLabel="Markets"
       />
       <ScatterPlot
         height="100%"

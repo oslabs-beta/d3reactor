@@ -220,7 +220,7 @@ export default function AreaChart({
     <div ref={anchor} style={{ width: width, height: height }}>
       {tooltip && (
         <Tooltip
-          data={tooltip}
+          data={tooltip.data}
           cursorX={margin.left + tooltip.cursorX}
           cursorY={margin.top + tooltip.cursorY}
           distanceFromTop={tooltip.distanceFromTop}

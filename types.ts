@@ -322,6 +322,7 @@ export interface ArcProps {
   setTooltip?: React.Dispatch<any>;
 }
 
+// eslint-disable-next-line import/export
 export interface VoronoiProps {
   fill: string;
   stroke: string;

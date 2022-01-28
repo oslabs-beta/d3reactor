@@ -13,7 +13,7 @@ export const VoronoiCell = ({
   data,
   margin,
 }: VoronoiProps): JSX.Element => {
-  const { width, height } = useWindowDimensions();
+  const { width } = useWindowDimensions();
   const [scrollPosition, setScrollPosition] = useState(0);
 
   const handleScroll = () => {
