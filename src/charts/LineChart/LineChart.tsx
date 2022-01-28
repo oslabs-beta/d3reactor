@@ -204,7 +204,7 @@ export default function LineChart({
     <div ref={anchor} style={{ width: width, height: height }}>
       {tooltip && (
         <Tooltip
-          data={tooltip}
+          data={tooltip.data}
           cursorX={margin.left + tooltip.cursorX}
           cursorY={margin.top + tooltip.cursorY}
           distanceFromTop={tooltip.distanceFromTop}
@@ -294,6 +294,7 @@ export default function LineChart({
               xAccessor={xAccessor}
               yAccessor={yAccessor}
               setTooltip={setTooltip}
+              margin={margin}
             />
           )}
 

@@ -327,7 +327,7 @@ export interface VoronoiProps {
   stroke: string;
   opacity: number;
   d: string | undefined;
-  cellCenter?: { cx: number; cy: number; tooltipData: Data };
+  cellCenter: { cx: number; cy: number; tooltipData: Data };
   data?: any;
   setTooltip?: React.Dispatch<any>;
 }
@@ -387,6 +387,7 @@ export interface VoronoiProps {
   stroke: string;
   opacity: number;
   d: string | undefined;
+  margin: Margin;
 }
 export interface VoronoiBody {
   data: Data;
@@ -396,5 +397,6 @@ export interface VoronoiBody {
   xAccessor: xAccessorFunc;
   yAccessor: yAccessorFunc;
   setTooltip: React.Dispatch<any> | undefined;
+  margin: Margin;
 }
 export type GroupAccessorFunc = (d: any) => number | Date;

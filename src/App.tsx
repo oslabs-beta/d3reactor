@@ -55,12 +55,9 @@ function App() {
         xDataType="date"
         yKey="value"
         xAxis="bottom"
-        yAxis="left"
+        yAxis={false}
         yGrid={true}
         xAxisLabel="Date"
-        yAxisLabel="Value"
-        legend={'right'}
-        legendLabel="Markets"
       />
       <ScatterPlot
         height="100%"
