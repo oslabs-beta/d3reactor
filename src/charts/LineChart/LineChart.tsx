@@ -11,8 +11,6 @@ import {
   LineChartProps,
   xAccessorFunc,
   yAccessorFunc,
-  GroupAccessorFunc,
-  Data,
 } from '../../../types';
 import {
   getXAxisCoordinates,
