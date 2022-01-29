@@ -27,8 +27,6 @@ OR you can import each chart separately
 import {AreaChart, BarChart, PieChart, ScatterPlot, LineChart} from "d3reactor"
 ```
 
-And you are good to go. 
-
 
 # Examples
 
