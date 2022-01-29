@@ -14,20 +14,20 @@ export const VoronoiCell = ({
   margin,
 }: VoronoiProps): JSX.Element => {
   const { width } = useWindowDimensions();
-  const [scrollPosition, setScrollPosition] = useState(0);
+  // const [scrollPosition, setScrollPosition] = useState(0);
 
-  const handleScroll = () => {
-    const position = window.pageYOffset;
-    setScrollPosition(position);
-  };
+  // const handleScroll = () => {
+  //   const position = window.pageYOffset;
+  //   setScrollPosition(position);
+  // };
 
-  useEffect(() => {
-    window.addEventListener('scroll', handleScroll, { passive: true });
+  // useEffect(() => {
+  //   window.addEventListener('scroll', handleScroll, { passive: true });
 
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
+  //   return () => {
+  //     window.removeEventListener('scroll', handleScroll);
+  //   };
+  // }, []);
 
   const tooltipState = {
     cursorX: 0,
@@ -49,7 +49,7 @@ export const VoronoiCell = ({
     };
 
     tooltipState.distanceFromTop =
-      tooltipState.cursorY + margin.top - scrollPosition;
+      tooltipState.cursorY + margin.top;
     tooltipState.distanceFromRight =
       width - (margin.left + tooltipState.cursorX);
     tooltipState.distanceFromLeft = margin.left + tooltipState.cursorX;
