@@ -1,41 +1,49 @@
 # d3reactor
 
-An open-source library of chart components for creating performant, responsive data visualizations in React
+An open-source library of charts for creating performant, responsive data visualizations built with React and D3. 
 
-# The problem: 
-
-D3 and React compete for control of the DOM, making it difficult to leverage D3's capabilities while taking advantage of React's virtual DOM. This often results in D3 code that re-renders the DOM unnecessarily, resulting in charts with poor performance. 
+The main goal of this library to help you create customizable charts easily. 
 
 # Installation
-Let's get your first d3reactor chart set up in less < 5 minutes.
+Let's get your first d3reactor chart setup in less < 5 minutes.
 
 ## Install the d3reactor package
 ```
-npm i d3reactor
+npm install d3reactor
 ```
 OR
 ```
-yarn install d3reactor
+yarn add d3reactor
 ```
-## Import d3reactor into your React file
+## Import d3reactor into your React project
+
 ```
-import d3reactor from 'd3reactor'
+import * as d3reactor from "d3reactor"
 ```
 
-## Instantiate a new d3reactor component in the return statement of your parent component
+OR you can import each chart separately 
+
 ```
-function MyParentComponent() {
-  return (
-    <d3reactor.AreaChart
-      data={my_data}
-      xKey='my_xkey_value'
-      yKey='my_ykey_value'
-      groupBy='my_group' // if you want a multi-chart
-    />
-  );
-}
+import {AreaChart, BarChart, PieChart, ScatterPlot, LineChart} from "d3reactor"
+```
+
+And you are good to go. 
+
+
+# Examples
+
+```
+  <AreaChart
+    data={my_data}
+    xKey='my_xkey_value'
+    yKey='my_ykey_value'
+    groupBy='my_group' // if you want a multi-chart
+  />
+
 ```
 
 And you're good to go!
 
 <img width="667" alt="Screen Shot 2022-01-27 at 11 49 44" src="https://user-images.githubusercontent.com/83984184/151405131-82e9c38f-806a-4cb1-8d6a-b24a62595279.png">
+
+
