@@ -15,6 +15,7 @@ OR
 ```
 yarn add d3reactor
 ```
+
 ## Import d3reactor into your React project
 
 ```
@@ -26,7 +27,6 @@ OR you can import each chart separately
 ```
 import {AreaChart, BarChart, PieChart, ScatterPlot, LineChart} from "d3reactor"
 ```
-
 
 # Examples
 
