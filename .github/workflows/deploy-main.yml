@@ -37,9 +37,5 @@ jobs:
         with:
           token: ${{ secrets.NPM_TOKEN }}
           registry: https://registry.npmjs.org/
-          # access level for scoped packages -- by 1.0.0 we may unscope from @oslabs-beta
-          access: restricted
-          # just see if it works -- don't actually publish
-          dry-run: true
           # only run if published version number differs from the one in package.json
           check-version: true 
