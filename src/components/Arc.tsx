@@ -8,7 +8,6 @@ export const Arc = React.memo(
   ({
     data,
     dataTestId = 'arc',
-    key,
     fill = 'none',
     stroke,
     strokeWidth = '1px',
@@ -39,7 +38,7 @@ export const Arc = React.memo(
       }
     };
 
-    const onMouseLeave = (e: any) => {
+    const onMouseLeave = () => {
       if (setTooltip) {
         setTooltip ? setTooltip(false) : null;
       }
@@ -54,7 +53,7 @@ export const Arc = React.memo(
         strokeWidth={strokeWidth}
         d={d}
         onMouseMove={(e) => onMouseMove(e)}
-        onMouseLeave={(e) => onMouseLeave(e)}
+        onMouseLeave={() => onMouseLeave()}
       />
     );
   }

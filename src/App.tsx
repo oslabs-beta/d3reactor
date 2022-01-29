@@ -46,7 +46,7 @@ function App() {
         xAxisLabel="GDP per capita"
         yKey="Life expectancy"
         yGrid={true}
-        yAxis="left"
+        yAxis="right"
         yAxisLabel="Life Expectancy"
       />
       <LineChart
