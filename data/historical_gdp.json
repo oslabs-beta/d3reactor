@@ -1,0 +1,109 @@
+[{"group": "USA",
+  "year": "2012",
+  "GDP": 16961
+},
+{"group": "USA",
+  "year": "2013",
+  "GDP": 17273
+},
+{"group": "USA",
+  "year": "2014",
+  "GDP": 17709
+},
+{"group": "USA",
+  "year": "2015",
+  "GDP": 18238
+},
+{"group": "USA",
+  "year": "2016",
+  "GDP": 18550
+},
+{"group": "USA",
+  "year": "2017",
+  "GDP": 18978
+},
+{"group": "USA",
+  "year": "2018",
+  "GDP": 19550
+},
+{"group": "USA",
+  "year": "2019",
+  "GDP": 19968
+},
+{"group": "USA",
+  "year": "2020",
+  "GDP": 19269
+},
+  {"group": "Developed Countries Less USA",
+    "year": "2012",
+    "GDP": 23909
+  },
+  {"group": "Developed Countries Less USA",
+    "year": "2013",
+    "GDP": 24134
+  },
+  {"group": "Developed Countries Less USA",
+    "year": "2014",
+    "GDP": 24536
+  },
+  {"group": "Developed Countries Less USA",
+    "year": "2015",
+    "GDP": 25033
+  },
+  {"group": "Developed Countries Less USA",
+    "year": "2016",
+    "GDP": 25467
+  },
+  {"group": "Developed Countries Less USA",
+    "year": "2017",
+    "GDP": 26107
+  },
+  {"group": "Developed Countries Less USA",
+    "year": "2018",
+    "GDP": 26574
+  },
+  {"group": "Developed Countries Less USA",
+    "year": "2019",
+    "GDP": 26939
+  },
+  {"group": "Developed Countries Less USA",
+    "year": "2020",
+    "GDP": 25350
+  },
+  {"group": "Developing Countries",
+    "year": "2012",
+    "GDP": 25829
+  },
+  {"group": "Developing Countries",
+    "year": "2013",
+    "GDP": 27212
+  },
+  {"group": "Developing Countries",
+    "year": "2014",
+    "GDP": 28555
+  },
+  {"group": "Developing Countries",
+    "year": "2015",
+    "GDP": 29821
+  },
+  {"group": "Developing Countries",
+    "year": "2016",
+    "GDP": 31170
+  },
+  {"group": "Developing Countries",
+    "year": "2017",
+    "GDP": 32697
+  },
+  {"group": "Developing Countries",
+    "year": "2018",
+    "GDP": 34127
+  },
+  {"group": "Developing Countries",
+    "year": "2019",
+    "GDP": 35391
+  },
+  {"group": "Developing Countries",
+    "year": "2020",
+    "GDP": 34752
+  }
+]

@@ -136,7 +136,7 @@ export default function PieChart({
   // ********************
 
   const textTranform = (d: any) => {
-    const [x, y] = arcGenerator.centroid(d);
+    const [x, y]: number[] = arcGenerator.centroid(d);
     return `translate(${x}, ${y})`;
   };
 
@@ -222,9 +222,12 @@ export default function PieChart({
       {tooltip && (
         <Tooltip
           chartType={chartType}
-          data={tooltip}
-          x={tooltip.cx}
-          y={tooltip.cy}
+          data={tooltip.data}
+          cursorX={tooltip.cursorX}
+          cursorY={tooltip.cursorY}
+          distanceFromTop={tooltip.distanceFromTop}
+          distanceFromRight={tooltip.distanceFromRight}
+          distanceFromLeft={tooltip.distanceFromLeft}
           xKey={label}
           yKey={value}
         />
@@ -232,7 +235,7 @@ export default function PieChart({
       <svg width={'100%'} height={'100%'}>
         <g transform={translate} data-testid="pie-chart">
           {pie.map((d: any, i: number) => (
-            <g key={'g' + i}>
+            <g key={`g + ${i}`}>
               <Arc
                 data={{ [label]: d.data[label], [value]: d.data[value] }}
                 dataTestId={`pie-chart-arc-${i}`}
@@ -241,7 +244,7 @@ export default function PieChart({
                 stroke="#ffffff"
                 strokeWidth="0px"
                 d={arcGenerator(d)}
-                id={'arc-' + i}
+                id={`arc- + ${i}`}
                 setTooltip={setTooltip}
               />
               {pieLabel && (

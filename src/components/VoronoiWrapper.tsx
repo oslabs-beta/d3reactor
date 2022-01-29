@@ -1,6 +1,7 @@
 import React from 'react';
 import { Data, VoronoiBody } from '../../types';
 import { VoronoiCell } from './VoronoiCell';
+import useWindowDimensions from '../hooks/useWindowDimensions';
 
 export const VoronoiWrapper = React.memo(
   ({
@@ -11,6 +12,7 @@ export const VoronoiWrapper = React.memo(
     xAccessor,
     yAccessor,
     setTooltip,
+    margin,
   }: VoronoiBody): JSX.Element => {
     return (
       <g className="voronoi-wrapper">
@@ -26,6 +28,7 @@ export const VoronoiWrapper = React.memo(
               cy: yScale(yAccessor(element)),
               tooltipData: element,
             }}
+            margin={margin}
             setTooltip={setTooltip}
             data={element}
           />

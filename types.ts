@@ -4,6 +4,15 @@ export interface Data {
   [key: string]: any;
 }
 
+export interface toolTipState {
+  cursorX: number,
+  cursorY: number,
+  distanceFromTop: number,
+  distanceFromRight: number,
+  distanceFromLeft: number,
+  data: any,
+}
+
 export interface ScatterPlotProps<T> {
   data: Data[];
   height?: T;
@@ -273,8 +282,11 @@ export interface TooltipProps {
   data: any;
   xAccessor?: xAccessorFunc;
   yAccessor?: yAccessorFunc;
-  x: number;
-  y: number;
+  cursorX: number;
+  cursorY: number;
+  distanceFromTop: number;
+  distanceFromRight: number;
+  distanceFromLeft: number;
   xKey?: string;
   yKey?: string;
 }
@@ -293,6 +305,7 @@ export interface RectangleProps {
   y: number;
   width: number;
   height: number;
+  margin: Margin;
   fill: string;
   setTooltip?: React.Dispatch<any>;
 }
@@ -306,7 +319,7 @@ export interface LineProps {
 }
 
 export interface ArcProps {
-  data: {};
+  data: Record<string,unknown>;
   dataTestId?: string;
   key: string;
   fill: string;
@@ -318,14 +331,16 @@ export interface ArcProps {
   setTooltip?: React.Dispatch<any>;
 }
 
+// eslint-disable-next-line import/export
 export interface VoronoiProps {
   fill: string;
   stroke: string;
   opacity: number;
   d: string | undefined;
-  cellCenter?: { cx: number; cy: number; tooltipData: Data };
+  cellCenter: { cx: number; cy: number; tooltipData: Data };
   data?: any;
   setTooltip?: React.Dispatch<any>;
+  margin: Margin;
 }
 
 export type ColorScale = d3.ScaleOrdinal<string, string, never>;
@@ -378,12 +393,6 @@ export type yAccessorFunc = (d: any, i?: number) => number;
 
 export type Domain = number | Date | undefined;
 
-export interface VoronoiProps {
-  fill: string;
-  stroke: string;
-  opacity: number;
-  d: string | undefined;
-}
 export interface VoronoiBody {
   data: Data;
   voronoi: d3.Voronoi<string>;
@@ -392,5 +401,6 @@ export interface VoronoiBody {
   xAccessor: xAccessorFunc;
   yAccessor: yAccessorFunc;
   setTooltip: React.Dispatch<any> | undefined;
+  margin: Margin;
 }
 export type GroupAccessorFunc = (d: any) => number | Date;

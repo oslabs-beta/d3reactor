@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/restrict-plus-operands */
 /** App.js */
 import React, { useState, useMemo } from 'react';
 import { useResponsive } from '../../hooks/useResponsive';
@@ -6,13 +7,7 @@ import * as d3 from 'd3';
 import { Axis } from '../../components/ContinuousAxis';
 import { Line } from '../../components/Line';
 import { VoronoiWrapper } from '../../components/VoronoiWrapper';
-import {
-  LineChartProps,
-  xAccessorFunc,
-  yAccessorFunc,
-  GroupAccessorFunc,
-  Data,
-} from '../../../types';
+import { LineChartProps, xAccessorFunc, yAccessorFunc } from '../../../types';
 import {
   getXAxisCoordinates,
   getYAxisCoordinates,
@@ -136,7 +131,7 @@ export default function LineChart({
   // ********************
 
   const yScale = useMemo(() => {
-    return yScaleDef(data, yAccessor, margin, cHeight);
+    return yScaleDef(data, yAccessor, margin, cHeight, 'line-chart');
   }, [data, yAccessor, margin, cHeight]);
 
   const { xScale, xMin, xMax } = useMemo(() => {
@@ -203,9 +198,12 @@ export default function LineChart({
     <div ref={anchor} style={{ width: width, height: height }}>
       {tooltip && (
         <Tooltip
-          data={tooltip}
-          x={margin.left + tooltip.cx}
-          y={margin.top + tooltip.cy}
+          data={tooltip.data}
+          cursorX={margin.left + tooltip.cursorX}
+          cursorY={margin.top + tooltip.cursorY}
+          distanceFromTop={tooltip.distanceFromTop}
+          distanceFromRight={tooltip.distanceFromRight}
+          distanceFromLeft={tooltip.distanceFromLeft}
           xKey={xKey}
           yKey={yKey}
         />
@@ -290,6 +288,7 @@ export default function LineChart({
               xAccessor={xAccessor}
               yAccessor={yAccessor}
               setTooltip={setTooltip}
+              margin={margin}
             />
           )}
 

@@ -9,7 +9,12 @@ import { Rectangle } from '../../components/Rectangle';
 import Tooltip from '../../components/Tooltip';
 import { ColorLegend } from '../../components/ColorLegend';
 import { transformSkinnyToWide } from '../../utils';
-import { BarChartProps, Data, yAccessorFunc } from '../../../types';
+import {
+  BarChartProps,
+  Data,
+  toolTipState,
+  yAccessorFunc,
+} from '../../../types';
 import {
   getXAxisCoordinates,
   getYAxisCoordinates,
@@ -61,10 +66,8 @@ export default function BarChart({
 
   // When the yKey key has been assigned to the groupBy variable we know the user didn't specify grouping
   const keys: string[] = useMemo(() => {
-    let groups: d3.InternMap<any, any[]>;
     const groupAccessor = (d: Data) => d[groupBy ?? ''];
-    // eslint-disable-next-line prefer-const
-    groups = d3.group(data, groupAccessor);
+    const groups = d3.group(data, groupAccessor);
     return groupBy ? Array.from(groups).map((group) => group[0]) : [yKey];
   }, [groupBy, yKey]);
 
@@ -134,7 +137,6 @@ export default function BarChart({
       tickMargin,
     ]
   );
-
   const translate = `translate(${margin.left}, ${margin.top})`;
 
   // ********************
@@ -159,6 +161,7 @@ export default function BarChart({
       yAccessor,
       margin,
       cHeight,
+      'bar-chart',
       groupBy
     );
   }, [transData, yAccessor, margin, cHeight, groupBy]);
@@ -194,16 +197,19 @@ export default function BarChart({
   // Initialize event listeners and create interaction behavior
   // ********************
 
-  const [tooltip, setTooltip] = useState<false | any>(false);
+  const [tooltip, setTooltip] = useState<false | toolTipState>(false);
 
   return (
     <div ref={anchor} style={{ width: width, height: height }}>
       {tooltip && (
         <Tooltip
           chartType={chartType}
-          data={tooltip}
-          x={tooltip.cx + xScale.bandwidth() / 2 + margin.left}
-          y={tooltip.cy + margin.top}
+          data={tooltip.data}
+          cursorX={tooltip.cursorX + xScale.bandwidth() / 2 + margin.left}
+          cursorY={tooltip.cursorY + margin.top}
+          distanceFromTop={tooltip.distanceFromTop}
+          distanceFromRight={tooltip.distanceFromRight}
+          distanceFromLeft={tooltip.distanceFromLeft}
           xKey={xKey}
           yKey={yKey}
         />
@@ -284,6 +290,7 @@ export default function BarChart({
                             ? yScale(sequence[0]) - yScale(sequence[1])
                             : 0
                         }
+                        margin={margin}
                         fill={colorScale(layer.key[i])}
                         setTooltip={setTooltip}
                       />
@@ -310,6 +317,7 @@ export default function BarChart({
                       // draw rect from 0 mark to +value
                       Math.abs(yScale(0) - yScale(yAccessor(d)))
                     }
+                    margin={margin}
                     fill={colorScale(yKey)}
                     setTooltip={setTooltip}
                   />

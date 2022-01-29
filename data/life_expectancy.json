@@ -1,0 +1,1642 @@
+[
+  {
+      "Entity": "Afghanistan",
+      "Code": "AFG",
+      "Year": 2011,
+      "Life expectancy": 61.553,
+      "GDP per capita": 1792,
+      "145446-annotations": "",
+      "Population (historical estimates)": 30117411,
+      "Continent": ""
+  },
+  {
+      "Entity": "Albania",
+      "Code": "ALB",
+      "Year": 2011,
+      "Life expectancy": 76.914,
+      "GDP per capita": 9484,
+      "145446-annotations": "",
+      "Population (historical estimates)": 2928601,
+      "Continent": ""
+  },
+  {
+      "Entity": "Algeria",
+      "Code": "DZA",
+      "Year": 2011,
+      "Life expectancy": 75.199,
+      "GDP per capita": 13204,
+      "145446-annotations": "",
+      "Population (historical estimates)": 36661438,
+      "Continent": ""
+  },
+  {
+      "Entity": "Angola",
+      "Code": "AGO",
+      "Year": 2011,
+      "Life expectancy": 56.33,
+      "GDP per capita": 8016,
+      "145446-annotations": "",
+      "Population (historical estimates)": 24220660,
+      "Continent": ""
+  },
+  {
+      "Entity": "Argentina",
+      "Code": "ARG",
+      "Year": 2011,
+      "Life expectancy": 75.439,
+      "GDP per capita": 20003,
+      "145446-annotations": "",
+      "Population (historical estimates)": 41320497,
+      "Continent": ""
+  },
+  {
+      "Entity": "Armenia",
+      "Code": "ARM",
+      "Year": 2011,
+      "Life expectancy": 73.572,
+      "GDP per capita": 8465,
+      "145446-annotations": "",
+      "Population (historical estimates)": 2876536,
+      "Continent": ""
+  },
+  {
+      "Entity": "Australia",
+      "Code": "AUS",
+      "Year": 2011,
+      "Life expectancy": 82.119,
+      "GDP per capita": 46132,
+      "145446-annotations": "",
+      "Population (historical estimates)": 22538002,
+      "Continent": ""
+  },
+  {
+      "Entity": "Austria",
+      "Code": "AUT",
+      "Year": 2011,
+      "Life expectancy": 80.776,
+      "GDP per capita": 41446,
+      "145446-annotations": "",
+      "Population (historical estimates)": 8453501,
+      "Continent": ""
+  },
+  {
+      "Entity": "Azerbaijan",
+      "Code": "AZE",
+      "Year": 2011,
+      "Life expectancy": 71.234,
+      "GDP per capita": 16176,
+      "145446-annotations": "",
+      "Population (historical estimates)": 9146277,
+      "Continent": ""
+  },
+  {
+      "Entity": "Bahrain",
+      "Code": "BHR",
+      "Year": 2011,
+      "Life expectancy": 76.2,
+      "GDP per capita": 36372,
+      "145446-annotations": "",
+      "Population (historical estimates)": 1278153,
+      "Continent": ""
+  },
+  {
+      "Entity": "Bangladesh",
+      "Code": "BGD",
+      "Year": 2011,
+      "Life expectancy": 70.256,
+      "GDP per capita": 2772,
+      "145446-annotations": "",
+      "Population (historical estimates)": 149273134,
+      "Continent": ""
+  },
+  {
+      "Entity": "Barbados",
+      "Code": "BRB",
+      "Year": 2011,
+      "Life expectancy": 78.456,
+      "GDP per capita": 11870,
+      "145446-annotations": "",
+      "Population (historical estimates)": 282987,
+      "Continent": ""
+  },
+  {
+      "Entity": "Belarus",
+      "Code": "BLR",
+      "Year": 2011,
+      "Life expectancy": 71.443,
+      "GDP per capita": 17918,
+      "145446-annotations": "",
+      "Population (historical estimates)": 9415316,
+      "Continent": ""
+  },
+  {
+      "Entity": "Belgium",
+      "Code": "BEL",
+      "Year": 2011,
+      "Life expectancy": 80.261,
+      "GDP per capita": 38130,
+      "145446-annotations": "",
+      "Population (historical estimates)": 11013860,
+      "Continent": ""
+  },
+  {
+      "Entity": "Benin",
+      "Code": "BEN",
+      "Year": 2011,
+      "Life expectancy": 59.59,
+      "GDP per capita": 1836,
+      "145446-annotations": "",
+      "Population (historical estimates)": 9460829,
+      "Continent": ""
+  },
+  {
+      "Entity": "Bolivia",
+      "Code": "BOL",
+      "Year": 2011,
+      "Life expectancy": 68.521,
+      "GDP per capita": 5331,
+      "145446-annotations": "",
+      "Population (historical estimates)": 10212951,
+      "Continent": ""
+  },
+  {
+      "Entity": "Bosnia and Herzegovina",
+      "Code": "BIH",
+      "Year": 2011,
+      "Life expectancy": 76.219,
+      "GDP per capita": 8961,
+      "145446-annotations": "",
+      "Population (historical estimates)": 3661173,
+      "Continent": ""
+  },
+  {
+      "Entity": "Botswana",
+      "Code": "BWA",
+      "Year": 2011,
+      "Life expectancy": 61.91,
+      "GDP per capita": 13376,
+      "145446-annotations": "",
+      "Population (historical estimates)": 2015406,
+      "Continent": ""
+  },
+  {
+      "Entity": "Brazil",
+      "Code": "BRA",
+      "Year": 2011,
+      "Life expectancy": 73.921,
+      "GDP per capita": 14831,
+      "145446-annotations": "",
+      "Population (historical estimates)": 197514541,
+      "Continent": ""
+  },
+  {
+      "Entity": "Bulgaria",
+      "Code": "BGR",
+      "Year": 2011,
+      "Life expectancy": 73.932,
+      "GDP per capita": 15112,
+      "145446-annotations": "",
+      "Population (historical estimates)": 7378652,
+      "Continent": ""
+  },
+  {
+      "Entity": "Burkina Faso",
+      "Code": "BFA",
+      "Year": 2011,
+      "Life expectancy": 57.761,
+      "GDP per capita": 1344,
+      "145446-annotations": "",
+      "Population (historical estimates)": 16081915,
+      "Continent": ""
+  },
+  {
+      "Entity": "Burundi",
+      "Code": "BDI",
+      "Year": 2011,
+      "Life expectancy": 57.925,
+      "GDP per capita": 719,
+      "145446-annotations": "",
+      "Population (historical estimates)": 8958406,
+      "Continent": ""
+  },
+  {
+      "Entity": "Cambodia",
+      "Code": "KHM",
+      "Year": 2011,
+      "Life expectancy": 67.043,
+      "GDP per capita": 2496,
+      "145446-annotations": "",
+      "Population (historical estimates)": 14541421,
+      "Continent": ""
+  },
+  {
+      "Entity": "Cameroon",
+      "Code": "CMR",
+      "Year": 2011,
+      "Life expectancy": 55.581,
+      "GDP per capita": 2494,
+      "145446-annotations": "",
+      "Population (historical estimates)": 20906392,
+      "Continent": ""
+  },
+  {
+      "Entity": "Canada",
+      "Code": "CAN",
+      "Year": 2011,
+      "Life expectancy": 81.51,
+      "GDP per capita": 42197,
+      "145446-annotations": "",
+      "Population (historical estimates)": 34539156,
+      "Continent": ""
+  },
+  {
+      "Entity": "Cape Verde",
+      "Code": "CPV",
+      "Year": 2011,
+      "Life expectancy": 71.243,
+      "GDP per capita": 6295,
+      "145446-annotations": "",
+      "Population (historical estimates)": 498858,
+      "Continent": ""
+  },
+  {
+      "Entity": "Central African Republic",
+      "Code": "CAF",
+      "Year": 2011,
+      "Life expectancy": 47.95,
+      "GDP per capita": 909,
+      "145446-annotations": "",
+      "Population (historical estimates)": 4418639,
+      "Continent": ""
+  },
+  {
+      "Entity": "Chad",
+      "Code": "TCD",
+      "Year": 2011,
+      "Life expectancy": 51.424,
+      "GDP per capita": 1661,
+      "145446-annotations": "",
+      "Population (historical estimates)": 12360986,
+      "Continent": ""
+  },
+  {
+      "Entity": "Chile",
+      "Code": "CHL",
+      "Year": 2011,
+      "Life expectancy": 78.986,
+      "GDP per capita": 19705,
+      "145446-annotations": "",
+      "Population (historical estimates)": 17233584,
+      "Continent": ""
+  },
+  {
+      "Entity": "China",
+      "Code": "CHN",
+      "Year": 2011,
+      "Life expectancy": 74.708,
+      "GDP per capita": 10221,
+      "145446-annotations": "",
+      "Population (historical estimates)": 1376497633,
+      "Continent": ""
+  },
+  {
+      "Entity": "Colombia",
+      "Code": "COL",
+      "Year": 2011,
+      "Life expectancy": 75.655,
+      "GDP per capita": 11788,
+      "145446-annotations": "",
+      "Population (historical estimates)": 45662747,
+      "Continent": ""
+  },
+  {
+      "Entity": "Comoros",
+      "Code": "COM",
+      "Year": 2011,
+      "Life expectancy": 62.24,
+      "GDP per capita": 1479,
+      "145446-annotations": "",
+      "Population (historical estimates)": 706578,
+      "Continent": ""
+  },
+  {
+      "Entity": "Congo",
+      "Code": "COG",
+      "Year": 2011,
+      "Life expectancy": 60.785,
+      "GDP per capita": 5875,
+      "145446-annotations": "",
+      "Population (historical estimates)": 4394842,
+      "Continent": ""
+  },
+  {
+      "Entity": "Costa Rica",
+      "Code": "CRI",
+      "Year": 2011,
+      "Life expectancy": 78.919,
+      "GDP per capita": 12366,
+      "145446-annotations": "",
+      "Population (historical estimates)": 4633086,
+      "Continent": ""
+  },
+  {
+      "Entity": "Cote d'Ivoire",
+      "Code": "CIV",
+      "Year": 2011,
+      "Life expectancy": 53.62,
+      "GDP per capita": 2444,
+      "145446-annotations": "",
+      "Population (historical estimates)": 21028652,
+      "Continent": ""
+  },
+  {
+      "Entity": "Croatia",
+      "Code": "HRV",
+      "Year": 2011,
+      "Life expectancy": 77.059,
+      "GDP per capita": 19813,
+      "145446-annotations": "",
+      "Population (historical estimates)": 4313098,
+      "Continent": ""
+  },
+  {
+      "Entity": "Cuba",
+      "Code": "CUB",
+      "Year": 2011,
+      "Life expectancy": 78.4,
+      "GDP per capita": 6928,
+      "145446-annotations": "",
+      "Population (historical estimates)": 11236671,
+      "Continent": ""
+  },
+  {
+      "Entity": "Cyprus",
+      "Code": "CYP",
+      "Year": 2011,
+      "Life expectancy": 79.621,
+      "GDP per capita": 27272,
+      "145446-annotations": "",
+      "Population (historical estimates)": 1124837,
+      "Continent": ""
+  },
+  {
+      "Entity": "Czechia",
+      "Code": "CZE",
+      "Year": 2011,
+      "Life expectancy": 77.843,
+      "GDP per capita": 26725,
+      "145446-annotations": "",
+      "Population (historical estimates)": 10566512,
+      "Continent": ""
+  },
+  {
+      "Entity": "Democratic Republic of Congo",
+      "Code": "COD",
+      "Year": 2011,
+      "Life expectancy": 57.427,
+      "GDP per capita": 681,
+      "145446-annotations": "",
+      "Population (historical estimates)": 66755151,
+      "Continent": ""
+  },
+  {
+      "Entity": "Denmark",
+      "Code": "DNK",
+      "Year": 2011,
+      "Life expectancy": 79.704,
+      "GDP per capita": 43575,
+      "145446-annotations": "",
+      "Population (historical estimates)": 5582980,
+      "Continent": ""
+  },
+  {
+      "Entity": "Djibouti",
+      "Code": "DJI",
+      "Year": 2011,
+      "Life expectancy": 60.667,
+      "GDP per capita": 2590,
+      "145446-annotations": "",
+      "Population (historical estimates)": 853671,
+      "Continent": ""
+  },
+  {
+      "Entity": "Dominica",
+      "Code": "DMA",
+      "Year": 2011,
+      "Life expectancy": 74.111,
+      "GDP per capita": 8944,
+      "145446-annotations": "",
+      "Population (historical estimates)": 70912,
+      "Continent": ""
+  },
+  {
+      "Entity": "Dominican Republic",
+      "Code": "DOM",
+      "Year": 2011,
+      "Life expectancy": 72.284,
+      "GDP per capita": 11679,
+      "145446-annotations": "",
+      "Population (historical estimates)": 9813219,
+      "Continent": ""
+  },
+  {
+      "Entity": "Ecuador",
+      "Code": "ECU",
+      "Year": 2011,
+      "Life expectancy": 75.289,
+      "GDP per capita": 9985,
+      "145446-annotations": "",
+      "Population (historical estimates)": 15243885,
+      "Continent": ""
+  },
+  {
+      "Entity": "Egypt",
+      "Code": "EGY",
+      "Year": 2011,
+      "Life expectancy": 70.543,
+      "GDP per capita": 10737,
+      "145446-annotations": "",
+      "Population (historical estimates)": 84529251,
+      "Continent": ""
+  },
+  {
+      "Entity": "El Salvador",
+      "Code": "SLV",
+      "Year": 2011,
+      "Life expectancy": 71.449,
+      "GDP per capita": 7607,
+      "145446-annotations": "",
+      "Population (historical estimates)": 6210567,
+      "Continent": ""
+  },
+  {
+      "Entity": "Estonia",
+      "Code": "EST",
+      "Year": 2011,
+      "Life expectancy": 75.893,
+      "GDP per capita": 21997,
+      "145446-annotations": "",
+      "Population (historical estimates)": 1327701,
+      "Continent": ""
+  },
+  {
+      "Entity": "Eswatini",
+      "Code": "SWZ",
+      "Year": 2011,
+      "Life expectancy": 48.141,
+      "GDP per capita": 7389,
+      "145446-annotations": "",
+      "Population (historical estimates)": 1072029,
+      "Continent": ""
+  },
+  {
+      "Entity": "Ethiopia",
+      "Code": "ETH",
+      "Year": 2011,
+      "Life expectancy": 62.505,
+      "GDP per capita": 1199,
+      "145446-annotations": "",
+      "Population (historical estimates)": 90139928,
+      "Continent": ""
+  },
+  {
+      "Entity": "Finland",
+      "Code": "FIN",
+      "Year": 2011,
+      "Life expectancy": 80.365,
+      "GDP per capita": 38432,
+      "145446-annotations": "",
+      "Population (historical estimates)": 5390036,
+      "Continent": ""
+  },
+  {
+      "Entity": "France",
+      "Code": "FRA",
+      "Year": 2011,
+      "Life expectancy": 81.692,
+      "GDP per capita": 36691,
+      "145446-annotations": "",
+      "Population (historical estimates)": 63222229,
+      "Continent": ""
+  },
+  {
+      "Entity": "Gabon",
+      "Code": "GAB",
+      "Year": 2011,
+      "Life expectancy": 62.168,
+      "GDP per capita": 16403,
+      "145446-annotations": "",
+      "Population (historical estimates)": 1684629,
+      "Continent": ""
+  },
+  {
+      "Entity": "Gambia",
+      "Code": "GMB",
+      "Year": 2011,
+      "Life expectancy": 59.917,
+      "GDP per capita": 1669,
+      "145446-annotations": "",
+      "Population (historical estimates)": 1848142,
+      "Continent": ""
+  },
+  {
+      "Entity": "Georgia",
+      "Code": "GEO",
+      "Year": 2011,
+      "Life expectancy": 71.773,
+      "GDP per capita": 8946,
+      "145446-annotations": "",
+      "Population (historical estimates)": 4081012,
+      "Continent": ""
+  },
+  {
+      "Entity": "Germany",
+      "Code": "DEU",
+      "Year": 2011,
+      "Life expectancy": 80.261,
+      "GDP per capita": 43189,
+      "145446-annotations": "",
+      "Population (historical estimates)": 80855629,
+      "Continent": ""
+  },
+  {
+      "Entity": "Ghana",
+      "Code": "GHA",
+      "Year": 2011,
+      "Life expectancy": 61.381,
+      "GDP per capita": 3283,
+      "145446-annotations": "",
+      "Population (historical estimates)": 25387713,
+      "Continent": ""
+  },
+  {
+      "Entity": "Greece",
+      "Code": "GRC",
+      "Year": 2011,
+      "Life expectancy": 80.754,
+      "GDP per capita": 24349,
+      "145446-annotations": "",
+      "Population (historical estimates)": 10829074,
+      "Continent": ""
+  },
+  {
+      "Entity": "Guatemala",
+      "Code": "GTM",
+      "Year": 2011,
+      "Life expectancy": 71.861,
+      "GDP per capita": 6650,
+      "145446-annotations": "",
+      "Population (historical estimates)": 14948792,
+      "Continent": ""
+  },
+  {
+      "Entity": "Guinea",
+      "Code": "GIN",
+      "Year": 2011,
+      "Life expectancy": 57.387,
+      "GDP per capita": 1347,
+      "145446-annotations": "",
+      "Population (historical estimates)": 10420459,
+      "Continent": ""
+  },
+  {
+      "Entity": "Guinea-Bissau",
+      "Code": "GNB",
+      "Year": 2011,
+      "Life expectancy": 55.144,
+      "GDP per capita": 1413,
+      "145446-annotations": "",
+      "Population (historical estimates)": 1562996,
+      "Continent": ""
+  },
+  {
+      "Entity": "Haiti",
+      "Code": "HTI",
+      "Year": 2011,
+      "Life expectancy": 60.879,
+      "GDP per capita": 1648,
+      "145446-annotations": "",
+      "Population (historical estimates)": 10100320,
+      "Continent": ""
+  },
+  {
+      "Entity": "Honduras",
+      "Code": "HND",
+      "Year": 2011,
+      "Life expectancy": 73.569,
+      "GDP per capita": 4421,
+      "145446-annotations": "",
+      "Population (historical estimates)": 8480670,
+      "Continent": ""
+  },
+  {
+      "Entity": "Hong Kong",
+      "Code": "HKG",
+      "Year": 2011,
+      "Life expectancy": 83.109,
+      "GDP per capita": 44532,
+      "145446-annotations": "",
+      "Population (historical estimates)": 7006598,
+      "Continent": ""
+  },
+  {
+      "Entity": "Hungary",
+      "Code": "HUN",
+      "Year": 2011,
+      "Life expectancy": 74.795,
+      "GDP per capita": 20886,
+      "145446-annotations": "",
+      "Population (historical estimates)": 9895689,
+      "Continent": ""
+  },
+  {
+      "Entity": "Iceland",
+      "Code": "ISL",
+      "Year": 2011,
+      "Life expectancy": 81.951,
+      "GDP per capita": 36740,
+      "145446-annotations": "",
+      "Population (historical estimates)": 323471,
+      "Continent": ""
+  },
+  {
+      "Entity": "India",
+      "Code": "IND",
+      "Year": 2011,
+      "Life expectancy": 67.13,
+      "GDP per capita": 4768,
+      "145446-annotations": "",
+      "Population (historical estimates)": 1250287939,
+      "Continent": ""
+  },
+  {
+      "Entity": "Indonesia",
+      "Code": "IDN",
+      "Year": 2011,
+      "Life expectancy": 69.542,
+      "GDP per capita": 8849,
+      "145446-annotations": "",
+      "Population (historical estimates)": 245115988,
+      "Continent": ""
+  },
+  {
+      "Entity": "Iran",
+      "Code": "IRN",
+      "Year": 2011,
+      "Life expectancy": 74.352,
+      "GDP per capita": 18024,
+      "145446-annotations": "",
+      "Population (historical estimates)": 74634959,
+      "Continent": ""
+  },
+  {
+      "Entity": "Iraq",
+      "Code": "IRQ",
+      "Year": 2011,
+      "Life expectancy": 68.848,
+      "GDP per capita": 11484,
+      "145446-annotations": "",
+      "Population (historical estimates)": 30725305,
+      "Continent": ""
+  },
+  {
+      "Entity": "Ireland",
+      "Code": "IRL",
+      "Year": 2011,
+      "Life expectancy": 80.382,
+      "GDP per capita": 48980,
+      "145446-annotations": "",
+      "Population (historical estimates)": 4591115,
+      "Continent": ""
+  },
+  {
+      "Entity": "Israel",
+      "Code": "ISR",
+      "Year": 2011,
+      "Life expectancy": 81.653,
+      "GDP per capita": 29370,
+      "145446-annotations": "",
+      "Population (historical estimates)": 7487095,
+      "Continent": ""
+  },
+  {
+      "Entity": "Italy",
+      "Code": "ITA",
+      "Year": 2011,
+      "Life expectancy": 82.128,
+      "GDP per capita": 35151,
+      "145446-annotations": "",
+      "Population (historical estimates)": 59589070,
+      "Continent": ""
+  },
+  {
+      "Entity": "Jamaica",
+      "Code": "JAM",
+      "Year": 2011,
+      "Life expectancy": 74.012,
+      "GDP per capita": 7141,
+      "145446-annotations": "",
+      "Population (historical estimates)": 2825932,
+      "Continent": ""
+  },
+  {
+      "Entity": "Japan",
+      "Code": "JPN",
+      "Year": 2011,
+      "Life expectancy": 83.118,
+      "GDP per capita": 34979,
+      "145446-annotations": "",
+      "Population (historical estimates)": 128498966,
+      "Continent": ""
+  },
+  {
+      "Entity": "Jordan",
+      "Code": "JOR",
+      "Year": 2011,
+      "Life expectancy": 73.581,
+      "GDP per capita": 11615,
+      "145446-annotations": "",
+      "Population (historical estimates)": 7662858,
+      "Continent": ""
+  },
+  {
+      "Entity": "Kazakhstan",
+      "Code": "KAZ",
+      "Year": 2011,
+      "Life expectancy": 68.047,
+      "GDP per capita": 21302,
+      "145446-annotations": "",
+      "Population (historical estimates)": 16490669,
+      "Continent": ""
+  },
+  {
+      "Entity": "Kenya",
+      "Code": "KEN",
+      "Year": 2011,
+      "Life expectancy": 61.851,
+      "GDP per capita": 2712,
+      "145446-annotations": "",
+      "Population (historical estimates)": 43178270,
+      "Continent": ""
+  },
+  {
+      "Entity": "Kuwait",
+      "Code": "KWT",
+      "Year": 2011,
+      "Life expectancy": 74.55,
+      "GDP per capita": 77126,
+      "145446-annotations": "",
+      "Population (historical estimates)": 3168054,
+      "Continent": ""
+  },
+  {
+      "Entity": "Kyrgyzstan",
+      "Code": "KGZ",
+      "Year": 2011,
+      "Life expectancy": 69.376,
+      "GDP per capita": 4142,
+      "145446-annotations": "",
+      "Population (historical estimates)": 5517927,
+      "Continent": ""
+  },
+  {
+      "Entity": "Laos",
+      "Code": "LAO",
+      "Year": 2011,
+      "Life expectancy": 64.797,
+      "GDP per capita": 4401,
+      "145446-annotations": "",
+      "Population (historical estimates)": 6347564,
+      "Continent": ""
+  },
+  {
+      "Entity": "Latvia",
+      "Code": "LVA",
+      "Year": 2011,
+      "Life expectancy": 73.323,
+      "GDP per capita": 18428,
+      "145446-annotations": "",
+      "Population (historical estimates)": 2093606,
+      "Continent": ""
+  },
+  {
+      "Entity": "Lebanon",
+      "Code": "LBN",
+      "Year": 2011,
+      "Life expectancy": 78.507,
+      "GDP per capita": 16230,
+      "145446-annotations": "",
+      "Population (historical estimates)": 5202022,
+      "Continent": ""
+  },
+  {
+      "Entity": "Lesotho",
+      "Code": "LSO",
+      "Year": 2011,
+      "Life expectancy": 46.207,
+      "GDP per capita": 2346,
+      "145446-annotations": "",
+      "Population (historical estimates)": 2003793,
+      "Continent": ""
+  },
+  {
+      "Entity": "Liberia",
+      "Code": "LBR",
+      "Year": 2011,
+      "Life expectancy": 60.146,
+      "GDP per capita": 820,
+      "145446-annotations": "",
+      "Population (historical estimates)": 4017446,
+      "Continent": ""
+  },
+  {
+      "Entity": "Libya",
+      "Code": "LBY",
+      "Year": 2011,
+      "Life expectancy": 71.956,
+      "GDP per capita": 12893,
+      "145446-annotations": "",
+      "Population (historical estimates)": 6247438,
+      "Continent": ""
+  },
+  {
+      "Entity": "Lithuania",
+      "Code": "LTU",
+      "Year": 2011,
+      "Life expectancy": 73.256,
+      "GDP per capita": 20243,
+      "145446-annotations": "",
+      "Population (historical estimates)": 3083402,
+      "Continent": ""
+  },
+  {
+      "Entity": "Luxembourg",
+      "Code": "LUX",
+      "Year": 2011,
+      "Life expectancy": 80.664,
+      "GDP per capita": 54031,
+      "145446-annotations": "",
+      "Population (historical estimates)": 519312,
+      "Continent": ""
+  },
+  {
+      "Entity": "Madagascar",
+      "Code": "MDG",
+      "Year": 2011,
+      "Life expectancy": 63.836,
+      "GDP per capita": 1347,
+      "145446-annotations": "",
+      "Population (historical estimates)": 21743970,
+      "Continent": ""
+  },
+  {
+      "Entity": "Malawi",
+      "Code": "MWI",
+      "Year": 2011,
+      "Life expectancy": 57.161,
+      "GDP per capita": 1102,
+      "145446-annotations": "",
+      "Population (historical estimates)": 14962118,
+      "Continent": ""
+  },
+  {
+      "Entity": "Malaysia",
+      "Code": "MYS",
+      "Year": 2011,
+      "Life expectancy": 74.683,
+      "GDP per capita": 19390,
+      "145446-annotations": "",
+      "Population (historical estimates)": 28650962,
+      "Continent": ""
+  },
+  {
+      "Entity": "Mali",
+      "Code": "MLI",
+      "Year": 2011,
+      "Life expectancy": 55.701,
+      "GDP per capita": 1500,
+      "145446-annotations": "",
+      "Population (historical estimates)": 15514593,
+      "Continent": ""
+  },
+  {
+      "Entity": "Malta",
+      "Code": "MLT",
+      "Year": 2011,
+      "Life expectancy": 81.094,
+      "GDP per capita": 23871,
+      "145446-annotations": "",
+      "Population (historical estimates)": 417720,
+      "Continent": ""
+  },
+  {
+      "Entity": "Mauritania",
+      "Code": "MRT",
+      "Year": 2011,
+      "Life expectancy": 62.799,
+      "GDP per capita": 3104,
+      "145446-annotations": "",
+      "Population (historical estimates)": 3598646,
+      "Continent": ""
+  },
+  {
+      "Entity": "Mauritius",
+      "Code": "MUS",
+      "Year": 2011,
+      "Life expectancy": 73.718,
+      "GDP per capita": 16483,
+      "145446-annotations": "",
+      "Population (historical estimates)": 1251074,
+      "Continent": ""
+  },
+  {
+      "Entity": "Mexico",
+      "Code": "MEX",
+      "Year": 2011,
+      "Life expectancy": 75.011,
+      "GDP per capita": 15210,
+      "145446-annotations": "",
+      "Population (historical estimates)": 115695468,
+      "Continent": ""
+  },
+  {
+      "Entity": "Moldova",
+      "Code": "MDA",
+      "Year": 2011,
+      "Life expectancy": 70.119,
+      "GDP per capita": 4892,
+      "145446-annotations": "",
+      "Population (historical estimates)": 4079167,
+      "Continent": ""
+  },
+  {
+      "Entity": "Mongolia",
+      "Code": "MNG",
+      "Year": 2011,
+      "Life expectancy": 67.818,
+      "GDP per capita": 9484,
+      "145446-annotations": "",
+      "Population (historical estimates)": 2770357,
+      "Continent": ""
+  },
+  {
+      "Entity": "Montenegro",
+      "Code": "MNE",
+      "Year": 2011,
+      "Life expectancy": 75.505,
+      "GDP per capita": 15747,
+      "145446-annotations": "",
+      "Population (historical estimates)": 625271,
+      "Continent": ""
+  },
+  {
+      "Entity": "Morocco",
+      "Code": "MAR",
+      "Year": 2011,
+      "Life expectancy": 74.696,
+      "GDP per capita": 7226,
+      "145446-annotations": "",
+      "Population (historical estimates)": 32781860,
+      "Continent": ""
+  },
+  {
+      "Entity": "Mozambique",
+      "Code": "MOZ",
+      "Year": 2011,
+      "Life expectancy": 53.043,
+      "GDP per capita": 925,
+      "145446-annotations": "",
+      "Population (historical estimates)": 24187500,
+      "Continent": ""
+  },
+  {
+      "Entity": "Myanmar",
+      "Code": "MMR",
+      "Year": 2011,
+      "Life expectancy": 63.983,
+      "GDP per capita": 3884,
+      "145446-annotations": "",
+      "Population (historical estimates)": 50990612,
+      "Continent": ""
+  },
+  {
+      "Entity": "Namibia",
+      "Code": "NAM",
+      "Year": 2011,
+      "Life expectancy": 58.085,
+      "GDP per capita": 8203,
+      "145446-annotations": "",
+      "Population (historical estimates)": 2156698,
+      "Continent": ""
+  },
+  {
+      "Entity": "Nepal",
+      "Code": "NPL",
+      "Year": 2011,
+      "Life expectancy": 68.028,
+      "GDP per capita": 2189,
+      "145446-annotations": "",
+      "Population (historical estimates)": 27041220,
+      "Continent": ""
+  },
+  {
+      "Entity": "Netherlands",
+      "Code": "NLD",
+      "Year": 2011,
+      "Life expectancy": 81.015,
+      "GDP per capita": 44591,
+      "145446-annotations": "",
+      "Population (historical estimates)": 16738190,
+      "Continent": ""
+  },
+  {
+      "Entity": "New Zealand",
+      "Code": "NZL",
+      "Year": 2011,
+      "Life expectancy": 81.052,
+      "GDP per capita": 32057,
+      "145446-annotations": "",
+      "Population (historical estimates)": 4418674,
+      "Continent": ""
+  },
+  {
+      "Entity": "Nicaragua",
+      "Code": "NIC",
+      "Year": 2011,
+      "Life expectancy": 72.692,
+      "GDP per capita": 4189,
+      "145446-annotations": "",
+      "Population (historical estimates)": 5903035,
+      "Continent": ""
+  },
+  {
+      "Entity": "Niger",
+      "Code": "NER",
+      "Year": 2011,
+      "Life expectancy": 58.081,
+      "GDP per capita": 799,
+      "145446-annotations": "",
+      "Population (historical estimates)": 17114770,
+      "Continent": ""
+  },
+  {
+      "Entity": "Nigeria",
+      "Code": "NGA",
+      "Year": 2011,
+      "Life expectancy": 51.346,
+      "GDP per capita": 5136,
+      "145446-annotations": "",
+      "Population (historical estimates)": 162805080,
+      "Continent": ""
+  },
+  {
+      "Entity": "North Korea",
+      "Code": "PRK",
+      "Year": 2011,
+      "Life expectancy": 70.012,
+      "GDP per capita": 1756.6108,
+      "145446-annotations": "",
+      "Population (historical estimates)": 24673392,
+      "Continent": ""
+  },
+  {
+      "Entity": "North Macedonia",
+      "Code": "MKD",
+      "Year": 2011,
+      "Life expectancy": 74.846,
+      "GDP per capita": 11321,
+      "145446-annotations": "",
+      "Population (historical estimates)": 2072484,
+      "Continent": ""
+  },
+  {
+      "Entity": "Norway",
+      "Code": "NOR",
+      "Year": 2011,
+      "Life expectancy": 81.345,
+      "GDP per capita": 80623,
+      "145446-annotations": "",
+      "Population (historical estimates)": 4948335,
+      "Continent": ""
+  },
+  {
+      "Entity": "Oman",
+      "Code": "OMN",
+      "Year": 2011,
+      "Life expectancy": 75.916,
+      "GDP per capita": 44454,
+      "145446-annotations": "",
+      "Population (historical estimates)": 3251102,
+      "Continent": ""
+  },
+  {
+      "Entity": "Pakistan",
+      "Code": "PAK",
+      "Year": 2011,
+      "Life expectancy": 65.562,
+      "GDP per capita": 4464,
+      "145446-annotations": "",
+      "Population (historical estimates)": 183340168,
+      "Continent": ""
+  },
+  {
+      "Entity": "Palestine",
+      "Code": "PSE",
+      "Year": 2011,
+      "Life expectancy": 72.915,
+      "GDP per capita": 4863,
+      "145446-annotations": "",
+      "Population (historical estimates)": 4149654,
+      "Continent": ""
+  },
+  {
+      "Entity": "Panama",
+      "Code": "PAN",
+      "Year": 2011,
+      "Life expectancy": 76.989,
+      "GDP per capita": 16762,
+      "145446-annotations": "",
+      "Population (historical estimates)": 3706479,
+      "Continent": ""
+  },
+  {
+      "Entity": "Paraguay",
+      "Code": "PRY",
+      "Year": 2011,
+      "Life expectancy": 72.86,
+      "GDP per capita": 7377,
+      "145446-annotations": "",
+      "Population (historical estimates)": 6333981,
+      "Continent": ""
+  },
+  {
+      "Entity": "Peru",
+      "Code": "PER",
+      "Year": 2011,
+      "Life expectancy": 74.697,
+      "GDP per capita": 10044,
+      "145446-annotations": "",
+      "Population (historical estimates)": 29264314,
+      "Continent": ""
+  },
+  {
+      "Entity": "Philippines",
+      "Code": "PHL",
+      "Year": 2011,
+      "Life expectancy": 69.984,
+      "GDP per capita": 5851,
+      "145446-annotations": "",
+      "Population (historical estimates)": 95570049,
+      "Continent": ""
+  },
+  {
+      "Entity": "Poland",
+      "Code": "POL",
+      "Year": 2011,
+      "Life expectancy": 76.647,
+      "GDP per capita": 21837,
+      "145446-annotations": "",
+      "Population (historical estimates)": 38286824,
+      "Continent": ""
+  },
+  {
+      "Entity": "Portugal",
+      "Code": "PRT",
+      "Year": 2011,
+      "Life expectancy": 80.26,
+      "GDP per capita": 25133,
+      "145446-annotations": "",
+      "Population (historical estimates)": 10569388,
+      "Continent": ""
+  },
+  {
+      "Entity": "Puerto Rico",
+      "Code": "PRI",
+      "Year": 2011,
+      "Life expectancy": 78.797,
+      "GDP per capita": 33981,
+      "145446-annotations": "",
+      "Population (historical estimates)": 3559862,
+      "Continent": ""
+  },
+  {
+      "Entity": "Romania",
+      "Code": "ROU",
+      "Year": 2011,
+      "Life expectancy": 74.42,
+      "GDP per capita": 17174,
+      "145446-annotations": "",
+      "Population (historical estimates)": 20336718,
+      "Continent": ""
+  },
+  {
+      "Entity": "Russia",
+      "Code": "RUS",
+      "Year": 2011,
+      "Life expectancy": 69.343,
+      "GDP per capita": 23130,
+      "145446-annotations": "",
+      "Population (historical estimates)": 143703027,
+      "Continent": ""
+  },
+  {
+      "Entity": "Rwanda",
+      "Code": "RWA",
+      "Year": 2011,
+      "Life expectancy": 64.523,
+      "GDP per capita": 1449,
+      "145446-annotations": "",
+      "Population (historical estimates)": 10293333,
+      "Continent": ""
+  },
+  {
+      "Entity": "Saint Lucia",
+      "Code": "LCA",
+      "Year": 2011,
+      "Life expectancy": 74.993,
+      "GDP per capita": 10255,
+      "145446-annotations": "",
+      "Population (historical estimates)": 175538,
+      "Continent": ""
+  },
+  {
+      "Entity": "Sao Tome and Principe",
+      "Code": "STP",
+      "Year": 2011,
+      "Life expectancy": 67.885,
+      "GDP per capita": 3179,
+      "145446-annotations": "",
+      "Population (historical estimates)": 184521,
+      "Continent": ""
+  },
+  {
+      "Entity": "Saudi Arabia",
+      "Code": "SAU",
+      "Year": 2011,
+      "Life expectancy": 74.089,
+      "GDP per capita": 48470,
+      "145446-annotations": "",
+      "Population (historical estimates)": 28267591,
+      "Continent": ""
+  },
+  {
+      "Entity": "Senegal",
+      "Code": "SEN",
+      "Year": 2011,
+      "Life expectancy": 64.898,
+      "GDP per capita": 2123,
+      "145446-annotations": "",
+      "Population (historical estimates)": 13033814,
+      "Continent": ""
+  },
+  {
+      "Entity": "Serbia",
+      "Code": "SRB",
+      "Year": 2011,
+      "Life expectancy": 74.364,
+      "GDP per capita": 12463,
+      "145446-annotations": "",
+      "Population (historical estimates)": 8963761,
+      "Continent": ""
+  },
+  {
+      "Entity": "Seychelles",
+      "Code": "SYC",
+      "Year": 2011,
+      "Life expectancy": 72.976,
+      "GDP per capita": 21545,
+      "145446-annotations": "",
+      "Population (historical estimates)": 91882,
+      "Continent": ""
+  },
+  {
+      "Entity": "Sierra Leone",
+      "Code": "SLE",
+      "Year": 2011,
+      "Life expectancy": 50.234,
+      "GDP per capita": 1479,
+      "145446-annotations": "",
+      "Population (historical estimates)": 6563238,
+      "Continent": ""
+  },
+  {
+      "Entity": "Singapore",
+      "Code": "SGP",
+      "Year": 2011,
+      "Life expectancy": 82.048,
+      "GDP per capita": 61672,
+      "145446-annotations": "",
+      "Population (historical estimates)": 5263640,
+      "Continent": ""
+  },
+  {
+      "Entity": "Slovakia",
+      "Code": "SVK",
+      "Year": 2011,
+      "Life expectancy": 75.782,
+      "GDP per capita": 22483,
+      "145446-annotations": "",
+      "Population (historical estimates)": 5408932,
+      "Continent": ""
+  },
+  {
+      "Entity": "Slovenia",
+      "Code": "SVN",
+      "Year": 2011,
+      "Life expectancy": 79.725,
+      "GDP per capita": 26004,
+      "145446-annotations": "",
+      "Population (historical estimates)": 2051277,
+      "Continent": ""
+  },
+  {
+      "Entity": "South Africa",
+      "Code": "ZAF",
+      "Year": 2011,
+      "Life expectancy": 58.895,
+      "GDP per capita": 11838,
+      "145446-annotations": "",
+      "Population (historical estimates)": 52003759,
+      "Continent": ""
+  },
+  {
+      "Entity": "South Korea",
+      "Code": "KOR",
+      "Year": 2011,
+      "Life expectancy": 80.79,
+      "GDP per capita": 32225,
+      "145446-annotations": "",
+      "Population (historical estimates)": 49786153,
+      "Continent": ""
+  },
+  {
+      "Entity": "Spain",
+      "Code": "ESP",
+      "Year": 2011,
+      "Life expectancy": 82.149,
+      "GDP per capita": 31600,
+      "145446-annotations": "",
+      "Population (historical estimates)": 47084242,
+      "Continent": ""
+  },
+  {
+      "Entity": "Sri Lanka",
+      "Code": "LKA",
+      "Year": 2011,
+      "Life expectancy": 75.614,
+      "GDP per capita": 8918,
+      "145446-annotations": "",
+      "Population (historical estimates)": 20398496,
+      "Continent": ""
+  },
+  {
+      "Entity": "Sudan",
+      "Code": "SDN",
+      "Year": 2011,
+      "Life expectancy": 63.171,
+      "GDP per capita": 3669,
+      "145446-annotations": "",
+      "Population (historical estimates)": 35349676,
+      "Continent": ""
+  },
+  {
+      "Entity": "Sweden",
+      "Code": "SWE",
+      "Year": 2011,
+      "Life expectancy": 81.679,
+      "GDP per capita": 42079,
+      "145446-annotations": "",
+      "Population (historical estimates)": 9466705,
+      "Continent": ""
+  },
+  {
+      "Entity": "Switzerland",
+      "Code": "CHE",
+      "Year": 2011,
+      "Life expectancy": 82.45,
+      "GDP per capita": 58686,
+      "145446-annotations": "",
+      "Population (historical estimates)": 7906988,
+      "Continent": ""
+  },
+  {
+      "Entity": "Syria",
+      "Code": "SYR",
+      "Year": 2011,
+      "Life expectancy": 71.27,
+      "GDP per capita": 5979,
+      "145446-annotations": "",
+      "Population (historical estimates)": 21081814,
+      "Continent": ""
+  },
+  {
+      "Entity": "Taiwan",
+      "Code": "TWN",
+      "Year": 2011,
+      "Life expectancy": 78.961,
+      "GDP per capita": 38565,
+      "145446-annotations": "",
+      "Population (historical estimates)": 23268760,
+      "Continent": ""
+  },
+  {
+      "Entity": "Tajikistan",
+      "Code": "TJK",
+      "Year": 2011,
+      "Life expectancy": 69.055,
+      "GDP per capita": 3111,
+      "145446-annotations": "",
+      "Population (historical estimates)": 7697507,
+      "Continent": ""
+  },
+  {
+      "Entity": "Tanzania",
+      "Code": "TZA",
+      "Year": 2011,
+      "Life expectancy": 59.525,
+      "GDP per capita": 2227,
+      "145446-annotations": "",
+      "Population (historical estimates)": 45673520,
+      "Continent": ""
+  },
+  {
+      "Entity": "Thailand",
+      "Code": "THA",
+      "Year": 2011,
+      "Life expectancy": 74.593,
+      "GDP per capita": 13318,
+      "145446-annotations": "",
+      "Population (historical estimates)": 67518379,
+      "Continent": ""
+  },
+  {
+      "Entity": "Togo",
+      "Code": "TGO",
+      "Year": 2011,
+      "Life expectancy": 58.092,
+      "GDP per capita": 1227,
+      "145446-annotations": "",
+      "Population (historical estimates)": 6595939,
+      "Continent": ""
+  },
+  {
+      "Entity": "Trinidad and Tobago",
+      "Code": "TTO",
+      "Year": 2011,
+      "Life expectancy": 72.17,
+      "GDP per capita": 29745,
+      "145446-annotations": "",
+      "Population (historical estimates)": 1336180,
+      "Continent": ""
+  },
+  {
+      "Entity": "Tunisia",
+      "Code": "TUN",
+      "Year": 2011,
+      "Life expectancy": 75.206,
+      "GDP per capita": 10437,
+      "145446-annotations": "",
+      "Population (historical estimates)": 10741872,
+      "Continent": ""
+  },
+  {
+      "Entity": "Turkey",
+      "Code": "TUR",
+      "Year": 2011,
+      "Life expectancy": 74.944,
+      "GDP per capita": 17919,
+      "145446-annotations": "",
+      "Population (historical estimates)": 73443254,
+      "Continent": ""
+  },
+  {
+      "Entity": "Turkmenistan",
+      "Code": "TKM",
+      "Year": 2011,
+      "Life expectancy": 66.928,
+      "GDP per capita": 16518,
+      "145446-annotations": "",
+      "Population (historical estimates)": 5174076,
+      "Continent": ""
+  },
+  {
+      "Entity": "Uganda",
+      "Code": "UGA",
+      "Year": 2011,
+      "Life expectancy": 58.087,
+      "GDP per capita": 1890,
+      "145446-annotations": "",
+      "Population (historical estimates)": 33476771,
+      "Continent": ""
+  },
+  {
+      "Entity": "Ukraine",
+      "Code": "UKR",
+      "Year": 2011,
+      "Life expectancy": 69.932,
+      "GDP per capita": 10333,
+      "145446-annotations": "",
+      "Population (historical estimates)": 45619850,
+      "Continent": ""
+  },
+  {
+      "Entity": "United Arab Emirates",
+      "Code": "ARE",
+      "Year": 2011,
+      "Life expectancy": 76.521,
+      "GDP per capita": 65307,
+      "145446-annotations": "",
+      "Population (historical estimates)": 8946778,
+      "Continent": ""
+  },
+  {
+      "Entity": "United Kingdom",
+      "Code": "GBR",
+      "Year": 2011,
+      "Life expectancy": 80.564,
+      "GDP per capita": 34971,
+      "145446-annotations": "",
+      "Population (historical estimates)": 64021922,
+      "Continent": ""
+  },
+  {
+      "Entity": "United States",
+      "Code": "USA",
+      "Year": 2011,
+      "Life expectancy": 78.777,
+      "GDP per capita": 49675,
+      "145446-annotations": "",
+      "Population (historical estimates)": 311584051,
+      "Continent": ""
+  },
+  {
+      "Entity": "Uruguay",
+      "Code": "URY",
+      "Year": 2011,
+      "Life expectancy": 76.882,
+      "GDP per capita": 17211,
+      "145446-annotations": "",
+      "Population (historical estimates)": 3368926,
+      "Continent": ""
+  },
+  {
+      "Entity": "Uzbekistan",
+      "Code": "UZB",
+      "Year": 2011,
+      "Life expectancy": 69.91,
+      "GDP per capita": 7396,
+      "145446-annotations": "",
+      "Population (historical estimates)": 28977006,
+      "Continent": ""
+  },
+  {
+      "Entity": "Venezuela",
+      "Code": "VEN",
+      "Year": 2011,
+      "Life expectancy": 73.11,
+      "GDP per capita": 17746,
+      "145446-annotations": "",
+      "Population (historical estimates)": 28887873,
+      "Continent": ""
+  },
+  {
+      "Entity": "Vietnam",
+      "Code": "VNM",
+      "Year": 2011,
+      "Life expectancy": 74.904,
+      "GDP per capita": 4786,
+      "145446-annotations": "",
+      "Population (historical estimates)": 88871384,
+      "Continent": ""
+  },
+  {
+      "Entity": "Yemen",
+      "Code": "YEM",
+      "Year": 2011,
+      "Life expectancy": 65.768,
+      "GDP per capita": 4088,
+      "145446-annotations": "",
+      "Population (historical estimates)": 23807586,
+      "Continent": ""
+  },
+  {
+      "Entity": "Zambia",
+      "Code": "ZMB",
+      "Year": 2011,
+      "Life expectancy": 57.126,
+      "GDP per capita": 3205,
+      "145446-annotations": "",
+      "Population (historical estimates)": 14023199,
+      "Continent": ""
+  },
+  {
+      "Entity": "Zimbabwe",
+      "Code": "ZWE",
+      "Year": 2011,
+      "Life expectancy": 52.896,
+      "GDP per capita": 1515,
+      "145446-annotations": "",
+      "Population (historical estimates)": 12894323,
+      "Continent": ""
+  }
+]

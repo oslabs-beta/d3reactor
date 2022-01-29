@@ -2,6 +2,7 @@ import React from 'react';
 import * as d3 from 'd3';
 
 import { ArcProps } from '../../types';
+import useWindowDimensions from '../hooks/useWindowDimensions';
 
 export const Arc = React.memo(
   ({
@@ -14,19 +15,27 @@ export const Arc = React.memo(
     d,
     setTooltip,
   }: ArcProps): JSX.Element => {
-    let cellCenter = {
-      cx: 0,
-      cy: 0,
-      tooltipData: data,
+    const { width } = useWindowDimensions();
+
+    let tooltipState = {
+      cursorX: 0,
+      cursorY: 0,
+      distanceFromTop: 0,
+      distanceFromRight: 0,
+      distanceFromLeft: 0,
+      data,
     };
     const onMouseMove = (e: any) => {
       if (setTooltip) {
-        cellCenter = {
-          cx: e.pageX,
-          cy: e.pageY,
-          tooltipData: data,
+        tooltipState = {
+          cursorX: e.pageX,
+          cursorY: e.pageY,
+          distanceFromTop: e.clientY,
+          distanceFromRight: width - e.pageX,
+          distanceFromLeft: e.pageX,
+          data,
         };
-        setTooltip(cellCenter);
+        setTooltip(tooltipState);
       }
     };
 

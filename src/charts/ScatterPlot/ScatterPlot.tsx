@@ -1,13 +1,11 @@
 /** App.js */
 import React, { useState, useMemo } from 'react';
-
 /*eslint import/namespace: ['error', { allowComputed: true }]*/
 import * as d3 from 'd3';
 import { useResponsive } from '../../hooks/useResponsive';
 import { Axis } from '../../components/ContinuousAxis';
 import { Circle } from '../../components/Circle';
 import { ColorLegend } from '../../components/ColorLegend';
-
 import { d3Voronoi } from '../../functionality/voronoi';
 import { xScaleDef } from '../../functionality/xScale';
 import { yScaleDef } from '../../functionality/yScale';
@@ -18,6 +16,7 @@ import {
   xAccessorFunc,
   yAccessorFunc,
   Data,
+  toolTipState,
 } from '../../../types';
 import {
   getXAxisCoordinates,
@@ -65,9 +64,8 @@ export default function ScatterPlot({
   if (xDataType !== undefined) xType = xDataType;
 
   const keys = useMemo(() => {
-    let groups: d3.InternMap<any, any[]>;
     const groupAccessor = (d: Data) => d[groupBy ?? ''];
-    groups = d3.group(data, groupAccessor);
+    const groups = d3.group(data, groupAccessor);
     return groupBy ? Array.from(groups).map((group) => group[0]) : [yKey];
   }, [groupBy, yKey]);
 
@@ -129,7 +127,7 @@ export default function ScatterPlot({
   const xAccessorScaled = (d: any) => xScale(xAccessor(d));
 
   const yScale = useMemo(() => {
-    return yScaleDef(data, yAccessor, margin, cHeight);
+    return yScaleDef(data, yAccessor, margin, cHeight, 'scatter-plot');
   }, [data, yAccessor, margin, cHeight]);
 
   const yAccessorScaled = (d: any) => yScale(yAccessor(d));
@@ -165,7 +163,7 @@ export default function ScatterPlot({
   // Initialize event listeners and create interaction behavior
   // ********************
 
-  const [tooltip, setTooltip] = useState<false | any>(false);
+  const [tooltip, setTooltip] = useState<false | toolTipState>(false);
 
   const voronoi = useMemo(() => {
     return d3Voronoi(
@@ -185,9 +183,12 @@ export default function ScatterPlot({
       {tooltip && (
         <Tooltip
           chartType="scatter-plot"
-          data={tooltip}
-          x={margin.left + tooltip.cx}
-          y={margin.top + tooltip.cy}
+          data={tooltip.data}
+          cursorX={margin.left + tooltip.cursorX}
+          cursorY={margin.top + tooltip.cursorY}
+          distanceFromTop={tooltip.distanceFromTop}
+          distanceFromRight={tooltip.distanceFromRight}
+          distanceFromLeft={tooltip.distanceFromLeft}
           xKey={xKey}
           yKey={yKey}
         />
@@ -271,6 +272,7 @@ export default function ScatterPlot({
               xAccessor={xAccessor}
               yAccessor={yAccessor}
               setTooltip={setTooltip}
+              margin={margin}
             />
           )}
 

@@ -87,10 +87,7 @@ function Axi({
     }
   };
 
-  const getTickStyle = (
-    axisType: string,
-    individualTick: number | Date
-  ): any => {
+  const getTickStyle = (axisType: string): any => {
     // TODO remove any
     switch (axisType) {
       case 'top':
@@ -155,22 +152,22 @@ function Axi({
         />
       )}
       {(type === 'top' || type === 'bottom') &&
-        horizontalTicks.map((tick, i) => (
+        horizontalTicks.map((tick) => (
           <TickText
             data-testid="d3reactor-ticktext"
             key={JSON.stringify(tick)}
-            style={getTickStyle(type, tick)}
+            style={getTickStyle(type)}
             transform={getTickTranslation(type, tick)}
           >
             {getFormattedTick(tick)}
           </TickText>
         ))}
       {(type === 'right' || type === 'left') &&
-        verticalTicks.map((tick, i) => (
+        verticalTicks.map((tick) => (
           <TickText
             data-testid="d3reactor-ticktext"
             key={JSON.stringify(tick)}
-            style={getTickStyle(type, tick)}
+            style={getTickStyle(type)}
             transform={getTickTranslation(type, tick)}
           >
             {getFormattedTick(tick)}
