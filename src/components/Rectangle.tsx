@@ -8,75 +8,73 @@ const Bar = styled.rect`
   fill-opacity: 0.7;
 `;
 
-export const Rectangle = React.memo(
-  ({
+const RectangleComp = ({
+  data,
+  dataTestId = 'rectangle',
+  x,
+  y,
+  width,
+  height,
+  margin,
+  fill,
+  setTooltip,
+}: RectangleProps): JSX.Element => {
+  const clientWidth = useWindowDimensions().width;
+  let tooltipState = {
+    cursorX: 0,
+    cursorY: 0,
+    distanceFromTop: 0,
+    distanceFromRight: 0,
+    distanceFromLeft: 0,
     data,
-    dataTestId = 'rectangle',
-    x,
-    y,
-    width,
-    height,
-    margin,
-    fill,
-    setTooltip,
-  }: RectangleProps): JSX.Element => {
-    const clientWidth = useWindowDimensions().width;
+  };
 
-    let tooltipState = {
-      cursorX: 0,
-      cursorY: 0,
-      distanceFromTop: 0,
-      distanceFromRight: 0,
-      distanceFromLeft: 0,
-      data,
-    };
+  const mouseOver = (e: any) => {
+    // When the cursor enter the rectangle from the left we need to add half
+    // of the bar width to the cursor position to calculate the distance from
+    // right hand side of the page. When the cursor enters the bar from the
+    // right side of the bar we need to substract half of the bar width.
+    const offsetFromLeft = e.pageX - e.nativeEvent.layerX;
+    const offsetFromTop = e.clientY - e.nativeEvent.layerY;
+    const rectMidPoint = (x ?? 0) + width / 2;
+    const rectTop = y ?? 0;
 
-    const mouseOver = (e: any) => {
-      // When the cursor enter the rectangle from the left we need to add half
-      // of the bar width to the cursor position to calculate the distance from
-      // right hand side of the page. When the cursor enters the bar from the
-      // right side of the bar we need to substract half of the bar width.
-      const offsetFromLeft = e.pageX - e.nativeEvent.layerX;
-      const offsetFromTop = e.clientY - e.nativeEvent.layerY;
-      const cursorXPosition =
-        offsetFromLeft + e.nativeEvent.layerX - margin.marginLeft;
-      const cursorYPosition =
-        offsetFromTop + e.nativeEvent.layerY - margin.marginTop;
-      const rectMidPoint = (x ?? 0) + width / 2;
-      const rectTop = y ?? 0;
+    if (setTooltip) {
+      tooltipState = {
+        cursorX: e.pageX - e.nativeEvent.layerX + (x ?? 0),
+        cursorY: e.pageY - e.nativeEvent.layerY + (y ?? 0),
+        distanceFromTop: offsetFromTop + margin.top + rectTop,
+        distanceFromRight:
+          clientWidth - (offsetFromLeft + margin.left + rectMidPoint),
+        distanceFromLeft: offsetFromLeft + margin.left + rectMidPoint,
+        data,
+      };
 
-      if (setTooltip) {
-        tooltipState = {
-          cursorX: e.pageX - e.nativeEvent.layerX + (x ?? 0),
-          cursorY: e.pageY - e.nativeEvent.layerY + (y ?? 0),
-          distanceFromTop: offsetFromTop + margin.marginTop + rectTop,
-          distanceFromRight:
-            clientWidth - (offsetFromLeft + margin.marginLeft + rectMidPoint),
-          distanceFromLeft: offsetFromLeft + margin.marginLeft + rectMidPoint,
-          data,
-        };
+      setTooltip(tooltipState);
+    }
+  };
 
-        setTooltip(tooltipState);
-      }
-    };
+  const mouseOut = () => {
+    if (setTooltip) {
+      setTooltip ? setTooltip(false) : null;
+    }
+  };
 
-    const mouseOut = (e: any) => {
-      if (setTooltip) {
-        setTooltip ? setTooltip(false) : null;
-      }
-    };
+  return (
+    <Bar
+      data-testid={dataTestId}
+      x={x}
+      y={y}
+      width={width}
+      height={height}
+      fill={fill}
+      onMouseOver={(e) => mouseOver(e)}
+      onMouseOut={() => mouseOut()}
+    />
+  );
+};
+const compareProps = (prev: RectangleProps, next: RectangleProps) => {
+  return prev.x === next.x && prev.y === next.y && prev.margin === next.margin;
+};
 
-    return (
-      <Bar
-        data-testid={dataTestId}
-        x={x}
-        y={y}
-        width={width}
-        height={height}
-        fill={fill}
-        onMouseOver={(e) => mouseOver(e)}
-        onMouseOut={(e) => mouseOut(e)}
-      />
-    );
-  }
-);
+export const Rectangle = React.memo(RectangleComp, compareProps);

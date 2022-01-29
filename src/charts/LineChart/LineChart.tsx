@@ -131,7 +131,7 @@ export default function LineChart({
   // ********************
 
   const yScale = useMemo(() => {
-    return yScaleDef(data, yAccessor, margin, cHeight);
+    return yScaleDef(data, yAccessor, margin, cHeight, 'line-chart');
   }, [data, yAccessor, margin, cHeight]);
 
   const { xScale, xMin, xMax } = useMemo(() => {

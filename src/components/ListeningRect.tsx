@@ -122,10 +122,6 @@ export default function ListeningRect({
       }
     }
 
-    console.log(
-      'DIST FROM LEFT ',
-      margin.left - margin.right - tooltipState.cursorX
-    );
     tooltipState.distanceFromTop =
       tooltipState.cursorY + margin.top - scrollPosition;
     tooltipState.distanceFromRight =

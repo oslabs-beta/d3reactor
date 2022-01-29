@@ -195,8 +195,6 @@ export function getAxisLabelCoordinates(
   axis: boolean,
   tickMargin = 0
 ) {
-  const fontSize = 16;
-
   let rotate = 0;
   let axisLabelX = 0;
   let axisLabelY = 0;
@@ -297,11 +295,6 @@ export function calculateOuterRadius(
 }
 
 interface CountryDataProps {
-  key: string;
-  values: Array<Array<number>>;
-}
-
-interface CorrectedCountryDataProps {
   key: string;
   values: Array<Array<number>>;
 }

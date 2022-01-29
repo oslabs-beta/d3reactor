@@ -85,7 +85,7 @@ export default function BarChart({
 
   const getSequenceData = (sequence: Data) => {
     const xKeyValue = { [xKey]: sequence.data[xKey] };
-    const yKeyValue = { [yKey]: sequence[1] - sequence[0] };
+    const yKeyValue = { [yKey]: sequence[1] };
     return { ...xKeyValue, ...yKeyValue };
   };
 
@@ -137,7 +137,6 @@ export default function BarChart({
       tickMargin,
     ]
   );
-
   const translate = `translate(${margin.left}, ${margin.top})`;
 
   // ********************
@@ -162,6 +161,7 @@ export default function BarChart({
       yAccessor,
       margin,
       cHeight,
+      'bar-chart',
       groupBy
     );
   }, [transData, yAccessor, margin, cHeight, groupBy]);
@@ -290,10 +290,7 @@ export default function BarChart({
                             ? yScale(sequence[0]) - yScale(sequence[1])
                             : 0
                         }
-                        margin={{
-                          marginTop: margin.top,
-                          marginLeft: margin.left,
-                        }}
+                        margin={margin}
                         fill={colorScale(layer.key[i])}
                         setTooltip={setTooltip}
                       />
@@ -320,10 +317,7 @@ export default function BarChart({
                       // draw rect from 0 mark to +value
                       Math.abs(yScale(0) - yScale(yAccessor(d)))
                     }
-                    margin={{
-                      marginTop: margin.top,
-                      marginLeft: margin.left,
-                    }}
+                    margin={margin}
                     fill={colorScale(yKey)}
                     setTooltip={setTooltip}
                   />

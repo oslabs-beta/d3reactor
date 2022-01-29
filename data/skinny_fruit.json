@@ -1,82 +1,82 @@
 [
   {
     "date": "Thu Feb 01 2018 00:00:00 GMT-0500 (Eastern Standard Time)",
-    "fruit": "apples",
+    "fruit": "Apples",
     "value": 10
   },
   {
     "date": "Thu Mar 01 2018 00:00:00 GMT-0500 (Eastern Standard Time)",
-    "fruit": "apples",
+    "fruit": "Apples",
     "value": 19
   },
   {
     "date": "Thu Mar 08 2018 00:00:00 GMT-0500 (Eastern Standard Time)",
-    "fruit": "apples",
+    "fruit": "Apples",
     "value": 38
   },
   {
     "date": "Sun Apr 01 2018 00:00:00 GMT-0400 (Eastern Daylight Time)",
-    "fruit": "apples",
+    "fruit": "Apples",
     "value": 20
   },
   {
     "date": "Thu Feb 01 2018 00:00:00 GMT-0500 (Eastern Standard Time)",
-    "fruit": "oranges",
+    "fruit": "Oranges",
     "value": 13
   },
   {
     "date": "Thu Mar 01 2018 00:00:00 GMT-0500 (Eastern Standard Time)",
-    "fruit": "oranges",
-    "value": null
+    "fruit": "Oranges",
+    "value": 20
   },
   {
     "date": "Thu Mar 08 2018 00:00:00 GMT-0500 (Eastern Standard Time)",
-    "fruit": "oranges",
+    "fruit": "Oranges",
     "value": 4
   },
   {
     "date": "Sun Apr 01 2018 00:00:00 GMT-0400 (Eastern Daylight Time)",
-    "fruit": "oranges",
+    "fruit": "Oranges",
     "value": 10
   },
   {
     "date": "Thu Feb 01 2018 00:00:00 GMT-0500 (Eastern Standard Time)",
-    "fruit": "bananas",
+    "fruit": "Bananas",
     "value": 20
   },
   {
     "date": "Thu Mar 01 2018 00:00:00 GMT-0500 (Eastern Standard Time)",
-    "fruit": "bananas",
+    "fruit": "Bananas",
     "value":15
   },
   {
     "date": "Thu Mar 08 2018 00:00:00 GMT-0500 (Eastern Standard Time)",
-    "fruit": "bananas",
+    "fruit": "Bananas",
     "value": 6
   },
   {
     "date": "Sun Apr 01 2018 00:00:00 GMT-0400 (Eastern Daylight Time)",
-    "fruit": "bananas",
+    "fruit": "Bananas",
     "value": 25
   },
   {
     "date": "Thu Feb 01 2018 00:00:00 GMT-0500 (Eastern Standard Time)",
-    "fruit": "apricots",
+    "fruit": "Apricots",
     "value": 22
   },
   {
     "date": "Thu Mar 01 2018 00:00:00 GMT-0500 (Eastern Standard Time)",
-    "fruit": "apricots",
+    "fruit": "Apricots",
     "value":3
   },
   {
     "date": "Thu Mar 08 2018 00:00:00 GMT-0500 (Eastern Standard Time)",
-    "fruit": "apricots",
+    "fruit": "Apricots",
     "value": 3
   },
   {
     "date": "Sun Apr 01 2018 00:00:00 GMT-0400 (Eastern Daylight Time)",
-    "fruit": "apricots",
+    "fruit": "Apricots",
     "value": 40
   }
 ]
