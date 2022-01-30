@@ -127,7 +127,7 @@ export const ColorLegend = ({
   };
 
   // iterate thru category names, create color swab & text for each
-  const legend = labels.reverse().map((domainValue: string, i: number) => {
+  const legend = labels.map((domainValue: string, i: number) => {
     if (domainValue.length > longestWord) longestWord = domainValue.length;
     return (
       <g
