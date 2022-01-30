@@ -26,7 +26,7 @@ function App() {
     <Container className="app">
       <GlobalStyle />
       <PieChart
-        data={coffee_shop}
+        data={coffee_shop.reverse()}
         label="product"
         value="sales"
         outerRadius={300}
@@ -46,7 +46,7 @@ function App() {
         xAxisLabel="GDP per capita"
         yKey="Life expectancy"
         yGrid={true}
-        yAxis="right"
+        yAxis="left"
         yAxisLabel="Life Expectancy"
       />
       <LineChart
