@@ -119,6 +119,11 @@ export default function PieChart({
     .value((d: any) => d[value]);
 
   const pie: any = pieGenerator(data);
+  const propsData = useMemo(
+    () =>
+      pie.map((d: any) => ({ [label]: d.data[label], [value]: d.data[value] })),
+    [data]
+  );
 
   // ********************
   // STEP 4. Define styles
@@ -237,7 +242,7 @@ export default function PieChart({
           {pie.map((d: any, i: number) => (
             <g key={`g + ${i}`}>
               <Arc
-                data={{ [label]: d.data[label], [value]: d.data[value] }}
+                data={propsData[i]}
                 dataTestId={`pie-chart-arc-${i}`}
                 key={d.label}
                 fill={colorScale(keys[i])}
