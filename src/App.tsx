@@ -25,21 +25,6 @@ function App() {
   return (
     <Container className="app">
       <GlobalStyle />
-      <BarChart
-        height="100%"
-        width="100%"
-        data={skinny_fruit}
-        groupBy="fruit"
-        xKey="date"
-        yKey="value"
-        xAxis="bottom"
-        yAxis="right"
-        legend="top"
-        legendLabel="hellohdhdhdhhd"
-        yGrid={true}
-        xAxisLabel="Date"
-        yAxisLabel="Value"
-      />
       <PieChart
         data={coffee_shop}
         label="product"

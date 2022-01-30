@@ -123,8 +123,7 @@ export default function ListeningRect({
       }
     }
 
-    tooltipState.distanceFromTop =
-      tooltipState.cursorY + margin.top;
+    tooltipState.distanceFromTop = tooltipState.cursorY + margin.top;
     tooltipState.distanceFromRight =
       width - (margin.left + tooltipState.cursorX);
     tooltipState.distanceFromLeft = margin.left + tooltipState.cursorX;
