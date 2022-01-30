@@ -127,7 +127,7 @@ export default function PieChart({
 
   const discreteColors = Math.min(keys.length, 9);
   const computedScheme = d3[`${colorScheme}`][discreteColors];
-  const colorScale = d3.scaleOrdinal(computedScheme);
+  const colorScale = d3.scaleOrdinal(Array.from(computedScheme).reverse());
   colorScale.domain(keys);
 
   // ********************
