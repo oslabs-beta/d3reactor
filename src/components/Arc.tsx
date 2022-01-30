@@ -1,5 +1,4 @@
 import React from 'react';
-import * as d3 from 'd3';
 
 import { ArcProps } from '../../types';
 import useWindowDimensions from '../hooks/useWindowDimensions';

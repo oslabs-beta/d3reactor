@@ -1,7 +1,6 @@
 import React from 'react';
 import { Data, VoronoiBody } from '../../types';
 import { VoronoiCell } from './VoronoiCell';
-import useWindowDimensions from '../hooks/useWindowDimensions';
 
 export const VoronoiWrapper = React.memo(
   ({

@@ -40,8 +40,8 @@ export const VoronoiCell = ({
 
   const onMouseMove = (e: any) => {
     const tooltipState = {
-      cursorX: e.nativeEvent.pageX - e.nativeEvent.layerX + cellCenter.cx,
-      cursorY: e.nativeEvent.pageY - e.nativeEvent.layerY + cellCenter.cy,
+      cursorX: e.nativeEvent.pageX - e.nativeEvent.offsetX + cellCenter.cx,
+      cursorY: e.nativeEvent.pageY - e.nativeEvent.offsetY + cellCenter.cy,
       distanceFromTop: 0,
       distanceFromRight: 0,
       distanceFromLeft: 0,
