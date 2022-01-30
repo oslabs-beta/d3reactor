@@ -142,7 +142,7 @@ const Tooltip = ({
   let xValString = data[xKey as string];
   if (data[xKey as string] instanceof Date) {
     // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-    xValString = `${xValString.getFullYear()}.${xValString.getMonth()}.${xValString.getDay()}`;
+    xValString = `${xValString.getFullYear()}-${xValString.getMonth()}-${xValString.getDay()}`;
   }
 
   let yValString = data[yKey as string];
