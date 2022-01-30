@@ -28,7 +28,7 @@ function App() {
       <BarChart
         height="100%"
         width="100%"
-        data={skinny_fruit.slice(0, 7)}
+        data={skinny_fruit}
         groupBy="fruit"
         xKey="date"
         yKey="value"

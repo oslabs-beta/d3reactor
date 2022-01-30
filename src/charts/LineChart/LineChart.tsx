@@ -154,7 +154,7 @@ export default function LineChart({
   const discreteColors =
     Array.from(keys).length < 4 ? 3 : Math.min(Array.from(keys).length, 9);
   const computedScheme = d3[`${colorScheme}`][discreteColors];
-  const colorScale = d3.scaleOrdinal(Array.from(computedScheme).reverse());
+  const colorScale = d3.scaleOrdinal(Array.from(computedScheme));
   colorScale.domain(computedScheme);
 
   // ********************
