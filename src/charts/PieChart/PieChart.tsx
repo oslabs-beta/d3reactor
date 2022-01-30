@@ -119,8 +119,11 @@ export default function PieChart({
     .value((d: any) => d[value]);
 
   const pie: any = pieGenerator(data);
-  const propsData = useMemo(() => pie.map((d: any) => ({[label]: d.data[label], [value]: d.data[value]})), [data])
-
+  const propsData = useMemo(
+    () =>
+      pie.map((d: any) => ({ [label]: d.data[label], [value]: d.data[value] })),
+    [data]
+  );
 
   // ********************
   // STEP 4. Define styles
