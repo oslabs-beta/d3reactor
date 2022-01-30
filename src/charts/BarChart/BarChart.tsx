@@ -85,7 +85,7 @@ export default function BarChart({
 
   const getSequenceData = (sequence: Data) => {
     const xKeyValue = { [xKey]: sequence.data[xKey] };
-    const yKeyValue = { [yKey]: sequence[1] };
+    const yKeyValue = { [yKey]: sequence[1] - sequence[0] };
     return { ...xKeyValue, ...yKeyValue };
   };
 
