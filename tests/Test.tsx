@@ -35,6 +35,7 @@ const Test = React.memo((): JSX.Element => {
         xAxisLabel="Date"
         yAxisLabel="Value"
         legend={'bottom'}
+        tooltipVisible={true}
       />
       <AreaChart
         height="100%"
