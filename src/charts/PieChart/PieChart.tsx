@@ -256,6 +256,7 @@ export default function PieChart({
       <div ref={anchor} style={{ width: '100%', height: '100%' }}>
         {tooltipVisible && tooltip && (
           <Tooltip
+            theme={theme}
             chartType={chartType}
             data={tooltip.data}
             cursorX={tooltip.cursorX}

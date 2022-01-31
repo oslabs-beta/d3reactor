@@ -5,6 +5,7 @@ import { TooltipProps } from '../../types';
 // import TooltipContent from './TooltipContent.jsx';
 
 const Tooltip = ({
+  theme = 'light',
   chartType,
   data,
   cursorX,
@@ -19,10 +20,34 @@ const Tooltip = ({
   // TOOLTIP STYLES
   // ********************
 
-  const backgroundColor = '#fff';
-  const boarderColor = '#ddd';
+  const lightTheme = {
+    strokeGridLineColor: '#ebebeb',
+    textColor: '#8c8c8c',
+    axisBaseLineColor: '#ebebeb',
+    legendBackgroundColor: '#ffffff',
+    legendBorder: '1px solid #ebebeb',
+    tooltipBackgroundColor: '#ffffff',
+    tooltipBorder: '1px solid #ddd',
+    tooltipShadow: `0 0 10px 0 rgba(80, 80, 80, 0.2)`,
+  };
+
+  const darkTheme = {
+    strokeGridLineColor: '#3d3d3d',
+    textColor: '#727272',
+    axisBaseLineColor: '#3d3d3d',
+    legendBackgroundColor: '#1d1d1d',
+    legendBorder: '1px solid #3d3d3d',
+    tooltipBackgroundColor: '#1d1d1d',
+    tooltipBorder: '1px solid #3d3d3d',
+    tooltipShadow: `0 0 10px 0 rgba(100, 100, 100, 0.2)`,
+  };
+
+  const themes = {
+    light: lightTheme,
+    dark: darkTheme,
+  };
+
   const triangleSize = 12;
-  const shadowElevationHigh = `0 0 10px 0 rgba(80, 80, 80, 0.2)`;
 
   // If the tooltip is too close to the top of the screen we will position the
   // tooltip below the cursor.
@@ -91,26 +116,29 @@ const Tooltip = ({
     position: 'absolute',
     pointerEvents: 'none',
     fontFamily: 'Tahoma, Geneva, Verdana, sans-serif',
-    fontSize: '12px',
-    color: '#737373',
   };
 
   const contentStyle: React.CSSProperties | undefined = {
     position: 'absolute',
     margin: '4px 4px',
-    padding: '0.6em 1em',
+    border: `6px solid ${themes[theme].tooltipBackgroundColor}`,
+    borderRight: `12px solid ${themes[theme].tooltipBackgroundColor}`,
+    borderBottom: `6px solid ${themes[theme].tooltipBackgroundColor}`,
+    borderLeft: `12px solid ${themes[theme].tooltipBackgroundColor}`,
+    // padding: '0.6em 1em',
     borderRadius: '4px',
     minWidth: '140px',
     maxWidth: '240px',
     transform: contentTranslation,
-    background: backgroundColor,
+    backgroundColor: `${themes[theme].tooltipBackgroundColor}`,
     textAlign: 'center',
     lineHeight: '1.4em',
-    fontSize: '1em',
-    border: `1px solid ${boarderColor}`,
+    fontSize: '12px',
+    color: `${themes[theme].textColor}`,
+    // border: `${themes[theme].tooltipBorder}`,
     zIndex: '9',
     transition: 'all 0.1s ease-out',
-    boxShadow: shadowElevationHigh,
+    boxShadow: `${themes[theme].tooltipShadow}`,
     pointerEvents: 'none',
     // wordBreak: 'break-all',
   };
@@ -120,7 +148,7 @@ const Tooltip = ({
     position: 'absolute',
     width: `${triangleSize}px`,
     height: `${triangleSize}px`,
-    background: backgroundColor,
+    backgroundColor: `${themes[theme].tooltipBackgroundColor}`,
     transform: triangleTranslation,
     transformOrigin: 'center center',
     zIndex: '10',
@@ -133,10 +161,10 @@ const Tooltip = ({
     position: 'absolute',
     width: `${triangleSize}px`,
     height: `${triangleSize}px`,
-    background: boarderColor,
+    background: `${themes[theme].tooltipBackgroundColor}`,
     transform: triangleBorderTranslation,
     transformOrigin: 'center center',
-    boxShadow: shadowElevationHigh,
+    boxShadow: `${themes[theme].tooltipShadow}`,
     zIndex: '8',
     transition: 'all 0.1s ease-out',
     pointerEvents: 'none',
@@ -155,6 +183,7 @@ const Tooltip = ({
 
   return (
     <div
+      className="tooltip"
       style={tooltipWrapperStyle}
       data-testid={chartType ? `tooltip-${chartType}` : 'tooltip'}
     >

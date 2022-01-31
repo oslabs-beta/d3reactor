@@ -286,6 +286,7 @@ export interface DiscreteAxisProps {
 }
 
 export interface TooltipProps {
+  theme: 'light' | 'dark';
   chartType?:
     | 'bar-chart'
     | 'line-chart'

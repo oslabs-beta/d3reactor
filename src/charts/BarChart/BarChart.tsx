@@ -228,6 +228,7 @@ export default function BarChart({
       <div ref={anchor} style={{ width: width, height: height }}>
         {tooltipVisible && tooltip && (
           <Tooltip
+            theme={theme}
             chartType={chartType}
             data={tooltip.data}
             cursorX={tooltip.cursorX + xScale.bandwidth() / 2 + margin.left}

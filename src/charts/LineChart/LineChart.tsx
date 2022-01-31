@@ -224,6 +224,7 @@ export default function LineChart({
       <div ref={anchor} style={{ width: width, height: height }}>
         {tooltipVisible && tooltip && (
           <Tooltip
+            theme={theme}
             data={tooltip.data}
             cursorX={margin.left + tooltip.cursorX}
             cursorY={margin.top + tooltip.cursorY}

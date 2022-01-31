@@ -208,6 +208,7 @@ export default function ScatterPlot({
       <div ref={anchor} style={{ width: width, height: height }}>
         {tooltipVisible && tooltip && (
           <Tooltip
+            theme={theme}
             chartType="scatter-plot"
             data={tooltip.data}
             cursorX={margin.left + tooltip.cursorX}
