@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import * as d3 from 'd3';
 import {
   Margin,
@@ -155,7 +155,7 @@ export default function ListeningRect({
       }
     }
 
-    tooltipState.distanceFromTop = tooltipState.cursorY + margin.top;
+    tooltipState.distanceFromTop = yScale(closestYValue) + margin.top;
     tooltipState.distanceFromRight =
       width - (margin.left + tooltipState.cursorX);
     tooltipState.distanceFromLeft = margin.left + tooltipState.cursorX;
