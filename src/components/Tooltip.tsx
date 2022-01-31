@@ -1,5 +1,8 @@
+/* eslint-disable import/default */
 import React from 'react';
 import { TooltipProps } from '../../types';
+// eslint-disable-next-line import/namespace
+// import TooltipContent from './TooltipContent.jsx';
 
 const Tooltip = ({
   chartType,

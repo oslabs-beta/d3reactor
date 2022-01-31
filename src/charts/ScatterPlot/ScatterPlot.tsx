@@ -27,7 +27,31 @@ import {
 } from '../../utils';
 import { Label } from '../../components/Label';
 
+import { ThemeProvider } from 'styled-components';
+
+const LightTheme = {
+  strokeGridLineColor: '#ebebeb',
+  textColor: '#8c8c8c',
+  axisBaseLineColor: '#ebebeb',
+  legendBackgroundColor: '#ffffff',
+  legendBorder: '1px solid #ebebeb',
+};
+
+const DarkTheme = {
+  strokeGridLineColor: '#3d3d3d',
+  textColor: '#727272',
+  axisBaseLineColor: '#3d3d3d',
+  legendBackgroundColor: '#1d1d1d',
+  legendBorder: '1px solid #3d3d3d',
+};
+
+const themes = {
+  light: LightTheme,
+  dark: DarkTheme,
+};
+
 export default function ScatterPlot({
+  theme = 'light',
   data,
   height = '100%',
   width = '100%',
@@ -45,6 +69,7 @@ export default function ScatterPlot({
   legendLabel = '',
   chartType = 'scatter-plot',
   colorScheme = 'schemePurples',
+  tooltipVisible = false,
 }: ScatterPlotProps<string | number>): JSX.Element {
   /**********
   Step in creating any chart:
@@ -179,124 +204,131 @@ export default function ScatterPlot({
   }, [data, xScale, yScale, xAccessor, yAccessor, cHeight, cWidth, margin]);
 
   return (
-    <div ref={anchor} style={{ width: width, height: height }}>
-      {tooltip && (
-        <Tooltip
-          chartType="scatter-plot"
-          data={tooltip.data}
-          cursorX={margin.left + tooltip.cursorX}
-          cursorY={margin.top + tooltip.cursorY}
-          distanceFromTop={tooltip.distanceFromTop}
-          distanceFromRight={tooltip.distanceFromRight}
-          distanceFromLeft={tooltip.distanceFromLeft}
-          xKey={xKey}
-          yKey={yKey}
-        />
-      )}
-      <svg width={cWidth} height={cHeight}>
-        <g className="spbody" transform={translate}>
-          {yAxis && (
-            <Axis
-              chartType={chartType}
-              x={yAxisX}
-              y={yAxisY}
-              yGrid={yGrid}
-              height={cHeight}
-              width={cWidth}
-              margin={margin}
-              scale={yScale}
-              type={yAxis}
-            />
-          )}
-          {yAxisLabel && (
-            <Label
-              x={yAxisX}
-              y={yAxisY}
-              height={cHeight}
-              width={cWidth}
-              margin={margin}
-              type={yAxis ? yAxis : 'left'}
-              axis={yAxis ? true : false}
-              label={yAxisLabel}
-            />
-          )}
-          {xAxis && (
-            <Axis
-              x={xAxisX}
-              y={xAxisY}
-              xGrid={xGrid}
-              height={cHeight}
-              width={cWidth}
-              margin={margin}
-              scale={xScale}
-              type={xAxis}
-            />
-          )}
-          {xAxisLabel && (
-            <Label
-              x={xAxisX}
-              y={xAxisY}
-              height={cHeight}
-              width={cWidth}
-              margin={margin}
-              type={xAxis ? xAxis : 'bottom'}
-              axis={xAxis ? true : false}
-              label={xAxisLabel}
-            />
-          )}
-          {data.map((element: any, i: number) =>
-            !groupBy ? (
-              <Circle
-                key={i}
-                cx={xAccessorScaled(element)}
-                cy={yAccessorScaled(element)}
-                r="5"
-                color={colorScale(keys[1])}
-              />
-            ) : (
-              <Circle
-                key={i}
-                cx={xAccessorScaled(element)}
-                cy={yAccessorScaled(element)}
-                r="5"
-                color={colorScale(element[groupBy])}
-              />
-            )
-          )}
-          {voronoi && (
-            <VoronoiWrapper
-              data={data}
-              voronoi={voronoi}
-              xScale={xScale}
-              yScale={yScale}
-              xAccessor={xAccessor}
-              yAccessor={yAccessor}
-              setTooltip={setTooltip}
-              margin={margin}
-            />
-          )}
-
-          {
-            // If legend prop is truthy, render legend component:
-            legend && (
-              <ColorLegend
-                legendLabel={legendLabel}
-                labels={keys}
-                circleRadius={5 /* Radius of each color swab in legend */}
-                colorScale={colorScale}
-                setLegendOffset={setLegendOffset}
-                legendPosition={legend}
-                legendWidth={xOffset}
-                legendHeight={yOffset}
+    <ThemeProvider theme={themes[theme]}>
+      <div ref={anchor} style={{ width: width, height: height }}>
+        {tooltipVisible && tooltip && (
+          <Tooltip
+            chartType="scatter-plot"
+            data={tooltip.data}
+            cursorX={margin.left + tooltip.cursorX}
+            cursorY={margin.top + tooltip.cursorY}
+            distanceFromTop={tooltip.distanceFromTop}
+            distanceFromRight={tooltip.distanceFromRight}
+            distanceFromLeft={tooltip.distanceFromLeft}
+            xKey={xKey}
+            yKey={yKey}
+          />
+        )}
+        <svg width={cWidth} height={cHeight}>
+          <g className="spbody" transform={translate}>
+            {yAxis && (
+              <Axis
+                theme={theme}
+                chartType={chartType}
+                x={yAxisX}
+                y={yAxisY}
+                yGrid={yGrid}
+                height={cHeight}
+                width={cWidth}
                 margin={margin}
-                cWidth={cWidth}
-                cHeight={cHeight}
-                EXTRA_LEGEND_MARGIN={EXTRA_LEGEND_MARGIN}
+                scale={yScale}
+                type={yAxis}
               />
-            )
-          }
-        </g>
-      </svg>
-    </div>
+            )}
+            {yAxisLabel && (
+              <Label
+                theme={theme}
+                x={yAxisX}
+                y={yAxisY}
+                height={cHeight}
+                width={cWidth}
+                margin={margin}
+                type={yAxis ? yAxis : 'left'}
+                axis={yAxis ? true : false}
+                label={yAxisLabel}
+              />
+            )}
+            {xAxis && (
+              <Axis
+                theme={theme}
+                x={xAxisX}
+                y={xAxisY}
+                xGrid={xGrid}
+                height={cHeight}
+                width={cWidth}
+                margin={margin}
+                scale={xScale}
+                type={xAxis}
+              />
+            )}
+            {xAxisLabel && (
+              <Label
+                theme={theme}
+                x={xAxisX}
+                y={xAxisY}
+                height={cHeight}
+                width={cWidth}
+                margin={margin}
+                type={xAxis ? xAxis : 'bottom'}
+                axis={xAxis ? true : false}
+                label={xAxisLabel}
+              />
+            )}
+            {data.map((element: any, i: number) =>
+              !groupBy ? (
+                <Circle
+                  key={i}
+                  cx={xAccessorScaled(element)}
+                  cy={yAccessorScaled(element)}
+                  r="5"
+                  color={colorScale(keys[1])}
+                />
+              ) : (
+                <Circle
+                  key={i}
+                  cx={xAccessorScaled(element)}
+                  cy={yAccessorScaled(element)}
+                  r="5"
+                  color={colorScale(element[groupBy])}
+                />
+              )
+            )}
+            {voronoi && (
+              <VoronoiWrapper
+                data={data}
+                voronoi={voronoi}
+                xScale={xScale}
+                yScale={yScale}
+                xAccessor={xAccessor}
+                yAccessor={yAccessor}
+                setTooltip={setTooltip}
+                margin={margin}
+              />
+            )}
+
+            {
+              // If legend prop is truthy, render legend component:
+              legend && (
+                <ColorLegend
+                  theme={theme}
+                  legendLabel={legendLabel}
+                  labels={keys}
+                  circleRadius={5 /* Radius of each color swab in legend */}
+                  colorScale={colorScale}
+                  setLegendOffset={setLegendOffset}
+                  legendPosition={legend}
+                  legendWidth={xOffset}
+                  legendHeight={yOffset}
+                  margin={margin}
+                  cWidth={cWidth}
+                  cHeight={cHeight}
+                  EXTRA_LEGEND_MARGIN={EXTRA_LEGEND_MARGIN}
+                />
+              )
+            }
+          </g>
+        </svg>
+      </div>
+    </ThemeProvider>
   );
 }

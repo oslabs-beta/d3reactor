@@ -5,15 +5,16 @@ export interface Data {
 }
 
 export interface toolTipState {
-  cursorX: number,
-  cursorY: number,
-  distanceFromTop: number,
-  distanceFromRight: number,
-  distanceFromLeft: number,
-  data: any,
+  cursorX: number;
+  cursorY: number;
+  distanceFromTop: number;
+  distanceFromRight: number;
+  distanceFromLeft: number;
+  data: any;
 }
 
 export interface ScatterPlotProps<T> {
+  theme?: 'light' | 'dark';
   data: Data[];
   height?: T;
   width?: T;
@@ -52,9 +53,11 @@ export interface ScatterPlotProps<T> {
     | 'schemeGreens'
     | 'schemeBlues'
     | 'schemeSpectral';
+  tooltipVisible?: false | true;
 }
 
 export interface BarChartProps<T> {
+  theme?: 'light' | 'dark';
   data: Data[];
   height?: T;
   width?: T;
@@ -91,9 +94,11 @@ export interface BarChartProps<T> {
     | 'schemeGreens'
     | 'schemeBlues'
     | 'schemeSpectral';
+  tooltipVisible?: false | true;
 }
 
 export interface LineChartProps<T> {
+  theme?: 'light' | 'dark';
   data: Data[];
   dataTestId?: string;
   height?: T;
@@ -133,9 +138,11 @@ export interface LineChartProps<T> {
     | 'schemeGreens'
     | 'schemeBlues'
     | 'schemeSpectral';
+  tooltipVisible?: false | true;
 }
 
 export interface AreaChartProps<T> {
+  theme?: 'light' | 'dark';
   data: Data[];
   height?: T;
   width?: T;
@@ -174,9 +181,11 @@ export interface AreaChartProps<T> {
     | 'schemeGreens'
     | 'schemeBlues'
     | 'schemeSpectral';
+  tooltipVisible?: false | true;
 }
 
 export interface PieChartProps {
+  theme?: 'light' | 'dark';
   data: any;
   innerRadius?: number | string | undefined;
   label: string;
@@ -208,9 +217,11 @@ export interface PieChartProps {
     | 'schemeGreens'
     | 'schemeBlues'
     | 'schemeSpectral';
+  tooltipVisible?: false | true;
 }
 
 export interface PieChartBodyProps {
+  theme?: 'light' | 'dark';
   data: any;
   height: number;
   width: number;
@@ -230,6 +241,7 @@ export interface Margin {
 }
 
 export interface ContinuousAxisProps {
+  theme?: 'light' | 'dark';
   dataTestId?: string;
   x: number;
   y: number;
@@ -252,6 +264,7 @@ export interface ContinuousAxisProps {
 }
 
 export interface DiscreteAxisProps {
+  theme?: 'light' | 'dark';
   dataTestId?: string;
   x: number;
   y: number;
@@ -319,7 +332,7 @@ export interface LineProps {
 }
 
 export interface ArcProps {
-  data: Record<string,unknown>;
+  data: Record<string, unknown>;
   dataTestId?: string;
   key: string;
   fill: string;
@@ -346,6 +359,7 @@ export interface VoronoiProps {
 export type ColorScale = d3.ScaleOrdinal<string, string, never>;
 
 export interface ColorLegendProps {
+  theme?: 'light' | 'dark';
   colorScale: ColorScale;
   dataTestId?: string;
   tickSpacing?: number;

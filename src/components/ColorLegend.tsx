@@ -1,5 +1,27 @@
 import React, { useEffect } from 'react';
 import { ColorLegendProps } from '../../types';
+import styled from 'styled-components';
+
+const Legend = styled.div`
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  border: ${(props) => props.theme.legendBorder};
+  border-radius: 4px;
+  white-space: nowrap;
+  font-family: Tahoma, Geneva, Verdana, sans-serif;
+  background-color: ${(props) => props.theme.legendBackgroundColor};
+`;
+
+const LegendTitle = styled.text`
+  font-size: 14px;
+  fill: ${(props) => props.theme.textColor};
+`;
+
+const LegendLabel = styled.text`
+  font-size: 12px;
+  fill: ${(props) => props.theme.textColor};
+`;
 
 export const ColorLegend = ({
   colorScale,
@@ -121,11 +143,6 @@ export const ColorLegend = ({
   // trying to make the legend no taller than the chart:
   // const rectHeight = Math.min(tickSpacing*(domain.length + labelHeightOffset) + EXTRA_LEGEND_MARGIN*2, cHeight);
 
-  const tick: React.CSSProperties | undefined = {
-    fontFamily: 'Tahoma, Geneva, Verdana, sans-serif',
-    fontSize: '12px',
-  };
-
   // iterate thru category names, create color swab & text for each
   const legend = labels.map((domainValue: string, i: number) => {
     if (domainValue.length > longestWord) longestWord = domainValue.length;
@@ -143,9 +160,9 @@ export const ColorLegend = ({
           })`}
       >
         <circle fill={colorScale(domainValue)} r={circleRadius} />
-        <text style={tick} x={tickTextOffset} dy=".32em">
+        <LegendLabel x={tickTextOffset} dy=".32em">
           {domainValue}
-        </text>
+        </LegendLabel>
       </g>
     );
   });
@@ -158,19 +175,19 @@ export const ColorLegend = ({
 
   useEffect(() => setLegendOffset([rectWidth, rectHeight]), []);
 
-  const style: React.CSSProperties | undefined = {
-    boxSizing: 'border-box',
-    width: '100%',
-    height: '100%',
-    border: `1px solid #ddd`,
-    borderRadius: '4px',
-    // You can also use a fixed width and ommit the white-sapce.
-    whiteSpace: 'nowrap',
-    backgroundColor: '#ffffff',
-    fontFamily: 'Tahoma, Geneva, Verdana, sans-serif',
-    fontSize: '12px',
-    color: '#737373',
-  };
+  // const style: React.CSSProperties | undefined = {
+  //   boxSizing: 'border-box',
+  //   width: '100%',
+  //   height: '100%',
+  //   border: `1px solid #ddd`,
+  //   borderRadius: '4px',
+  //   // You can also use a fixed width and ommit the white-sapce.
+  //   whiteSpace: 'nowrap',
+  //   backgroundColor: '#ffffff',
+  //   fontFamily: 'Tahoma, Geneva, Verdana, sans-serif',
+  //   fontSize: '12px',
+  //   color: '#737373',
+  // };
   return (
     <g
       data-testid={dataTestId}
@@ -184,10 +201,10 @@ export const ColorLegend = ({
         pointerEvents="none"
         // style={fill: 'red'}
       >
-        <div style={style}></div>
+        <Legend />
       </foreignObject>
 
-      <text
+      <LegendTitle
         className={'sectionLabel' /* TODO: implement CSS */}
         x={8 /* Where to put Legend title label */}
         y={
@@ -198,7 +215,7 @@ export const ColorLegend = ({
         textAnchor={'start'}
       >
         {legendLabel}
-      </text>
+      </LegendTitle>
       {legend}
     </g>
   );

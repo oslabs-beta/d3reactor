@@ -14,7 +14,35 @@ import {
   EXTRA_LEGEND_MARGIN,
 } from '../../utils';
 
+import styled, { ThemeProvider } from 'styled-components';
+
+const LightTheme = {
+  strokeGridLineColor: '#ebebeb',
+  textColor: '#8c8c8c',
+  axisBaseLineColor: '#ebebeb',
+  legendBackgroundColor: '#ffffff',
+  legendBorder: '1px solid #ebebeb',
+  tooltipBackgroundColor: '#ffffff',
+  tooltipBorder: '1px solid #ddd',
+};
+
+const DarkTheme = {
+  strokeGridLineColor: '#3d3d3d',
+  textColor: '#727272',
+  axisBaseLineColor: '#3d3d3d',
+  legendBackgroundColor: '#1d1d1d',
+  legendBorder: '1px solid #3d3d3d',
+  tooltipBackgroundColor: '#373737',
+  tooltipBorder: '1px solid #3d3d3d',
+};
+
+const themes = {
+  light: LightTheme,
+  dark: DarkTheme,
+};
+
 export default function PieChart({
+  theme = 'light',
   data,
   innerRadius,
   label,
@@ -25,6 +53,7 @@ export default function PieChart({
   chartType = 'pie-chart',
   colorScheme = 'schemePurples',
   value,
+  tooltipVisible = false,
 }: PieChartProps): JSX.Element {
   /**********
   Step in creating any chart:
@@ -223,73 +252,76 @@ export default function PieChart({
   const [tooltip, setTooltip] = useState<false | any>(false);
 
   return (
-    <div ref={anchor} style={{ width: '100%', height: '100%' }}>
-      {tooltip && (
-        <Tooltip
-          chartType={chartType}
-          data={tooltip.data}
-          cursorX={tooltip.cursorX}
-          cursorY={tooltip.cursorY}
-          distanceFromTop={tooltip.distanceFromTop}
-          distanceFromRight={tooltip.distanceFromRight}
-          distanceFromLeft={tooltip.distanceFromLeft}
-          xKey={label}
-          yKey={value}
-        />
-      )}
-      <svg width={'100%'} height={'100%'}>
-        <g transform={translate} data-testid="pie-chart">
-          {pie.map((d: any, i: number) => (
-            <g key={`g + ${i}`}>
-              <Arc
-                data={propsData[i]}
-                dataTestId={`pie-chart-arc-${i}`}
-                key={d.label}
-                fill={colorScale(keys[i])}
-                stroke="#ffffff"
-                strokeWidth="0px"
-                d={arcGenerator(d)}
-                id={`arc- + ${i}`}
-                setTooltip={setTooltip}
-              />
-              {pieLabel && (
-                <text
-                  data-testid={`pie-chart-arc-text-${i}`}
-                  style={{ pointerEvents: 'none' }}
-                  transform={textTranform(d)}
-                  textAnchor={'middle'}
-                  alignmentBaseline={'middle'}
-                  fill={'black'}
-                >
-                  {d.data[value]}
-                </text>
-              )}
-            </g>
-          ))}
-          {
-            // If legend prop is truthy, render legend component:
-            legend && (
-              <ColorLegend
-                legendLabel={legendLabel}
-                labels={keys}
-                circleRadius={5 /* Radius of each color swab in legend */}
-                colorScale={colorScale}
-                dataTestId="pie-chart-legend"
-                setLegendOffset={setLegendOffset}
-                legendPosition={legend}
-                legendWidth={xOffset}
-                legendHeight={yOffset}
-                xPosition={xPosition}
-                yPosition={yPosition}
-                margin={margin}
-                cWidth={cWidth / 2}
-                cHeight={cHeight / 2}
-                EXTRA_LEGEND_MARGIN={EXTRA_LEGEND_MARGIN}
-              />
-            )
-          }
-        </g>
-      </svg>
-    </div>
+    <ThemeProvider theme={themes[theme]}>
+      <div ref={anchor} style={{ width: '100%', height: '100%' }}>
+        {tooltipVisible && tooltip && (
+          <Tooltip
+            chartType={chartType}
+            data={tooltip.data}
+            cursorX={tooltip.cursorX}
+            cursorY={tooltip.cursorY}
+            distanceFromTop={tooltip.distanceFromTop}
+            distanceFromRight={tooltip.distanceFromRight}
+            distanceFromLeft={tooltip.distanceFromLeft}
+            xKey={label}
+            yKey={value}
+          />
+        )}
+        <svg width={'100%'} height={'100%'}>
+          <g transform={translate} data-testid="pie-chart">
+            {pie.map((d: any, i: number) => (
+              <g key={`g + ${i}`}>
+                <Arc
+                  data={propsData[i]}
+                  dataTestId={`pie-chart-arc-${i}`}
+                  key={d.label}
+                  fill={colorScale(keys[i])}
+                  stroke="#ffffff"
+                  strokeWidth="0px"
+                  d={arcGenerator(d)}
+                  id={`arc- + ${i}`}
+                  setTooltip={setTooltip}
+                />
+                {pieLabel && (
+                  <text
+                    data-testid={`pie-chart-arc-text-${i}`}
+                    style={{ pointerEvents: 'none' }}
+                    transform={textTranform(d)}
+                    textAnchor={'middle'}
+                    alignmentBaseline={'middle'}
+                    fill={'black'}
+                  >
+                    {d.data[value]}
+                  </text>
+                )}
+              </g>
+            ))}
+            {
+              // If legend prop is truthy, render legend component:
+              legend && (
+                <ColorLegend
+                  theme={theme}
+                  legendLabel={legendLabel}
+                  labels={keys}
+                  circleRadius={5 /* Radius of each color swab in legend */}
+                  colorScale={colorScale}
+                  dataTestId="pie-chart-legend"
+                  setLegendOffset={setLegendOffset}
+                  legendPosition={legend}
+                  legendWidth={xOffset}
+                  legendHeight={yOffset}
+                  xPosition={xPosition}
+                  yPosition={yPosition}
+                  margin={margin}
+                  cWidth={cWidth / 2}
+                  cHeight={cHeight / 2}
+                  EXTRA_LEGEND_MARGIN={EXTRA_LEGEND_MARGIN}
+                />
+              )
+            }
+          </g>
+        </svg>
+      </div>
+    </ThemeProvider>
   );
 }

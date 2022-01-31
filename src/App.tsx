@@ -26,6 +26,7 @@ function App() {
     <Container className="app">
       <GlobalStyle />
       <PieChart
+        theme="dark"
         data={coffee_shop.reverse()}
         label="product"
         value="sales"
@@ -36,6 +37,7 @@ function App() {
         legendLabel="Annual Sales 2021"
       />
       <ScatterPlot
+        theme="dark"
         height="100%"
         width="100%"
         data={life_expectancy}
@@ -50,6 +52,7 @@ function App() {
         yAxisLabel="Life Expectancy"
       />
       <LineChart
+        theme="dark"
         height={'100%'}
         width={'100%'}
         data={ny_unemployment}
@@ -66,6 +69,7 @@ function App() {
         legendLabel="Counties"
       />
       <BarChart
+        theme="dark"
         height="100%"
         width="100%"
         data={historical_gdp}
@@ -80,6 +84,7 @@ function App() {
         legend={'bottom'}
       />
       <AreaChart
+        theme="dark"
         height="100%"
         width="100%"
         data={skinny_fruit}
