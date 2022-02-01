@@ -12,6 +12,7 @@ export const VoronoiWrapper = React.memo(
     yAccessor,
     setTooltip,
     margin,
+    cWidth
   }: VoronoiBody): JSX.Element => {
     return (
       <g className="voronoi-wrapper">
@@ -28,6 +29,7 @@ export const VoronoiWrapper = React.memo(
               tooltipData: element,
             }}
             margin={margin}
+            cWidth={cWidth}
             setTooltip={setTooltip}
             data={element}
           />

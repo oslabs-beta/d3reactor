@@ -24,14 +24,18 @@ import {
   inferXDataType,
   transformSkinnyToWide,
   EXTRA_LEGEND_MARGIN,
+  themes,
 } from '../../utils';
-import styled from 'styled-components';
+import styled, { ThemeProvider } from 'styled-components';
+
+const { light, dark } = themes;
 
 const Area = styled.path`
   fill-opacity: 0.7;
 `;
 
 export default function AreaChart({
+  theme = 'light',
   data,
   height = '100%',
   width = '100%',
@@ -49,6 +53,7 @@ export default function AreaChart({
   legendLabel = '',
   chartType = 'area-chart',
   colorScheme = 'schemePurples',
+  tooltipVisible = true,
 }: AreaChartProps<string | number>): JSX.Element {
   /**********
   Step in creating any chart:
@@ -217,112 +222,120 @@ export default function AreaChart({
   const [tooltip, setTooltip] = useState<false | toolTipState>(false);
 
   return (
-    <div ref={anchor} style={{ width: width, height: height }}>
-      {tooltip && (
-        <Tooltip
-          data={tooltip.data}
-          cursorX={margin.left + tooltip.cursorX}
-          cursorY={margin.top + tooltip.cursorY}
-          distanceFromTop={tooltip.distanceFromTop}
-          distanceFromRight={tooltip.distanceFromRight}
-          distanceFromLeft={tooltip.distanceFromLeft}
-          xKey={xKey}
-          yKey={yKey}
-        />
-      )}
-      <svg width={cWidth} height={cHeight}>
-        <g transform={translate}>
-          {yAxis && (
-            <Axis
-              x={yAxisX}
-              y={yAxisY}
-              height={cHeight}
-              width={cWidth}
-              margin={margin}
-              scale={yScale}
-              type={yAxis}
-              yGrid={yGrid}
-            />
-          )}
-          {yAxisLabel && (
-            <Label
-              x={yAxisX}
-              y={yAxisY}
-              height={cHeight}
-              width={cWidth}
-              margin={margin}
-              type={yAxis ? yAxis : 'left'}
-              axis={yAxis ? true : false}
-              label={yAxisLabel}
-            />
-          )}
-          {xAxis && (
-            <Axis
-              x={xAxisX}
-              y={xAxisY}
-              height={cHeight}
-              width={cWidth}
-              margin={margin}
-              scale={xScale}
-              xGrid={xGrid}
-              type={xAxis}
-              xTicksValue={xTicksValue}
-            />
-          )}
-          {xAxisLabel && (
-            <Label
-              x={xAxisX}
-              y={xAxisY}
-              height={cHeight}
-              width={cWidth}
-              margin={margin}
-              type={xAxis ? xAxis : 'bottom'}
-              axis={xAxis ? true : false}
-              label={xAxisLabel}
-            />
-          )}
-          {layers.map((layer, i) => (
-            <Area
-              key={i}
-              d={areaGenerator(layer)}
-              fill={colorScale(layer.key)}
-            />
-          ))}
-          {
-            // If legend prop is truthy, render legend component:
-            legend && (
-              <ColorLegend
-                legendLabel={legendLabel}
-                labels={labelArray}
-                circleRadius={5 /* Radius of each color swab in legend */}
-                colorScale={colorScale}
-                setLegendOffset={setLegendOffset}
-                legendPosition={legend}
-                legendWidth={xOffset}
-                legendHeight={yOffset}
-                margin={margin}
-                cWidth={cWidth}
-                cHeight={cHeight}
-                EXTRA_LEGEND_MARGIN={EXTRA_LEGEND_MARGIN}
-              />
-            )
-          }
-          <ListeningRect
-            data={transData}
-            layers={layers}
-            width={cWidth}
-            height={cHeight}
-            margin={margin}
-            xScale={xScale}
-            yScale={yScale}
-            xAccessor={xAccessor}
-            yAccessor={yAccessor}
+    <ThemeProvider theme={themes[theme]}>
+      <div ref={anchor} style={{ width: width, height: height }}>
+        {tooltipVisible && tooltip && (
+          <Tooltip
+            theme={theme}
+            data={tooltip.data}
+            cursorX={margin.left + tooltip.cursorX}
+            cursorY={margin.top + tooltip.cursorY}
+            distanceFromTop={tooltip.distanceFromTop}
+            distanceFromRight={tooltip.distanceFromRight}
+            distanceFromLeft={tooltip.distanceFromLeft}
             xKey={xKey}
             yKey={yKey}
-            setTooltip={setTooltip}
           />
-        </g>
-      </svg>
-    </div>
+        )}
+        <svg width={cWidth} height={cHeight}>
+          <g transform={translate}>
+            {yAxis && (
+              <Axis
+                theme={theme}
+                x={yAxisX}
+                y={yAxisY}
+                height={cHeight}
+                width={cWidth}
+                margin={margin}
+                scale={yScale}
+                type={yAxis}
+                yGrid={yGrid}
+              />
+            )}
+            {yAxisLabel && (
+              <Label
+                theme={theme}
+                x={yAxisX}
+                y={yAxisY}
+                height={cHeight}
+                width={cWidth}
+                margin={margin}
+                type={yAxis ? yAxis : 'left'}
+                axis={yAxis ? true : false}
+                label={yAxisLabel}
+              />
+            )}
+            {xAxis && (
+              <Axis
+                theme={theme}
+                x={xAxisX}
+                y={xAxisY}
+                height={cHeight}
+                width={cWidth}
+                margin={margin}
+                scale={xScale}
+                xGrid={xGrid}
+                type={xAxis}
+                xTicksValue={xTicksValue}
+              />
+            )}
+            {xAxisLabel && (
+              <Label
+                theme={theme}
+                x={xAxisX}
+                y={xAxisY}
+                height={cHeight}
+                width={cWidth}
+                margin={margin}
+                type={xAxis ? xAxis : 'bottom'}
+                axis={xAxis ? true : false}
+                label={xAxisLabel}
+              />
+            )}
+            {layers.map((layer, i) => (
+              <Area
+                key={i}
+                d={areaGenerator(layer)}
+                fill={colorScale(layer.key)}
+              />
+            ))}
+            {
+              // If legend prop is truthy, render legend component:
+              legend && (
+                <ColorLegend
+                  theme={theme}
+                  legendLabel={legendLabel}
+                  labels={labelArray}
+                  circleRadius={5 /* Radius of each color swab in legend */}
+                  colorScale={colorScale}
+                  setLegendOffset={setLegendOffset}
+                  legendPosition={legend}
+                  legendWidth={xOffset}
+                  legendHeight={yOffset}
+                  margin={margin}
+                  cWidth={cWidth}
+                  cHeight={cHeight}
+                  EXTRA_LEGEND_MARGIN={EXTRA_LEGEND_MARGIN}
+                />
+              )
+            }
+            <ListeningRect
+              data={transData}
+              layers={layers}
+              width={cWidth}
+              height={cHeight}
+              margin={margin}
+              xScale={xScale}
+              yScale={yScale}
+              xAccessor={xAccessor}
+              yAccessor={yAccessor}
+              xKey={xKey}
+              yKey={yKey}
+              setTooltip={setTooltip}
+            />
+          </g>
+        </svg>
+      </div>
+    </ThemeProvider>
   );
 }

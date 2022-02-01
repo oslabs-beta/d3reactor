@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/restrict-plus-operands */
 import React from 'react';
 import { VoronoiProps } from '../../types';
-import useWindowDimensions from '../hooks/useWindowDimensions';
 
 export const VoronoiCell = ({
   fill,
@@ -12,8 +11,8 @@ export const VoronoiCell = ({
   setTooltip,
   data,
   margin,
+  cWidth,
 }: VoronoiProps): JSX.Element => {
-  const { width } = useWindowDimensions();
 
   // The code below was commented out because of the performance issues we ran
   // into when charts are taking in large data sets
@@ -54,7 +53,7 @@ export const VoronoiCell = ({
 
     tooltipState.distanceFromTop = cellCenter.cy + margin.top;
     tooltipState.distanceFromRight =
-      width - (margin.left + tooltipState.cursorX);
+      (margin.left + cWidth + margin.right) - (margin.left + tooltipState.cursorX);
     tooltipState.distanceFromLeft = margin.left + tooltipState.cursorX;
 
     setTooltip ? setTooltip(tooltipState) : null;

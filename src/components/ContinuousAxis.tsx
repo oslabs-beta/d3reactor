@@ -7,14 +7,17 @@ import styled from 'styled-components';
 
 const TickText = styled.text`
   font-size: 12px;
+  font-family: Tahoma, Geneva, Verdana, sans-serif;
+  fill: ${(props) => props.theme.textColor};
 `;
 
 const AxisBaseline = styled.line`
-  stroke: #999999;
+  stroke: ${(props) => props.theme.axisBaseLineColor};
   stroke-width: 2;
 `;
 
 function Axi({
+  theme = 'light',
   dataTestId = 'd3reactor-continuous',
   x,
   y,
@@ -102,6 +105,7 @@ function Axi({
   };
 
   const grid = gridGenerator(
+    theme,
     type,
     xGrid,
     yGrid,

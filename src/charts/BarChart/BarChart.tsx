@@ -20,11 +20,16 @@ import {
   getYAxisCoordinates,
   getMarginsWithLegend,
   EXTRA_LEGEND_MARGIN,
+  themes,
 } from '../../utils';
 import { yScaleDef } from '../../functionality/yScale';
 import { Label } from '../../components/Label';
+import styled, { ThemeProvider } from 'styled-components';
+
+const { light, dark } = themes;
 
 export default function BarChart({
+  theme = 'light',
   data,
   height = '100%',
   width = '100%',
@@ -40,6 +45,7 @@ export default function BarChart({
   legendLabel = '',
   chartType = 'bar-chart',
   colorScheme = 'schemePurples',
+  tooltipVisible = true,
 }: BarChartProps<string | number>): JSX.Element {
   /**********
   Step in creating any chart:
@@ -200,152 +206,160 @@ export default function BarChart({
   const [tooltip, setTooltip] = useState<false | toolTipState>(false);
 
   return (
-    <div ref={anchor} style={{ width: width, height: height }}>
-      {tooltip && (
-        <Tooltip
-          chartType={chartType}
-          data={tooltip.data}
-          cursorX={tooltip.cursorX + xScale.bandwidth() / 2 + margin.left}
-          cursorY={tooltip.cursorY + margin.top}
-          distanceFromTop={tooltip.distanceFromTop}
-          distanceFromRight={tooltip.distanceFromRight}
-          distanceFromLeft={tooltip.distanceFromLeft}
-          xKey={xKey}
-          yKey={yKey}
-        />
-      )}
-      <svg width={cWidth} height={cHeight} data-testid="bar-chart">
-        <g transform={translate}>
-          {xAxis && (
-            <DiscreteAxis
-              dataTestId="bar-chart-x-axis"
-              x={xAxisX}
-              y={xAxisY}
-              width={cWidth}
-              margin={margin}
-              scale={xScale}
-              type={xAxis}
-              data={transData}
-              xAccessor={xAccessor}
-              setTickMargin={setTickMargin}
-            />
-          )}
-          {yAxisLabel && (
-            <Label
-              dataTestId="bar-chart-y-axis-label"
-              x={yAxisX}
-              y={yAxisY}
-              height={cHeight}
-              width={cWidth}
-              margin={margin}
-              type={yAxis ? yAxis : 'left'}
-              axis={yAxis ? true : false}
-              label={yAxisLabel}
-            />
-          )}
-          {yAxis && (
-            <Axis
-              dataTestId="bar-chart-y-axis"
-              x={yAxisX}
-              y={yAxisY}
-              height={cHeight}
-              width={cWidth}
-              margin={margin}
-              scale={yScale}
-              type={yAxis}
-              yGrid={yGrid}
-            />
-          )}
-          {xAxisLabel && (
-            <Label
-              dataTestId="bar-chart-x-axis-label"
-              x={xAxisX}
-              y={xAxisY}
-              height={cHeight}
-              width={cWidth}
-              margin={margin}
-              type={xAxis ? xAxis : 'bottom'}
-              axis={xAxis ? true : false}
-              label={xAxisLabel}
-              tickMargin={tickMargin}
-            />
-          )}
-          {groupBy
-            ? layers.map(
-                (
-                  layer: Data,
-                  i: number // MULTI CHART
-                ) => (
-                  <g key={i}>
-                    {layer.map((sequence: Data, j: number) => (
-                      <Rectangle
-                        data={getSequenceData(sequence)}
-                        dataTestId={`rectangle-${j}`}
-                        key={j}
-                        x={xScale(xAccessor(sequence.data))}
-                        y={yScale(sequence[1])}
-                        width={xScale.bandwidth()}
-                        height={
-                          yScale(sequence[0]) - yScale(sequence[1]) > 0
-                            ? yScale(sequence[0]) - yScale(sequence[1])
-                            : 0
-                        }
-                        margin={margin}
-                        fill={colorScale(layer.key[i])}
-                        setTooltip={setTooltip}
-                      />
-                    ))}
-                  </g>
-                )
-              )
-            : data.map((d: Data, i: number) => {
-                return (
-                  // SINGLE CHART
-                  <Rectangle
-                    data={d}
-                    dataTestId={`rectangle-${i}`}
-                    key={i}
-                    x={xScale(xAccessor(d))}
-                    y={
-                      // if value < 0 mark, start rect top at 0 mark
-                      yScale(0) - yScale(yAccessor(d)) > 0
-                        ? yScale(yAccessor(d))
-                        : yScale(0)
-                    }
-                    width={xScale.bandwidth()}
-                    height={
-                      // draw rect from 0 mark to +value
-                      Math.abs(yScale(0) - yScale(yAccessor(d)))
-                    }
-                    margin={margin}
-                    fill={colorScale(yKey)}
-                    setTooltip={setTooltip}
-                  />
-                );
-              })}
-
-          {
-            // If legend prop is truthy, render legend component:
-            legend && (
-              <ColorLegend
-                legendLabel={legendLabel}
-                labels={labelArray}
-                circleRadius={5 /* Radius of each color swab in legend */}
-                colorScale={colorScale}
-                dataTestId="bar-chart-legend"
-                setLegendOffset={setLegendOffset}
-                legendPosition={legend}
-                legendWidth={xOffset}
-                legendHeight={yOffset}
+    <ThemeProvider theme={themes[theme]}>
+      <div ref={anchor} style={{ width: width, height: height }}>
+        {tooltipVisible && tooltip && (
+          <Tooltip
+            theme={theme}
+            chartType={chartType}
+            data={tooltip.data}
+            cursorX={tooltip.cursorX + xScale.bandwidth() / 2 + margin.left}
+            cursorY={tooltip.cursorY + margin.top}
+            distanceFromTop={tooltip.distanceFromTop}
+            distanceFromRight={tooltip.distanceFromRight}
+            distanceFromLeft={tooltip.distanceFromLeft}
+            xKey={xKey}
+            yKey={yKey}
+          />
+        )}
+        <svg width={cWidth} height={cHeight} data-testid="bar-chart">
+          <g transform={translate}>
+            {xAxis && (
+              <DiscreteAxis
+                dataTestId="bar-chart-x-axis"
+                x={xAxisX}
+                y={xAxisY}
+                width={cWidth}
                 margin={margin}
-                cWidth={cWidth}
-                cHeight={cHeight}
-                EXTRA_LEGEND_MARGIN={EXTRA_LEGEND_MARGIN}
+                scale={xScale}
+                type={xAxis}
+                data={transData}
+                xAccessor={xAccessor}
+                setTickMargin={setTickMargin}
               />
-            )
-          }
-        </g>
-      </svg>
-    </div>
+            )}
+            {yAxisLabel && (
+              <Label
+                theme={theme}
+                dataTestId="bar-chart-y-axis-label"
+                x={yAxisX}
+                y={yAxisY}
+                height={cHeight}
+                width={cWidth}
+                margin={margin}
+                type={yAxis ? yAxis : 'left'}
+                axis={yAxis ? true : false}
+                label={yAxisLabel}
+              />
+            )}
+            {yAxis && (
+              <Axis
+                dataTestId="bar-chart-y-axis"
+                x={yAxisX}
+                y={yAxisY}
+                height={cHeight}
+                width={cWidth}
+                margin={margin}
+                scale={yScale}
+                type={yAxis}
+                yGrid={yGrid}
+              />
+            )}
+            {xAxisLabel && (
+              <Label
+                theme={theme}
+                dataTestId="bar-chart-x-axis-label"
+                x={xAxisX}
+                y={xAxisY}
+                height={cHeight}
+                width={cWidth}
+                margin={margin}
+                type={xAxis ? xAxis : 'bottom'}
+                axis={xAxis ? true : false}
+                label={xAxisLabel}
+                tickMargin={tickMargin}
+              />
+            )}
+            {groupBy
+              ? layers.map(
+                  (
+                    layer: Data,
+                    i: number // MULTI CHART
+                  ) => (
+                    <g key={i}>
+                      {layer.map((sequence: Data, j: number) => (
+                        <Rectangle
+                          data={getSequenceData(sequence)}
+                          dataTestId={`rectangle-${j}`}
+                          key={j}
+                          x={xScale(xAccessor(sequence.data))}
+                          y={yScale(sequence[1])}
+                          width={xScale.bandwidth()}
+                          height={
+                            yScale(sequence[0]) - yScale(sequence[1]) > 0
+                              ? yScale(sequence[0]) - yScale(sequence[1])
+                              : 0
+                          }
+                          margin={margin}
+                          cWidth={cWidth}
+                          fill={colorScale(layer.key[i])}
+                          setTooltip={setTooltip}
+                        />
+                      ))}
+                    </g>
+                  )
+                )
+              : data.map((d: Data, i: number) => {
+                  return (
+                    // SINGLE CHART
+                    <Rectangle
+                      data={d}
+                      dataTestId={`rectangle-${i}`}
+                      key={i}
+                      x={xScale(xAccessor(d))}
+                      y={
+                        // if value < 0 mark, start rect top at 0 mark
+                        yScale(0) - yScale(yAccessor(d)) > 0
+                          ? yScale(yAccessor(d))
+                          : yScale(0)
+                      }
+                      width={xScale.bandwidth()}
+                      height={
+                        // draw rect from 0 mark to +value
+                        Math.abs(yScale(0) - yScale(yAccessor(d)))
+                      }
+                      margin={margin}
+                      fill={colorScale(yKey)}
+                      setTooltip={setTooltip}
+                      cWidth={cWidth}
+                    />
+                  );
+                })}
+
+            {
+              // If legend prop is truthy, render legend component:
+              legend && (
+                <ColorLegend
+                  theme={theme}
+                  legendLabel={legendLabel}
+                  labels={labelArray}
+                  circleRadius={5 /* Radius of each color swab in legend */}
+                  colorScale={colorScale}
+                  dataTestId="bar-chart-legend"
+                  setLegendOffset={setLegendOffset}
+                  legendPosition={legend}
+                  legendWidth={xOffset}
+                  legendHeight={yOffset}
+                  margin={margin}
+                  cWidth={cWidth}
+                  cHeight={cHeight}
+                  EXTRA_LEGEND_MARGIN={EXTRA_LEGEND_MARGIN}
+                />
+              )
+            }
+          </g>
+        </svg>
+      </div>
+    </ThemeProvider>
   );
 }
