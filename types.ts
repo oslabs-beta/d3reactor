@@ -321,6 +321,7 @@ export interface RectangleProps {
   width: number;
   height: number;
   margin: Margin;
+  cWidth: number;
   fill: string;
   setTooltip?: React.Dispatch<any>;
 }
@@ -356,6 +357,7 @@ export interface VoronoiProps {
   data?: any;
   setTooltip?: React.Dispatch<any>;
   margin: Margin;
+  cWidth: number;
 }
 
 export type ColorScale = d3.ScaleOrdinal<string, string, never>;
@@ -418,5 +420,6 @@ export interface VoronoiBody {
   yAccessor: yAccessorFunc;
   setTooltip: React.Dispatch<any> | undefined;
   margin: Margin;
+  cWidth: number;
 }
 export type GroupAccessorFunc = (d: any) => number | Date;

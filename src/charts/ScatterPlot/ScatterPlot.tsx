@@ -286,6 +286,7 @@ export default function ScatterPlot({
                 yAccessor={yAccessor}
                 setTooltip={setTooltip}
                 margin={margin}
+                cWidth={cWidth}
               />
             )}
 

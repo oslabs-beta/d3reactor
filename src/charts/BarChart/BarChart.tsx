@@ -301,6 +301,7 @@ export default function BarChart({
                               : 0
                           }
                           margin={margin}
+                          cWidth={cWidth}
                           fill={colorScale(layer.key[i])}
                           setTooltip={setTooltip}
                         />
@@ -330,6 +331,7 @@ export default function BarChart({
                       margin={margin}
                       fill={colorScale(yKey)}
                       setTooltip={setTooltip}
+                      cWidth={cWidth}
                     />
                   );
                 })}

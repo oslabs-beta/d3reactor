@@ -302,6 +302,7 @@ export default function LineChart({
                 yAccessor={yAccessor}
                 setTooltip={setTooltip}
                 margin={margin}
+                cWidth={cWidth}
               />
             )}
 

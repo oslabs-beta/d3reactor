@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/restrict-plus-operands */
 import React from 'react';
 import { RectangleProps } from '../../types';
-import useWindowDimensions from '../hooks/useWindowDimensions';
 
 import styled from 'styled-components';
 const Bar = styled.rect`
@@ -16,10 +15,11 @@ const RectangleComp = ({
   width,
   height,
   margin,
+  cWidth,
   fill,
   setTooltip,
 }: RectangleProps): JSX.Element => {
-  const clientWidth = useWindowDimensions().width;
+
   let tooltipState = {
     cursorX: 0,
     cursorY: 0,
@@ -45,7 +45,7 @@ const RectangleComp = ({
         cursorY: e.pageY - e.nativeEvent.offsetY + (y ?? 0),
         distanceFromTop: offsetFromTop + margin.top + rectTop,
         distanceFromRight:
-          clientWidth - (offsetFromLeft + margin.left + rectMidPoint),
+          (margin.left + cWidth + margin.right) - (offsetFromLeft + margin.left + rectMidPoint),
         distanceFromLeft: offsetFromLeft + margin.left + rectMidPoint,
         data,
       };
