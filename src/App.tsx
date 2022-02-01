@@ -15,7 +15,6 @@ import { Container } from './styles/componentStyles';
 function App() {
   return (
     <Container className="app">
-      <GlobalStyle />
       <PieChart
         theme="dark"
         data={fruit}
@@ -71,7 +70,7 @@ function App() {
         legendLabel="Markets"
       />
       <ScatterPlot
-        theme="dark"
+        theme="light"
         height="100%"
         width="100%"
         data={penguins}

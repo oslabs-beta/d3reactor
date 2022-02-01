@@ -6,6 +6,7 @@ import styled from 'styled-components';
 
 const TickText = styled.text`
   font-size: 12px;
+  font-family: Tahoma, Geneva, Verdana, sans-serif;
   fill: ${(props) => props.theme.textColor};
 `;
 

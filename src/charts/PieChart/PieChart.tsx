@@ -17,6 +17,14 @@ import {
 
 import styled, { ThemeProvider } from 'styled-components';
 
+const PieLabel = styled.text`
+  font-family: Tahoma, Geneva, Verdana, sans-serif;
+  text-anchor: middle;
+  alignment-baseline: middle;
+  fill: black;
+  pointer-events: none;
+`;
+
 const { light, dark } = themes;
 
 export default function PieChart({
@@ -262,16 +270,12 @@ export default function PieChart({
                   setTooltip={setTooltip}
                 />
                 {pieLabel && (
-                  <text
+                  <PieLabel
                     data-testid={`pie-chart-arc-text-${i}`}
-                    style={{ pointerEvents: 'none' }}
                     transform={textTranform(d)}
-                    textAnchor={'middle'}
-                    alignmentBaseline={'middle'}
-                    fill={'black'}
                   >
                     {d.data[value]}
-                  </text>
+                  </PieLabel>
                 )}
               </g>
             ))}

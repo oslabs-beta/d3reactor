@@ -5,6 +5,7 @@ import { Margin } from '../../types';
 import styled from 'styled-components';
 const AxisLabel = styled.text`
   font-size: 16px;
+  font-family: Tahoma, Geneva, Verdana, sans-serif;
   fill: ${(props) => props.theme.textColor};
 `;
 

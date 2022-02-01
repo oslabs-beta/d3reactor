@@ -7,7 +7,7 @@ const GlobalStyle = createGlobalStyle`
       outline:0;
       box-sizing:border-box;
       font-family: Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #1d1d1d;
+      /* background-color: #1d1d1d; */
       /* background-color: #fff; */
   }
 `;
