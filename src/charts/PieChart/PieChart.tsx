@@ -268,6 +268,8 @@ export default function PieChart({
                   d={arcGenerator(d)}
                   id={`arc- + ${i}`}
                   setTooltip={setTooltip}
+                  margin={margin}
+                  cWidth={cWidth}
                 />
                 {pieLabel && (
                   <PieLabel

@@ -345,6 +345,8 @@ export interface ArcProps {
   id?: string | number;
   cellCenter?: { cx: number; cy: number; tooltipData: Data };
   setTooltip?: React.Dispatch<any>;
+  margin: Margin;
+  cWidth: number;
 }
 
 // eslint-disable-next-line import/export
