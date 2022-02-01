@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/restrict-plus-operands */
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { VoronoiProps } from '../../types';
 import useWindowDimensions from '../hooks/useWindowDimensions';
 
@@ -14,6 +14,10 @@ export const VoronoiCell = ({
   margin,
 }: VoronoiProps): JSX.Element => {
   const { width } = useWindowDimensions();
+
+  // The code below was commented out because of the performance issues we ran
+  // into when charts are taking in large data sets
+  // TODO: Figure out how to performantly use scroll to improve the performance.
   // const [scrollPosition, setScrollPosition] = useState(0);
 
   // const handleScroll = () => {
@@ -48,7 +52,7 @@ export const VoronoiCell = ({
       data,
     };
 
-    tooltipState.distanceFromTop = tooltipState.cursorY + margin.top;
+    tooltipState.distanceFromTop = cellCenter.cy + margin.top;
     tooltipState.distanceFromRight =
       width - (margin.left + tooltipState.cursorX);
     tooltipState.distanceFromLeft = margin.left + tooltipState.cursorX;
