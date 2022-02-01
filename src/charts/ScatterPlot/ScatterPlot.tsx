@@ -69,7 +69,7 @@ export default function ScatterPlot({
   legendLabel = '',
   chartType = 'scatter-plot',
   colorScheme = 'schemePurples',
-  tooltipVisible = false,
+  tooltipVisible = true,
 }: ScatterPlotProps<string | number>): JSX.Element {
   /**********
   Step in creating any chart:

@@ -63,7 +63,7 @@ export default function BarChart({
   legendLabel = '',
   chartType = 'bar-chart',
   colorScheme = 'schemePurples',
-  tooltipVisible = false,
+  tooltipVisible = true,
 }: BarChartProps<string | number>): JSX.Element {
   /**********
   Step in creating any chart:

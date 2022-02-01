@@ -64,7 +64,7 @@ export default function LineChart({
   legendLabel = '',
   chartType = 'line-chart',
   colorScheme = 'schemePurples',
-  tooltipVisible = false,
+  tooltipVisible = true,
 }: LineChartProps<string | number>): JSX.Element {
   /**********
   Step in creating any chart:

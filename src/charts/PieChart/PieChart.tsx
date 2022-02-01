@@ -53,7 +53,7 @@ export default function PieChart({
   chartType = 'pie-chart',
   colorScheme = 'schemePurples',
   value,
-  tooltipVisible = false,
+  tooltipVisible = true,
 }: PieChartProps): JSX.Element {
   /**********
   Step in creating any chart:

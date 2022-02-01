@@ -71,7 +71,7 @@ export default function AreaChart({
   legendLabel = '',
   chartType = 'area-chart',
   colorScheme = 'schemePurples',
-  tooltipVisible = false,
+  tooltipVisible = true,
 }: AreaChartProps<string | number>): JSX.Element {
   /**********
   Step in creating any chart:
