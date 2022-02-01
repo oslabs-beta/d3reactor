@@ -16,13 +16,13 @@ const Legend = styled.div`
 const LegendTitle = styled.text`
   font-size: 14px;
   font-family: Tahoma, Geneva, Verdana, sans-serif;
-  fill: ${(props) => props.theme.textColor};
+  fill: ${(props) => props.theme.legendTextColor};
 `;
 
 const LegendLabel = styled.text`
   font-size: 12px;
   font-family: Tahoma, Geneva, Verdana, sans-serif;
-  fill: ${(props) => props.theme.textColor};
+  fill: ${(props) => props.theme.legendTextColor};
 `;
 
 export const ColorLegend = ({

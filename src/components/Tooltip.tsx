@@ -26,7 +26,7 @@ const Tooltip = ({
     axisBaseLineColor: '#ebebeb',
     legendBackgroundColor: '#ffffff',
     legendBorder: '1px solid #ebebeb',
-    tooltipTextColor: '#e5e5e5',
+    tooltipTextColor: '#212121',
     tooltipBackgroundColor: '#ffffff',
     tooltipBorder: '1px solid #ddd',
     tooltipShadow: `0 0 10px 0 rgba(80, 80, 80, 0.2)`,

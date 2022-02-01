@@ -9,7 +9,6 @@ import portfolio from '../data/portfolio.json';
 import penguins from '../data/penguins.json';
 import fruit from '../data/fruit.json';
 
-import GlobalStyle from './styles/globals';
 import { Container } from './styles/componentStyles';
 
 function App() {
