@@ -26,6 +26,7 @@ function App() {
         pieLabel={true}
       />
       <BarChart
+        theme="dark"
         height="100%"
         width="100%"
         data={portfolio.slice(5, 13)}
@@ -40,6 +41,7 @@ function App() {
         tooltipVisible={true}
       />
       <AreaChart
+        theme="dark"
         height="100%"
         width="100%"
         data={portfolio.slice(30, 60)}

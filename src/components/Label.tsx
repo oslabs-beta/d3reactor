@@ -4,7 +4,7 @@ import { Margin } from '../../types';
 
 import styled from 'styled-components';
 const AxisLabel = styled.text`
-  font-size: 20px;
+  font-size: 16px;
   fill: ${(props) => props.theme.textColor};
 `;
 
