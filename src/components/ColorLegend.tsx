@@ -175,19 +175,6 @@ export const ColorLegend = ({
 
   useEffect(() => setLegendOffset([rectWidth, rectHeight]), []);
 
-  // const style: React.CSSProperties | undefined = {
-  //   boxSizing: 'border-box',
-  //   width: '100%',
-  //   height: '100%',
-  //   border: `1px solid #ddd`,
-  //   borderRadius: '4px',
-  //   // You can also use a fixed width and ommit the white-sapce.
-  //   whiteSpace: 'nowrap',
-  //   backgroundColor: '#ffffff',
-  //   fontFamily: 'Tahoma, Geneva, Verdana, sans-serif',
-  //   fontSize: '12px',
-  //   color: '#737373',
-  // };
   return (
     <g
       data-testid={dataTestId}

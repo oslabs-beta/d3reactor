@@ -53,7 +53,7 @@ export interface ScatterPlotProps<T> {
     | 'schemeGreens'
     | 'schemeBlues'
     | 'schemeSpectral';
-  tooltipVisible?: false | true;
+  tooltipVisible?: boolean;
 }
 
 export interface BarChartProps<T> {
@@ -94,7 +94,7 @@ export interface BarChartProps<T> {
     | 'schemeGreens'
     | 'schemeBlues'
     | 'schemeSpectral';
-  tooltipVisible?: false | true;
+  tooltipVisible?: boolean;
 }
 
 export interface LineChartProps<T> {
@@ -138,7 +138,7 @@ export interface LineChartProps<T> {
     | 'schemeGreens'
     | 'schemeBlues'
     | 'schemeSpectral';
-  tooltipVisible?: false | true;
+  tooltipVisible?: boolean;
 }
 
 export interface AreaChartProps<T> {
@@ -181,7 +181,7 @@ export interface AreaChartProps<T> {
     | 'schemeGreens'
     | 'schemeBlues'
     | 'schemeSpectral';
-  tooltipVisible?: false | true;
+  tooltipVisible?: boolean;
 }
 
 export interface PieChartProps {
@@ -217,7 +217,7 @@ export interface PieChartProps {
     | 'schemeGreens'
     | 'schemeBlues'
     | 'schemeSpectral';
-  tooltipVisible?: false | true;
+  tooltipVisible?: boolean;
 }
 
 export interface PieChartBodyProps {
