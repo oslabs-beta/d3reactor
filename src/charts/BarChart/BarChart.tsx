@@ -20,31 +20,13 @@ import {
   getYAxisCoordinates,
   getMarginsWithLegend,
   EXTRA_LEGEND_MARGIN,
+  themes,
 } from '../../utils';
 import { yScaleDef } from '../../functionality/yScale';
 import { Label } from '../../components/Label';
 import styled, { ThemeProvider } from 'styled-components';
 
-const LightTheme = {
-  strokeGridLineColor: '#ebebeb',
-  textColor: '#8c8c8c',
-  axisBaseLineColor: '#ebebeb',
-  legendBackgroundColor: '#ffffff',
-  legendBorder: '1px solid #ebebeb',
-};
-
-const DarkTheme = {
-  strokeGridLineColor: '#3d3d3d',
-  textColor: '#727272',
-  axisBaseLineColor: '#3d3d3d',
-  legendBackgroundColor: '#1d1d1d',
-  legendBorder: '1px solid #3d3d3d',
-};
-
-const themes = {
-  light: LightTheme,
-  dark: DarkTheme,
-};
+const { light, dark } = themes;
 
 export default function BarChart({
   theme = 'light',

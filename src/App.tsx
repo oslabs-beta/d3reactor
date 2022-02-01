@@ -17,6 +17,7 @@ function App() {
     <Container className="app">
       <GlobalStyle />
       <PieChart
+        theme="dark"
         data={fruit}
         label="label"
         value="value"
@@ -54,6 +55,7 @@ function App() {
         yAxisLabel="Value"
       />
       <LineChart
+        theme="dark"
         height={'100%'}
         width={'100%'}
         data={portfolio}
@@ -69,6 +71,7 @@ function App() {
         legendLabel="Markets"
       />
       <ScatterPlot
+        theme="dark"
         height="100%"
         width="100%"
         data={penguins}
