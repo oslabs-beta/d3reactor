@@ -14,6 +14,7 @@ import {
   getMarginsWithLegend,
   inferXDataType,
   EXTRA_LEGEND_MARGIN,
+  themes,
 } from '../../utils';
 import { ColorLegend } from '../../components/ColorLegend';
 import { yScaleDef } from '../../functionality/yScale';
@@ -22,7 +23,12 @@ import { d3Voronoi } from '../../functionality/voronoi';
 import { Label } from '../../components/Label';
 import Tooltip from '../../components/Tooltip';
 
+import styled, { ThemeProvider } from 'styled-components';
+
+const { light, dark } = themes;
+
 export default function LineChart({
+  theme = 'light',
   data,
   height = '100%',
   width = '100%',
@@ -40,6 +46,7 @@ export default function LineChart({
   legendLabel = '',
   chartType = 'line-chart',
   colorScheme = 'schemePurples',
+  tooltipVisible = true,
 }: LineChartProps<string | number>): JSX.Element {
   /**********
   Step in creating any chart:
@@ -154,7 +161,7 @@ export default function LineChart({
   const discreteColors =
     Array.from(keys).length < 4 ? 3 : Math.min(Array.from(keys).length, 9);
   const computedScheme = d3[`${colorScheme}`][discreteColors];
-  const colorScale = d3.scaleOrdinal(Array.from(computedScheme).reverse());
+  const colorScale = d3.scaleOrdinal(Array.from(computedScheme));
   colorScale.domain(computedScheme);
 
   // ********************
@@ -195,124 +202,133 @@ export default function LineChart({
   }, [data, xScale, yScale, xAccessor, yAccessor, cHeight, cWidth, margin]);
 
   return (
-    <div ref={anchor} style={{ width: width, height: height }}>
-      {tooltip && (
-        <Tooltip
-          data={tooltip.data}
-          cursorX={margin.left + tooltip.cursorX}
-          cursorY={margin.top + tooltip.cursorY}
-          distanceFromTop={tooltip.distanceFromTop}
-          distanceFromRight={tooltip.distanceFromRight}
-          distanceFromLeft={tooltip.distanceFromLeft}
-          xKey={xKey}
-          yKey={yKey}
-        />
-      )}
-      <svg width={cWidth} height={cHeight} data-testid="line-chart">
-        <g transform={translate}>
-          {yAxis && (
-            <Axis
-              x={yAxisX}
-              y={yAxisY}
-              height={cHeight}
-              width={cWidth}
-              margin={margin}
-              scale={yScale}
-              type={yAxis}
-              yGrid={yGrid}
-            />
-          )}
-          {yAxisLabel && (
-            <Label
-              x={yAxisX}
-              y={yAxisY}
-              height={cHeight}
-              width={cWidth}
-              margin={margin}
-              type={yAxis ? yAxis : 'left'}
-              axis={yAxis ? true : false}
-              label={yAxisLabel}
-            />
-          )}
+    <ThemeProvider theme={themes[theme]}>
+      <div ref={anchor} style={{ width: width, height: height }}>
+        {tooltipVisible && tooltip && (
+          <Tooltip
+            theme={theme}
+            data={tooltip.data}
+            cursorX={margin.left + tooltip.cursorX}
+            cursorY={margin.top + tooltip.cursorY}
+            distanceFromTop={tooltip.distanceFromTop}
+            distanceFromRight={tooltip.distanceFromRight}
+            distanceFromLeft={tooltip.distanceFromLeft}
+            xKey={xKey}
+            yKey={yKey}
+          />
+        )}
+        <svg width={cWidth} height={cHeight} data-testid="line-chart">
+          <g transform={translate}>
+            {yAxis && (
+              <Axis
+                theme={theme}
+                x={yAxisX}
+                y={yAxisY}
+                height={cHeight}
+                width={cWidth}
+                margin={margin}
+                scale={yScale}
+                type={yAxis}
+                yGrid={yGrid}
+              />
+            )}
+            {yAxisLabel && (
+              <Label
+                theme={theme}
+                x={yAxisX}
+                y={yAxisY}
+                height={cHeight}
+                width={cWidth}
+                margin={margin}
+                type={yAxis ? yAxis : 'left'}
+                axis={yAxis ? true : false}
+                label={yAxisLabel}
+              />
+            )}
 
-          {xAxis && (
-            <Axis
-              x={xAxisX}
-              y={xAxisY}
-              height={cHeight}
-              width={cWidth}
-              margin={margin}
-              scale={xScale}
-              type={xAxis}
-              xGrid={xGrid}
-              xTicksValue={xTicksValue}
-            />
-          )}
-          {xAxisLabel && (
-            <Label
-              x={xAxisX}
-              y={xAxisY}
-              height={cHeight}
-              width={cWidth}
-              margin={margin}
-              type={xAxis ? xAxis : 'bottom'}
-              axis={xAxis ? true : false}
-              label={xAxisLabel}
-            />
-          )}
-          {groupBy ? (
-            d3.map(lineGroups, (lineGroup: [string, []], i) => {
-              return (
-                <Line
-                  key={i}
-                  fill="none"
-                  stroke={colorScale(lineGroup[0])}
-                  d={line(lineGroup[1])}
-                />
-              );
-            })
-          ) : (
-            <Line
-              fill="none"
-              stroke={colorScale(keys[0])}
-              strokeWidth="1px"
-              d={line(cleanData)}
-            />
-          )}
-          {voronoi && (
-            <VoronoiWrapper
-              data={cleanData}
-              voronoi={voronoi}
-              xScale={xScale}
-              yScale={yScale}
-              xAccessor={xAccessor}
-              yAccessor={yAccessor}
-              setTooltip={setTooltip}
-              margin={margin}
-            />
-          )}
-
-          {
-            // If legend prop is truthy, render legend component:
-            legend && (
-              <ColorLegend
-                legendLabel={legendLabel}
-                labels={keys}
-                circleRadius={5 /* Radius of each color swab in legend */}
-                colorScale={colorScale}
-                setLegendOffset={setLegendOffset}
-                legendPosition={legend}
-                legendWidth={xOffset}
-                legendHeight={yOffset}
+            {xAxis && (
+              <Axis
+                theme={theme}
+                x={xAxisX}
+                y={xAxisY}
+                height={cHeight}
+                width={cWidth}
+                margin={margin}
+                scale={xScale}
+                type={xAxis}
+                xGrid={xGrid}
+                xTicksValue={xTicksValue}
+              />
+            )}
+            {xAxisLabel && (
+              <Label
+                theme={theme}
+                x={xAxisX}
+                y={xAxisY}
+                height={cHeight}
+                width={cWidth}
+                margin={margin}
+                type={xAxis ? xAxis : 'bottom'}
+                axis={xAxis ? true : false}
+                label={xAxisLabel}
+              />
+            )}
+            {groupBy ? (
+              d3.map(lineGroups, (lineGroup: [string, []], i) => {
+                return (
+                  <Line
+                    key={i}
+                    fill="none"
+                    stroke={colorScale(lineGroup[0])}
+                    d={line(lineGroup[1])}
+                  />
+                );
+              })
+            ) : (
+              <Line
+                fill="none"
+                stroke={colorScale(keys[0])}
+                strokeWidth="1px"
+                d={line(cleanData)}
+              />
+            )}
+            {voronoi && (
+              <VoronoiWrapper
+                data={cleanData}
+                voronoi={voronoi}
+                xScale={xScale}
+                yScale={yScale}
+                xAccessor={xAccessor}
+                yAccessor={yAccessor}
+                setTooltip={setTooltip}
                 margin={margin}
                 cWidth={cWidth}
-                cHeight={cHeight}
-                EXTRA_LEGEND_MARGIN={EXTRA_LEGEND_MARGIN}
               />
-            )
-          }
-        </g>
-      </svg>
-    </div>
+            )}
+
+            {
+              // If legend prop is truthy, render legend component:
+              legend && (
+                <ColorLegend
+                  theme={theme}
+                  legendLabel={legendLabel}
+                  labels={keys}
+                  circleRadius={5 /* Radius of each color swab in legend */}
+                  colorScale={colorScale}
+                  setLegendOffset={setLegendOffset}
+                  legendPosition={legend}
+                  legendWidth={xOffset}
+                  legendHeight={yOffset}
+                  margin={margin}
+                  cWidth={cWidth}
+                  cHeight={cHeight}
+                  EXTRA_LEGEND_MARGIN={EXTRA_LEGEND_MARGIN}
+                />
+              )
+            }
+          </g>
+        </svg>
+      </div>
+    </ThemeProvider>
   );
 }

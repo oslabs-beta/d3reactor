@@ -4,10 +4,13 @@ import { Margin } from '../../types';
 
 import styled from 'styled-components';
 const AxisLabel = styled.text`
-  font-size: 22px;
+  font-size: 16px;
+  font-family: Tahoma, Geneva, Verdana, sans-serif;
+  fill: ${(props) => props.theme.textColor};
 `;
 
 export function Label({
+  theme = 'light',
   dataTestId = 'label',
   x,
   y,
@@ -19,6 +22,7 @@ export function Label({
   label,
   tickMargin,
 }: {
+  theme: string;
   dataTestId?: string;
   x: number;
   y: number;

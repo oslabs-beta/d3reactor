@@ -1,8 +1,6 @@
 import React from 'react';
-import * as d3 from 'd3';
 
 import { ArcProps } from '../../types';
-import useWindowDimensions from '../hooks/useWindowDimensions';
 
 export const Arc = React.memo(
   ({
@@ -13,8 +11,9 @@ export const Arc = React.memo(
     strokeWidth = '1px',
     d,
     setTooltip,
+    margin,
+    cWidth,
   }: ArcProps): JSX.Element => {
-    const { width } = useWindowDimensions();
 
     let tooltipState = {
       cursorX: 0,
@@ -30,7 +29,7 @@ export const Arc = React.memo(
           cursorX: e.pageX,
           cursorY: e.pageY,
           distanceFromTop: e.clientY,
-          distanceFromRight: width - e.pageX,
+          distanceFromRight: (margin.left + cWidth + margin.right) - cWidth,
           distanceFromLeft: e.pageX,
           data,
         };

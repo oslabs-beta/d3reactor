@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/restrict-plus-operands */
 import React from 'react';
 import { RectangleProps } from '../../types';
-import useWindowDimensions from '../hooks/useWindowDimensions';
 
 import styled from 'styled-components';
 const Bar = styled.rect`
@@ -16,10 +15,11 @@ const RectangleComp = ({
   width,
   height,
   margin,
+  cWidth,
   fill,
   setTooltip,
 }: RectangleProps): JSX.Element => {
-  const clientWidth = useWindowDimensions().width;
+
   let tooltipState = {
     cursorX: 0,
     cursorY: 0,
@@ -34,18 +34,18 @@ const RectangleComp = ({
     // of the bar width to the cursor position to calculate the distance from
     // right hand side of the page. When the cursor enters the bar from the
     // right side of the bar we need to substract half of the bar width.
-    const offsetFromLeft = e.pageX - e.nativeEvent.layerX;
-    const offsetFromTop = e.clientY - e.nativeEvent.layerY;
+    const offsetFromLeft = e.pageX - e.nativeEvent.offsetX;
+    const offsetFromTop = e.clientY - e.nativeEvent.offsetY;
     const rectMidPoint = (x ?? 0) + width / 2;
     const rectTop = y ?? 0;
 
     if (setTooltip) {
       tooltipState = {
-        cursorX: e.pageX - e.nativeEvent.layerX + (x ?? 0),
-        cursorY: e.pageY - e.nativeEvent.layerY + (y ?? 0),
+        cursorX: e.pageX - e.nativeEvent.offsetX + (x ?? 0),
+        cursorY: e.pageY - e.nativeEvent.offsetY + (y ?? 0),
         distanceFromTop: offsetFromTop + margin.top + rectTop,
         distanceFromRight:
-          clientWidth - (offsetFromLeft + margin.left + rectMidPoint),
+          (margin.left + cWidth + margin.right) - (offsetFromLeft + margin.left + rectMidPoint),
         distanceFromLeft: offsetFromLeft + margin.left + rectMidPoint,
         data,
       };

@@ -1,6 +1,29 @@
 import { Margin, LegendPos } from '../types';
 import { DiscreteAxis } from './components/DiscreteAxis';
 
+const LightTheme = {
+  strokeGridLineColor: '#ebebeb',
+  textColor: '#8c8c8c',
+  axisBaseLineColor: '#ebebeb',
+  legendTextColor: '#212121',
+  legendBackgroundColor: '#ffffff',
+  legendBorder: '1px solid #ebebeb',
+};
+
+const DarkTheme = {
+  strokeGridLineColor: '#3d3d3d',
+  textColor: '#727272',
+  axisBaseLineColor: '#3d3d3d',
+  legendTextColor: '#e5e5e5',
+  legendBackgroundColor: '#1d1d1d',
+  legendBorder: '1px solid #3d3d3d',
+};
+
+export const themes = {
+  light: LightTheme,
+  dark: DarkTheme,
+};
+
 export const EXTRA_LEGEND_MARGIN = 6;
 
 export function getXAxisCoordinates(
