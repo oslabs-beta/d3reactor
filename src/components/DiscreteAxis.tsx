@@ -3,12 +3,14 @@ import * as d3 from 'd3';
 import { DiscreteAxisProps, Data } from '../../types';
 
 import styled from 'styled-components';
+
 const TickText = styled.text`
   font-size: 12px;
+  fill: ${(props) => props.theme.textColor};
 `;
 
 const AxisBaseline = styled.line`
-  stroke: #999999;
+  stroke: ${(props) => props.theme.axisBaseLineColor};
   stroke-width: 2;
 `;
 
