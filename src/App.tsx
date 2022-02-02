@@ -40,7 +40,7 @@ function App() {
         legend={'bottom'}
         tooltipVisible={true}
       />
-      {/*<AreaChart
+      <AreaChart
         theme="dark"
         height="100%"
         width="100%"
@@ -52,7 +52,7 @@ function App() {
         yGrid={true}
         xAxisLabel="Date"
         yAxisLabel="Value"
-      /> */}
+      />
       <LineChart
         theme="light"
         height={'100%'}
