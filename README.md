@@ -42,7 +42,7 @@ import {AreaChart, BarChart, PieChart, ScatterPlot, LineChart} from "d3reactor"
 
 And you're good to go!
 
-<img width="1538" alt="Stacked Bar Chart" src="https://user-images.githubusercontent.com/83976244/152200475-cf9ad3e8-914b-42e3-90b7-81dbd14c19d9.png">
+<img width="1100" alt="Stacked Bar Chart" src="https://user-images.githubusercontent.com/83976244/152200475-cf9ad3e8-914b-42e3-90b7-81dbd14c19d9.png">
 
 
 
