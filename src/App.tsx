@@ -23,7 +23,7 @@ function App() {
         outerRadius={240}
         pieLabel={true}
       />
-      <BarChart
+      {/*<BarChart
         theme="dark"
         height="100%"
         width="100%"
@@ -50,9 +50,9 @@ function App() {
         yGrid={true}
         xAxisLabel="Date"
         yAxisLabel="Value"
-      />
+      /> */}
       <LineChart
-        theme="dark"
+        theme="light"
         height={'100%'}
         width={'100%'}
         data={portfolio}
@@ -67,7 +67,7 @@ function App() {
         legend={'right'}
         legendLabel="Markets"
       />
-      <ScatterPlot
+      {/* <ScatterPlot
         theme="light"
         height="100%"
         width="100%"
@@ -81,7 +81,7 @@ function App() {
         yGrid={true}
         yAxis="right"
         yAxisLabel="Body Mass"
-      />
+      /> */}
     </Container>
   );
 }
