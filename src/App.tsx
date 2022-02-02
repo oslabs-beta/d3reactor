@@ -8,6 +8,7 @@ import PieChart from './charts/PieChart/PieChart';
 import portfolio from '../data/portfolio.json';
 import penguins from '../data/penguins.json';
 import fruit from '../data/fruit.json';
+import skinny_fruit from '../data/skinny_fruit.json';
 
 import { Container } from './styles/componentStyles';
 
@@ -23,13 +24,14 @@ function App() {
         outerRadius={240}
         pieLabel={true}
       />
-      {/*<BarChart
-        theme="dark"
+      <BarChart
+        theme="light"
         height="100%"
         width="100%"
-        data={portfolio.slice(5, 13)}
+        data={skinny_fruit.reverse()}
         xKey="date"
         yKey="value"
+        groupBy="fruit"
         xAxis="bottom"
         yAxis="right"
         yGrid={true}
@@ -38,7 +40,7 @@ function App() {
         legend={'bottom'}
         tooltipVisible={true}
       />
-      <AreaChart
+      {/*<AreaChart
         theme="dark"
         height="100%"
         width="100%"
