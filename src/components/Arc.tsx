@@ -29,7 +29,8 @@ export const Arc = React.memo(
           cursorX: e.nativeEvent.pageX,
           cursorY: e.nativeEvent.pageY,
           distanceFromTop: e.nativeEvent.pageY - e.clientY + e.clientY,
-          distanceFromRight: margin.left + cWidth + margin.right - cWidth,
+          distanceFromRight:
+            cWidth - (margin.right + margin.left) - e.nativeEvent.pageX,
           distanceFromLeft: e.pageX,
           data,
         };

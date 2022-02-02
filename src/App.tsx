@@ -20,8 +20,7 @@ function App() {
         data={fruit.sort((a, b) => a.value - b.value)}
         label="label"
         value="value"
-        legend="top-left"
-        outerRadius={240}
+        outerRadius={400}
         pieLabel={true}
       />
       <BarChart
