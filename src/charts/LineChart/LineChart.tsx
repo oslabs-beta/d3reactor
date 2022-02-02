@@ -159,14 +159,6 @@ export default function LineChart({
   // ********************
 
   const numberOfKeys = Array.from(keys).length;
-  // let discreteColors = 0;
-  // let computedScheme: string[];
-  // if (numberOfKeys > 3) {
-  //   discreteColors = Math.min(Array.from(keys).length, 9);
-  //   computedScheme = d3[`${colorScheme}`][discreteColors];
-  // } else {
-
-  // }
   const discreteColors =
     numberOfKeys < 4 ? 3 : Math.min(Array.from(keys).length, 9);
   const computedScheme = Array.from(
