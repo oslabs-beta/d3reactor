@@ -145,15 +145,19 @@ export default function PieChart({
   // Define how the data will drive your design
   // ********************
 
-  const discreteColors = Math.min(keys.length, 9);
+  const numberOfKeys = Array.from(keys).length;
+  const discreteColors =
+    numberOfKeys < 4 ? 3 : Math.min(Array.from(keys).length, 9);
   const computedScheme = d3[`${colorScheme}`][discreteColors];
-  const colorScale = d3.scaleOrdinal(Array.from(computedScheme).reverse());
+  const colorScale = d3.scaleOrdinal(computedScheme);
   colorScale.domain(keys);
 
   // ********************
   // STEP 5. Set up supportive elements
   // Render your axes, labels, legends, annotations, etc.
   // ********************
+
+  const colorLabels = [...keys].reverse();
 
   const textTranform = (d: any) => {
     const [x, y]: number[] = arcGenerator.centroid(d);
@@ -287,7 +291,7 @@ export default function PieChart({
                 <ColorLegend
                   theme={theme}
                   legendLabel={legendLabel}
-                  labels={keys}
+                  labels={colorLabels}
                   circleRadius={5 /* Radius of each color swab in legend */}
                   colorScale={colorScale}
                   dataTestId="pie-chart-legend"
