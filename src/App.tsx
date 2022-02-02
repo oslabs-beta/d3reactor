@@ -69,7 +69,7 @@ function App() {
         legend={'right'}
         legendLabel="Markets"
       />
-      {/* <ScatterPlot
+      <ScatterPlot
         theme="light"
         height="100%"
         width="100%"
@@ -83,7 +83,7 @@ function App() {
         yGrid={true}
         yAxis="right"
         yAxisLabel="Body Mass"
-      /> */}
+      />
     </Container>
   );
 }
