@@ -144,10 +144,13 @@ export default function ScatterPlot({
   // ********************
 
   // discreteColors must be between 3 and 9, so here we create a range.
+  const numberOfKeys = Array.from(keys).length;
   const discreteColors =
-    Array.from(keys).length < 4 ? 3 : Math.min(Array.from(keys).length, 9);
-  const computedScheme = d3[`${colorScheme}`][discreteColors];
-  const colorScale = d3.scaleOrdinal(Array.from(computedScheme).reverse());
+    numberOfKeys < 4 ? 3 : Math.min(Array.from(keys).length, 9);
+  const computedScheme = Array.from(
+    d3[`${colorScheme}`][discreteColors]
+  ).reverse();
+  const colorScale = d3.scaleOrdinal(computedScheme);
   colorScale.domain(keys);
 
   // ********************

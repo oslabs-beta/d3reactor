@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/restrict-plus-operands */
 import React from 'react';
 
 import { ArcProps } from '../../types';
@@ -14,7 +15,6 @@ export const Arc = React.memo(
     margin,
     cWidth,
   }: ArcProps): JSX.Element => {
-
     let tooltipState = {
       cursorX: 0,
       cursorY: 0,
@@ -26,13 +26,15 @@ export const Arc = React.memo(
     const onMouseMove = (e: any) => {
       if (setTooltip) {
         tooltipState = {
-          cursorX: e.pageX,
-          cursorY: e.pageY,
-          distanceFromTop: e.clientY,
-          distanceFromRight: (margin.left + cWidth + margin.right) - cWidth,
+          cursorX: e.nativeEvent.pageX,
+          cursorY: e.nativeEvent.pageY,
+          distanceFromTop: e.nativeEvent.pageY - e.clientY + e.clientY,
+          distanceFromRight:
+            cWidth - (margin.right + margin.left) - e.nativeEvent.pageX,
           distanceFromLeft: e.pageX,
           data,
         };
+
         setTooltip(tooltipState);
       }
     };
