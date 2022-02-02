@@ -13,7 +13,6 @@ export const VoronoiCell = ({
   margin,
   cWidth,
 }: VoronoiProps): JSX.Element => {
-
   // The code below was commented out because of the performance issues we ran
   // into when charts are taking in large data sets
   // TODO: Figure out how to performantly use scroll to improve the performance.
@@ -53,7 +52,10 @@ export const VoronoiCell = ({
 
     tooltipState.distanceFromTop = cellCenter.cy + margin.top;
     tooltipState.distanceFromRight =
-      (margin.left + cWidth + margin.right) - (margin.left + tooltipState.cursorX);
+      margin.left +
+      cWidth +
+      margin.right -
+      (margin.left + tooltipState.cursorX);
     tooltipState.distanceFromLeft = margin.left + tooltipState.cursorX;
 
     setTooltip ? setTooltip(tooltipState) : null;

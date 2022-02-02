@@ -19,7 +19,6 @@ const RectangleComp = ({
   fill,
   setTooltip,
 }: RectangleProps): JSX.Element => {
-
   let tooltipState = {
     cursorX: 0,
     cursorY: 0,
@@ -45,7 +44,10 @@ const RectangleComp = ({
         cursorY: e.pageY - e.nativeEvent.offsetY + (y ?? 0),
         distanceFromTop: offsetFromTop + margin.top + rectTop,
         distanceFromRight:
-          (margin.left + cWidth + margin.right) - (offsetFromLeft + margin.left + rectMidPoint),
+          margin.left +
+          cWidth +
+          margin.right -
+          (offsetFromLeft + margin.left + rectMidPoint),
         distanceFromLeft: offsetFromLeft + margin.left + rectMidPoint,
         data,
       };
