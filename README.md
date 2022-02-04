@@ -31,7 +31,7 @@ import {AreaChart, BarChart, PieChart, ScatterPlot, LineChart} from "d3reactor"
 # Examples
 
 ```
-  <AreaChart
+  <BarChart
     data={my_data}
     xKey='my_xkey_value'
     yKey='my_ykey_value'
