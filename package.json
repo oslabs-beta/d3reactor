@@ -1,6 +1,6 @@
 {
   "name": "@oslabs-beta/d3reactor",
-  "version": "0.0.10",
+  "version": "0.0.12",
   "description": "Open-source charting library for creating performant, responsive data visualizations in React",
   "keywords": ["d3", "react", "chart", "graph", "svg", "visualization", "data visualization"],
   "main": "./dist/index.js",
