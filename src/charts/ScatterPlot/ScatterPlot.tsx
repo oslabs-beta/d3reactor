@@ -30,8 +30,6 @@ import { Label } from '../../components/Label';
 
 import { ThemeProvider } from 'styled-components';
 
-const { light, dark } = themes;
-
 export default function ScatterPlot({
   theme = 'light',
   data,
@@ -74,7 +72,7 @@ export default function ScatterPlot({
     const groupAccessor = (d: Data) => d[groupBy ?? ''];
     const groups = d3.group(data, groupAccessor);
     return groupBy ? Array.from(groups).map((group) => group[0]) : [yKey];
-  }, [groupBy, yKey]);
+  }, [groupBy, yKey, data]);
 
   const xAccessor: xAccessorFunc = useMemo(() => {
     return xType === 'number' ? (d) => d[xKey] : (d) => new Date(d[xKey]);

@@ -151,7 +151,7 @@ export const ColorLegend = ({
     return (
       <g
         className="tick"
-        key={domainValue}
+        key={i}
         transform={`translate(
           ${EXTRA_LEGEND_MARGIN + circleRadius},
           ${
