@@ -156,10 +156,10 @@ function Axi({
         />
       )}
       {(type === 'top' || type === 'bottom') &&
-        horizontalTicks.map((tick) => (
+        horizontalTicks.map((tick, i) => (
           <TickText
             data-testid="d3reactor-ticktext"
-            key={JSON.stringify(tick)}
+            key={i}
             style={getTickStyle(type)}
             transform={getTickTranslation(type, tick)}
           >
@@ -167,10 +167,10 @@ function Axi({
           </TickText>
         ))}
       {(type === 'right' || type === 'left') &&
-        verticalTicks.map((tick) => (
+        verticalTicks.map((tick, i) => (
           <TickText
             data-testid="d3reactor-ticktext"
-            key={JSON.stringify(tick)}
+            key={i}
             style={getTickStyle(type)}
             transform={getTickTranslation(type, tick)}
           >

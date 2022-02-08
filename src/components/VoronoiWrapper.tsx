@@ -18,7 +18,7 @@ export const VoronoiWrapper = React.memo(
       <g className="voronoi-wrapper">
         {data.map((element: Data, i: number) => (
           <VoronoiCell
-            key={JSON.stringify(element)}
+            key={i}
             fill="none"
             stroke="none"
             opacity={0.5}

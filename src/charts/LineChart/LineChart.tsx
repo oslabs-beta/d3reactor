@@ -23,9 +23,8 @@ import { d3Voronoi } from '../../functionality/voronoi';
 import { Label } from '../../components/Label';
 import Tooltip from '../../components/Tooltip';
 
-import styled, { ThemeProvider } from 'styled-components';
+import { ThemeProvider } from 'styled-components';
 
-const { light, dark } = themes;
 
 export default function LineChart({
   theme = 'light',
@@ -203,8 +202,6 @@ export default function LineChart({
       margin
     );
   }, [data, xScale, yScale, xAccessor, yAccessor, cHeight, cWidth, margin]);
-
-  console.log('KEYS ', keys);
   return (
     <ThemeProvider theme={themes[theme]}>
       <div ref={anchor} style={{ width: width, height: height }}>

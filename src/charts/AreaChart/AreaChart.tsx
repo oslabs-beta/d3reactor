@@ -28,8 +28,6 @@ import {
 } from '../../utils';
 import styled, { ThemeProvider } from 'styled-components';
 
-const { light, dark } = themes;
-
 const Area = styled.path`
   fill-opacity: 0.7;
 `;
@@ -88,7 +86,7 @@ export default function AreaChart({
     const groupAccessor = (d: Data) => d[groupBy ?? ''];
     const groups = d3.group(data, groupAccessor);
     return groupBy ? Array.from(groups).map((group) => group[0]) : [yKey];
-  }, [groupBy, yKey]);
+  }, [groupBy, yKey, data]);
 
   const transData = useMemo(() => {
     return groupBy
