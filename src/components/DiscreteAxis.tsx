@@ -129,7 +129,7 @@ export const DiscreteAxis = React.memo(
             {ticks.map((tick: any, i: number) => (
               <TickText
                 data-testid="d3reactor-ticktext"
-                key={JSON.stringify(tick)}
+                key={i}
                 style={getTickStyle(type, tick)}
                 transform={getTickTranslation(type, tick, i)}
               >
@@ -143,7 +143,7 @@ export const DiscreteAxis = React.memo(
             {ticks.map((tick: any, i: number) => (
               <TickText
                 data-testid="d3reactor-ticktext"
-                key={JSON.stringify(tick.slice(0, 10))}
+                key={i}
                 style={getTickStyle(type, tick.slice(0, 10))}
                 transform={getTickTranslation(type, tick.slice(0, 10), i)}
               >

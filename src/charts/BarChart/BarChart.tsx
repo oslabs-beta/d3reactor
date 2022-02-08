@@ -24,9 +24,8 @@ import {
 } from '../../utils';
 import { yScaleDef } from '../../functionality/yScale';
 import { Label } from '../../components/Label';
-import styled, { ThemeProvider } from 'styled-components';
+import{ ThemeProvider } from 'styled-components';
 
-const { light, dark } = themes;
 
 export default function BarChart({
   theme = 'light',
@@ -75,7 +74,7 @@ export default function BarChart({
     const groupAccessor = (d: Data) => d[groupBy ?? ''];
     const groups = d3.group(data, groupAccessor);
     return groupBy ? Array.from(groups).map((group) => group[0]) : [yKey];
-  }, [groupBy, yKey]);
+  }, [groupBy, yKey, data]);
 
   const transData = useMemo(() => {
     return groupBy

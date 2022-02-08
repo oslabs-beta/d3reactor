@@ -42,8 +42,18 @@ import {AreaChart, BarChart, PieChart, ScatterPlot, LineChart} from "d3reactor"
 
 And you're good to go!
 
+<img width="1100" alt="Stacked Bar Chart" src="https://user-images.githubusercontent.com/83976244/152201874-6b5e51a7-92a0-473d-abc7-9f06b45bc525.png">
 
-<img width="1100" alt="Stacked Bar Chart" src="https://user-images.githubusercontent.com/83976244/152202135-2f15b0e9-62da-47c5-aa61-9db4a2a7b80c.png">
 
+# Documentation
+
+For detailed information, please follow the links below: 
+
+* [d3reactor](https://www.d3reactor.com/)
+* [Area Chart](https://www.docs.d3reactor.com/docs/Charts/area-chart)
+* [Bar Chart](https://www.docs.d3reactor.com/docs/Charts/bar-chart)
+* [Line Chart](https://www.docs.d3reactor.com/docs/Charts/line-chart)
+* [Pie Chart](https://www.docs.d3reactor.com/docs/Charts/pie-chart)
+* [Scatter Plot](https://www.docs.d3reactor.com/docs/Charts/scatter-plot)
 
 
