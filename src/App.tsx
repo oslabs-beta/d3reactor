@@ -40,7 +40,7 @@ function App() {
         tooltipVisible={true}
       />
       <AreaChart
-        theme="dark"
+        theme="light"
         height="100%"
         width="100%"
         data={portfolio.slice(30, 60)}
