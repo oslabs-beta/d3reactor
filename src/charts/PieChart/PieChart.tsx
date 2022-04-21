@@ -25,8 +25,6 @@ const PieLabel = styled.text`
   pointer-events: none;
 `;
 
-const { light, dark } = themes;
-
 export default function PieChart({
   theme = 'light',
   data,
@@ -60,7 +58,7 @@ export default function PieChart({
     const groupAccessor = (d: Data) => d[label ?? ''];
     const groups: d3.InternMap<any, any[]> = d3.group(data, groupAccessor);
     return Array.from(groups).map((group) => group[0]);
-  }, [label]);
+  }, [label, data]);
 
   // ********************
   // STEP 2. Determine chart dimensions
