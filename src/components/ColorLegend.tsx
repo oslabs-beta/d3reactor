@@ -175,7 +175,7 @@ export const ColorLegend = ({
     (longestWord * (fontSize + 1)) / 2 +
     EXTRA_LEGEND_MARGIN * 2; //+1 by fontSize is a bit of a kludge
 
-  useEffect(() => setLegendOffset([rectWidth, rectHeight]), []);
+  useEffect(() => setLegendOffset([rectWidth, rectHeight]), [rectWidth, rectHeight]);
 
   return (
     <g
