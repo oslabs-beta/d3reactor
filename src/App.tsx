@@ -41,7 +41,7 @@ function App() {
   }, []);
   return (
     <Container className="app">
-      {/* <PieChart
+      <PieChart
         theme="dark"
         data={pie}
         label="label"
@@ -64,7 +64,7 @@ function App() {
         yAxisLabel="Value"
         legend={'bottom'}
         tooltipVisible={true}
-      />*/}
+      />
       <AreaChart
         theme="light"
         height="100%"
