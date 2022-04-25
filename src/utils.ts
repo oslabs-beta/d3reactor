@@ -391,6 +391,7 @@ export function transformSkinnyToWide(
   xDataKey: string | undefined,
   yDataKey: string | undefined
 ) {
+  console.log('Function called.');
   const outputArr = [];
   // Find unique x vals. create 1 object with date prop for each date
   const rowsArr: any = [];

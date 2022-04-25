@@ -24,8 +24,7 @@ import {
 } from '../../utils';
 import { yScaleDef } from '../../functionality/yScale';
 import { Label } from '../../components/Label';
-import{ ThemeProvider } from 'styled-components';
-
+import { ThemeProvider } from 'styled-components';
 
 export default function BarChart({
   theme = 'light',
@@ -61,6 +60,18 @@ export default function BarChart({
   // Look at the data structure and declare how to access the values we'll need.
   // ********************
 
+  const cleanData = useMemo(() => {
+    return data
+      .filter((d) => d[xKey] !== null)
+      .map((d) => {
+        if (d[yKey] === null) {
+          d[yKey] = 0;
+        }
+
+        return d;
+      });
+  }, [data]);
+
   const xAccessor: (d: Data) => string = useMemo(() => {
     return (d) => d[xKey];
   }, []);
@@ -72,15 +83,15 @@ export default function BarChart({
   // When the yKey key has been assigned to the groupBy variable we know the user didn't specify grouping
   const keys: string[] = useMemo(() => {
     const groupAccessor = (d: Data) => d[groupBy ?? ''];
-    const groups = d3.group(data, groupAccessor);
+    const groups = d3.group(cleanData, groupAccessor);
     return groupBy ? Array.from(groups).map((group) => group[0]) : [yKey];
-  }, [groupBy, yKey, data]);
+  }, [groupBy, yKey, cleanData]);
 
   const transData = useMemo(() => {
     return groupBy
-      ? transformSkinnyToWide(data, keys, groupBy, xKey, yKey)
-      : data;
-  }, [data, keys, groupBy, xKey, yKey]);
+      ? transformSkinnyToWide(cleanData, keys, groupBy, xKey, yKey)
+      : cleanData;
+  }, [cleanData, keys, groupBy, xKey, yKey]);
 
   const stack = d3.stack().keys(keys).order(d3.stackOrderAscending);
 
@@ -156,7 +167,7 @@ export default function BarChart({
       .scaleBand()
       .paddingInner(0.1)
       .paddingOuter(0.1)
-      .domain(data.map(xAccessor))
+      .domain(transData.map(xAccessor))
       .range([0, rangeMax > 40 ? rangeMax : 40]);
   }, [transData, xAccessor, cWidth, margin]);
 
@@ -311,7 +322,7 @@ export default function BarChart({
                     </g>
                   )
                 )
-              : data.map((d: Data, i: number) => {
+              : cleanData.map((d: Data, i: number) => {
                   return (
                     // SINGLE CHART
                     <Rectangle
