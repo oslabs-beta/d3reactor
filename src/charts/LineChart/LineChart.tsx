@@ -25,7 +25,6 @@ import Tooltip from '../../components/Tooltip';
 
 import { ThemeProvider } from 'styled-components';
 
-
 export default function LineChart({
   theme = 'light',
   data,
@@ -80,7 +79,7 @@ export default function LineChart({
     return data.filter((el) => el[yKey] !== null);
   }, [data]);
 
-  const lineGroups: any = d3.group(data, (d) => d[groupBy ?? '']);
+  const lineGroups: any = d3.group(cleanData, (d) => d[groupBy ?? '']);
 
   let keys: string[] = [];
   if (groupBy !== undefined) {

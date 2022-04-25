@@ -1,4 +1,4 @@
-import React, {useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import BarChart from './charts/BarChart/BarChart';
 import AreaChart from './charts/AreaChart/AreaChart';
@@ -10,27 +10,38 @@ import { Container } from './styles/componentStyles';
 import portfolio from '../data/portfolio.json';
 import penguins from '../data/penguins.json';
 import fruit from '../data/fruit.json';
-import unemployment from '../data/unemployment.json'
+import unemployment from '../data/unemployment.json';
 import skinny_fruit from '../data/skinny_fruit.json';
 
-
 function App() {
-  const [pie, setPie] = useState(fruit.sort((a, b) => a.value - b.value).slice(2))
-  const [bar, setBar] = useState(skinny_fruit.reverse().slice(2))
-  const [area, setArea] = useState(portfolio.slice(30, 60))
-  const [line, setLine] = useState(unemployment.slice(0, 60))
-  const [scatter, setScatter] = useState(penguins.slice(30, 60))
+  const [pie, setPie] = useState(
+    fruit.sort((a, b) => a.value - b.value).slice(2)
+  );
+  const [bar, setBar] = useState(skinny_fruit.reverse().slice(2));
+  const [area, setArea] = useState(portfolio.slice(30, 60));
+  const [line, setLine] = useState(unemployment.slice(0, 60));
+  const [scatter, setScatter] = useState(penguins.slice(30, 60));
 
   useEffect(() => {
-    setTimeout(() => {setPie(fruit.sort((a, b) => a.value - b.value))}, 1000);
-    setTimeout(() => {setBar(skinny_fruit.reverse())}, 2000);
-    setTimeout(() => {setArea(portfolio.slice(0, 60))}, 4000);
-    setTimeout(() => {setLine(unemployment)}, 6000);
-    setTimeout(() => {setScatter(penguins)}, 8000);
-  }, [])
+    setTimeout(() => {
+      setPie(fruit.sort((a, b) => a.value - b.value));
+    }, 1000);
+    setTimeout(() => {
+      setBar(skinny_fruit.reverse());
+    }, 2000);
+    setTimeout(() => {
+      setArea(portfolio.slice(0, 60));
+    }, 4000);
+    setTimeout(() => {
+      setLine(unemployment);
+    }, 6000);
+    setTimeout(() => {
+      setScatter(penguins);
+    }, 8000);
+  }, []);
   return (
     <Container className="app">
-      <PieChart
+      {/* <PieChart
         theme="dark"
         data={pie}
         label="label"
@@ -53,7 +64,7 @@ function App() {
         yAxisLabel="Value"
         legend={'bottom'}
         tooltipVisible={true}
-      />
+      />*/}
       <AreaChart
         theme="light"
         height="100%"
@@ -74,7 +85,7 @@ function App() {
         data={line}
         xKey="date"
         xDataType="date"
-        groupBy='division'
+        groupBy="division"
         yKey="unemployment"
         xAxis="bottom"
         yAxis="left"
@@ -100,7 +111,6 @@ function App() {
         yAxis="right"
         yAxisLabel="Body Mass"
         legend={'right'}
-
       />
     </Container>
   );
