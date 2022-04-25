@@ -14,9 +14,7 @@ import unemployment from '../data/unemployment.json';
 import skinny_fruit from '../data/skinny_fruit.json';
 
 function App() {
-  const [pie, setPie] = useState(
-    fruit.sort((a, b) => a.value - b.value).slice(2)
-  );
+  const [pie, setPie] = useState(fruit.slice(2));
   const [bar, setBar] = useState(skinny_fruit.reverse().slice(2));
   const [area, setArea] = useState(portfolio.slice(30, 60));
   const [line, setLine] = useState(unemployment.slice(0, 60));
@@ -24,7 +22,7 @@ function App() {
 
   useEffect(() => {
     setTimeout(() => {
-      setPie(fruit.sort((a, b) => a.value - b.value));
+      setPie(fruit);
     }, 1000);
     setTimeout(() => {
       setBar(skinny_fruit.reverse());
@@ -49,7 +47,7 @@ function App() {
         outerRadius={400}
         pieLabel={true}
       />
-      <BarChart
+      {/* <BarChart
         theme="light"
         height="100%"
         width="100%"
@@ -111,7 +109,7 @@ function App() {
         yAxis="right"
         yAxisLabel="Body Mass"
         legend={'right'}
-      />
+      /> */}
     </Container>
   );
 }

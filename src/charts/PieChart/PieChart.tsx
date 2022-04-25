@@ -53,6 +53,10 @@ export default function PieChart({
   // STEP 1. Process data
   // Look at the data structure and declare how to access the values we'll need.
   // ********************
+  const cleanData = useMemo(
+    () => data.filter((el: any) => el.value !== null),
+    [data]
+  );
 
   const keys = useMemo(() => {
     const groupAccessor = (d: Data) => d[label ?? ''];
