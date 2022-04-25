@@ -135,7 +135,7 @@ function Axi({
 
   const getFormattedTick = (individualTick: number | Date) => {
     if (typeof individualTick === 'number') {
-      return individualTick;
+      return d3.format(',')(individualTick);
     } else {
       return formatTick(individualTick);
     }
