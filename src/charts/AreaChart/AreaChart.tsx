@@ -27,7 +27,6 @@ import {
   themes,
 } from '../../utils';
 import styled, { ThemeProvider } from 'styled-components';
-import { ChunkGraph } from 'webpack';
 
 const Area = styled.path`
   fill-opacity: 0.7;
