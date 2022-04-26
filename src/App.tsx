@@ -16,7 +16,7 @@ import skinny_fruit from '../data/skinny_fruit.json';
 function App() {
   const [pie, setPie] = useState(fruit.slice(2));
   const [bar, setBar] = useState(skinny_fruit);
-  const [area, setArea] = useState(portfolio.slice(30, 60));
+  const [area, setArea] = useState(portfolio);
   const [line, setLine] = useState(unemployment.slice(0, 60));
   const [scatter, setScatter] = useState(penguins.slice(30, 60));
 
@@ -28,7 +28,7 @@ function App() {
       // setBar(skinny_fruit.reverse());
     }, 2000);
     setTimeout(() => {
-      setArea(portfolio.slice(0, 60));
+      setArea(portfolio);
     }, 4000);
     setTimeout(() => {
       setLine(unemployment);
@@ -46,7 +46,7 @@ function App() {
         value="value"
         outerRadius={400}
         pieLabel={true}
-  /> */}
+  />
       <BarChart
         theme="light"
         height="100%"
@@ -62,8 +62,8 @@ function App() {
         yAxisLabel="Value"
         legend={'bottom'}
         tooltipVisible={true}
-      />
-      {/* <AreaChart
+      />*/}
+      <AreaChart
         theme="light"
         height="100%"
         width="100%"
@@ -76,7 +76,7 @@ function App() {
         xAxisLabel="Date"
         yAxisLabel="Value"
       />
-      <LineChart
+      {/* <LineChart
         theme="light"
         height={'100%'}
         width={'100%'}
