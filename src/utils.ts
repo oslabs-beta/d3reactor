@@ -391,6 +391,7 @@ export function transformSkinnyToWide(
   xDataKey: string | undefined,
   yDataKey: string | undefined
 ) {
+  console.log('Function called.');
   const outputArr = [];
   // Find unique x vals. create 1 object with date prop for each date
   const rowsArr: any = [];
@@ -421,7 +422,7 @@ export function transformSkinnyToWide(
 }
 
 export function inferXDataType(el: any, xKey: string) {
-  let xDataType: 'number' | 'date' | undefined;
+  let xDataType: 'number' | 'date';
   if (
     (typeof el[xKey] === 'string' && !isNaN(Date.parse(el[xKey]))) ||
     el[xKey] instanceof Date

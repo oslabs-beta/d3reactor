@@ -65,14 +65,21 @@ export default function ScatterPlot({
   // STEP 1. Process data
   // Look at the data structure and declare how to access the values we'll need.
   // ********************
-  let xType: 'number' | 'date' = inferXDataType(data[0], xKey);
+
+  // Null values must be removed from the dataset
+  const cleanData = useMemo(
+    () => data.filter((el) => el[xKey] !== null && el[yKey] !== null),
+    [data]
+  );
+
+  let xType: 'number' | 'date' = inferXDataType(cleanData[0], xKey);
   if (xDataType !== undefined) xType = xDataType;
 
   const keys = useMemo(() => {
     const groupAccessor = (d: Data) => d[groupBy ?? ''];
-    const groups = d3.group(data, groupAccessor);
+    const groups = d3.group(cleanData, groupAccessor);
     return groupBy ? Array.from(groups).map((group) => group[0]) : [yKey];
-  }, [groupBy, yKey, data]);
+  }, [groupBy, yKey, cleanData]);
 
   const xAccessor: xAccessorFunc = useMemo(() => {
     return xType === 'number' ? (d) => d[xKey] : (d) => new Date(d[xKey]);
@@ -126,14 +133,14 @@ export default function ScatterPlot({
   // ********************
 
   const { xScale } = useMemo(() => {
-    return xScaleDef(data, xType, xAccessor, margin, cWidth, chartType);
-  }, [data, cWidth, margin]);
+    return xScaleDef(cleanData, xType, xAccessor, margin, cWidth, chartType);
+  }, [cleanData, cWidth, margin]);
 
   const xAccessorScaled = (d: any) => xScale(xAccessor(d));
 
   const yScale = useMemo(() => {
-    return yScaleDef(data, yAccessor, margin, cHeight, 'scatter-plot');
-  }, [data, yAccessor, margin, cHeight]);
+    return yScaleDef(cleanData, yAccessor, margin, cHeight, 'scatter-plot');
+  }, [cleanData, yAccessor, margin, cHeight]);
 
   const yAccessorScaled = (d: any) => yScale(yAccessor(d));
   // ********************
@@ -175,7 +182,7 @@ export default function ScatterPlot({
 
   const voronoi = useMemo(() => {
     return d3Voronoi(
-      data,
+      cleanData,
       xScale,
       yScale,
       xAccessor,
@@ -184,7 +191,16 @@ export default function ScatterPlot({
       cWidth,
       margin
     );
-  }, [data, xScale, yScale, xAccessor, yAccessor, cHeight, cWidth, margin]);
+  }, [
+    cleanData,
+    xScale,
+    yScale,
+    xAccessor,
+    yAccessor,
+    cHeight,
+    cWidth,
+    margin,
+  ]);
 
   return (
     <ThemeProvider theme={themes[theme]}>
@@ -258,7 +274,7 @@ export default function ScatterPlot({
                 label={xAxisLabel}
               />
             )}
-            {data.map((element: any, i: number) =>
+            {cleanData.map((element: any, i: number) =>
               !groupBy ? (
                 <Circle
                   key={i}
@@ -279,7 +295,7 @@ export default function ScatterPlot({
             )}
             {voronoi && (
               <VoronoiWrapper
-                data={data}
+                data={cleanData}
                 voronoi={voronoi}
                 xScale={xScale}
                 yScale={yScale}

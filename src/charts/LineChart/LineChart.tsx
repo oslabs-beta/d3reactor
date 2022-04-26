@@ -25,7 +25,6 @@ import Tooltip from '../../components/Tooltip';
 
 import { ThemeProvider } from 'styled-components';
 
-
 export default function LineChart({
   theme = 'light',
   data,
@@ -62,8 +61,15 @@ export default function LineChart({
   // Look at the data structure and declare how to access the values we'll need.
   // ********************
 
+  // Null values must be removed from the dataset so as to not break our the
+  // Line generator function.
+  const cleanData = useMemo(
+    () => data.filter((el) => el[xKey] !== null && el[yKey] !== null),
+    [data]
+  );
+
   // if no xKey datatype is passed in, determine if it's Date
-  let xType: 'number' | 'date' = inferXDataType(data[0], xKey);
+  let xType: 'number' | 'date' = inferXDataType(cleanData[0], xKey);
   if (xDataType !== undefined) xType = xDataType;
 
   const xAccessor: xAccessorFunc = useMemo(() => {
@@ -74,13 +80,7 @@ export default function LineChart({
     return (d) => d[yKey];
   }, []);
 
-  // Null values must be removed from the dataset so as to not break our the
-  // Line generator function.
-  const cleanData = useMemo(() => {
-    return data.filter((el) => el[yKey] !== null);
-  }, [data]);
-
-  const lineGroups: any = d3.group(data, (d) => d[groupBy ?? '']);
+  const lineGroups: any = d3.group(cleanData, (d) => d[groupBy ?? '']);
 
   let keys: string[] = [];
   if (groupBy !== undefined) {
@@ -137,12 +137,12 @@ export default function LineChart({
   // ********************
 
   const yScale = useMemo(() => {
-    return yScaleDef(data, yAccessor, margin, cHeight, 'line-chart');
-  }, [data, yAccessor, margin, cHeight]);
+    return yScaleDef(cleanData, yAccessor, margin, cHeight, 'line-chart');
+  }, [cleanData, yAccessor, margin, cHeight]);
 
   const { xScale, xMin, xMax } = useMemo(() => {
-    return xScaleDef(data, xType, xAccessor, margin, cWidth, chartType);
-  }, [data, cWidth, margin]);
+    return xScaleDef(cleanData, xType, xAccessor, margin, cWidth, chartType);
+  }, [cleanData, cWidth, margin]);
 
   const line: any = d3
     .line()
@@ -192,7 +192,7 @@ export default function LineChart({
 
   const voronoi = useMemo(() => {
     return d3Voronoi(
-      data,
+      cleanData,
       xScale,
       yScale,
       xAccessor,
@@ -201,7 +201,16 @@ export default function LineChart({
       cWidth,
       margin
     );
-  }, [data, xScale, yScale, xAccessor, yAccessor, cHeight, cWidth, margin]);
+  }, [
+    cleanData,
+    xScale,
+    yScale,
+    xAccessor,
+    yAccessor,
+    cHeight,
+    cWidth,
+    margin,
+  ]);
   return (
     <ThemeProvider theme={themes[theme]}>
       <div ref={anchor} style={{ width: width, height: height }}>

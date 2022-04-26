@@ -76,23 +76,28 @@ export default function AreaChart({
     return (d) => d[yKey];
   }, [yKey]);
 
+  const cleanData = useMemo(
+    () => data.filter((el) => el[xKey] !== null && el[yKey] !== null),
+    [data]
+  );
+
   // if no xKey datatype is passed in, determine if it's Date
   if (!xDataType) {
-    xDataType = inferXDataType(data[0], xKey);
+    xDataType = inferXDataType(cleanData[0], xKey);
   }
 
   // generate arr of keys. these are used to render discrete areas to be displayed
   const keys = useMemo(() => {
     const groupAccessor = (d: Data) => d[groupBy ?? ''];
-    const groups = d3.group(data, groupAccessor);
+    const groups = d3.group(cleanData, groupAccessor);
     return groupBy ? Array.from(groups).map((group) => group[0]) : [yKey];
-  }, [groupBy, yKey, data]);
+  }, [groupBy, yKey, cleanData]);
 
   const transData = useMemo(() => {
     return groupBy
-      ? transformSkinnyToWide(data, keys, groupBy, xKey, yKey)
-      : data;
-  }, [data, keys, groupBy, xKey, yKey]);
+      ? transformSkinnyToWide(cleanData, keys, groupBy, xKey, yKey)
+      : cleanData;
+  }, [cleanData, keys, groupBy, xKey, yKey]);
 
   // generate stack: an array of Series representing the x and associated y0 & y1 values for each area
   const stack = d3.stack().keys(keys);

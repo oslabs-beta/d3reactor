@@ -47,7 +47,7 @@
   {
     "date": "Thu Mar 01 2018 00:00:00 GMT-0500 (Eastern Standard Time)",
     "fruit": "Bananas",
-    "value":15
+    "value": 15
   },
   {
     "date": "Thu Mar 08 2018 00:00:00 GMT-0500 (Eastern Standard Time)",
@@ -67,7 +67,7 @@
   {
     "date": "Thu Mar 01 2018 00:00:00 GMT-0500 (Eastern Standard Time)",
     "fruit": "Apricots",
-    "value":3
+    "value": 3
   },
   {
     "date": "Thu Mar 08 2018 00:00:00 GMT-0500 (Eastern Standard Time)",
